@@ -1,1 +1,77 @@
-site_name: My Docs
+# Project information
+copyright: © 2025 プレハブ小屋 All rights reserved.
+#remote_branch: gh-pages
+#remote_name: origin
+repo_url: https://github.com/showa-yojyo/taoup/
+site_author: プレハブ小屋
+site_description: 読書ノートの一部
+site_name: The Art of Unix Programming 読書ノート
+site_url: https://github.com/showa-yojyo/taoup/
+
+# Documentation layout
+#draft_focs: []
+#exclude_docs: []
+nav:
+  - Home: index.md
+#  - About: about.md
+#  - Extensions: extensions.md
+#  - Scratch: scratch.md
+  - Issues: https://github.com/showa-yojyo/taoup/issues
+#not_in_nav: []
+validation:
+  absolute_links: relative_to_docs
+  anchors: warn
+  omitted_files: warn
+  unrecognized_links: warn
+
+# Build directories
+#docs_dir: docs
+#extra: {}
+#extra_css:
+#  - css/override.css
+#extra_javascript:
+#  - path: js/load-mathjax.js
+#    async: true
+#extra_templates: []
+#site_dir: site
+
+theme:
+  color_mode: auto
+#  highlightjs: on
+#  hljs_style: github
+#  hljs_style_dark: github-dark
+  locale: ja
+  name: mkdocs
+  nav_style: primary
+  navigation_depth: 3
+  shortcuts:
+    help: 191
+    next: 78
+    previous: 80
+    search: 83
+  user_color_mode_toggle: on
+
+# Preview controls
+#dev_addr: "127.0.0.1:8000"
+strict: true
+
+# about/license.md => /about/license.html
+use_directory_urls: false
+
+# Formatting options
+
+markdown_extensions:
+  - sane_lists
+  - toc:
+      permalink: true
+      title: 見出し一覧
+      toc_depth: "2-6"
+
+plugins:
+  - search:
+      enabled: True
+      indexing: sections
+      lang:
+        - en
+      min_search_length: 4
+      prebuild_index: False
