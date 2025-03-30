@@ -1,17 +1,57 @@
-# Welcome to MkDocs
+# The Art of Unix Programming 読書ノート
 
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
+不朽の名著、[The Art of Unix Programming][TAOUP] が無料で読める（リンク先）こと
+を最近知った。遅ればせながらそれを利用して読書ノートをとることにする。邦訳版を
+高々一周読んでいるが、移動先での読書だったためその記録が残っていないこともあり、
+今から始める。
 
-## Commands
+## 目次
 
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs -h` - Print help message and exit.
+* [Preface](./preface.md)
+* I. Context
+    1. [Philosophy](./context/philosophy.md)
+    2. [History]
+    3. [Contrasts]
+* II. Design
+    4. [Modularity]
+    5. [Textuality]
+    6. [Transparency]
+    7. [Multiprogramming]
+    8. [Minilanguages]
+    9. [Generation]
+    10. [Configuration]
+    11. [Interfaces]
+    12. [Optimization]
+    13. [Complexity]
+* III. Implementation
+    14. [Languages]
+    15. [Tools]
+    16. [Reuse]
+* IV. Community
+    17. [Portability]
+    18. [Documentation]
+    19. [Open Source]
+    20. [Futures]
 
-## Project layout
+[TAOUP]: <http://www.catb.org/esr/writings/taoup/html/>
 
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
+<!-- touch complexity.md
+touch configuration.md
+touch contrast.md
+touch documentation.md
+touch future.md
+touch generation.md
+touch history.md
+touch interface.md
+touch languages.md
+touch minilanguages.md
+touch modularity.md
+touch multiprogram.md
+touch opensource.md
+touch optimization.md
+touch philosophy.md
+touch portability.md
+touch reuse.md
+touch textuality.md
+touch tools.md
+touch transparency.md -->

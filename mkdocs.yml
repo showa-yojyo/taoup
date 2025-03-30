@@ -13,11 +13,15 @@ site_url: https://github.com/showa-yojyo/taoup/
 #exclude_docs: []
 nav:
   - Home: index.md
+  - Notes:
+    - Preface: preface.md
+    - Context:
+      - Philosophy: context/philosophy.md
 #  - About: about.md
 #  - Extensions: extensions.md
 #  - Scratch: scratch.md
   - Issues: https://github.com/showa-yojyo/taoup/issues
-#not_in_nav: []
+#not_in_nav:
 validation:
   absolute_links: relative_to_docs
   anchors: warn
