@@ -417,12 +417,112 @@ Doug McIlroy, Rob Pike, Ken Thompson 各老師による Unix 評を、おそら�
 
 ### Rule of Optimization: Prototype before polishing. Get it working before you optimize it.
 
+まず試作で、それから最適化だ。
+
+* «90% of the functionality delivered now is better than 100% of it delivered
+  never» Kernighan and Plauger
+* «Premature optimization is the root of all evil» Donald Knuth; 完全版は本書脚
+  注参照。
+* «Make it run, then make it right, then make it fast» Kent Beck
+
+最適化には局所的なものと大域的なものがある。早過ぎる前者は後者を阻害すると言って
+いる：
+
+> A prematurely optimized portion of a design frequently interferes with changes
+> that would have much higher payoffs across the whole design, so you end up
+> with both inferior performance and excessively complex code.
+
+設計の観点からも試作することには意味がある：
+
+> Using prototyping to learn which features you don't have to implement helps
+> optimization for performance; you don't have to optimize what you don't write.
+
 ### Rule of Diversity: Distrust all claims for one true way.
+
+> Even the best software tools tend to be limited by the imaginations of their
+> designers.
+
+設計者の想像には限界がある。
+
+Unix の伝統では、ただ一つの真の方法のような考えを疑念であると考える。そして、次
+のようなものを良しとする：
+
+> It embraces multiple languages, open extensible systems, and customization
+> hooks everywhere.
+
+<!-- embrace: 抱擁する→受け入れる→採用する -->
 
 ### Rule of Extensibility: Design for the future, because it will be here sooner than you think.
 
+Unix 愛好家は技術者というより芸術家に近いようだ。
+
+> Never assume you have the final answer. Therefore, leave room for your data
+> formats and code to grow; otherwise, you will often find that you are locked
+> into unwise early choices because you cannot change them while maintaining
+> backward compatibility.
+
+データ形式とコードは拡張性を意識して設計しろということだ。さらに実践的なことを述
+べられる：
+
+> When you design protocols or file formats, make them sufficiently
+> self-describing to be extensible. Always, always either include a version
+> number, or compose the format from self-contained, self-describing clauses in
+> such a way that new clauses can be readily added and old ones dropped without
+> confusing format-reading code.
+
+例えば自作アプリケーションデータを XML ファイルで入出力可能にする設計だとすると、
+ファイルの最初の方に `<version>` のような要素を格納してしかるべきだ。
+
 ## The Unix Philosophy in One Lesson
+
+かの有名な KISS 原則を紹介する節。忘れたらこの巨大な画像を確認して欲しい。本書の
+残りの部分で読者がその方法を学ぶ助けとするつもりだと述べている。
 
 ## Applying the Unix Philosophy
 
+Unix の教えを標語的にして一覧にしたもの（完全版ではないと断ってある）がある。
+
+自分の言葉で表現し直して以下に綴る：
+
+* 送信元と送信先に依存しないフィルターであり得るものはそうであって然るべきだ。
+* データストリームはテキストであって然るべきだ。
+* データベースレイアウトとアプリケーションプロトコルはテキストであって然るべきだ。
+* 複雑な UI は複雑なバックエンドから分離してあって然るべきだ。
+* C 言語で書く前にインタプリター言語で試作する。
+* 一つの言語しか使わないとプログラムが複雑になり過ぎる可能性がある場合、かつその
+  場合に限り、一つの言語ですべてを書くより、複数の言語を混ぜるほうがいい。
+* 受け入れは寛大に、送り出しは厳格に。
+* 絞り込む際には不要な情報を捨ててはいけない。
+* 必要な仕事をするだけの小さなプログラムを書け。
+
+ここで言う C 言語は現代ならそれ以外の違う言語でもあり得る。コードが面倒な高級言
+語くらいの意味に解釈したい。
+
+> We'll see the Unix design rules, and the prescriptions that derive from them,
+> applied over and over again in the remainder of this book.
+
+Unix の設計規則とそこから派生した方策は、当然ではあるが、他の伝統的なソフトウェ
+ア工学のベストプラクティスに収束する傾向がある。
+
 ## Attitude Matters Too
+
+> If you don't know what the right thing is, do the minimum necessary to get the
+> job done, at least until you figure out what the right thing is.
+
+言われなくてもそうすると言いたいところだが、実際は意外にそうではない。
+
+> You have to believe that software design is a craft worth all the
+> intelligence, creativity, and passion you can muster.
+
+<!-- muster: 奮い起こす -->
+
+Unix の哲学を正しく行うにはかなりの意思の強さが要ると言う。必要以上に頑張ること
+なく、賢く働き、余分な努力は後に取っておく。道具を活用し、自動化する。そんな態度
+であれと述べ、こう語りかけられる：
+
+> If this attitude seems preposterous or vaguely embarrassing to you, stop and
+> think; ask yourself what you've forgotten. Why do you design software instead
+> of doing something else to make money or pass the time? You must have thought
+> software was worthy of your passion once....
+
+馬鹿らしいとはさすがに思っていないが、熱が失せているのは確かだ。
