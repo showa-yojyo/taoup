@@ -1,4 +1,4 @@
-# Philosophy
+# Chapter 1. Philosophy
 
 [TOC]
 

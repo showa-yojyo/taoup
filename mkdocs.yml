@@ -17,9 +17,7 @@ nav:
     - Preface: preface.md
     - Context:
       - Philosophy: context/philosophy.md
-#  - About: about.md
-#  - Extensions: extensions.md
-#  - Scratch: scratch.md
+      - History: context/history.md
   - Issues: https://github.com/showa-yojyo/taoup/issues
 #not_in_nav:
 validation:
@@ -65,6 +63,7 @@ use_directory_urls: false
 # Formatting options
 
 markdown_extensions:
+  - admonition
   - sane_lists
   - toc:
       permalink: true

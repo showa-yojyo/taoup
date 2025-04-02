@@ -10,7 +10,7 @@
 * [Preface](./preface.md)
 * I. Context
     1. [Philosophy](./context/philosophy.md)
-    2. [History]
+    2. [History](./context/history.md)
     3. [Contrasts]
 * II. Design
     4. [Modularity]
