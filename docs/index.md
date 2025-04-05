@@ -11,7 +11,7 @@
 * I. Context
     1. [Philosophy](./context/philosophy.md)
     2. [History](./context/history.md)
-    3. [Contrasts]
+    3. [Contrasts](./context/contrasts.md)
 * II. Design
     4. [Modularity]
     5. [Textuality]
@@ -37,11 +37,9 @@
 
 <!-- touch complexity.md
 touch configuration.md
-touch contrast.md
 touch documentation.md
 touch future.md
 touch generation.md
-touch history.md
 touch interface.md
 touch languages.md
 touch minilanguages.md

@@ -18,6 +18,7 @@ nav:
     - Context:
       - Philosophy: context/philosophy.md
       - History: context/history.md
+      - Contrasts: context/contrasts.md
   - Issues: https://github.com/showa-yojyo/taoup/issues
 #not_in_nav:
 validation:
