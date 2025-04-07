@@ -9,47 +9,28 @@
 
 * [Preface](./preface.md)
 * I. Context
-    1. [Philosophy](./context/philosophy.md)
-    2. [History](./context/history.md)
-    3. [Contrasts](./context/contrasts.md)
+    * [Chapter 1. Philosophy](./context/philosophy.md)
+    * [Chapter 2. History](./context/history.md)
+    * [Chapter 3. Contrasts](./context/contrasts.md)
 * II. Design
-    4. [Modularity]
-    5. [Textuality]
-    6. [Transparency]
-    7. [Multiprogramming]
-    8. [Minilanguages]
-    9. [Generation]
-    10. [Configuration]
-    11. [Interfaces]
-    12. [Optimization]
-    13. [Complexity]
+    * [Chapter 4. Modularity](./design/modularity.md)
+    * [Chapter 5. Textuality](./design/textuality.md)
+    * [Chapter 6. Transparency](./design/transparency.md)
+    * [Chapter 7. Multiprogramming](./design/multiprogram.md)
+    * [Chapter 8. Minilanguages](./design/minilanguages.md)
+    * [Chapter 9. Generation](./design/generation.md)
+    * [Chapter 10. Configuration](./design/configuration.md)
+    * [Chapter 11. Interfaces](./design/interface.md)
+    * [Chapter 12. Optimization](./design/optimization.md)
+    * [Chapter 13. Complexity](./design/complexity.md)
 * III. Implementation
-    14. [Languages]
-    15. [Tools]
-    16. [Reuse]
+    * [Chapter 14. Languages](./implementation/languages.md)
+    * [Chapter 15. Tools](./implementation/tools.md)
+    * [Chapter 16. Reuse](./implementation/reuse.md)
 * IV. Community
-    17. [Portability]
-    18. [Documentation]
-    19. [Open Source]
-    20. [Futures]
+    * [Chapter 17. Portability](./community/portability.md)
+    * [Chapter 18. Documentation](./community/documentation.md)
+    * [Chapter 19. Open Source](./community/opensource.md)
+    * [Chapter 20. Futures](./community/futures.md)
 
 [TAOUP]: <http://www.catb.org/esr/writings/taoup/html/>
-
-<!-- touch complexity.md
-touch configuration.md
-touch documentation.md
-touch future.md
-touch generation.md
-touch interface.md
-touch languages.md
-touch minilanguages.md
-touch modularity.md
-touch multiprogram.md
-touch opensource.md
-touch optimization.md
-touch philosophy.md
-touch portability.md
-touch reuse.md
-touch textuality.md
-touch tools.md
-touch transparency.md -->

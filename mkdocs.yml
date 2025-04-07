@@ -19,6 +19,26 @@ nav:
       - Philosophy: context/philosophy.md
       - History: context/history.md
       - Contrasts: context/contrasts.md
+    - Design:
+      - Modularity: design/modularity.md
+      - Textuality: design/textuality.md
+      - Transparency: design/transparency.md
+      - Multiprogramming: design/multiprogram.md
+      - Minilanguages: design/minilanguages.md
+      - Generation: design/generation.md
+      - Configuration: design/configuration.md
+      - Interfaces: design/interface.md
+      - Optimization: design/optimization.md
+      - Complexity: design/complexity.md
+    - Implementation:
+      - Languages: implementation/languages.md
+      - Tools: implementation/tools.md
+      - Reuse: implementation/reuse.md
+    - Community:
+      - Portability: community/portability.md
+      - Documentation: community/documentation.md
+      - Open Source: community/opensource.md
+      - Futures: community/futures.md
   - Issues: https://github.com/showa-yojyo/taoup/issues
 #not_in_nav:
 validation:
