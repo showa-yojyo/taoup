@@ -180,24 +180,189 @@ DRY 原則および SPOT 規則という術語を導入する最初のパラグ�
 > it around a strong core algorithm addressing a clear formal definition of the
 > problem, avoiding heuristics and fudging.
 
+<!-- fudge: ごまかす -->
+
 次の記述にある薄いラッパーというのは何か筋が良さそうだ：
 
 > Many of its most effective tools are thin wrappers around a direct translation
 > of some single powerful algorithm.
 
-TBD: しばらく diff の議論が続く。
+しばらく diff の議論が続く。
 
+例えば diff を使う人が中心的なアルゴリズムを完璧に理解しなくても何をするのかを
+直感的に理解することができるのは、次の理由による：
 
+> First, the central engine is solid, small, and has never needed one line of
+> maintenance. Second, the results are clear and consistent, unmarred by
+> surprises where heuristics fail. (Doug McIlroy)
+
+<!-- unmarred: having no injury, defacement, or imperfection -->
+
+> The opposite of a formal approach is using *heuristics*—rules of thumb leading
+> toward a solution that is probabilistically, but not certainly, correct.
+
+発見的手法を採用する状況は例えば：
+
+* 決定論的に正しい解答が不可能である場合（例：スパムフィルター）
+* 形式的に正しい方法が知られているが、実行不能なほど高く付く場合（例：仮想メモ
+  リー管理）
+
+発見的手法の厄介事とは：
+
+> The trouble with heuristics is that they proliferate special cases and edge
+> cases. If nothing else, you usually have to backstop a heuristic with some
+> sort of recovery mechanism when it fails.
+
+特別な場合や極端な場合がべらぼうに増える。
+
+<!-- proliferate: to increase a lot and suddenly in number -->
 
 ### The Value of Detachment
 
+制約は、経済性だけでなく、ある種のエレガントな設計を促した。
+
+> To design for compactness and orthogonality, start from zero. Zen teaches that
+> attachment leads to suffering; experience with software design teaches that
+> attachment to unnoticed assumptions leads to non-orthogonality, noncompact
+> designs, and projects that fail or become maintenance nightmares.
+
+ゼロから始めるというのは、要らない仮定や先入観に執着するなという心得と捉えればい
+い。
+
+> Abstract. Simplify. Generalize.
+
+単純な文章でこの節の本質を表し切った。
+
+> Jokes about the relationship between Unix and Zen are a live part of the Unix
+> tradition as well.
+
+そういえば Python も禅がどうのとか言っていた記憶がある。
+
 ## Software Is a Many-Layered Thing
+
+関数やオブジェクトの階層を設計する方向は大まかに二つある。どちらの方向をいつ選ぶ
+コードの階層化に大きな影響を与える。
 
 ### Top-Down versus Bottom-Up
 
+オブジェクト指向プログラミング言語のクラス階層と同様に、上下関係は抽象度の高いほ
+うが上とする。
+
+> One direction is bottom-up, from concrete to abstract — working up from the
+> specific operations in the problem domain that you know you will need to
+> perform. （中略） The other direction is top-down, abstract to concrete — from
+> the highest-level specification describing the project as a whole, or the
+> application logic, downwards to individual operations.
+
+トップダウンとボトムアップの違いを具体的に考えるには、設計が次のどちらを中心に構
+成されているのかを求めろ：
+
+* メインループ
+* メインループが呼び出すことが可能な操作全てのライブラリー
+
+この方向選択は重大事だと述べる。TBD
+
+> Purely top-down programming often has the effect of overinvesting effort in
+> code that has to be scrapped and rebuilt because the interface doesn't pass a
+> reality check.
+>
+> In self-defense against this, programmers try to do both things — express the
+> abstract specification as top-down application logic, and capture a lot of
+> low-level domain primitives in functions or libraries, so they can be reused
+> when the high-level design changes.
+
+Unix プログラマーはシステムプログラミングを中心とした伝統を受け継いでいる。そこ
+では、低水準要素がハードウェア階層の操作であり重要だ。そのため、学習本能によりボ
+トムアップ方式に傾倒する。
+
+ボトムアップの利点をいくつか述べている：
+
+> Bottom-up programming gives you time and room to refine a vague specification.
+> Bottom-up also appeals to programmers' natural human laziness — when you have
+> to scrap and rebuild code, you tend to have to throw away larger pieces if
+> you're working top-down than you do if you're working bottom-up.
+
+実際のコードはこの二つの方式のどちらも用いてプログラムされる傾向がある。そこで
+「接着剤」が登場する。
+
 ### Glue Layers
 
+> When the top-down and bottom-up drives collide, the result is often a mess.
+> The top layer of application logic and the bottom layer of domain primitives
+> have to be impedance-matched by a layer of glue logic.
+
+このパラグラフの英文和訳はすごく難しい。
+
+> One of the lessons Unix programmers have learned over decades is that glue is
+> nasty stuff and that it is vitally important to keep glue layers as thin as
+> possible.
+
+接着のための層を可能な限り薄く保つことが死活的に重要だそうだ。
+
+Web ブラウザーの例では、DOM と画面の間に位置するはずの描画コードが接着層の一部だ
+と述べている。このコードはブラウザーの中でバグが最も発生しやすいことが知られてい
+る。なので、これを一般化すると？
+
+> A Web browser's glue layer has to mediate not merely between specification and
+> domain primitives, but between several different external specifications:
+
+いろいろなものを仲介する必要があるので、不具合が発生しやすいという理解でいいか。
+
+接着層は縦方向に分裂しやすい。
+
+> The thin-glue principle can be viewed as a refinement of the Rule of
+> Separation.
+
+最後の一文も和訳しにくい：
+
+> Policy (the application logic) should be cleanly separated from mechanism (the
+> domain primitives), but if there is a lot of code that is neither policy nor
+> mechanism, chances are that it is accomplishing very little besides adding
+> global complexity to the system.
+
 ### Case Study: C Considered as Thin Glue
+
+> The C language itself is a good example of the effectiveness of thin glue.
+
+なんてことを言うのだ。
+
+> the architectures in every generation of computers, from early mainframes
+> through minicomputers through workstations through PCs, had tended to
+> converge.
+
+この極限を classical architecture と呼んでいるのも含めて、この指摘は面白い。
+
+C 言語設計の狙いを一言で表すと「構造化アセンブラー」だ：
+
+> Thompson and Ritchie designed C to be a sort of structured assembler for an
+> idealized processor and memory architecture that they expected could be
+> efficiently modeled on most conventional computers.
+
+言わんとすることがなんとなく理解できる。スーファミゲームプログラムのアセンブル
+コードを解読しているときに、メモ代わりに C 言語のコードを添える者としては。
+
+> C started out as a good fit for microprocessors and, rather than becoming
+> irrelevant as its assumptions fell out of date, actually became a better fit
+> as hardware converged more closely on the classical architecture.
+
+ハードウェアが極限値 classical architecture にどんどん収束していった。そういうわ
+けで、C 言語は汎用プログラミング言語としてすべてを席巻した。
+
+> C, designed as a thin but flexible layer over the classical architecture,
+> looks with two decades' additional perspective like almost the best possible
+> design for the structured-assembler niche it was intended to fill.
+
+何か具体的な例を挙げられるようにしたい。
+
+> This history is worth recalling and understanding because C shows us how
+> powerful a clean, minimalist design can be.
+
+かのサンテグジュペリはかつて飛行機の設計についてこう述べた：完璧に到達するのは、
+これ以上加えるものがないときではなく、これ以上取り除くものがないときだ。作家とい
+うか、フランス料理の巨匠のような感性だと思う。
+
+> The history of C is also a lesson in the value of having a working reference
+> implementation *before* you standardize.
 
 ## Libraries
 
