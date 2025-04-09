@@ -77,9 +77,21 @@
 > such designs normally need a reference card or cheat sheet but not a manual.
 > We'll call such designs *semi-compact*, as opposed to *strictly compact*.
 
-例: TBW
+パラコンパクトというのは聞いたことがあるが、セミコンパクトとは。
 
-TBD: 豆知識
+* Unix システムコール API は半コンパクトだ。Unix プログラマーはアプリケーション
+  の大半の実装に十分なシステムコール（ファイルシステム、シグナル、プロセス）の部
+  分集合がその脳裡にある。
+* C 言語ライブラリーはコンパクトでない。数学関数だけでもそのすべてがプログラマー
+  一人の頭蓋に収まることはない。
+
+認知心理学の基礎的な知見を援用し、魔法の数字とされる 7 を閾値とする：
+
+> This gives us a good rule of thumb for evaluating the compactness of APIs:
+> Does a programmer have to remember more than seven entry points? Anything
+> larger than this is unlikely to be strictly compact.
+
+コンパクトなものの例をさらに挙げる：
 
 > Among Unix tools, make(1) is compact; autoconf(1) and automake(1) are not.
 > Among markup languages, HTML is semi-compact, but DocBook （中略） is not. The
@@ -260,7 +272,7 @@ DRY 原則および SPOT 規則という術語を導入する最初のパラグ�
 * メインループ
 * メインループが呼び出すことが可能な操作全てのライブラリー
 
-この方向選択は重大事だと述べる。TBD
+この方向選択は重大事だと述べる。
 
 > Purely top-down programming often has the effect of overinvesting effort in
 > code that has to be scrapped and rebuilt because the interface doesn't pass a
@@ -366,8 +378,123 @@ C 言語設計の狙いを一言で表すと「構造化アセンブラー」だ
 
 ## Libraries
 
+> One consequence of the emphasis that the Unix programming style put on
+> modularity and well-defined APIs is a strong tendency to factor programs into
+> bits of glue connecting collections of libraries, especially shared libraries
+> (the equivalents of what are called dynamically-linked libraries or DLLs under
+> Windows and other operating systems).
+
+共有ライブラリーというもの関する詳細な記述などはない。読者は Windows でいうとこ
+ろの DLL と同等の意味を持つファイルだという一言で理解できぬようではまずい。
+
+> Under Unix, it is normal practice to make this layering explicit, with the
+> service routines collected in a library that is separately documented.
+
+文書がライブラリー単位で分離して整っているというのが要点。
+
+> There is a flip side to this. In the Unix world, libraries which are delivered
+> *as libraries* should come with exerciser programs.
+
+オープンであるということでしかなく、文書化された形がプログラムだけしかなく、C プ
+ログラムから簡単に呼び出すことができないインターフェイスを持つのは、苛つくという
+意見の人がいる。
+
+共有ライブラリーの一形態として、プラグインというものがある：
+
+> An important form of library layering is the *plugin*, a library with a set of
+> known entry points that is dynamically loaded after startup time to perform a
+> specialized task.
+
 ### Case Study: GIMP Plugins
+
+ここで GIMP の話題になる。著者は GIMP のアプリケーション設計を次のように分析して
+いる。アプリケーション自体が一つのライブラリーであるとみなしている：
+
+> But GIMP is built as a library of image-manipulation and housekeeping routines
+> called by a relatively thin layer of control code. The driver code knows about
+> the GUI, but not directly about image formats; the library routines reverse
+> this by knowing about image formats and operations but not about the GUI.
+
+GIMP の主要部分は libgimp と呼ばれる文書化されたライブラリー層であり、他のプログ
+ラムは libgimp を使うことがある。実際、Windows 版だが GIMP2 のインストールフォル
+ダーを調べると、実行ファイルのあるフォルダーにファイル `libgimp-2.0-0.dll` が存
+在する。さらに多数の DLL ファイルが配置されていて、これらにプラグインファイルが
+紛れているのだろう。
+
+> A registry of GIMP plugins is available on the World Wide Web.
+
+プラグインを任意に選択してアプリケーションとしての GIMP に組み込むという設計。
+
+> Though most GIMP plugins are small, simple C programs, it is also possible to
+> write a plugin that exposes the library API to a scripting language;
+
+GIMP プラグインも公開インターフェイスを開陳して、他のプログラムが使えるようにす
+ることが可能と読める。
 
 ## Unix and Object-Oriented Languages
 
+私は Unix とオブジェクト指向プログラミングのどちらにも助けられたと感じている者な
+ので、次の見解は意外：
+
+> There is some tension and conflict between the Unix tradition of modularity
+> and the usage patterns that have developed around OO languages. Unix
+> programmers have always tended to be a bit more skeptical about OO than their
+> counterparts elsewhere.
+
+> Even when Unix programmers use other languages, they tend to want to carry
+> over the thin-glue/shallow-layering style that Unix models have taught them.
+
+オブジェクト指向言語は抽象化を容易にすることは、コードで単純な仕事を複雑な方法で
+やってしまうような場合に逆効果になり得る。
+
+いくら層の一枚一枚は薄くても、重ね過ぎると透明性を損なう：
+
+> It becomes too difficult to see down through them and mentally model what the
+> code is actually doing. The Rules of Simplicity, Clarity, and Transparency get
+> violated wholesale, and the result is code full of obscure bugs and continuing
+> maintenance problems.
+
+<!-- exacerbate: to make something that is already bad even worse -->
+
+> Another side effect of OO abstraction is that opportunities for optimization
+> tend to disappear.
+
+確かに。可換則などの代数的な性質が成り立つかどうかが示されないとも述べている。
+
+> Unix programmers tend to share an instinctive sense of these problems. ...
+
+* Unix 界では正統派オブジェクト指向プログラミングに対する批判が、よそでは許され
+  ていないほど声高に叫ばれている。
+* Unix プログラマーはオブジェクト指向プログラミングを使わない状況を知っている。
+
+オブジェクト指向プログラミングは GUI では上手くいく。クラスと概念の対応関係が間
+違いにくいからではないかとある。
+
+まとめ：
+
+> One of the central challenges of design in the Unix style is how to combine
+> the virtue of detachment (simplifying and generalizing problems from their
+> original context) with the virtue of thin glue and shallow, flat, transparent
+> hierarchies of code and design.
+
 ## Coding for Modularity
+
+モジュール性を向上させるのに役立つかもしれないチェックリスト。
+
+* 大域変数の個数
+* モジュール個別の規模が [Hatton の急所][Hatton] の急所に収まる
+* 関数の呼び出し側との契約を（形式的にでなくてよいので）一行で記述できる
+* 内部 API がある
+* API, クラス、データ構造などの入口の数が七で収まる
+* モジュールあたりの入口の数はどう分布しているか
+
+一行コメントの思想は Python の docstring が受け継いでいる。
+
+ここでの内部 API とは、関数呼び出しやデータ構造の集合体であって、それを単位とし
+て他の人に陳述可能であるものを指す。優れた API はその背後にある実装を見ずとも、
+筋が通っていて無理がないものだという：
+
+> Try to describe it to another programmer over the phone. If you fail, it is
+> very probably too complex, and poorly designed.
+
+[Hatton]: <http://www.catb.org/esr/writings/taoup/html/graphics/hatton.png>
