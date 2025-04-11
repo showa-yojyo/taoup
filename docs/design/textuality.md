@@ -155,8 +155,8 @@ MS Excel などの CSV の扱いがまずい理由を引用する。データ欄
 > by RFC 2822). MIME (Multipurpose Internet Media Extension) provides a way to
 > embed typed binary data within RFC-822-format messages.
 
-後続のパラグラフで RFC 822 書式の仕様を簡潔に述べている。TODO: 実例を拾ってきて
-ここに貼り付ける：
+後続のパラグラフで RFC 822 書式の仕様を簡潔に述べている。実例は後で述べるように
+容易に入手可能。
 
 この metaformat が適しているデータ構造：
 
@@ -407,13 +407,21 @@ IMAP は POP3 を置き換えるために設計された。インターネット
 > This is a viable option because, at the transaction layer, HTTP is very simple
 > and general.
 
-HTTP を簡単に説明している文があり有益。TODO: ここに要約する。
+HTTP を簡単に説明している文があり有益。
+
+* 要求は RFC-822/MIME 風書式のメッセージ
+* ヘッダーは識別と認証情報を一般に含む
+* 最初の行は URI で指定された資料に対するメソッド (GET, PUT, POST, etc.) 呼び出し
+* 応答は RFC-822/MIME 書式のメッセージ
 
 > Besides avoiding a lot of lower-level details, this method means the
 > application protocol will tunnel through the standard HTTP service port and
 > not need a TCP/IP service port of its own. This can be a distinct advantage;
 > most firewalls leave port 80 open, but trying to punch another hole through
 > can be fraught with both technical and political difficulties.
+
+MDN にあるこの資料は HTTP を大づかみに理解するのにいい：
+[An overview of HTTP - HTTP](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Overview)
 
 ### Case Study: The `CDDB/freedb.org` Database
 
@@ -437,15 +445,31 @@ HTTP を簡単に説明している文があり有益。TODO: ここに要約す
 
 IPP はネットワークからアクセス可能な印刷機を制御するための標準だ。
 
+* IPP はトランスポート層として HTTP 1.1 を使用する
+* 要求はすべて POST メソッド 呼出しによって渡される
+* 応答は通常の HTTP 応答
+
 > Most network-aware printers already embed a web server, because that's the
 > natural way to make the status of the printer remotely queryable by human
 > beings.
 
-TBD
+Printer Working Group の文書 [How to Use the Internet Printing Protocol
+](https://www.pwg.org/ipp/ippguide.html) にある Overview にザッと目を通し、本書
+のこれまでの説明と組み合わせればこの通信規約の例がおぼろげにわかるか。
 
 ### BEEP: Blocks Extensible Exchange Protocol
 
-TBD
+> BEEP (formerly BXXP) is a generic protocol machine that competes with HTTP for
+> the role of universal underlayer for application protocols.
+
+聞いたことがない。リンク切れは <https://beepcore.org/> に変えておけばいいか？
+
+> BEEP also avoids the HTTP problem that all requests have to be
+> client-initiated; it would be better in situations in which a server needs to
+> send asynchronous status messages back to the client.
+
+今なら Python や JavaScript で非同期プログラミングを知っているから言わんとするこ
+とを理解するが、C/C++ しか知らないときに読んだら想像がつかなかっただろう。
 
 > BEEP is still new technology in mid-2003, and has only a few demonstration
 > projects.
@@ -458,5 +482,9 @@ TBD
 > XML-RPC and SOAP, considered as remote procedure call methods, have some
 > associated risks that we discuss at the end of [Chapter 7](./multiprogram.md).
 
+これらは後回しでいいか。第七章でもわからなかったらここに戻る。
+
 > Jabber is a peer-to-peer protocol designed to support instant messaging and
 > presence.
+
+リンク先 (Jabber Software Foundation) は Chrome からの警告により閲覧不能。
