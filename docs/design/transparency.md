@@ -111,6 +111,10 @@ Unix プログラマーの言う elegant とは、数学者のそれと本質的
 > code generation — but you can also monitor the results of many intermediate
 > steps in parsing and code generation.
 
+回帰テストは、ソフトウェアが変更される際に発生するバグを検出するためのテストだ。
+ある固定されたテスト入力に対して、変更されたソフトウェアの出力を、既知の正しい出
+力のスナップショットに対して継続的に検査するものだ。
+
 中間形態がテキスト形式であるため、回帰テスト出力の差分を取れば発見、分析が容易だ。
 
 > The design pattern to extract from this example is that the driver program has
@@ -182,26 +186,187 @@ Git のインデックスと同じ狙いだろう。
 この編成のもうひとつの利点は、Unix のファイルシステム権限機構を使うことができる
 ことだ。
 
-対照的な例として、Windows のレジストリーファイルを挙げている。
+対照的な例として Windows のレジストリーファイルを挙げている。
 
-TBD
+* Windows 本体とアプリケーションの両方が使用する
+* 各レジストリーは単一の巨大なファイルに格納されている
+* レジストリーを編集するには専用ツールが必要
+* レジストリー項目を追加すればするほど平均アクセス時間が増加する
+* レジストリーを編集するための標準 API がシステムから与えられていない
+
+過去に邦訳版を読んだときにこの記述があったことははっきりと記憶している。
 
 ### Case Study: Freeciv Data Files
 
+[Freeciv] はビデオゲームだそうだが、全然聞いたことがないので紹介文を丸々引用して
+おく：
+
+> Freeciv is an open-source strategy game inspired by Sid Meier's classic
+> Civilization II. In it, each player begins with a wandering band of neolithic
+> nomads and builds a civilization. Player civilizations may explore and
+> colonize the world, fight wars, engage in trade, and research technological
+> advances. Some players may actually be artificial intelligences; solitaire
+> play against these can be challenging. One wins either by conquering the world
+> or by being the first player to reach a technology level sufficient to get a
+> starship to Alpha Centauri.
+
+このゲームプログラムはデータファイルの取り扱いが優れているという。
+
+* テキスト形式で記述する
+* 文字列をゲームサーバー内の重要データの内部リストに組み立てる
+* `include` ディレクティブがあり、設定ファイルの分割が可能（個別編集可能性）
+
+ゲームエンジンのコードに触れることなく、データファイルの中で新しい宣言を作成する
+だけで、国家や単位型を定義することができる。
+
+ゲーム側が未知のプロパティー名を無視するという性質がある。これは一長一短がある：
+
+* 起動中のデータファイル解析を中断することなく、プロパティーを宣言することができ
+  る。これはゲームデータとゲームエンジンの開発をきれいに分離できることを意味する。
+* 同時に、プロパティー名の誤字を検出できないことも意味する。
+
+Freeciv データファイルの集合体を考えると、機能的には Windows のレジストリーに似
+ている。しかし、どのプログラムもこれらのファイルに書き込みをしないため、Windows
+レジストリーで指摘した不快な問題が突然持ち上がることはない。
+
 ## Designing for Transparency and Discoverability
+
+透明性と発見容易性を設計するためには、コードを単純に保つためのあらゆる戦術を適用
+する必要がある。この設計は機能するだろうかと考えた後に、次も自問する：
+
+* 他の人が読めるか
+* こなれているか
 
 ### The Zen of Transparency
 
+> If you want transparent code, the most effective route is simply not to layer
+> too much abstraction over what you are manipulating with the code.
+
+プログラミング理論本は行き過ぎた抽象化を戒めることが多い。行き過ぎていない抽象化
+が望ましい。
+
+> Too many OO designs are spaghetti-like tangles of is-a and has-a
+> relationships, or feature thick layers of glue in which many of the objects
+> seem to exist simply to hold places in a steep-sided pyramid of abstractions.
+> Such designs are the opposite of transparent; they are (notoriously) opaque
+> and difficult to debug.
+
+Unix プログラマーのやり方はこうだ。低く構える：
+
+> Keeping glue layers thin is part of it; more generally, our tradition teaches
+> us to build lower, hugging the ground with algorithms and structures that are
+> designed to be simple and transparent.
+
 ### Coding for Transparency and Discoverability
+
+> Transparency and discoverability, like modularity, are primarily properties of
+> designs, not code.
+
+* コールスタックが深くなり過ぎないか。
+* コードに強力で目に見える不変性があるか。
+* API の関数呼び出しは個別に直交しているか（一つの関数が多過ぎる引数によってさま
+  ざまな挙動を呈してはいないか）。
+* システムの高水準状態を把握するために、目立つデータ構造がひとつまみあるのか、単
+  一の大域的特典掲示板があるのか。
+* プログラム内のデータ構造やクラスと、それらが表現する実世界の実体との間に、きれ
+  いな一対一の写像があるか。
+* ある機能を担当しているコードを見つけるのが簡単か。
+* マジックナンバー（説明のつかない定数）があるか。
+
+> It's best for code to be simple.
+
+[第四章](./modularity.md)のチェックリストと比較するといい。
 
 ### Transparency and Avoiding Overprotectiveness
 
+隠すこととアクセスできないようにすることには重要な違いがある。
+
+何をしているのか明らかにできないプログラムは、トラブルシューティングをはるかに困
+難にする。
+
+> Thus, experienced Unix users actually take the presence of debugging and
+> instrumentation switches as a good sign, （中略） presence suggests one with
+> enough wisdom to follow the Rule of Transparency.
+
+GUI アプリケーションでは過剰防衛傾向がさらに強い。Unix 開発者が GUI に対して冷淡
+である理由の一つは、設計者が予測した狭い範囲以外で GUI を介して操作しなければな
+らない人にとってイラつくほど不透明になる点だ。
+
+何をやっているのか不透明なプログラムは多くの仮定が組み込まれている傾向がある。
+
+> Unix tradition pushes for programs that are flexible for a broader range of
+> uses and troubleshooting situations, including the ability to present as much
+> state and activity information to the user as the user indicates he is willing
+> to handle. This is good for troubleshooting; it is also good for growing
+> smarter, more self-reliant users.
+
+<!-- reliant:  needing a particular thing or person in order to continue, to work correctly, or to succeed -->
+
+Unix は使用者も成長する。
+
 ### Transparency and Editable Representations
 
+透明性が難しい領域からそれが簡単な領域に問題を反転させるプログラムの価値。
+
+> All three applications turn manipulation of their binary file formats into a
+> problem to which human beings can more readily apply intuition and competences
+> gained from everyday experience.
+
+可逆的かつ無劣化に変換するという特性はきわめて重要であり、実装する価値がある。
+
+> All the advantages of textual data-file formats that we discussed in Chapter 5
+> also apply to the textual formats that sng(1), infocmp(1) and their kin
+> generate.
+
+ある種の複雑なバイナリーオブジェクトの編集を伴う設計上の問題に直面した場合、最初
+に、編集可能なテキスト形式への逆写像を行うことができるツールを書くことが可能かど
+うかを考えるのが良い。
+
+> If the binary object is dynamically generated or very large, then it may not
+> be practical or possible to capture all the state with a textualizer. In that
+> case, the equivalent task is to write a browser.
+
+これは難しいように聞こえるが、例えば psql(1) のようなものもブラウザーとみなせる。
+
+テキスト化ツールやブラウザーを製作することが価値がある理由は：
+
+* 学習経験を積む
+* 検査やデバッグのために構造体の中身をダンプする能力を得る
+* 試験負荷や異常な事例を簡単に生成できる
+* 再使用可能コードを得る
+
 ### Transparency, Fault Diagnosis, and Fault Recovery
+
+透明性は耐バグ性でもある：
+
+> Yet another benefit of transparency, related to ease of debugging, is that
+> transparent systems are easier to perform recovery actions on after a bug
+> bites — and, often, more resistant to damage from bugs in the first place.
+
+* Windows のレジストリーはバグのあるアプリケーションコードによって破損されやす
+  い。これにより、システム全体が使用不能になる可能性がある。そうでなくても、レジ
+  ストリーの破損がレジストリー編集ツールを混乱させると、復旧が困難になることがあ
+  る。
+* 対照的に、terminfo データベースは一枚岩のファイルではないので、項目一つ間違え
+  たからといってデータセット全体が使用不能になるけではない。一枚岩であっても、
+  termcap のような完全にテキスト化されている形式は、通常、単一障害点から回復可能
+  な手段で解析される。
+* SNG ファイルの構文エラーは破損した PNG 画像の読み込みを拒否するような特殊なエ
+  ディターを必要とせず、手作業で修正することが可能。
+
+テキスト化ツールやブラウザーなどの発見可能性ツールは故障診断をも容易にする。理由
+は：
+
+* テキスト化されたデータは人間がシステムの状態を検査しやすくする。
+* 単一障害によって修復不可能なほど破壊されにくくする効果がある。
+
+> Over and over again, the Rule of Robustness is clear. Simplicity plus
+> transparency lowers costs, reduces everybody's stress, and frees people to
+> concentrate on new problems rather than cleaning up after old mistakes.
 
 ## Designing for Maintainability
 
 [Audacity]: <https://www.audacityteam.org/>
 [Fetchmail]: <https://www.fetchmail.info/>
+[Freeciv]: <https://freeciv.org/>
 [KMail]: <https://apps.kde.org/kmail2/>
