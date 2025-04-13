@@ -366,6 +366,44 @@ Unix は使用者も成長する。
 
 ## Designing for Maintainability
 
+保守性が要求するのはコードが動作するというだけでなく、Rule of Clarity に従い、コ
+ンピュータにも人間にも良く通じるということもだ。
+
+> Unix programmers have a lot of implicit knowledge available to them about what
+> makes for maintainable code, because Unix hosts source code that goes back
+> decades.
+
+Unix プログラマーはスクラップ＆リビルドする傾向があるので、十年単位の進化の圧力
+に耐えてきたソースは保守性があるために生き残ったと言える。
+
+> “Is this code live, dormant, or dead?”
+
+<!-- dormant: not active or growing now, but having the ability to become active in the future -->
+
+* 生きているコード：活発な開発者共同体がある
+* 休眠コード：維持することの苦痛がその創始者にとっての有用性を上回ったか
+* 死んだコード：同じようなものをゼロから再実装する方が簡単
+
+重要な実践を二つ挙げている：
+
+* «Rule of Clarity: choosing simple algorithms»
+* 案内文書を含める
+
+複雑なアルゴリズムの代償は、最初に実装したときにバグが発生しやすいということだけ
+でなく、保守担当者が理解するのが難しい。
+
+ソースコードの配布において、コード中の主要なデータ構造やアルゴリズムを非公式に記
+述した文書を含めておく。
+
+> In fact, Unix programmers have often been better about producing hacker's
+> guides than they are about writing end-user documentation.
+
+オープンソースプロジェクトのためのハッカーズガイドは、将来の保守人への助言である
+だけでなく、気軽な貢献者が機能を追加したり修正したりしやすいように設計されてい
+る。
+
+> The Linux kernel sources include literally dozens of these.
+
 [Audacity]: <https://www.audacityteam.org/>
 [Fetchmail]: <https://www.fetchmail.info/>
 [Freeciv]: <https://freeciv.org/>
