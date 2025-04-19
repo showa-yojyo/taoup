@@ -256,19 +256,278 @@ XSLT の特徴：
 
 ### Case Study: The Documenter's Workbench Tools
 
-べらぼうに長い。
+まず Documenter's Workbench Tools を知らないとついていけない：
+
+> `troff` is the center of a suite of formatting tools (collectively called
+> Documenter's Workbench or DWB), all of which are domain-specific minilanguages
+> of various kinds.
+
+ほとんどは `troff` マークアップのための前処理器か後処理器だ。Free Software
+Foundation 版のものは groff(1) といい、機能が拡張されている。
+
+* 本格的なインタプリターになりかけている命令型小規模言語の良い例だ。
+* 条件法と再帰はあるがループはない。Turing 完全であるのは偶然だ。
+
+後処理器は通常、`troff` 使用者には見えない。
+
+> The original `troff` emitted codes for the particular typesetter the Unix
+> development group had available in 1970; later in the 1970s these were cleaned
+> up into a device-independent minilanguage for placing text and simple graphics
+> on a page.
+
+後処理器はこの言語を現代の画像プリンターが実際に受け入れることができるものに変換
+する。
+
+前処理は `troff` 言語に機能を実際に追加する。一般的なものは：
+
+* tbl(1): 表を作成する
+* eqn(1): 数式を組版する
+* pic(1): 図式を作図する
+
+その他、grn(1), refer(1), bib(1) などがある。これらすべてのオープンソース等価版
+は `groff` に同梱されている。
+
+> The grap(1) preprocessor provided a rather versatile plotting facility; there
+> is an open-source implementation separate from `groff`.
+
+その他の前処理器の中には、オープンソースでの実装がなく、もはや一般的に使わ
+れていないものもある。例えば ideal(1) や chem(1) だ。
+
+これらの前処理器それぞれは小規模言語を受け取り、それを `troff` 要求にコンパイル
+する。具体的には：
+
+> it is supposed to interpret by looking for a unique start and end request, and
+> passes through unaltered any markup outside those (`tbl` looks for
+> `.TS`/`.TE`, `pic` looks for `.PS`/`.PE`, etc.).
+
+たいていの前処理器は互いに干渉することなく、任意の順序で実行可能だ。モノによって
+は、例えば `chem` と `grap` はどちらも `pic` コマンドを発行するので、パイプライ
+ンでは `pic` の前に来なければならない。
+
+化学式、数式、表、書誌、プロット、図式を含む仮想的な論文を対象とした、
+Documenter's Workbench 処理パイプラインの例を本書から引用する：
+
+```console
+cat thesis.ms | chem | tbl | refer | grap | pic | eqn | groff -Tps > thesis.ps
+```
+
+この種のビルドレシピは一度構成すれば、繰り返し使用するために Makefile やシェルス
+クリプトラッパーに収めておけばいい。
+
+これらの前処理器が扱う問題の範囲は、小規模言語モデルの能力をある程度示している。
+WYSIWYG ワープロに同等の知識を埋め込むのは至難の業だ。
+
+> The pipeline architecture supports plugging in new, experimental preprocessors
+> and postprocessors without disturbing old ones. It is modular and extensible.
+
+Documenter's Workbench はパイプ、絞り込み、小規模言語の能力の初期の見本であり、
+その見本は後の Unix の設計の多くに影響を与えた。個々の前処理器の設計は効果的な小
+規模言語の設計がどのようなものかについて、より多くの教訓を含む。
+
+> Sometimes users writing descriptions in the minilanguages do unclean things
+> with low-level troff markup inserted by hand.
+
+マークアップを手動でいじるのは不潔だ。
+
+前処理器言語は比較的きれいな、シェルのような構文を持っており、データファイル
+フォーマットの設計について [Chapter 5](./textuality.md) で説明した慣習の多くに
+従っている。
+
+Documenter's Workbench の少なくとも三つの小規模言語に共通する題の一つは意味を宣
+言的に取り扱うことだ。この考え方は GUI ツールキットにも見られる。
+
+この辺で pic(1) プログラムに図式配置を与えるコードを考察しているが、割愛。
+
+<!-- Example 8.4. Taxonomy of languages — the pic source. -->
+
+pic(1) の例は小規模言語に共通の設計主題を反映していて、それは Glade にも反映され
+ている。つまり、制約に基づく推論をカプセル化し、それを動作に変換するために小規模
+言語を用いる。
+
+> The `pic2graph` script we used as a case study in [Chapter 7] was an ad-hoc
+> way to accomplish this, using the retrofitted PostScript capability of
+> groff(1) as a half-way step to a modern bitmap format.
+
+GNU plotutils パッケージには pic2plot(1) という、より清浄な解決策がある。
+
+> The code was split into a parsing front end and a back end that generated
+> troff markup, the two communicating through a layer of drawing primitives.
+
+モジュール性があるので、pic2plot(1) は GNU `pic` の解析段階を切り離し、最新の描
+画ライブラリーを用いて描画を再実装した。
 
 ### Case Study: `fetchmail` Run-Control Syntax
 
+Example 8.5. としてファイル `fetchmailrc` の例が示される。この実行制御ファイルは
+命令型小規模言語と見なすことができる。
+
+<!-- Example 8.5. Synthetic example of a `fetchmailrc`. -->
+
+* 条件分岐も再帰もループもない。明示的な制御構造はまったくない。
+* 単なる関係ではなく動作を記述するので、Glade GUI 記述のような純粋に宣言的な構文
+  とは区別される。
+
+複雑なプログラムのための実行制御小規模言語は、この宣言言語と非常に弱い命令型言語
+のどっちつかずにしばしばなる。
+
 ### Case Study: `awk`
+
+前半の `awk` に関する概要はザッと目を通す程度でいい。
+
+当研究事例は `awk` が模倣の手本にはならないことを指摘する。
+
+* 1990 年以降はほとんど使われなくなった。
+* 新しいスクリプト言語、特に Perl に取って代わられた。
+
+もともと `awk` は報告書生成のための小さくて表現力豊かな特殊目的言語として設計さ
+れた。残念なことに、`awk` は複雑さ対能力曲線の悪い点に設計されていることが判明し
+た。
+
+> Awk has also fallen out of use because more modern shells have floating point
+> arithmetic, associative arrays, RE pattern matching, and substring
+> capabilities, so that equivalents of small awk scripts can be done without the
+> overhead of process creation. -- David Korn
+
+* 1987 年に Perl が登場してから数年間は `awk` の方が小さくて高速な実装だったとい
+  う理由だけで競争力を維持していた。しかし、計算サイクルとメモリーの経費が下がる
+  につれて、そういう倹約指向は力を失っていった。
+* 2000 年になる頃には `awk` は古参の Unix ハッカーのほとんどにとって単なる思い出
+  に過ぎなくなっていた。
+
+* 機械資源は時間とともに安くなるが、プログラマーの頭の中の空間は高くなる一方だ。
+* 最近の小規模言語は一般的だが非コンパクトなものと、専門的だが非常にコンパクトな
+  ものに両極化している。
+
+  > specialized but noncompact simply won't compete
 
 ### Case Study: PostScript
 
+> PostScript is a minilanguage specialized for describing typeset text and
+> graphics to imaging devices.
+
+* Xerox Palo Alto Research Center で行われた設計作業を基に Unix に輸入された。
+* 1984 年に初めて商用リリースされた後、何年もの間、Adobe 社の独占製品としてのみ
+  利用可能。
+* 1988年 にオープンソースに近い許諾条件でクローンされ、以来 Unix でのプリンター
+  制御の事実上標準となっている。
+
+PostScript は機能的には `troff` マークアップに似ている。どちらもプリンターやその
+他の画像デバイスを制御するためのもので、通常はプログラムやマクロパッケージが生成
+する。
+
+PostScript は言語として一から設計されており、はるかに表現力が豊かで強力である。
+
+PostScript で書かれた画像のアルゴリズム記述は描画するビットマップよりもはるかに
+小さいため、記憶域や通信帯域幅を食わない。
+
+PostScript は明示的に Turing 完全であり、条件分岐、ループ、再帰、名前付き手続き
+を支援している。整数、実数、文字列、配列があるが、構造体に相当するものはない。
+
+全部で 400 ほどある操作のうち、基本的なものは 40 ほどある。例えば：
+
+* ページ上に文字列を描く
+* 現在のフォントを設定する
+* グレーレベルや色を変更する
+* 線分、円弧、Bezier 曲線を描く
+* 閉領域を塗りつぶす
+* くり抜き領域を設定する
+
+その他の PostScript 操作は算術演算、制御構造、手続きを実装する。これらにより反復
+画像や定型画像を、画像を組み合わせるプログラムとして表現する。
+
+PostScript の有用性の一端は SVG 性にある。ビットマップよりもはるかにかさばらず、
+デバイスの解像度に依存せず、ネットワークケーブルやシリアル回線でより速く移動でき
+る。
+
+> PostScript is often implemented as firmware built into a printer.
+
+Firmware とはハードウェア（この場合は印刷機）が機能し、機器上で動作する他のソフ
+トウェアと通信できるようにする基本的な機会命令を与えるソフトウェアのことをいう。
+
+オープンソースの実装である Ghostscript は PostScript をさまざまなグラフィック形
+式や（ちょっとした）プリンター制御言語に変換することが可能だ。他のほとんどのソフ
+トウェアは PostScript を最終的な出力形式として扱い、PostScript 対応の画像処理デ
+バイスに渡すことを意図しているが、編集したり、目で見たりすることはできない。
+
+PostScript はたいへんよく設計された特殊用途制御言語の例であり、模範として注意深
+く研究する価値がある。
+
 ### Case Study: `bc` and `dc`
+
+これらは命令型の例だ。
+
+> `dc` is the oldest language on Unix; it was written on the PDP-7 and ported to
+> the PDP-11 before Unix itself was ported. -- Ken Thompson
+
+この二つの言語の領域は無制限精度の算術演算だ。他のプログラムからは、そのような計
+算に必要な特殊技法を気にすることなく、これらの言語を使ってそのような計算を行うこ
+とができる。
+
+SNG や Glade マークアップ同様、これらの言語の強みの一つはその単純さだ。dc/bc そ
+れぞれの記法さえ知ってしまえば、これらの言語の対話的操作について目新しいことはほ
+とんどない。驚き最小の法則だ。
+
+* 条件分岐とループの両方を持ち、Turing 完全である
+* 型は非常に制限されており、無制限精度の整数と文字列しかない。
+
+dc/bc はインタプリター型小規模言語と完全なスクリプト言語の境界線上にある。
+
+ユーザー定義手続きのライブラリーを支援する能力はプログラミング可能性という付加的
+な利便性を与える。これは命令形言語の最も重要な利点だ。
+
+dc/bc のインターフェイスは単純なので、他のプログラムやスクリプトはこれらのプログ
+ラムを主プロセスとして呼び出すことで、これらのすべての機能に簡単にアクセスできる。
 
 ### Case Study: Emacs Lisp
 
+個人的には xyzzy 使用者だったので、この節の主張を誤解することはないと信じたい。
+
+特殊用途のインタープリタ型言語は、単に特定の課題を達成するための主プロセスとして
+実行されるのではなく、構造全体の核となることができる。
+
+Emacs は Lisp の方言で構築されており、編集バッファーに対する動作を記述することと、
+従プロセスを制御することの両方の素を備えている。
+
+Emacs が編集操作や他のプログラムのフロントエンドを記述するための強力な言語を中心
+に構築されているという事実は、通常の編集以外にも多くのことに使用できるということ
+を意味する。
+
+Emacs の「モード」はユーザー定義のライブラリーであり、Emacs Lisp で書かれたプロ
+グラムであり、エディターを特定の仕事に特化させるものだ。
+
+Emacs のモードで実装されるさまざまな機能の例：
+
+* メール送受信（システムメールサービスを従プロセスとして使う）
+* Usenet ニュース送受信
+* Web 閲覧
+* チャットプログラムのフロントエンド
+* カレンダー
+* Emacs 独自の電卓プログラム、
+* Emacs Lisp モードとして書かれたゲーム
+
 ### Case Study: JavaScript
+
+この節で研究するのはクライアント側 JavaScript だ。以下、単に JavaScript と記す。
+
+> JavaScript is an open-source language designed to be embedded in C programs.
+
+これは知らなんだ。
+
+* JavaScript コードを含む Web ページを通じた使用者への攻撃を防ぐため、その機能は
+  厳しく制限されている。
+* ディスクファイルの内容を直接変更することは不可能。
+* ネットワーク接続を独自に開始するとは不可能。
+
+上の制約があるので JavaScript は汎用言語とは言い難い。
+
+JavaScript は現在、ブラウザーの DOM と呼ばれる単一の特別なオブジェクトの値を読み
+書きすることで、その環境と相互作用する。
+
+JavaScript は次の理由から興味深い研究になる：
+
+* 実際にその場にいなくても入手できる汎用言語に限りなく近い。
+* 単一の DOM オブジェクトを介した JavaScript とそのブラウザー環境の間の結びつき
+  はよく設計されており、他の埋め込み状況の手本として役立つ可能性がある。
 
 ## Designing Minilanguages
 
@@ -282,5 +541,6 @@ XSLT の特徴：
 
 ### Language or Application Protocol?
 
+[Chapter 7]: <./multiprogram.md>
 [Figure 8.1]: <http://www.catb.org/esr/writings/taoup/html/graphics/taxonomy.png>
 [85]: <https://nwalsh.com/docs/tutorials/xsl/xsl/slides.html>
