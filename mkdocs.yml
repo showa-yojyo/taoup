@@ -85,6 +85,7 @@ use_directory_urls: false
 
 markdown_extensions:
   - admonition
+  - def_list
   - sane_lists
   - toc:
       permalink: true
