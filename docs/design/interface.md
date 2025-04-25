@@ -295,9 +295,109 @@ GUI は単純にスクリプト化できない。GUI とのやりとりはすべ
 
 ### Case Study: Two Ways to Write a Calculator Program
 
+GUI と CLI が単純な対話型プログラムである卓上計算機の設計にどのように有用に適用
+できるかを対比する。例は dc(1)/bc(1) vs xcalc(1) だ。
+
+dc(1)/bc(1) については [Chapter 7] と [Chapter 8] で触れられた。これらのプログラ
+ムはどちらも CLI だ。標準入力に式を入力し Enter を押すと式の値が標準出力に示され
+る。
+
+一方、xcalc(1) はクリック可能なボタンと電卓風の機器であり、単純な電卓を視覚的に
+真似ている。
+
+<!-- Figure 11.1. The xcalc GUI. -->
+
+xcalc(1) の手法は初心者が慣れ親しんでいるインターフェイスを模倣しているため説明
+するのが簡単だ。このプログラムの機能はすべて目に見えるボタンのラベルによって伝わ
+る。これは驚き最小の法則の最も強い形であり、プログラムを使用するためにマニュアル
+ページを読む必要のない、使用頻度の少ない初心者にとって真の利点だ。
+
+しかし、電卓のほぼ完全な非透明性 (non-transparency) も継承している。複雑な式を評
+価するとき、自分のキーストロークを見て正気確認をすることができない。例えば、
+
+```raw
+(2.51 + 4.6) * 0.3
+```
+
+のような式で小数点を間違えてしまうと問題になる。
+
+一方、dc(1)/bc(1) では、式を作りながら間違いを編集することができる。インターフェ
+イスは透明性がより高い。インタープリターは電卓の適度な大きさの見てくれに収まるも
+のに限定されないので、より多くの機能（および条件文、変数、反復などの機能）を含む
+ことができ、より表現力が豊かだ。もちろん mnemonic load も負うことになる。
+
+* タイピングが得意な人なら CLI の方が簡潔だと感じるだろうし、苦手な人ならマウス
+  クリックの方が早いと感じるかもしれない。
+* `dc`/`bc` はフィルターとして使えるが、`xcalc` はまったくスクリプト化できない。
+
+初心者にとっての使いやすさと熟練者にとっての実用性のトレードオフ：
+
+* 暗算によるエラーチェックが難しくない状況でカジュアルに使うなら `xcalc` が優る
+* より複雑な計算で、段階が正しいだけでなく、正しいことが見て取れなければなら
+  ない場合や、他のプログラムで生成するのが最も便利な場合は `dc`/`bc` が優る
+
 ## Transparency, Expressiveness, and Configurability
 
+> Unix programmers inherit a strong bias toward making interfaces expressive and
+> configurable.
+
+対象使用者に関する不確実性に対処するやり方が他の伝統的プログラマーと異なる。
+
+Unix プログラマーはインターフェイスを表現的で透明なものにするのが通例であり、こ
+れらの性質を得るために、使いやすさを犠牲にすることを厭わない (willing to
+sacrifice ease)。
+
+Unix プログラマーは «by programmers, for programmers» の精神だ。この姿勢の弊害は：
+
+* (Henry Spencer) 高度に構成可能で表現力豊かなインターフェイスが完成した時点で、
+  仕事は終わったと思い込む傾向があること
+* (Henry Spencer) 構成可能性の裏返しとして、優れた既定値およびすべてをそれに設定
+  する簡単な方法がさし迫った必要だ。
+* (Henry Spencer) 表現力の裏返しとして、プログラムであれ、文書であれ、どこから始
+  めて、どのようにして最も望まれる結果を達成するのかという導きが必要だ。
+
+透明性の法則も影響する。Unix プログラマーが、制御オプションの集合を定義した RFC
+やその他の標準に適合するように書いているとき、彼は自分の仕事はそれらのオプション
+全てに完全で透過的なインターフェイスを与えることだと思いがちだ。
+
+> His job is mechanism; policy belongs to the user.
+
+Macintosh や Windows の開発者が「標準のその機能を支援する必要はない。使用者のほ
+とんどは気にしないだろうし、彼らにとっては複雑であり過ぎる」と言うような場合、
+Unix の開発者はこう言うだろう。「誰もこの機能やオプションを欲しがらないとは限ら
+ない。したがって、我々はそれを支援しなければならない」。
+
+このような態度は Unix プログラマーが他の人と仕事をするときに衝突を引き起こす可能
+性がある。
+
+Unix の態度がどこまで適切かはさまざまである。相手の意見に耳を傾けることを学び、
+反対意見の背景にある前提を理解することが賢明だ。[Chapter 6] の Audacity と KMail
+の研究事例はそれに倣うべき良い例だ。
+
+人が UI を直感的であるというのは、次を満たすそれをいう：
+
+* 発見可能である
+* 使用中は透明である
+* 驚き最小の法則に従う
+
+> Of these three rules, Least Surprise is the least binding; initial surprises
+> can be coped with if discoverability and transparency make longer-term use
+> rewarding.
+<!-- be coped with: to deal successfully with a difficult situation -->
+
+人々は、単純な操作が簡単で、インターフェイスのより難しい角を一歩ずつ吸収できるよ
+うな発見経路がある限り、mnemonic load のかなり高い透明なインターフェイスについ
+て、直感と思われるものを発達させることができる。
+
 ## Unix Interface Design Patterns
+
+> There are no design patterns in graphical user interfaces themselves that are
+> specifically native to Unix.
+
+プログラムには複数のインターフェイスパターンに適合するモードがあることに注意。例
+えば、コンパイラーのようなインタフェイスを持つプログラムは、コマンドラインでファ
+イル引数が指定されていない場合、フィルターとして動作することがある。型変換プログ
+ラムの多くはこのように動作する。
 
 ### The Filter Pattern
 
@@ -309,7 +409,7 @@ GUI は単純にスクリプト化できない。GUI とのやりとりはすべ
 
 ### The Compiler Pattern
 
-### The ed pattern
+### The `ed` pattern
 
 ### The Roguelike Pattern
 
