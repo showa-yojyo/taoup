@@ -401,19 +401,280 @@ Unix の態度がどこまで適切かはさまざまである。相手の意見
 
 ### The Filter Pattern
 
+Unix に最も典型的に関連したインターフェイス設計パターンは、フィルターだ。フィル
+タープログラムは標準入力のデータを受け取り、何らかの変換をし、その結果を標準出力
+に送る。
+
+フィルタの典型的な例は tr(1), grep(1), sort(1) だ。
+
+grep(1) と sort(1) はコマンドラインで指定されたファイルからデータを入力すること
+もできる。この場合、標準入力を読み込まず、あたかもその入力が、名前付きファイルを
+順番に読み込んだ連結物であるかのように振る舞う。このような `cat` 風フィルターの
+原型は cat(1) であり、コマンドラインで指定されたファイルを異なるように扱うアプリ
+ケーション固有の理由がない限り、フィルターはこのように振る舞うことが期待される。
+
+フィルターを設計する際には次を覚えておくとよい ([Chapter 1]):
+
+1. Postel の処方箋を忘れるな。*Be generous in what you accept, rigorous in what you emit.*
+2. 必要のない情報は決して捨てるな。
+3. 雑音を決して加えるな。必要でない情報を加えないようにし、下流のプログラムに
+   とって解析が難しくなるような再整形は避けろ。
+
+> The term “filter” for this pattern is long-established Unix jargon.
+
+「フィルター」はパイプの初日に使われるようになった。データの流れを表す配管の比喩
+がすでに確立されていたため、「回路」が考慮されることはなかった。(Doug McIlroy)
+
 ### The Cantrip Pattern
+
+単語 cantrip の意味については後述。
+
+> No input, no output, just an invocation and a numeric exit status. A cantrip's
+> behavior is controlled only by startup conditions.
+
+初期条件や制御情報のごく単純な設定以外に、プログラムが使用者との実行時の対話を必
+要としない場合にこのパターンを適用する。
+
+例：
+
+* clear(1)
+* rm(1)
+* touch(1)
+* startx(1): X を起動するプログラム。
+
+このデザインパターンはかなり一般的なものではあるが、従来は名前がつけられていな
+かった。著者がこのように命名した。
+
+> the term “cantrip” is my invention. (In origin, it's a Scots-dialect word for
+> a magic spell, which has been picked up by a popular fantasy-role-playing game
+> to tag a spell that can be cast instantly, with minimal or no preparation.)
+
+この人気 RPG とは Dungeons & Dragons を指す。コマンドをゲームの呪文であるかのよ
+うに見立てるのは当たり前のことだ。
 
 ### The Source Pattern
 
+> A *source* is a filter-like program that requires no input; its output is
+> controlled only by startup conditions.
+
+典型的な例：
+
+* ls(1)
+* who(1)
+* ps(1)
+
+Unix では上記のような報告プログラムはソースパターンに強く従う傾向があるので、そ
+れらの出力は標準的なツールで絞り込むことができる。
+
 ### The Sink Pattern
+
+> A *sink* is a filter-like program that consumes standard input but emits
+> nothing to standard output. Again, its actions on the input data are
+> controlled only by startup conditions.
+
+このインターフェイスパターンは珍しく、よく知られた例はほとんどない。
+
+* lpr(1): 標準入力で指定されたテキストやファイルを印刷キューに押し込む。
+* mail(1) のメール送信モード。
+
+シンクパターンのように見えるプログラムの多くは、標準入力からデータだけでなく制御
+情報も受け取っており、実際には `ed` パターン（後述）のようなものだ。
+
+スポンジという用語が、sort(1) のような、入力を処理する前に入力全体を読まなければ
+ならないシンクプログラムに特に適用されることがある。
 
 ### The Compiler Pattern
 
+コンパイラー風プログラムは標準出力も標準入力も使わない。その代わり、コンパイコマ
+ンドラインからファイル名や材料名を受け取り、それらの名前を何らかの方法で変換し、
+変換された名前で出力する。コンパイラー風は起動後に使用者による操作を必要としな
+い。
+
+このパターンはその枠組が cc(1)/gcc(1) であることからそう呼ばれる。画像ファイルの
+変換や圧縮解凍を行うプログラムにも広く使われている。例：
+
+* gif2png(1)
+* gzip(1)
+* gunzip(1)
+
+おそらく ImageMagick の conjure(1) や ffmpeg(1) も該当するだろう。
+
+一般に、コンパイラーパターンは、プログラムが複数の名前付き素材に関して動作する必
+要があることが多く、かつ対話性を低くするように書ける（制御情報を起動時に与える）
+場合に適したモデルだ。
+
+コンパイラー風プログラムは容易にスクリプトにできる。
+
 ### The `ed` pattern
+
+起動時以降も使用者との継続的な対話によって駆動される必要があるプログラムは多い。
+
+* ed(1)
+* ftp(1)
+* sh(1)
+
+> An actual sample ed(1) session will be included in [Chapter 13].
+
+Unix のブラウザーやエディターに似たプログラムの多くは、編集対象の名前付き物資が
+テキストファイル以外のものであってもこのパターンに従う。例：gdb(1).
+
+このパターンのプログラムは容易にスクリプト化できない。このようなプログラムを動か
+すには、通信規約と、呼び出しプロセスに対応する状態機械が必要になる。
+[Chapter 7] の主プロセス制御の議論で指摘された問題が起こる。
+
+それでも、対話的プログラムを完全に支援する最も単純なスクリプト可能なパターンだ。
+ゆえに、後述の「分離エンジンとインターフェース」パターンの構成要素として、今でも
+かなり有用だ。
 
 ### The Roguelike Pattern
 
+> Roguelike programs are designed to be run on a system console, an X terminal
+> emulator, or a video display terminal. They use the full screen and support a
+> visual interface style, but with character-cell display rather than graphics
+> and a mouse.
+
+この節を読むときだけ頭をゲームモードに切り替えるのはありだ。
+
+<!--
+Figure 11.2. Screen shot of the original Rogue game.
+
+                                                a) some food
+                                                b) +1 ring mail [4] being worn
+-----------------------              ########## c) a +1,+2 mace in hand 
+|                     +###############          d) a +1,+0 short bow
+|                     |                         e) 28 +0,+0 arrows
+---------------+-------                         f) a short bow
+               #                                i) a magnesium wand
+               #                                g) a magnesium wand
+             ###               ---------------- j) a potion of detect things
+     --------+----------       |                l) a scroll of teleportation
+     |                 |      #+                --press space to continue--
+     |                 |      #|                 |             #
+     |                 +#######|                 |            ##
+     |                 |       |                 +##############
+     --------+----------       -------------------             #
+        ######                                                 #
+  ------+----------                                            ######
+  |...........@..!|                                                 #
+  |...........%...|                 ----------------                #
+  |...............|                #+              |          #######
+  |...............+#################|              |          #
+  |...............|                 |              +###########
+  -----------------                 ----------------
+Level: 3  Gold: 73     Hp: 36(36)   Str: 14(16) Arm: 4  Exp: 4/78
+-->
+
+コマンド：
+
+* 通常は画面にエコーバックがない単一キーストロークだ。
+* より手の込んだコマンドを入力するコマンドウィンドウを開くものもある。
+* コマンド体系では矢印キーを多用する。
+
+このパターンで書かれたプログラムは vi(1) か emacs(1) のどちらかをモデルにし、ヘ
+ルプの取得やプログラムの終了といった一般的な操作にそれらのコマンドシーケンスを使
+う傾向がある。これは驚き最小の法則による。
+
+このパターンに関連する他のインターフェイス表現には、以下のようなものがある：
+
+* 一行に一項目のメニューが使われる。選択中の項目が太字などの強調表示で描かれる。
+* モード行。強調表示された画面行に表示されるプログラム状態の要約。画面下部または
+  上部にあることが多い。
+
+キーボードの h, j, k, l キーに関する約束事：
+
+> a traditional but now archaic part of the roguelike pattern is the use of the
+> h, j, k, and l as cursor keys whenever they are not being interpreted as
+> self-inserting characters in an edit window; invariably k is up, j is down, h
+> is left, and l is right.
+
+そういえば Google 日本語入力では `zh`, `zj`, `zk`, `zl` をそれぞれ←↓↑→に変換でき
+る。
+
+このパターンに従ったプログラムは無数にある：
+
+* vi(1)
+* emacs(1)
+* elm(1)
+* pine(1)
+* mutt(1), その他の Unixメールリーダーの大半
+* tin(1)
+* slrn(1), その他の Usenet ニュースリーダーの大半
+* lynx(1)
+* その他多数
+
+ローグライクパターンはスクリプトを書くのが難しい。書こうとすることさえめったにな
+い。また、Figure 11.2 を見ればわかるように、出力をプログラムで解釈するのもかなり
+難しい。
+
+このパターンには、マウスで操作する完全 GUI のような視覚的な滑らかさもない。ロー
+グライクプログラムは依然として使用者にコマンドを習得させる必要がある。ローグライ
+クパターンに基づいて作られたインターフェイスは «only hard-core hackers can love»
+だ。このパターンは、スクリプト可能性もなく、初心者向け設計における最近の流行にも
+適合していないという、両方の悪い面を持っているように思われる。
+
+ローグライクプログラムは依然として人気がある。さらに、ローグライクパターンは広く
+浸透しているため、Unix では GUI プログラムでさえもしばしばしのごうとする。このパ
+ターンの人気が衰えない理由とは？
+
+> Efficiency, and perceived efficiency, seem to be important factors. Roguelike
+> programs tend to be fast and lightweight relative to their nearest GUI
+> competitors.
+
+マウスを動かすためにキーボードから手を離さなくて済むので、熟練タイピストはローグ
+ライクプログラムを好むことが多い。
+
+> Given a choice, touch-typists will prefer interfaces that minimize keystrokes
+> far off the home row;
+
+画面の使い方の分析。GUI 障害物で画面内が乱雑になることがない。ゆえに、他のプログ
+ラムと使用者の注意を頻繁に共有しなければならないプログラムでの使用に適している。
+先に挙げられたプログラム群にはその性質がある。
+
+> the roguelike pattern tends to appeal more than GUIs to people who value the
+> concision and expressiveness of a command set enough to tolerate the added
+> mnemonic load.
+
+それならゲームやエディターに向いているのは納得だ。
+
 ### The ‘Separated Engine and Interface’ Pattern
+
+エンジン
+:  応用領域に特化した核心算法と論理
+インターフェイス
+:  使用者からコマンドを受け付け、結果を示し、ヘルプや履歴などの業務
+
+> In fact, this separated-engine-and-interface pattern is probably the one most
+> characteristic interface design pattern of Unix.
+
+Xerox PARC の初期の GUI の研究は、原型として model-view-controller パターンを提
+案するに至った。
+
+* モデルは Unix 界では通常エンジン（上の意味で）と呼ばれるものだ。データベース
+  サーバーはモデルの典型的な例だ。
+* ビューは問題領域物トを目に見える形に表現するものだ。MVC が本当にうまく分離され
+  たアプリケーションでは、ビュー部分はモデルの更新を通知され、コントローラーに
+  よって同期的に駆動されたり、明示的な更新要求によって駆動されたりするのではな
+  く、独自に応答する。
+* コントローラーは使用者の要求を処理し、それをコマンドとしてモデルに渡す。
+
+実際には、V と C の部分は、どちらかが M に結合しているよりも密接に結合している傾
+向がある。アプリケーションが M の V を複数要求する場合にしか、これらは分離されな
+い傾向がある。
+
+Unix では MVC の適用が他の場所よりもはるかに一般だ。それは、まさに強い «do one
+thing well» 伝統があり、プロセス間通信が簡単で柔軟だからだ。
+
+この技法の特に強力な形は、ポリシーインターフェイス（多くの場合、V と C 機能を組
+み合わせた GUI）と、問題領域固有の小規模言語のインタプリター ([Chapter 8]) を含
+むエンジン (M) とを結びつけるものだ。
+
+#### Configurator/Actor Pair
+
+#### Spooler/Daemon Pair
+
+#### Driver/Engine Pair
+
+#### Client/Server Pair
 
 ### The CLI Server Pattern
 
@@ -427,6 +688,8 @@ Unix の態度がどこまで適切かはさまざまである。相手の意見
 
 ## Silence Is Golden
 
+[Chapter 1]: <../context/philosophy.md>
 [Chapter 6]: <./transparency.md>
 [Chapter 7]: <./multiprogram.md>
 [Chapter 8]: <./minilanguages.md>
+[Chapter 13]: <./complexity.md>
