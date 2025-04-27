@@ -670,23 +670,319 @@ thing well» 伝統があり、プロセス間通信が簡単で柔軟だから�
 
 #### Configurator/Actor Pair
 
+インターフェイス部分がフィルターや使用者コマンドを必要としないデーモン風プログラ
+ムの起動環境を制御する。
+
+fetchmail(1) と fetchmailconf(1) の対は当パターンの良い例だ。
+
+このデザインパターンによって、`fetchmail` と `fetchmailconf` のそれぞれが得意と
+することに特化することができ、実際、それぞれの仕事領域に適した異なる言語で書くこ
+とができる。
+
+* 通常デーモンとしてバックグラウンドで実行される `fetchmail` は GUI コードで大き
+  くなる必要はない。
+* `fetchmailconf` は `fetchmail` から規模と複雑さの費用を要求することなく、精巧
+  GUI に特化することができる。
+* `fetchmailconf` と `fetchmailconf` の間の情報経路は狭く、明確に定義されている
+  ため、コマンドラインや `fetchmailconf` 以外のスクリプトから `fetchmail` を動か
+  すことが可能だ。
+
+> The term “configurator/actor” is my invention.
+
 #### Spooler/Daemon Pair
+
+Configurator/Actor Pair の若干の変形は、バッチモードで（個々のジョブが使用者との
+対話を必要としない場合で）共有資源へのシリアライズされたアクセスを必要とする状況
+で有用だ。
+
+当パターンでは、Spooler つまりフロントエンドは単にジョブ要求とデータを Spool 領
+域に放つ。
+
+* ジョブ要求とデータは単なるファイル
+* Spool 領域は通常、単なるディレクトリー
+
+ディレクトリーの場所とジョブ要求の形態は Spooler と Daemon が合意している。
+
+Daemon はバックグラウンドで永遠に実行され、Spool ディレクトリーを能動的かつ反復
+的に行うべき仕事を採取しようとする。ジョブ要求を見つけると、関連するデータを処理
+しようとする。成功するとジョブ要求とデータは Spool 領域から削除される。
+
+例：
+
+* Unix の印刷システム lpr(1)/lpd(1). 前者と後者がそれぞれ Spooler/Daemon だ。
+  Spool 領域には印刷対象ファイルが置かれる。
+* at(1)/atd(1). 指定された時間にコマンドを実行するようスケジュールする。
+* UUCP. 1990 年代初頭にダイヤルアップ回線でのメール転送によく使われていた Unix
+  間コピープログラム。
+
+Spooler/Daemon Pair パターンはメール転送プログラムにおいて依然重要だ。送信失敗時
+にメールが Spool 領域に置かれる。後で送信を再試行する。
+
+Spooler/Daemon Pair は通常次の四部構成だ。実際、最初の三つが存在することは、その
+背後に Daemon が存在することを示す確実な手がかりとなる：
+
+* a job launcher
+* a queue lister
+* a job-cancellation utility
+* a spooling daemon
+
+> The terms “spooler” and “daemon” are well-established Unix jargon. (‘Spooler’
+> actually dates back to early mainframe days.)
 
 #### Driver/Engine Pair
 
+このパターンでは、前二つのものとは異なり、インターフェース部分は起動後にエンジン
+にコマンドを供給し、エンジンからの出力を解釈する。エンジンはドライバーの主プロセ
+スであってもよいし、エンジンとドライバーはソケットや共有メモリー、その他のプロセ
+ス間通信法を使って通信してもよい。重要な点は次の二点だ：
+
+* Driver と Engine の双方向性
+* Engine が独自のインターフェイスで単品で実行可能
+
+Configurator/Actor よりも結合度が高いので書くのが難しい：
+
+> the driver must have knowledge not merely about the engine's expected startup
+> environment but about its command set and response formats as well.
+
+Engine がスクリプト可能性のために設計されている場合、Driver が Engine 作者以外の
+誰かによって書かれたり、ある Engine のフロントエンドに Driver が複数使われたりす
+ることはよくある。例：
+
+* gv(1), ghostview(1)/gs(1)
+* xcdroast(1)/cdrecord(1)
+
+<!-- Figure 11.3. The Xcdroast GUI. -->
+
+xcdroast(1) は他の CLI ツールも呼び出す：
+
+* cdda2wav(1): サウンドファイル変換
+* mkisofs(1): ファイル一覧から ISO-9660 CD-ROM ファイルイメージを作成
+
+(Steve Johnson) Driver/Engine 編成における重要な落とし穴は、Driver が Engine の
+状態を理解しなければ、それを使用者に反映できないことが頻繁にあることだ。動作が実
+質的に瞬時であれば問題ないが、時間がかかる場合にはフィードバックの欠如は重大な問
+題となりうる。
+
+Engine が正しいことをするだけでなく、Driver に何をしているかを通知し、Driver が
+適切な反応を呈する奥ゆかしいインターフェイスを提示できるように設計することも重要
+だ。
+
+> The terms “driver” and “engine” are uncommon but established in the Unix
+> community.
+
 #### Client/Server Pair
+
+Client/Server Pair は Driver/Engine Pair のようなものではあるが、Engine 部分は
+
+* バックグラウンドで実行される
+* 対話的に実行されることは期待されていない
+* 独自の UI を有しない
+* プログラムが起動されるたびに高く付く何かを実行するのを避ける意味がある
+
+典型的な例：
+
+* FTP を実装する ftp(1)/ftpd(1).
+* sendmail(1) の二つのインスタンス。フォアグラウンドでは送信者、バックグラウンド
+  では聴取者。
+* Web ブラウザーと Web サーバー。
+* psql(1)/postmaster(1)
+
+これらの例はペア間のシリアライズされる通信規約が清浄であることが重要であるとい
+う、Client/Server 構成の重要な特性を示している。
+
+Separeted Engine and Interface プログラムはきれいな機能分離からこのような恩恵を
+得られる可能性があるが、Client/Server の場合、共有資源の管理が本質的に難しいた
+め、それを正しく行うことの見返りが特に高くなる傾向がある。
+
+Client と Server を別々の計算機で実行できることの利点がたいへん大きいので、現代
+では Client/Server Pair のほとんどは TCP/IP ソケットを使用している。
 
 ### The CLI Server Pattern
 
+サーバープロセスが inetd(8) のようなハーネスプログラムによって呼び出されるのは
+Unix の世界では普通のことで、ハーネスプログラムはサーバーの標準入力と標準出力が
+指定された TCP/IP サービスポートに接続されていることを確認する。この役割分担の利
+点のひとつは、ハーネスプログラムが起動するサーバー全てに対して、単一の用心棒とし
+て機能することだ。
+
+ハーネスプログラムの定義：
+
+> A harness program is a wrapper whose job it is to make some special sort of
+> resource available to the program(s) it calls. The term is most often used for
+> test harnesses, which make available test loads and (often) examples of
+> correct output for the actual output to be checked against.
+
+古典的なインターフェイスパターンの一つは CLI サーバーだ：
+
+* フォアグラウンドモードで起動されると標準入力から読み込んで標準出力に書き込む、
+  単純な CLI インターフェイスを有するプログラムだ。
+* バックグラウンドで起動されると、サーバーがこれを検出し、標準入力と標準出力を指
+  定された TCP/IP サービスポートに接続する。
+
+サーバーのほとんどのコードは、それがフォアグラウンドで実行されているのか、TCP/IP
+ハーネスで実行されているのかを知ることも気にすることもないというのが要諦だ。
+
+POP, IMAP, SMTP, HTTP サーバーは通常このパターンに従う。前述の Client/Server パ
+ターンのどれかと組み合わせることができる。
+
+> Though this pattern is quite traditional, the term “CLI server” is my
+> invention.
+
 ### Language-Based Interface Patterns
+
+問題領域固有の小規模言語 ([Chapter 8]) の長所は、Unix シェルに代表されるように、
+言語に基づく CLI を Unix インターフェイスの重要な様式にしている。
+
+このパターンの長所は dc(1)/bc(1) と xcalc(1) を比較した事例研究でよく示されてい
+る。
+
+最も強力な Unix デザインパターンの一つは、GUI フロントエンドと CLI 小規模言語
+バックエンドの組み合わせだ。この種のよく設計された例は必然的にかなり複雑になる
+が、小規模言語で実現できることのごく一部を網羅するために必要な間に合わせのコード
+の量に比べれば、はるかに単純で柔軟性が高いことがよくある。
+
+最近のデータベーススイートは通常どこでも一つ以上の GUI フロントエンドと報告作成
+で構成され、そのすべてが SQL のような言語を使用して共通のバックエンドと対話す
+る。このパターンは主に Unix の下で発展してきたものであり、他の場所よりも Unix の
+方がよりよく理解され、より広く適用されている。
+
+Unix 界では Emacs がこのパターンの最もよく知られた例の一つだ。
+
+GIMP の Script-fu 機能も良い例だ。これを使えば Scheme を使って GIMP をスクリプト
+化できる。Tcl, Perl, Python を使ったスクリプトも可能だ。これらの言語で書かれたプ
+ログラムはプラグインインターフェイスを通じて GIMP の内部を呼び出せる。
 
 ## Applying Unix Interface-Design Patterns
 
+スクリプトとパイプライン ([Chapter 7]) を容易にするためには、できるだけ単純なイ
+ンターフェイスパタンを選ぶのが賢明だ。
+
+上述した単一部品パターンの多くは、起動時間後に使用者による操作を必要としないこと
+が強調されている。使用者は人間でなく、別のプログラムであることが多いため、これは
+スクリプト性を最大化する、価値のある機能だ。
+
+* 初心者や非技術的な使用者に適した GUI やデザインパターンと、
+* 熟練者の役に立ち、スクリプト可能性を最大化する GUI やデザインパターン
+
+との間には、強く本質的な緊張関係がある。
+
+「最も単純なパターンを選択する」ことと、GUI を作成する要件が矛盾する場合、Unixの
+方法は、プログラムを二つに分割し、Separeted Engine and Interface デザインパター
+ンを適用することだ。
+
 ### The Polyvalent-Program Pattern
+
+1. プログラムの応用領域論理は、文書化された API を持つライブラリーの中にあり、他
+   のプログラムと連結することができる。他の世界に対するプログラムのインターフェ
+   イス論理は、ライブラリーの上に薄い層がある。あるいは、異なる UI スタイルを持
+   つ層がいくつかあり、そのどれでもライブラリーに連結することができる。
+2. バッチモードで対話的コマンドを実行する Cantrip, Compiler-like, CLI パターンの
+   いずれかである UI モードがある。
+3. GUI であり、中心ライブラリーに直接連結されるか、CLI を駆動する別プロセスとし
+   て動作する UI モードがある。
+4. 最新の汎用スクリプト言語を使ったスクリプティングインターフェイスモードがある。
+5. curses(3) を使ったローグライクなインターフェイスがオマケで存在する。
+
+<!-- Figure 11.4. Caller/callee relationships in a polyvalent program. -->
+
+GIMP は実際にこのパターンを満たしている。
 
 ## The Web Browser as a Universal Front End
 
+多くのアプリケーションでは、自作 GUI フロントエンドを全く書かず、むしろ Web ブラ
+ウザーをその役割に押し付けることが理にかなうようになった。この取り組み方には利点
+が多くある：
+
+* 手続き的な GUI コードを書く必要がない。代わりに、所望の GUI をそれに特化した言
+  語 (HTML, JavaScript) で記述することが可能。
+* アプリケーションを即座にインターネット対応にできる。
+* アプリケーションの細かい表現の詳細（フォントや色など）を、ブラウザーの環境設定
+  や CSS のような仕組みによって、使用者が自分好みに変えられる。
+* Web インターフェイスの一様な要素が使用者の学習作業を大幅に容易にする。
+
+短所もある：
+
+* Web が強制するバッチスタイルの対話が難しい
+* ステートレスプロトコルを使った永続的セッションの管理が難しい
+
+CGI はきめ細かな相互作用性をうまく対応していない。また、テンプレートシステム、ア
+プリケーションサーバー、埋め込みサーバースクリプトも、徐々に CGI に取って代わり
+つつある。この節ではこれらすべてを CGI と呼ぶ。
+
+CGI は基本的にバッチ式の相互作用であり、パンチされたカードを入力ホッパーに落とし
+て印字されたものが戻ってくるのとそれほど変わらない。JavaScript を使って使用者と
+やりとりし、メッセージにまとめてサーバーに送ることでより使いやすくすることができ
+る。
+
+!!! note
+    Java の話題は割愛。
+
+複数の CGI フォーム間でセッション情報を維持するのは厄介だ。サーバーは CGI 更新間
+のクライアントセッションに関する状態を保持しないので、同じ使用者による以前の
+フォーム送信と後のフォーム送信を接続するためにそれに頼ることはできない。これを回
+避する標準的な方法は：
+
+* 連鎖フォーム
+* クッキー
+
+> When you chain forms, you arrange for the CGI for the first form to generate a
+> unique ID in an invisible field of the second form, and for the second and all
+> subsequent forms to pass that ID to their successors.
+
+クッキーは環境変数に類似した、より直接的でない方法で同様の効果を与える。
+
+どちらの場合でも、CGI は ID をセッションインデックスとして使い（あるいはクッキー
+で状態を直接キャッシュし）、セッションの多重化を明示的に処理する必要がある。
+
+> That per-user state can be a problem; it eats resources, and it has to be
+> timed out, because between transactions there is no way to know that the user
+> is still on the other end of the wire.
+
+CGI とクッキーで十分なのに、Java やアプリケーションサーバーに依存した重量級設計
+を行おうとするな。できるだけ単純なパターンを選ぶのが最善だ。
+
+Web Browser as a Universal Front End の取り組み方の問題は、CGI バックエンドがブ
+ラウザー環境から容易に分離できないことだ。
+
+> The Unix answer is a three-tier architecture — Web forms calling CGIs which
+> call commands. The automation interface is the commands.
+
 ## Silence Is Golden
+
+[Chapter 1] では、沈黙の規則を習った：よく設計された Unix プログラムでは面白いこ
+とや驚くようなことは何も言わないので黙っていろ。
+
+標準エラーには本当のエラーしか送らず、要求されていないデータはまったく送らない方
+がよい：
+
+> If your CLI program emits status messages to standard output, then programs
+> that try to interpret that output will be put to the trouble of interpreting
+> or discarding those messages (even if nothing went wrong!).
+
+画面の縦の空間は貴重だ。
+
+迷惑メッセージは人間の帯域幅を無造作に浪費する。
+
+データを失う可能性のある操作を保護する必要がある場合を除いて、GUI を確認ポップ
+アップで散らかすな。
+
+一般的に、使用者がすでに知っていることを伝えるのは悪い流儀だ。インターフェイスの
+設計は全体として驚き最小の法則に従うべきだが、メッセージの内容は驚き最大の法則に
+従え。
+
+このルールは、確認プロンプトに対してさらに大きな効力を持つ。
+
+> Constantly asking for confirmation where the answer is almost always “yes”
+> conditions the user to press “yes” without thinking about it, a habit that can
+> have very unfortunate consequences. Programs should request confirmation only
+> when there is good reason to suspect that the answer might be “no no no!”
+
+確認プロンプトがまったくない場合、インターフェイスに本当に必要なのは undo コマン
+ドだという兆候かもしれない。
+
+デバッグのためにおしゃべりな進捗メッセージが必要な場合は、verbosity スイッチを
+使って既定で無効にしろ。本番用にリリースする前に、できるだけ多くの通常メッセージ
+を、verbosity がオンのときしか表示されるないようにしろ。
 
 [Chapter 1]: <../context/philosophy.md>
 [Chapter 6]: <./transparency.md>
