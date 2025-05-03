@@ -6,7 +6,7 @@
 
 ## Speaking of Complexity
 
-1. ソフトウェアの複雑性とは何かを定義する。
+1. ソフトウェアの複雑度とは何かを定義する。
 2. 複雑さの種類を水平的に区別する。それらは互いにトレードオフしなければならない
    ことがある。
 3. 垂直的な区別として、共存しなければならない複雑さと、排除するオプションがある
@@ -322,7 +322,7 @@ q
 
 行の範囲を指定するための比較的強力な構文があり、数値で指定したり、正規表現のパ
 ターンマッチで指定したり、現在行と最終行の特別な短縮形で指定したりすることができ
-ます。エディター操作の大半はどの範囲にも適用可能だ。直交性の良い例だ。
+る。エディター操作の大半はどの範囲にも適用可能だ。直交性の良い例だ。
 
 ex(1) と呼ばれる、コマンドプロンプトのようないくつかの便利な対話機能を追加したも
 のがある。ある種の異常なクラッシュの回復状況において、時折役に立つ。
@@ -481,6 +481,9 @@ Emacs は非 Unix 系 OS の統合開発環境 (IDE) が占める役割を果た
 
 ### Identifying the Complexity Problems
 
+どのテキストエディターにも、ある程度の必然的複雑性がある。四事例の中では、選択的
+複雑性も偶発的複雑性も、これ以上に大きく異なることを示している。
+
 四事例の中では ed(1) は最も複雑さが少ない。UI はきわめてコンパクトだ。
 
 * コマンドの多くが p や l という接尾辞を付ければ、結果を表示したり一覧したりする
@@ -488,11 +491,250 @@ Emacs は非 Unix 系 OS の統合開発環境 (IDE) が占める役割を果た
 * コマンド数が 30 未満であり、削除可能であるような選択的複雑性はあまりなく、偶発
   的複雑性を特定するのが難しい。
 
+反面、`ed` のインターフェイスはテキストファイルを素早くめくるような基本的な編集
+作業にはあまり適していない。
+
+では「複数ファイルの視覚的な閲覧と編集を支援する」という目的を `ed` に追加したと
+する。そうすると、Sam はこれを実現できる最小限の拡張機能ということになる。Sam 設
+計者は次の点で素晴らしい判断をした：
+
+> The fact that the designers did not change the semantics of the inherited ed
+> commands is notable; they kept an existing, orthogonal set and added a
+> relatively small set of capabilities that are themselves orthogonal.
+
+Sam を検討する。選択的複雑度を大きくしている機能は二つ：
+
+* 無限 undo 機能
+* コマンド言語での正規表現に基づく反復機能
+
+設計水準では Sam の偶発的複雑度を特定するのは難しい。インターフェイスは少なくと
+もセミコンパクトで、ほぼ間違いなく厳密にコンパクトだ。出自を考えれば驚くものでは
+ないことだが、Unix 設計の最高水準に達している。
+
+次に `vi` を検討する。
+
+* 何百ものコマンドがあり、重複が多くある。高々選択的複雑性であり、たぶん偶発的。
+* 製作当時、キャレット移動をキーで行う必要があったので、モーダルインターフェイス
+  は避けられなかった。
+* コマンドの乱雑さの問題は比較的表面的だ。ほとんど無視することが可能。
+
+問題としては即興的罠がもっとも深い：
+
+> Over the years, `vi` has had progressively more and more special-purpose C
+> code bolted onto it to perform tasks that Sam refuses to do and that Emacs
+> would attack with Lisp code modules and subprocess control.
+
+不要なときでも `vi` の全機能がメモリーに乗る。そこには選択的複雑性も偶発的複雑性
+も含まれる。
+
+Emacs と `vi` のコードベース規模の比率が `vi` にとって有利になる見込みはなさそう
+だ：
+
+> While `vi` fans like to talk about filtering buffers with external programs
+> and scripts to do what Emacs's embedded scripting does, the reality is that
+> `vi`'s `!` command cannot filter regions of an edit buffer selected at finer
+> granularity than a range of lines (Sam and Wily, though they have no more
+> subprocess management than `vi` does, can at least filter arbitrary text
+> ranges, not just line ranges). All knowledge of file formats and syntaxes that
+> vary at a finer granularity (and most do) has to be built in to C code if `vi`
+> is going to have it available at all.
+
+Emacs は十分に大きく、もつれた歴史があるので、選択的と偶発的複雑性を切り分けるの
+は難しい。設計に含まれる偶発的なものを必然的なものから切り分けることから始める。
+
+Emacs 設計の中で、もっともどうでもいい部分は Emacs Lisp だろう。
+
+* 現在では内蔵スクリプト言語が備わっていることは必須だが、それが Python, Java,
+  Perl であったとしてもエディター機能はほとんど変わらない。
+* ただし、設計当時は Lisp が Emacs に適した性質をもつ唯一の言語だった。
+* そういえば他の書籍でも Lisp は軽視されることがない。
+
+任意のイベントを任意の内蔵関数や使用者定義関数に束縛する機能は死活的だ。
+
+同梱されている膨大な拡張モードのライブラリーは偶然的だ（拡張を構築する能力は必然
+的だが）。
+
+子プロセスとの相互作用は死活的だ。これがなければ Emacs のモードは期待された IDE
+のような統合やさまざまなツールのフロントエンドたり得ない。
+
+> Experience with small editors that clone the default keybindings and
+> appearance of Emacs without emulating its extensibility is instructive.
+
+二つ挙げている：
+
+* [MicroEMACS]
+* [Pico]
+
+[MicroEMACS]: <https://en.wikipedia.org/wiki/MicroEMACS>
+[Pico]: <https://en.wikipedia.org/wiki/Pico_(text_editor)>
+
+Wily は Emacs と比較するのが面白い。Sam と同様、選択的複雑度は低く、Wily の UI
+は一ページで簡潔でありながら効率的に説明可能だ。
+
+* キーストロークや入力ジェスチャーに機能を束縛することが不可能（マウス限定）
+* ごく基本的なテキスト挿入・削除を除く編集機能は、エディター外部にあるプログラム
+  など（次のいずれか）で実装しなければならない：
+    * 単品のスクリプト
+    * Wily の入力イベントを傍受する特別な共生プロセス
+
+Emacs が Lisp 拡張で実装するような選択的複雑性は、特別な共生物で分配される。この
+仕組みには利点がある：
+
+* 使用者が選ぶ言語で共生物を書くことができる。
+* エディタープロセス外で動作するため、Wily 本体に悪影響を与えることがない。
+
+二つ目の利点を裏返せば欠点となる。Wily 自身は Unix ツールによる子プロセスとの相
+互作用を直接行えない。
+
+構文を意識した編集やリッチテキストへの興味を放棄しており、Wily もその Plan 9 の
+祖先である Acme もこれらのことはできない。
+
 ### Compromise Doesn't Work
+
+Sam と `vi` の比較は、少なくともエディターに関しては、`ed` の最小主義と Emacs の
+完全装備指向の間で妥協しようとする試みがあまり上手くいかないことを強く示唆してい
+る。
+
+* `vi` これを試みたが、結局どちらの徳も得るところか、即興的罠にはまった。
+* Wily は即興的罠を回避したが、Emacs の能力には及ばないし、それに近づくために
+  はそれぞれの対話型共生体に自作プロセスインターフェイスを要求しなければならない。
+
+> Evidently something about editors tends to push them in the direction of
+> increasing complexity.
+
+すべてが Zawinski の法則とも呼ばれる「ソフトウェア拡張の法則」に従って進化する傾
+向がある：
+
+> Every program attempts to expand until it can read mail. Those programs which
+> cannot so expand are replaced by ones which can.
+
+Zawinski はより一般に、次を主張している：
+
+> all really useful programs tend to turn into Swiss Army knives.
+
+Unix 界以外での、大規模で統合されたアプリケーションスイートの商業的成功はスイス
+アーミーナイフ説を裏付ける傾向があり、Unix の最小主義哲学に対して異議を直接的に
+唱えている。
+
+Zawinski の法則が正しい限りにおいて、あるものは小さくあることを望み、あるも
+のは大きくあることを望むが、その中間は不安定であることを示唆している。
+
+Emacs と Wily の例から、モノが大きくなりたがる理由がさらにわかる。編集とバージョ
+ン管理（メール、デバッグなど、編集以外の何か）は、実装者の視点からは別々の仕事
+だ。しかし、使用者は、同じファイル名やバッファーの内容を渡さなければならないプロ
+グラムの間を往復することに時間と注意を費やすよりも、テキストの断片を指し示すこと
+ができる単一の大きな環境で仕事をしたいことがよくある。
+
+もっと一般的に、Unix 環境全体を共同体による設計の一つの作品と見なすとしよう。そ
+うすると、「小さくて鋭い道具」という信仰、インターフェイスの複雑さとコードベース
+規模を抑えようという圧力は、まさに手作業の罠に導かれることがある。
+
+> the user has to maintain all the shared context himself, because the tools
+> won't do it for him.
+
+話をエディターに戻すと：
+
+* Sam は `vi` が間違ったものであることを示している。
+* Wily は Emacs の広大さを回避するために頑張ったが、構文を認識することができない
+  ために失敗に終わった。
+* Wily は、つまり Emacs の設計思想を因習を捨て去って整理したものは、正しいものな
+  のかもしれない。
+
+選択的複雑性の価値は誰かが選択する目的によって異なり、ある仕事に関連するテキスト
+指向ツールすべての間で、その仕事の状況、場面、背景を共にする能力は価値がある。
 
 ### Is Emacs an Argument against the Unix Tradition?
 
+昔気質の Unix プログラマーの間で `vi` や Emacs が受けなかった理由は、それらが醜
+いからだ。(Doug McIlroy)
+
+著者は `vi` 使用者による Emacs の攻撃と、まだ `ed` に執着している筋金入りの守旧
+派による `vi` への攻撃があると言っている。
+<!-- exuberance:  the quality of feeling energetic, or the behaviour of someone who feels this way -->
+
+Unix プログラマーは過剰よりも気品を賞揚する伝統を維持してきた。
+
+Emacs の広大さを発明したのは、Artificial Intelligence Lab の Richard M. Stallman
+だった。計算機科学の研究機関の中でも最も裕福な研究所だ。彼は Unix プログラマーの
+ような最小主義にこだわらず、自分のコードに最大限の能力と余地を求めた。
+
+> The central tension in the Unix tradition has always been between doing more
+> with less and doing more with more.
+
+Emacs に対する賛否両論はこの緊張の例証だという。
+
+Unix プログラマーが最小主義の原則に固執するあまり、現実を無視する過ちに対処する
+方法は二つある：
+
+* 大きいものは実際に大きいということを否定する
+* 独断的でない複雑性についての考え方を発展する
+
+先ほどは Emacs が Lisp と拡張を置き換えたら、という思考実験をした。Emacs が肥大
+している原因は拡張ライブラリーが巨大だからだという非難からそういう仮説を立てたわ
+けだが、これはシステムにあるシェルスクリプトの集合が巨大だから `/bin/sh` が肥大
+しているというようなものだ。
+
+> Emacs could be considered a virtual machine or framework around a collection
+> of small, sharp tools (the modes) that happen to be written in Lisp.
+
+Emacs の中に汎用言語があると肥大化したように感じるからという理由で Emacs に反対
+するのは、シェルに条件分岐や `for` ループがあるからという理由でシェルスクリプト
+を使うのを拒否するのと同じくらい愚かだ。シェルスクリプトを使うためにシェルを学ぶ
+必要がないように、Emacs を使うために Lisp を学ぶ必要もないのだ。
+
+拒絶に陥る可能性を回避し、Emacs が有用であると同時に巨大であること、つまり Unix
+最小主義に対する反論であることを認めよう。
+
 ## The Right Size of Software
+
+Unix 式の小さくて尖った道具は、ツール間の通信を容易にする枠組の中に存在しない限
+り、データの共有に苦労する。Emacs は枠組であり、«unified management of shared
+context» は Emacs の選択的複雑性を買うものだ。
+
+Emacs はファイルシステムをテキストバッファーと補助プロセスの世界と統合し、シェル
+の枠組をほとんど置き去りにしている。 Wily もバッファーと補助が中心だが、シェル枠
+組を取り込んでいる。最近のデスクトップ環境は GUI のための通信枠組を備え、これも
+シェル枠組を置き去りにしている。
+
+枠組は道具の生態系の住処になる：
+
+* シェルはシェルスクリプト
+* Emacs は Lisp モード
+* デスクトップ環境は GUI の群れ
+
+これは最小限の法則 (Rule of Minimality) を示唆している：
+
+> Choose the shared context you want to manage, and build your programs as small
+> as those boundaries will allow.
+
+* これは本章冒頭の Einstein の名言に適う。
+* The shared context の選択に注意を集中することになる。
+* この法則は枠組だけでなく、アプリケーションやプログラムシステムにも適用される。
+
+The shared context の大きさについてずさんになりがちだ。Zawinski の法則の背後にあ
+る圧力は、便利であるからといって context を share したがるアプリケーションの風潮
+がある。あまりに重く、多くの仮定を持ち運ぶことになり、複雑、肥大、巨大なプログラ
+ムを書くことになりがちだ。
+
+> The corrective to this tendency comes straight from the old-school Unix
+> hymnbook. It is the Rule of Parsimony: *Write a big program only when it is
+> clear by demonstration that nothing else will do.
+
+その時とは、問題を分割しようとして失敗した時だ。
+
+1. 小規模プログラムの解決策を探す。
+2. 単一の小プログラムでは解決できない場合、既存の枠組の中で小プログラムを連携さ
+   せ、それで攻める。
+3. 両方の取り組みが失敗したら、その場合に限り、大規模プログラムなり新規枠組なり
+   を自由に作る。
+
+枠組を作るときは分離の法則 (the Rule of Separation) を適用する。
+
+* 枠組は仕組みであり、方策は持たない。
+* 枠組を使うモジュールには、多くの振る舞いを組み込む。
+
+> Circumstances alter cases, and exercising good judgment and good taste is what
+> software designers are for.
 
 [Chapter 4]: <./modularity.md>
 [Chapter 8]: <./minilanguages.md>
