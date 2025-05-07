@@ -185,7 +185,33 @@ C の長所は資源効率と機械との距離の近さ。短所はプログラ
 
 #### C Case Study: `fetchmail`
 
-TBR
+C 言語の最良の事例研究は Unix カーネルそのものだ。ハードウェアの水準の操作を自然
+に支援する言語は強みとなる。
+
+C の構造体機能と同等のものはその代替言語のほとんどに存在しない。注目に値する例外
+は Python と Java だ。
+
+次のパラグラフの記述が気になる：
+
+> Finally, `fetchmail` requires the ability to parse a fairly complex
+> specification syntax for per-mail-server control information. In the Unix
+> world this sort of thing is classically handled by using C code generators
+> that grind out source code for a tokenizer and grammar parser from declarative
+> specifications. The existence of `yacc` and `lex` was a point in favor of C.
+
+宣言的仕様をすり潰すことで C で書かれた字句解析コードおよび文法解析コードを生成
+する過程があることになる。
+
+> `fetchmail` might reasonably have been coded in Python, albeit with possibly
+> significant loss of performance.
+
+当時の Python はべらぼうに遅いから、こういう見解になる。
+
+`fetchmail` が C 言語プログラムである本当の理由は、すでにそれで書かれた祖先から
+徐々に変異して進化してきたからだ。
+
+本書の以前にも触れているし、この後にも触れるが、関連ツール `fetchmailconf` は C
+ではなく Python で書いた。
 
 ### C++
 
@@ -208,10 +234,12 @@ C++ プログラムの寿命費用は C, FORTRAN, Ada の同等品よりも高�
 C++ はオブジェクト指向以外の重要なアイデアをいくつか取り入れている：
 
 * 例外処理
-* STL
+* STL を含むテンプレート
 
-<!-- 効率的なコンパイル言語、Cとの上位互換性、オブジェクト指向プラットフォーム、STLや
-ジェネリックスのような最先端テクニックの実現 -->
+<!-- さらに：
+* 効率的なコンパイル言語
+* C との上位互換性
+-->
 
 C++ はあらゆる人にあらゆることを可能にしようと試みているが、その代償として、個々
 のプログラマーの頭脳は処理し切れないほどの複雑さを抱える。C++ の主要設計者は一人
@@ -242,7 +270,26 @@ GNU コンパイラーコレクションは C++ コンパイラーを含む。
 
 #### C++ Case Study: The Qt Toolkit
 
-TBR
+[Qt] は Motif, MacOS Platinum, Microsoft Windows インターフェイスの見てくれや操
+作感を模倣するように意図的に（そして上手く）設計された、GUI を書くための API
+だ。また、XML, ファイルアクセス、ソケット、スレッド、タイマー、時間日付処理、
+データベースアクセス、抽象データ型各種、Unicode 用のクラスが用意されている。
+
+KDE プロジェクトの重要かつすぐに使える部品であり、競争力のある GUI とデスクトッ
+プ生産性ツールの統合集合を生み出すオープンソース世界の二つの取り組みの先人だ。
+
+C++ 実装は UI 部品をカプセル化するためのオブジェクト指向言語の長所を示している。
+オブジェクトを支援する言語では UI 要素の視覚的な階層をクラス階層によってコード上
+できれいに表現することができる。
+
+> Comparison with the notoriously baroque C API of Motif is instructive.
+
+これは気になる。
+
+!!! note
+
+    クラス階層の美しさは <https://doc.qt.io/qt-6/classes.html> の索引をザッと
+    見るだけでも窺い知れる。本文の趣旨に従って Qt Widgets から見るといい。
 
 ### Shell
 
@@ -289,11 +336,52 @@ Unix システムやエミュレーターにはすべてシェルが搭載され
 
 #### Case Study: `xmlto`
 
-TBR
+DocBook ならよく書いていたから話は理解できる。
+
+> `xmlto` is a driver script that calls all the commands needed to render an
+> XML-DocBook document as HTML, PostScript, plain text, or in any one of several
+> other formats (we'll take a closer look at DocBook in [Chapter 18]). It is
+> written in `bash`.
+
+適切なスタイルシートで XSLT エンジンを呼び出し、その結果を後処理器に渡すという詳
+細を処理する。
+
+* HTML/XHTML の場合、XSLT 変換が作業のすべてを行う。
+* プレーンテキストの場合も XML は HTML に加工されるが、その後処理で lynx(1) の
+  `-dump` モードに渡り、フラットテキストに加工される。
+* PostScript の場合、XML は FO に変換され、後処理において TeX マクロに変換され、
+  tex(1) によって DVI 形式に変換され、最後に dvi2ps(1) を使う。
+
+`xmlto` は単一のフロントエンドのシェルスクリプトで構成される。スクリプトプラグイ
+ンのいずれかを呼び出す。各プラグインもシェルスクリプトだ。
+
+この建築方式は指定された出力形式に関する情報のすべてが一箇所（対応するスクリプト
+プラグイン）に存在することを意味し、新しい出力形式を追加してもフロントエンドの
+コードにまったく影響を与えない。
+
+`xmlto` は中規模のシェルアプリケーションの良い例だ。
+
+* C/C++ はスクリプトを書くには厄介で、意味をなさない。
+* 内部データ構造や複雑なロジックを持たない、単純命令の発令なのでシェル十分だ。
+* シェルには、対象とするシステムでどこにでもあるという大きな利点がある。
 
 #### Case Study: Sorcery Linux
 
-TBR
+> Sorcerer GNU/Linux is a Linux distribution that you install as a small,
+> bootable foothold system just powerful enough to run bash(1) and a couple of
+> download utilities. With this code in place, you can invoke Sorcery, the
+> Sorcerer package system.
+
+Linux の一種であるものと、パッケージシステムであるものがある。
+
+Sorcery システムはすべてシェルで書かれている。プログラムのインストール手順はシェ
+ルが適している小規模で単純なプログラムになる傾向がある。この独特なアプリケーショ
+ンでは Sorcery 作者が必要な補助プログラムが足場システムに存在することを保証でき
+るため、シェルの主な欠点は消える。
+
+!!! note
+
+    これは少し調べただけで詳細がわからなかった。
 
 ### Perl
 
@@ -335,11 +423,45 @@ Perl の最も優れた面は、正規表現を多用する小さなスクリプ
 
 #### A Small Perl Case Study: `blq`
 
-TBR
+スクリプト `blq` はスパムを照会する。
+
+小さな Perl スクリプトの良い例であり、この言語の長所と短所の両方を示している。
+
+* 正規表現マッチングを多用している。
+* 拡張モジュール `Net::DNS` は標準モジュールではないゆえ、条件付きでインクルード
+  しなければならない。
+
+Perl コードとしては `blq` は例外的にきれいで規律正しい。それでも、Perl 慣用コー
+ドに慣れていなければ一部は読めない。例：
+
+```perl
+$0 =~ s!.*/!!;
+```
+
+Tcl と Python はどちらもこの種の小さなスクリプトには適しているが、どちらも `blq`
+が多用する正規表現マッチングのための Perl の便利な機能がない。Emacs Lisp の実装
+は Perl のものよりもさらに速く、コンパクトに書けるだろう。
 
 #### A Large Perl Case Study: `keeper`
+<!-- 
+keeperは、iblioの巨大なLinuxフリーソフトウェアアーカイブのために、入ってくるパッ
+ケージをファイルし、FTPとWWWの両方のインデックスファイルを維持するために使われる
+ツールです。 ソースとドキュメントは ibiblio アーカイブの search tools サブディレ
+クトリにあります。
 
-TBR
+keeperは、中規模から大規模の対話型Perlアプリケーションの良い例です。 コマンドラ
+インインターフェイスは行指向で、特殊なシェルやディレクトリエディタを模している。
+作業部分では、ファイルやディレクトリの操作、パターンマッチ、パターン指向の編集が
+多用されている。 プログラムテンプレートからウェブページや電子メール通知を簡単に
+生成することができる。 また、ディレクトリツリー上の様々な関数を自動化するため
+に、定型のPerlモジュールが使用されている。
+
+約3300行のこのアプリケーションは、おそらく1つのPerlプログラムで試みるべきサイズ
+と複雑さの限界に挑戦している。 とはいえ、そのほとんどは6日間で書かれたものだ。 C
+やC++やJavaでは、最低でも6週間はかかっただろうし、事後のデバッグや修正も非常に難
+しかっただろう。 純粋なTclでは大きすぎる。 Pythonバージョンはおそらく構造的に
+すっきりしていて、読みやすく、保守しやすいだろう。 EmacsのLispモードでも十分可能
+だが、Emacsはtelnetでの使用には向いていない。 -->
 
 ### Tcl
 
@@ -406,11 +528,32 @@ Tcl の実装は Windows, MacOS, その他多くのプラットフォームに�
 
 #### Case Study: `TkMan`
 
-TBR
+TkMan は Unix の `man` ページと Texinfo 文書の閲覧ソフトだ。Tk を用いた、純正の
+man(1) や xman(1) が支援するものよりもかなり洗練された GUI だ。
+
+TkMan は Tcl のあらゆる技法をほぼ全面的に披露しているので良い事例研究になる。ハ
+イライトは：
+
+* Tk との一体化
+* 他の Unix アプリケーションをスクリプトで制御（検索エンジンなど）
+* Texinfo マークアップを解析するため Tcl を使用
+
+他の言語のどれを使っても、このコードの大部分を構成する Tk GUIへの直接的なイン
+ターフェイスにはならなかっただろう。
 
 #### Moodss: A Large Tcl Case Study
 
-TBR
+[Moodss] はシステム管理者向けのグラフィカルな監視アプリケーションだ。MySQL,
+Linux, SNMP ネットワーク、Apache のログを監視し、統計情報を収集することができ、
+ダッシュボードと呼ばれる表計算シートのような GUI 盤を通して、それらをダイジェス
+トで表示することが可能だ。
+
+* 監視モジュールは Tcl だけでなく、Python や Perl でも書くことができる。
+* コードは洗練され、Tcl 共同体では模範とみなされている。
+* プロジェクトのウェブサイトがある。
+
+Moodss のコアは 約 18,000 行の Tcl で構成されている。自作オブジェクトシステムを
+含む Tcl 拡張を使用している。
 
 ### Python
 
@@ -481,15 +624,60 @@ Python の拡張に関する広範なオンラインドキュメントも上記 
 
 #### A Small Python Case Study: `imgsizer`
 
-TBR
+!!! note
+
+    なぜか本書著者の Web サイトに本ツールのヘルプがある：
+    <http://www.catb.org/~esr/imgsizer/imgsizer.html>
+
+もともと Perlで書かれたもので、Perl が得意とするパターン駆動型の小さなテキスト処
+理ツールのほぼ理想的な例だった。後に Python に翻訳され、標準モジュールによる
+HTTP 支援を利用するようになった。
+
+動的な文字列処理と洗練された正規表現マッチングが必要なため、
+
+* C/C++ で書いたならばはかなり骨が折れただろう。ずっと大きく、読みにくいものに
+  なっただろう。
+* Java ならばメモリー管理の問題は解決できただろうが、テキストのパターンマッチン
+  グでは C/C++ より表現力が高いとは言い難い。
 
 #### A Medium-Sized Python Case Study: `fetchmailconf`
 
-TBR
+[Chapter 11] では `fetchmail`/`fetchmailconf` を調べた。Python の強みは
+`fetchmailconf` がよく示している。
+
+`fetchmailconf` は Tk 使ってマルチパネル GUI 設定エディターを実装している。
+
+Tk バインディングが Python インタプリターに標準で同梱されている事実がここでは重
+要。
+
+エキスパートモードでは GUI は三つの盤に分かれた約 60 の属性の編集を支援する。属
+性編集用チェックボックス、ラジオボタン、テキストフィールド、スクロールリストボッ
+クスなどがある。
+
+> Despite this complexity, the first fully-functional version of the
+> configurator took me less than a week to design and code, counting the four
+> days it took to learn Python and Tk.
 
 #### A Large Python Case Study: PIL
 
-TBR
+PIL は [Pillow] の前身パッケージだ。概要は省略する。
+
+PIL の実装は Python インタプリターにロード可能オブジェクトコード拡張で Python を
+容易に拡張できる方法を示している。
+
+* ビットマップオブジェクトに対する基本的な操作を実装するライブラリーの核心部は速
+  度のために C で書かれている。
+* 高水準や手順ロジックは Python で書かれており、速度は遅いが読み込みや変更、拡張
+  ははるかに容易だ。
+
+類似のツールキットを他言語で書くとどうだろう：
+
+* Emacs Lisp やシェルで書くのは難しいか不可能だろう。
+* Tcl には優れた C 拡張機能があるが、PIL は不快なほど大きなプロジェクトになる。
+* Perl にはそのような機能があるが、Python と比べると即興的、文書が乏しく、複雑、
+  不安定だ。
+* Java の Native Method Interface は Python とほぼ同等の機能を搭載しているように
+  見える。
 
 ### Java
 
@@ -550,7 +738,29 @@ once, run anywhere» の実現に近づいていることだ。
 
 #### Case Study: FreeNet
 
-TBR
+Freenet は検閲や発禁を不可能にすることを目的とした peer-to-peer ネットワーキング
+プロジェクトだ。開発者の想定するアプリケーションは次のとおり：
+
+* 物議を醸すような情報を検閲なしに流布する。草の根ジャーナリズムから暴露記事に至
+  るまで、匿名かつ検閲不可能な公表を可能にすることで、言論の自由を保護する。
+* 広帯域コンテンツの効率的な配信。Debian Linux ソフトウェア更新の配布に利用され
+  ているのと同じ機能を用いる。
+* 万人の個人的出版。たとえ発信者になりたい人が計算機を所有していなくて
+  も、余地制限や強制的な広告なしに、誰でも Web サイトを持つことを可能にする。
+
+Java がこのプロジェクトに適していた理由は少なくとも二つある：
+
+* プロジェクト目標が可能な限り多様な計算機上で互換性のある実装をすることに重きを
+  置いているため、Java の高い移植性が圧倒的な優位性を持つ。
+* プロジェクトの性質上、ネットワーク API が重要であり、Java には強力なものが組み
+  込まれている。
+
+他言語でこのプロジェクトを取り組んでいたら：
+
+* C/C++ は、高性能が要求されるインフラプロジェクトでは伝統的な言語だが、標準化さ
+  れたネットワーク API がないため、かなり困難。
+* Tcl, Perl, Python であれば性能面で大きな犠牲を払うことになる。
+* Emacs Lisp は苦痛を伴うほど遅く、まったく不適切。
 
 ### Emacs Lisp
 
@@ -705,7 +915,7 @@ Tcl を使用している場合、Tk が同梱されている。代替品を評�
 
 * Tk
 * GTK
-* Qt
+* [Qt]
 * wxWindows
 
 GTK と Qt は明らかに先頭走者だ。いずれも MacOS と Windows に移植されているので、
@@ -730,7 +940,7 @@ GTK の特徴：
 * この四者の中で唯一、生粋の C バインディングを持つ。
 * C++, Perl, Python 用のバインディングが利用可能。
 
-Qt の特徴：
+[Qt] の特徴：
 
 * [KDE] プロジェクトに関連するツールキットだ。
 * Python と Perl 用のバインディングが用意されている。
@@ -750,8 +960,13 @@ Qt はイベント処理にスロット＆シグナル方式を採用してお�
 開発言語へのバインディングが利用可能かどうかによって決まるだろう。
 
 [Chapter 4]: <../design/modularity.md>
+[Chapter 11]: <../design/interface.md>
 [Chapter 15]: <./tools.md>
 [Chapter 17]: <../community/portability.md>
+[Chapter 18]: <../community/documentation.md>
 [GNOME]: <https://www.gnome.org/>
 [KDE]: <https://kde.org/>
+[Moodss]: <https://moodss.sourceforge.net/>
+[Pillow]: <https://python-pillow.github.io/>
+[Qt]: <https://www.qt.io/>
 [SourceForge]: <https://sourceforge.net/>
