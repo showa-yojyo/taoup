@@ -256,8 +256,8 @@ make(1) が使用可能だ。
 
 プロジェクト内のファイル間の依存関係は一つ以上のファイル `Makefile` に記述されて
 いる。各 `Makefile` は一連の「製造」で構成され、それぞれプログラム `make`に、あ
-る対象ファイルがあるソースファイルの集合に依存していることを伝え、ソースのどれか
-が対象より新しい場合にする処理を記述する。
+る目標ファイルがあるソースファイルの集合に依存していることを伝え、ソースのどれか
+が目標より新しい場合にする処理を記述する。
 
 プログラム `make` はファイル名や拡張子から明らかな依存関係の多くを推測できるの
 で、実際にすべての依存関係を書き出す必要はない。例えば、ファイル `myprog` がファ
@@ -269,11 +269,111 @@ make(1) が使用可能だ。
 
 Stuart Feldman 氏による `make` 誕生秘話があるので読んでおく。
 
-TBR
+非常に複雑な `Makefile` は、特に補助的な `Makefile` を呼び出す場合、ビルド工程を
+単純化するどころか、むしろ複雑化の原因になりかねない。
+
+*Recursive Make Considered Harmful* (1997) が警告していた。この論文の議論は広く
+受け入れられるようになり、以前の慣習を覆すところまで来ている。
+
+!!! note
+
+    この論文は Google 検索などですぐに見つかるようだ。
+
+`Makefile` と言えば行頭タブが使いにくいという印象があるが、これは設計ミスだそう
+だ。Stuart Feldman 氏本人によると、`lex`/`yacc` に不慣れだったため、何かを単純に
+するためにタブ文字を採用したそうだ。人気がすぐに出て、もう直せなくなった。
 
 ### `make` in Non-C/C++ Development
 
+[Chapter 14] で説明したようなスクリプト言語は従来のコンパイルやリンクの手順は不
+要かもしれないが、make(1) が手助けしてくれる依存関係がしばしば存在する。
+
+例えば、[Chapter 9] の技法の一つを使って仕様ファイルからコードの一部を実際に生成
+したとしよう。`make` を使って、仕様ファイルと生成されたソースを結びつけることが
+できる。こうすることで、仕様を変更して作り直すたびに、生成されるコードも自動的に
+作り直されるようになる。
+
+`Makefile` を使って文書を作成する処方箋を表現することはよくある。この手法はマー
+クアップ言語で書かれたマスターから、PostScript やその他の派生文書を自動的に生成
+するのによく用いる。
+
+#### Case Study: `make` for Document-File Translation
+
+実際の `Makefile` を見ると理解が話が早い。[fetchmail] から見つけてきたファイルの
+一部を抜粋する：
+
+```makefile
+FAQ: fetchmail-FAQ.html $(srcdir)/dist-tools/html2txt
+	AWK=$(AWK) $(SHELL) $(srcdir)/dist-tools/html2txt $(srcdir)/fetchmail-FAQ.html >$@
+
+FEATURES: fetchmail-features.html $(srcdir)/dist-tools/html2txt
+	AWK=$(AWK) $(SHELL) $(srcdir)/dist-tools/html2txt $(srcdir)/fetchmail-features.html >$@
+
+NOTES: design-notes.html esrs-design-notes.html $(srcdir)/dist-tools/html2txt
+	   echo "This file contains two articles reformatted from HTML." > $@ \
+	&& echo "------------------------------------------------------" >> $@ \
+	&& echo "" >> $@ \
+	&& AWK=$(AWK) $(SHELL) $(srcdir)/dist-tools/html2txt $(srcdir)/design-notes.html >>$@ \
+	&& AWK=$(AWK) $(SHELL) $(srcdir)/dist-tools/html2txt $(srcdir)/esrs-design-notes.html >>$@
+```
+
+いずれもソースが HTML ファイルで、目標がプレーンテキストファイルだ。本文では
+`lynx -dump` でテキストを得るとあるが、リポジトリーにある版では専用スクリプトを
+用いるように改良したようだ。
+
 ### Utility Productions
+
+一般的な `Makefile` で最も多用される目標のいくつかは、ファイル依存性をまったく表
+現していない。 配布パッケージを作ったり、ゼロからビルドするためにオブジェクト
+ファイルをすべて削除したりといった、開発者が機械化したい手順を束ねるためのもの
+だ。
+
+`all`
+:  プロジェクトのすべての実行可能ファイルを作成する必要がある。通常、明示的な規
+   則を持たない。一般的には、これは `Makefile` の最初の規則であるべきで、開発者
+   が引数なしで`make` を走らせると実行する。
+
+`test`
+:  プログラムの自動化されたテストスイートを実行する。通常、単体試験の集合で構成
+   され、開発過程において後退や不具合、その他の期待される動作からの逸脱を発見す
+   る。
+
+   `test` はソフトウェア最終使用者が、インストールが正しく機能していることを確認
+   するために使用することもできる。
+
+`clean`
+:  `all` を作成する際に通常作成されるファイルをすべて削除する。
+   `make clean` はソフトウェアをビルドする工程を初期状態に直すはずだ。
+
+`dist`
+:  ソースアーカイブを tar(1) などを用いて作成する。このアーカイブは単品で出荷す
+   ることができ、別の計算機でプログラムをリビルドするために使用することができ
+   る。この目標は配布用アーカイブを作成する前に、`make dist` がプロジェクト全体
+   をリビルドするように、`all` に依存するのと同等のことを行うはずだ。
+
+`distclean`
+:  ソースを `make dist` でまとめる場合に含めるもの以外をすべて捨てる。
+
+`realclean`
+:  `Makefile` を使ってリビルドできるものをすべて捨てる。
+
+`install`
+:  プロジェクトの実行ファイルと文書をシステムディレクトリーにインストールし、一
+   般使用者がアクセスできるようにする（通常 root 権限が必要）。実行ファイルが機
+   能するために必要なデータベースやライブラリーを初期化または更新する。
+
+`uninstall`
+:  `make install` によってシステムディレクトリーにインストールされたファイルを削
+   除する（通常 root 権限が必要）。これにより `make install` を完全に取り消すこ
+   とができる。
+
+これらの標準的な目標を使用する利点の一つは、プロジェクトの暗黙のロードマップを形
+成することだ。
+
+目標を上記のものに限定する必要はない。ひとたび `make` を習得すれば、プロジェクト
+ファイルの状態に依存するちょっとした作業を自動化するために、`Makefile` という機
+械を使うことがますます多くなるだろう。`Makefile` はこれらを置くのに便利な中心的
+な場所だ。
 
 ### Generating Makefiles
 
@@ -304,5 +404,8 @@ TBR
 ### Like an IDE, Only Better
 
 [Chapter 8]: <../design/minilanguages.md>
+[Chapter 9]: <../design/generation.md>
 [Chapter 13]: <../design/complexity.md>
+[Chapter 14]: <./languages.md>
+[fetchmail]: <https://gitlab.com/fetchmail/fetchmail>
 [XEmacs]: <https://www.xemacs.org/>
