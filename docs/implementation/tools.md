@@ -375,15 +375,163 @@ NOTES: design-notes.html esrs-design-notes.html $(srcdir)/dist-tools/html2txt
 械を使うことがますます多くなるだろう。`Makefile` はこれらを置くのに便利な中心的
 な場所だ。
 
+!!! note "TODO"
+
+    上記で習ったことを自作の `Makefile` に活用する。
+
 ### Generating Makefiles
+
+Unix `make` の捉えがたい利点の一つは、`Makefile` が単純なテキストファイルである
+からプログラムから生成できるファイルであるということだ。
+
+1980 年代半ば、大規模な Unix プログラム頒布では環境を調査し、収集した情報を使っ
+て独自 `Makefile` を構築するシェルスクリプトを含むことがかなり一般的だった。これ
+らは手が込んでいて、とんでもない規模に達していた。
+
+最終的にさまざまな人たちが `Makefile` を管理する工程を自動化するツールを書き始め
+た。これらのツールは一般的に二つの問題に対処しようとした：
+
+* 移植性
+* 依存関係を導出する
+
+おそらく一ダース以上試みられたが、ほとんどは不十分か、運転が難し過ぎるか、その両
+方であることが判明した。
+
+#### `makedepend`
+
+X Window System とともに配布されているこのツールは最も速く、最も便利で、Linux を
+含むすべての現代的 Unix にインストール済みだ。
+
+> `makedepend` takes a collection of C sources and generates dependencies for
+> the corresponding `.o` files from their `#include` directives. These can be
+> appended directly to a `makefile`, and in fact `makedepend` is defined to do
+> exactly that.
+
+ということで、C プロジェクト以外では役に立たない。
+
+#### `Imake`
+
+Imake は X Window System 用の `Makefile` 生成を機械化する試みで書かれた。
+`makedepend` を土台にして依存関係の解消と移植性の両方の問題に取り組んでいる。
+
+Imake システムは従来の `Makefile` を効果的に `Imakefile` に置き換える。これらは
+よりコンパクトで強力な記法で書かれており、`Makefile` に事実上コンパイルされる。
+コンパイルにはシステム固有でローカル環境に関する多くの情報を含む規則ファイルを用
+いる。
+
+> However, it has not achieved much popularity outside the X developer
+> community. It's hard to learn, hard to use, hard to extend, and produces
+> generated makefiles of mind-numbing size and complexity.
+
+Imake は Linux を含む X を支援するすべての Unix で利用可能。
+
+#### `autoconf`
+
+`autoconf` は Imake を否定した人々が書いた。昔ながらの `configure` シェルスクリ
+プトを生成する。これらのスクリプトはとりわけ `Makefile` を生成する。
+
+* 移植性に重点を置いており、依存性導出はまったく行っていない。
+* Imake と同じくらい複雑だが、より柔軟で拡張しやすい。
+* システムごとの規則データベースに依存するのではなく、`configure` スクリプトを生
+  成してシステムを検索する。
+
+`configure` スクリプトは `configure.in` と呼ばれる、人が書かなければならないプロ
+ジェクトごとのテンプレートからビルドされる。いったん生成されたスクリプトは自己完
+結的なものとなり、autoconf(1) 自体を持たないシステム上でもプロジェクトを設定する
+ことが可能となる。
+
+> But `autoconf`'s `Makefile.in` files are basically just `Makefile`s with
+> placeholders in them for simple text substitution; there's no second notation
+> to learn. If you want dependency derivation, you must take explicit steps to
+> call makedepend(1) or some similar tool — or use automake(1).
+
+`autoconf` は多くの Unix や Linux にインストールされている。Emacs のヘルプシステ
+ムからこのマニュアルを閲覧できるはずだ。
+
+依存関係の導出を直接支援していないにもかかわらず、また、一般的に暫定的な策である
+にもかかわらず、2003 年半ば、`autoconf` は明らかに `Makefile` 生成ツールの中で最
+も人気がある。
+
+参考書としては *GNU Autoconf, Automake, and Libtool* がある。ヤギ本と呼ばれてい
+るらしい。
+
+#### `automake`
+
+`automake` は autoconf(1) の上に Imake 風の依存関係の導出を追加する試みだ。
+
+1. 人がテンプレート `Makefile.am` を Imake 風記法で書く。
+2. automake(1) がそれをファイル `Makefile.in` にコンパイルする。
+3. `autoconf` による `configure` スクリプトがそれを操作する。
+
+2003 年半ばでは `automake` は比較的新しい技術だ。 FSF のプロジェクトのいくつかで
+使われているが、他の地域ではまだ広く採用されていない。
+
+* <https://ftp.gnu.org/gnu/autoconf/>
+* <https://ftp.gnu.org/gnu/automake/>
 
 ### Version-Control Systems
 
+> Tracking all that detail is just the sort of thing computers are good at and
+> humans are not.
+
 ### Why Version Control?
+
+コードに変更を加えた後、それが実行不可能であることが判明した場合、どのようにして
+良いことが分かっているコードに戻すことができるだろうか。もし元に戻すのが難しかっ
+たり、信頼できなかったりするのであれば、変更を加える冒険をすることは難しい。
+
+変更追跡も重要だ。コードが変更されたことは知っているはずだが、その理由を知ってい
+るだろうか。変更の理由を忘れてしまい、後でそれを踏みにじるのは簡単だ。プロジェク
+トに共同作業者がいる場合、誰が何を変更したのか、そしてそれぞれの変更に誰が責任を
+持ったのかをどうやって知ることができるだろうか。
+
+<!-- Henry Spencer -->
+
+バグ追跡も問題だ。ある特定のバージョンについて、コードがそのバージョンから突然変
+異した後に新たなバグ報告を受けることはよくある。 そのバグがすでに踏みつぶされた
+（おしゃれな表現だ）ものだとすぐにわかる場合もあるが、そうでない場合も多い。新し
+いバージョンで再現しなかったとしよう。 そのバグを再現し理解するために、どうやっ
+て古いバージョンのコードの状態を取り戻すのか。
+
+こうした問題に対処するには次の方法が必要だ：
+
+* プロジェクトの履歴を残す
+* 履歴を説明する注釈をつける手順
+* プロジェクトに複数の開発者がいる場合、開発者がお互いのバージョンを上書きしない
+  ようにする仕組み
 
 ### Version Control by Hand
 
+プロジェクトのすべてを手動でバックアップにコピーすることで、プロジェクトを定期的
+にスナップショットを撮る。ソースファイルに履歴コメントを入れる。誰かが特定のファ
+イルを編集している間、他の開発者がそれに手を触れぬよう、口頭やメールで取り決めを
+する。
+
+この手動方式の隠れた費用は高く、特に故障したときに高く付く。手順には時間と集中力
+が必要で、プロジェクトが窮地に陥ったときに間違いを犯しやすい。
+
+> As with most hand-hacking, this method does not scale well.
+
+技術者ならばこの一文を肝に銘じなければならない。
+
 ### Automated Version Control
+
+基本術語である VCS を定義する：
+
+> To avoid these problems, you can use a *version-control system* (VCS), a suite
+> of programs that automates away most of the drudgery involved in keeping an
+> annotated history of your project and avoiding modification conflicts.
+
+ほとんどの VCS は論理構成を共にしている。まずソースファイルの集合を登録すること
+から始める。その後、これらのファイルの一つを編集したいときには、そのファイルを
+チェックアウトしなければならない。編集が終わったら、ファイルをチェックインして、
+変更内容をアーカイブに追加し、ロックを解除して、何をしたかを説明する変更コメント
+を入力する。
+
+!!! note
+
+    現代からすると古い管理手法が部分的にある。
+
 
 ### Unix Tools for Version Control
 
