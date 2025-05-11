@@ -15,9 +15,9 @@ Unix でも IDE は存在する。しかし、仕様に制限のないさまざ�
 を IDE で制御するのは難しく、あまり使われていない。Unix は編集、コンパイル、デ
 バッグの反復を中心としない、より柔軟なスタイルを推奨している。
 
-コードの構築、コード構成の管理、プロファイリング、デバッグ、そしてこれらの仕事に
-関連する多くの苦役を自動化することで、楽しい部分に集中できるようにするのが Unix
-での開発戦術だ。
+コードの構築、コード構成の管理、性能分析、デバッグ、そしてこれらの仕事に関連する
+多くの苦役を自動化することで、楽しい部分に集中できるようにするのが Unix での開発
+戦術だ。
 
 この章のツールのほとんどは *Programming with GNU Software* でよく説明されてい
 る。
@@ -397,6 +397,10 @@ Unix `make` の捉えがたい利点の一つは、`Makefile` が単純なテキ
 おそらく一ダース以上試みられたが、ほとんどは不十分か、運転が難し過ぎるか、その両
 方であることが判明した。
 
+!!! note "TODO"
+
+    この節の内容を演習したい。
+
 #### `makedepend`
 
 X Window System とともに配布されているこのツールは最も速く、最も便利で、Linux を
@@ -436,9 +440,9 @@ Imake は Linux を含む X を支援するすべての Unix で利用可能。
   成してシステムを検索する。
 
 `configure` スクリプトは `configure.in` と呼ばれる、人が書かなければならないプロ
-ジェクトごとのテンプレートからビルドされる。いったん生成されたスクリプトは自己完
-結的なものとなり、autoconf(1) 自体を持たないシステム上でもプロジェクトを設定する
-ことが可能となる。
+ジェクトごとの雛形からビルドされる。いったん生成されたスクリプトは自己完結的なも
+のとなり、autoconf(1) 自体を持たないシステム上でもプロジェクトを設定することが可
+能となる。
 
 > But `autoconf`'s `Makefile.in` files are basically just `Makefile`s with
 > placeholders in them for simple text substitution; there's no second notation
@@ -459,7 +463,7 @@ Imake は Linux を含む X を支援するすべての Unix で利用可能。
 
 `automake` は autoconf(1) の上に Imake 風の依存関係の導出を追加する試みだ。
 
-1. 人がテンプレート `Makefile.am` を Imake 風記法で書く。
+1. 人が雛形 `Makefile.am` を Imake 風記法で書く。
 2. automake(1) がそれをファイル `Makefile.in` にコンパイルする。
 3. `autoconf` による `configure` スクリプトがそれを操作する。
 
@@ -532,25 +536,254 @@ Imake は Linux を含む X を支援するすべての Unix で利用可能。
 
     現代からすると古い管理手法が部分的にある。
 
+プロジェクトの歴史は必ずしも直線的ではない。一般的に使われている VCS のすべてに
+次の機能がある：
+
+* ブランチ
+* マージ
+
+この機能は、開発陣の規模やばらつきが大きくなるほど重要になる。
+
+VCS が行うことのそれ以外のほとんどは利便性だ。ラベル付けや、これらの基本的な操作
+を取り囲む報告機能、バージョン間の差分を表示したり、指定バージョンのファイル群
+を、後の変更を失うことなく、いつでも調査、復元できる名前付きリリースとして集約
+することが可能な道具などだ。
+
+> VCSs have their problems. The biggest one is that using a VCS involves extra
+> steps every time you want to edit a file, steps that developers in a hurry
+> tend to want to skip if they have to be done by hand.
+
+これは現代では解決した。
+
+> Another problem is that some kinds of natural operations tend to confuse VCSs.
+> Renaming files is a notorious trouble spot;
+
+これも解決した。
+
+それでも VCS は、たとえ小規模な一人開発者のプロジェクトであっても、多くの点で生
+産性と品質に大きな恩恵をもたらす。最も重要なのは、既知の良い状態に戻すのが常に簡
+単であることを保証することで、プログラマーが自由に実験できるようになることだ。
+
+> (VCSs, by the way, are not merely good for program code; the manuscript of
+> this book was maintained as a collection of files under RCS while it was being
+> written.)
+
+文書もバージョン管理の守備範囲に収まるから当然そうなる。RCS は下記参照。
 
 ### Unix Tools for Version Control
 
+歴史的に、Unix の世界では三つの VCS が大きな意義を持っていた。
+
+#### Source Code Control System (SCCS)
+
+* 1980 年頃、Bell Labs が開発した。System III Unix に搭載された。
+* VCS に関する最初の本格的な試みだったと思われる。
+* 開拓したコンセプトは商用 Unix および Windows 製品を含む、すべての後続のシステ
+  ムにおいて、今でもある程度見られる。
+* SCCS 自体はもはや時代遅れだ。
+* SCCS の完全なオープンソース実装は存在しない。
+
+#### Revision Control System (RCS)
+
+* SCCS の数年後に Purdue University で生まれた。
+* よりすっきりとした CLI を持ち、プロジェクト全体のリリースを識別名でまとめるた
+  めの優れた機能を備えている。
+* 本書出版当時、Unix 界で最も広く使われている VCS であり、RCS をバックエンドや下
+  敷きとして使っている VCS もある。
+* 少人数のプロジェクトに適している。
+* ソースは FSF が保守、頒布している。
+
+#### Concurrent Version System (CVS)
+
+CVS は 1990 年代初頭に開発された RCS のフロントエンドとして始まったが、使用され
+ているバージョン管理のモデルが十分に異なっていたため、すぐに新しい設計として認め
+られるようになった。現代の実装は RCS に依存していない。
+
+* ファイルを排他的にロックすることはない。衝突が生じると人間の助けが要る。
+* CLI が RCS よりも複雑。
+* より多くのストレージ容量を要する。
+* インターネット接続された複数の開発拠点に分散している大規模な開発者の作業に適し
+  ている。別のホストにあるリポジトリーを操作するのが容易だ。
+* ソースは FSF が保守、頒布している。
+
+次の記述が本質的。リポジトリーを中心に開発共同体が形成することがよくわかる：
+
+> The social machinery and philosophy accompanying the use of CVS is as
+> important as the details of the tools. The assumption is that projects will be
+> open and decentralized, with code subject to peer review and inspection even
+> by developers who are not officially members of the project group.
+
+ロックなしの理念も重要。あるプログラマーが何か変更を加えている最中にいなくなって
+も、プロジェクトがロックによって行き詰まることがない。
+
+* プロジェクトの境界が流動的
+* プロジェクトに対する寄与が比較的容易
+* プロジェクトが緻密な管理階層を持つ必要がない
+
+CVS には重大な問題がある。基本的な問題の一つは、プロジェクトのファイル名前空間
+が、ファイルそのものへの変更と同じようにバージョン管理されていないことだ。そのた
+め、CVS はファイル名の変更、削除、追加によって混乱しやすい。
+
+#### Other Version-Control Systems
+
+CVS の設計上の問題はより良いオープンソースの VCS という要求を生み出す。
+
+> Aegis has the longest history of any of these alternatives, has hosted its own
+> development since 1991, and is a mature production system. It features a heavy
+> emphasis on regression-testing and validation.
+
+Aegis は聞いたことがない。
+
+> Subversion is positioned as “CVS done right”, with the known design problems
+> fully addressed, and in 2003 probably has the best near-term prospect of
+> replacing CVS.
+
+この見通しは正しかった。
+
+> The BitKeeper project explores some interesting design ideas related to
+> change-sets and multiple distributed code repositories. Linus Torvalds uses
+> Bitkeeper for the Linux kernel sources. Its non-open-source license is,
+> however, controversial, and has significantly retarded the acceptance of the
+> product.
+
+その後 BitKeeper に見切りをつけて Git を自作することになった。
+
 ## Runtime Debugging
+
+構文的に正しいプログラムが期待どおりに動作しないのはなぜか。
+
+開発者がこの問題を予期して、透明性を保つように設計することが奨励されている。特
+に、内部のデータの流れが肉眼や簡単な道具で容易に監視でき、精神的に容易にモデル化
+できるようにプログラムを設計することだ。[Chapter 6] を見ろ。透明性のための設計は
+バグを防止する上でも、実行時のデバッグ作業を容易にする上でも価値がある。
+
+実行時デバッグをする場合、プログラムの状態を調べ、ブレイクポイントを設定し、統率
+された方法で単一文水準まで実行できることはきわめて便利だ。オープンソースの Unix
+には C/C++ のデバッグを支援する `gdb` という強力なものがある。
+
+Perl, Python, Java, Emacs Lisp はすべて、ブレイクポイントを設定したり、実行を制
+御したり、一般的な実行時デバッガーを実行できる標準パッケージやプログラムを支援し
+ている。
+
+> Remember the Unix philosophy. Spend your time on design quality, not the
+> low-level details, and automate away everything you can — including the detail
+> work of runtime debugging.
 
 ## Profiling
 
-### Combining Tools with Emacs
+一般的な法則として、プログラムの実行時間の九割はコードの一割で費やされる。プロ
+ファイラーとは、プログラムの速さを制約する一割の多発地点を特定するのに役立つ道具
+だ。
+
+Unix の伝統では上記は次のように解釈するようだ：九割を最適化せずに済むのだ。単に
+作業の節約になるからと良いいうだけではない。ほんとうに価値ある効果は、九割を最適
+化しないことで、全体的な複雑さを抑えてバグを減らすことができるということだ。
+
+プロファイラーを使う良い習慣を身につければ、時期尚早の最適化という悪い習慣を取り
+除くことができる。仕事のやり方も考え方も変わる。
+
+コンパイル言語のプロファイラーは、オブジェクトコードの計装に依存しているため、コ
+ンパイラーよりもプラットフォームにより強く依存する。ソース言語は気にしない。Unix
+では単一のプロファイラー gprof(1) が C/C++, その他すべてのコンパイル済み言語を扱
+う。
+
+Perl, Python, Emacs Lisp には標準に含まれる独自のプロファイラーがある。Java には
+プロファイリングが組み込まれている。
+
+## Combining Tools with Emacs
+
+この章で取り上げたほとんどの道具は Emacs セッションにおいて、道具単品で動作する
+よりも大きな実用性を与えるフロントエンドを通して動作する。
+
+Emacs についてだけでなく、プログラム間の相乗効果を探し、それを生み出すという精神
+的習慣についても習え。
 
 ### Emacs and `make`
 
+例えば `make` は Emacs のコマンド <kbd>M-x</kbd> `compile` で起動できる。カレン
+トディレクトリーで make(1) を実行し、出力を Emacs バッファーに取り込む。
+
+Emacs の `make` モードは Unix の C コンパイラーや他の多くが発するエラーメッセー
+ジの書式（ソースファイルと行番号）を知っている。
+
+もし `make` がエラーメッセージを出した場合、コマンド <kbd>C-x</kbd> <kbd>`</kbd>
+はエラーメッセージを解析し、適切なファイルのウィンドウを開き、キャレットをエラー
+行に移動させながら、順番に各エラーの場所を表示する。これにより、エラーメッセージ
+を順番に巡って最後のコンパイル以降に壊れた箇所を修正するのが簡単になる。
+
 ### Emacs and Runtime Debugging
+
+実行時エラーを検出するために、Emacs はシンボリックデバッガーと同様の統合を搭載し
+ている。つまり、専用モードを使ってプログラムにブレイクポイントを設定し、実行時の
+状態を調べることが可能だ。
+
+Emacs の Grand Unified Debugger モードはすべての主要な C デバッガーを支援してい
+る：
+
+* gdb(1)
+* sdb(1)
+* dbx(1)
+* xdb(1)
+
+また、Perl のシンボリックデバッグや、Java と Python の標準デバッガーも支援してい
+る。Emacs Lisp 自体に組み込まれた機能は、Emacs Lisp コードの対話的なデバッグを支
+援する。
 
 ### Emacs and Version Control
 
+Emacs は SCCS, RCS, CVS, Subversion のための使いやすいフロントエンドを実装してい
+る。<kbd>C-x</kbd> <kbd>v</kbd> <kbd>v</kbd> というコマンドひとつで、今見ている
+ファイルに対して次に行うべき論理的なバージョン管理操作を推測してくれる。
+
+Emacs はバージョン管理されたファイルの変更履歴を見たり、不要な変更を取り消したり
+するのにも役立つ。 ファイル集合全体やプロジェクトのディレクトリーツリーにバー
+ジョン管理操作を適用するのも簡単だ。Emacs はバージョン管理操作に関してかなり良い
+仕事をする。
+
+これらの機能が持つ意味は慣れる前に想像するよりも大きい。
+
+> You'll find, once you get used to fast and easy version control, that it's
+> extremely liberating. Because you know you can always revert to a known-good
+> state, you'll find you feel more free to develop in a fluid and exploratory
+> way, trying lots of changes out to see their effects.
+
+プログラマーは Emacs と VCS の強力な支援を受けて伸び伸びと編集できるということだ。
+
 ### Emacs and Profiling
+
+おそらく開発周期の中でこの段階だけ、Emacs は助けにならないだろう。性能分析は本質
+的に一括処理であり、プログラムを計測し、実行し、統計情報を見て、エディターでコー
+ドを調整し、これを繰り返す。この周期の性能分析に特化した部分で Emacs が活用でき
+る余地はまずない。
+
+性能分析報告をたくさん分析していることに気づいたら、報告行をマウスでクリックした
+りキーバインドを呼び出したりすると、関連する関数のソースにアクセスするようなモー
+ドを書くといいかもしれない。これは Emacs の tags を使えば簡単にできる。
+
+> Don't drudge — drudging wastes your time and productivity!
+
+格言をもう一つ：
+
+> Use your toolkit to automate or semi-automate the task.
+
+解決策をオープンソースソフトウェアとして公開することで、貰い受けたものすべてに恩
+返しをしろ。仲間を苦役から解放しろ。
 
 ### Like an IDE, Only Better
 
+ここまで読んだら、Emacs の内部から開発プロジェクト全体を実行することができ、数回
+のキー操作で低水準の仕組みを動かすことができ、場面を切り替えることによる精神的労
+力を省くことができるようになっている。
+
+Emacs を使った開発様式はプログラム構造を図形的に表現するなど、先進的な IDE が持
+ついくつかの機能と折り合いをつける。その代わりに Emacs が与えてくれるのは柔軟性
+と統制だ。Emacs Lisp を使って、微調整、個別化、仕事関連の解決能力を追加すること
+ができる。
+
+オープンソース共同体に目を向けることで、自分と同じような課題に直面している何千人
+もの Emacs 使用開発者の仕事から恩恵を受ける。その方がずっと効果的で楽しい。
+
+[Chapter 6]: <../design/transparency.md>
 [Chapter 8]: <../design/minilanguages.md>
 [Chapter 9]: <../design/generation.md>
 [Chapter 13]: <../design/complexity.md>
