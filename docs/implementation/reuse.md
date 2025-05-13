@@ -208,43 +208,82 @@ Unix 界では多くのオープンソースが利用できるため、再利用
 `man -k` を検索するだけで有用な結果が得られることが多い。
 
 > To begin to grasp something of the amazing wealth of resources out there, surf
-> to SourceForge, ibiblio, and Freshmeat.net. Other sites as important as these
-> three may exist by the time you read this book, but all three of these have
-> shown continuing value and popularity over a period of years, and seem likely
-> to endure.
+> to [SourceForge], [ibiblio], and Freshmeat.net. Other sites as important as
+> these three may exist by the time you read this book, but all three of these
+> have shown continuing value and popularity over a period of years, and seem
+> likely to endure.
 
 この辺の見通しはさすが。
 
-SourceForge は共同開発を支援するために特別に設計されたソフトウェアのデモ拠点であ
-り、関連するプロジェクト管理サービスも完備している。単なるアーカイブではなく、無
-料の開発ホスティングサービスであり、2003 年半ば現在、間違いなく世界最大のオープ
-ンソース活動の拠点となっている。
+[SourceForge] は共同開発を支援するために特別に設計されたソフトウェアのデモ拠点で
+あり、関連するプロジェクト管理サービスも完備している。単なるアーカイブではなく、
+無料の開発ホスティングサービスであり、2003 年半ば現在、間違いなく世界最大のオー
+プンソース活動の拠点となっている。
 
-Ibiblio の Linux アーカイブは SourceForge 以前は世界最大だった。単にパッケージを
-公開する受動的な場所ではあるが、WWW インターフェイスが優れている。また、Linux
-Documentation Project の拠点でもあり、Unix 使用者や開発者にとって優れた資料とな
-る多くの文書を保管している。
+[Ibiblio] の Linux アーカイブは [SourceForge] 以前は世界最大だった。単にパッケー
+ジを公開する受動的な場所ではあるが、WWW インターフェイスが優れている。また、
+Linux Documentation Project の拠点でもあり、Unix 使用者や開発者にとって優れた資
+料となる多くの文書を保管している。
 
-> Freshmeat is a system dedicated to providing release announcements of new
-> software, and new releases of old software. It lets users and third parties
-> attach reviews to releases.
+Freshmeat は新しいソフトウェアのリリースを告知したり、古いソフトウェアを新しくリ
+リースするためのシステムだ。使用者や第三者がリリースを批評することができる。
 
 いくつかのインタープリター言語に特化した拠点もある：
 
-> The CPAN archive is the central repository for useful free code in Perl. It is
-> easily reached from the Perl home page.
->
+> The [CPAN] archive is the central repository for useful free code in Perl. It
+> is easily reached from the Perl home page.
+
+現代でも活動中。
+
 > The Python Software Activity makes an archive of Python software and
 > documentation available at the Python Home Page.
->
+
+Python Software Activity というのは現存しない。Python Software Foundation の前身
+と考えられる。
+
 > Many Java applets and pointers to other sites featuring free Java software are
 > made available at the Java Applets page.
 
-TBR
+現代の Web ブラウザーを使う限りではアプレットは死んでいるので忘れていい。
+
+開発者として時間を投資する最も価値ある方法の一つは、これらの拠点を見て回り、自分
+が何を使えるかを学ぶことだ
+
+コードを読むことは未来への投資だ。新しい技法、問題を分割する新しい方法、異なる方
+式や取り組み方などをそこから学ぶことができる。コードを使うことも学ぶことも貴重な
+報酬だ。学習したことを使わなかったとしても、他の人の解決策を見ることで問題の定義
+が改善され、より良い解決策を自分で考え出す助けになるかもしれない。
+
+まったく新しい問題はめったにないので、必要なものに近いコードを発見することはほと
+んど可能だ。真に斬新なものであったとしても、それは誰かが解決したことのある問題と
+遺伝的に関連している可能性が高い。
 
 ## Issues in Using Open-Source Software
 
+オープンソースソフトウェアを利用したり再利用したりする際には大きな問題が三つある：
+
+* 品質
+* 文書
+* 使用許諾条件
+
+多くの高品質なオープンソースパッケージは文書が不十分なため、技術的にあるべき姿よ
+りも役に立たない。
+
+Unix の伝統はかなり階層的な文書を推奨する。
+
+ソフトウェアパッケージやトピックのキーワード、HOWTO や FAQ といった文字列を含む
+語句を Web 検索する価値がある。多くの場合、マニュアルページよりも初心者にとって
+有用な文書を見つける。
+
+オープンソースソフトウェアを再利用する上で最も深刻な問題は、パッケージの使用許諾
+条件を理解することだ。
+
 ## Licensing Issues
+
+パブリックドメインでないあらゆるものには著作権があり、おそらく複数ある。米国連邦
+法では©表示がなくても、著者が著作権を有する。
+
+TBR
 
 ### What Qualifies as Open Source
 
@@ -253,3 +292,6 @@ TBR
 ### When You Need a Lawyer
 
 [Chapter 2]: <../context/history.md>
+[CPAN]: <https://www.cpan.org/>
+[ibiblio]:<https://www.ibiblio.org/>
+[SourceForge]: <https://sourceforge.net/>
