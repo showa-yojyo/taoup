@@ -268,15 +268,172 @@ DocBook は大規模で複雑な技術文書用に設計された SGML と XML �
 
 ## The Present Chaos and a Possible Way Out
 
+Unix 文書は今のところメチャクチャだ。
+
+最近の Unix システム上の文書元帳ファイルは異なるマークアップ形式、man, ms, mm,
+TeX, Texinfo, POD, HTML, DocBook の間でばらついている。すべての描写処理版を見る
+一定の方法はない。Web アクセスもできないし、相互索引もない。
+
+Unix 共同体の多くの人々はこの問題を認識している。彼らは市販の Unix の開発者たち
+よりも、技術的な背景を持たない末端使用者に受け入れられるかどうかを競うことに積極
+的だ。2000 年以降、文書交換形式として XML-DocBook を使用する方向に進んでいる。
+
+システム全体のドキュメント登録装置として機能するソフトウェアを Unix システムすべ
+てに搭載することが最終目的となる。システム管理者がパッケージをインストールすると
+き、そのパッケージの XML-DocBook 文書を登録装置に入力することが一つの段階になる
+だろう。その後共通の HTML 文書木に処理され、すでに存在する文書に相互参照が付く。
+
+次に DocBook とそのツールチェーンについて詳細に見ていく。Unix での XML の入門と
+して、実践のための手引として、主要な事例研究として読める。
+
 ## DocBook
+
+DocBook とそれを支持するプログラムには多くの混乱がつきまとう。DocBook の信奉者た
+ちは、マークアップを書いたり、そこから HTML や PostScript を作ったりするために必
+要なこととはまったく関係のない略語を乱発し、計算機科学の基準から見ても濃密で難解
+な言葉を話している。XML の標準や技術論文はわかりにくいことで有名だ。
 
 ### Document Type Definitions
 
+DocBook は XML の方言だ。DocBook 文書は構造的なマークアップに XML タグを使った
+XML の一片だ。
+
+例えば、章見出しを物理的に適切に整形するためには、本の原稿は通常、前見出し、章立
+て、後見出しで構成されていることを知る必要がある。このようなことを知るためには、
+Document Type Definition (DTD) を与える必要がある。DTD は文書構造の中にどのよう
+な要素をどのような順序で入れることができるかを組版ソフトに伝える。
+
+DocBook を XML の「方言」と呼んでいるのは、実際には DocBook が DTD であるという
+ことだ。
+
+DocBook の背後には検証構文解析器と呼ばれるプログラムが潜んでいる。DocBook 文書を
+整形するとき、最初の段階はこのプログラムに通すことだ。これは与えられた文書を
+DocBook DTD と照らし合わせて、DTD の構造規則に違反していないことを確認する。
+
+エラーがなければ、検証構文解析器は文書を XML 要素とテキストのストリームに変換
+し、構文解析器のバックエンドがスタイルシートの情報と組み合わせて整形された出力を
+生成する。
+
+[Figure 18.1]
+<!-- Figure 18.1. Processing structural documents. -->
+
+* 図式中の中央二つの箱が本書で言うツールチェーンだ。
+* 組版ソフトに対する隠れた入力二つ、DTD とスタイルシートを忘れるな。
+
 ### Other DTDs
+
+他の DTD について簡単に触れておくと、前の節のどの部分が DocBook に特有で、どの部
+分が構造マークアップ言語のすべてに一般的なのかが明確になる。
+
+[TEI] (Text Encoding Initiative) は主に文学的な文章の計算機転写のために学界で使
+用されている大規模で精巧な DTD だ。TEI の Unix ベースのツールチェーンは DocBook
+と同じツールの多くを用いるが、スタイルシートは異なる。
+
+HTML の最新版である XHTML もまた、DTD によって記述される XML アプリケーション
+だ。
+
+!!! note
+
+    XHTML に関する記述は全部無視していい。
+
+その他にも、生命情報科学や銀行業など多様の分野で、構造化された情報を交換するため
+の XML DTD が数多く整備されている。
 
 ### The DocBook Toolchain
 
+DocBook の原稿から XHTML を作成するには、xmlto(1) フロントエンドを通常用いる。次
+の例では、XML DocBook 文書から XHTML ファイルを複数出力する。索引ページ用のファ
+イルと最上位節それぞれのページ用ファイルを含む：
+
+```console
+xmlto xhtml source.xml
+```
+
+単一の巨大ページを作るのも可能だ：
+
+```console
+xmlto xhtml-nochunks source.xml
+```
+
+印刷用の PostScript の作り方はこうだ：
+
+```console
+xmlto ps source.xml
+```
+
+文書を HTML や PostScript に変換するには、DocBook DTD と適切なスタイルシートの組
+み合わせを文書に適用できるエンジンが必要だ。[Figure 18.2] を見ろ。
+
+<!-- Figure 18.2. Present-day XML-DocBook toolchain. -->
+
+エンジン：
+
+* libxslt
+* Xalan & Saxon
+
+!!! note
+
+    よく使う `xsltproc` が文書の解析とスタイルシート変換の適用を行うものであることが理解できた。
+
+HTML への翻訳はかなり単純なスタイルシートを適用することで行われ、それで話は終わ
+る。RTF もこの方法で生成するのは簡単で、XHTML や RTF から、いざというときにフ
+ラットな ASCII テキスト近似を生成するのは容易だ。
+
+厄介なのは印刷だ。高品質の印刷出力、つまり PDF を生成するのは難しい。それを正し
+く行うには、内容から体裁段階と移行する人間の植字工の繊細な判断をアルゴリズムで複
+製する必要がある。
+
+スタイルシートとして、DocBook マークブックを XML の一種である FO に変換するもの
+を用いる。FO マークアップは非常に体裁段階のもので、XML の機能的な `troff` のよう
+なものと考えられる。これを PDF にパッケージするために PostScript に翻訳したい。
+
+Red Hat Linux に同梱されているツールチェーンでは、この作業は PassiveTeX という
+TeX マクロパッケージによって処理される。これは `xsltproc` によって生成された整形
+オブジェクトを Donald Knuth の TeX 言語に変換する。DVI 形式として知られる TeX の
+出力はその後 PDF に加工される。これを模式化するとこうなる：
+
+```raw
+XML → TeX → DVI → PDF
+```
+
+字体は重要な問題だ。XML, TeX, PDF では字体の動作モデルがまったく異なる。また、国
+際化と地域化の扱いは悪夢だ。このコード経路の唯一の長所は、それが機能するというこ
+とだ。
+
+上品な方法は　Apache プロジェクトが開発した FO から PostScript への直接変換器で
+ある [FOP] であろう。FOP を使えば、国際化の問題は解決しないまでも、少なくともう
+まく限定することができる。XML ツールは FOP に至るまで一貫して Unicode を扱う。
+Unicode 文字から PostScript 字体への写像も FOP の問題だ。
+
+[Figure 18.3]
+<!-- Figure 18.3. Future XML-DocBook toolchain with FOP. -->
+
+xsl-fo-proc と呼ばれる別のプロジェクトは、FOP と同じことを C++ で行うことを目指
+している。
+
+!!! note
+
+    このプロジェクトを探したが所在不明。
+
 ### Migration Tools
+
+古い流儀の体裁マークアップを DocBook に変換するのに必要な労力が第二の問題だ。人
+間ならば文書の体裁を論理構造に解析することが通常可能だ。なぜなら、例えば、斜体の
+字体が「強調」を意味するときと、「これは外国語の句だ」といった別の意味を持つとき
+を見分けるのに文脈を知っているからだ。
+
+文書を DocBook に翻訳する際にはこの種の区別を明示する必要がある。古いマークアッ
+プに存在することもあるが、そうでないことも多く、欠けている構造情報はなんとかしな
+ければダメだ。
+
+次の翻訳ツールはどれも完全な仕事はしてくれない。翻訳後は検査と人手による編集が必
+要になるだろう。
+
+* GNU Texinfo: `makeinfo --docbook`
+* POD: モジュール `POD::DocBook` は POD マークアップを DocBook に翻訳する。
+* LaTeX: PassiveTeX の作者によれば、[TeX4ht] というプロジェクトは LaTeX から
+  DocBook を生成できる。
+* `man` ページとその他の `troff` ベースのマークアップ
 
 ### Editing Tools
 
@@ -291,3 +448,10 @@ DocBook は大規模で複雑な技術文書用に設計された SGML と XML �
 [Chapter 8]: <../design/minilanguages.md>
 [Chapter 11]: <../design/interface.md>
 [Chapter 14]: <../implementation/languages.md>
+
+[Figure 18.1]: <http://www.catb.org/esr/writings/taoup/html/graphics/docflow1.png>
+[Figure 18.2]: <http://www.catb.org/esr/writings/taoup/html/graphics/docflow2.png>
+[Figure 18.3]: <http://www.catb.org/esr/writings/taoup/html/graphics/docflow3.png>
+[FOP]: <https://xmlgraphics.apache.org/fop/>
+[TEI]: <https://tei-c.org/>
+[TeX4ht]: <https://www.tug.org/tex4ht/>
