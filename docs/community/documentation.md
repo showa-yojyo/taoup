@@ -435,23 +435,124 @@ xsl-fo-proc と呼ばれる別のプロジェクトは、FOP と同じことを 
   DocBook を生成できる。
 * `man` ページとその他の `troff` ベースのマークアップ
 
+四番目が最も厄介な問題。著者は `troff` を DocBook に翻訳する道具を書いた。これは
+man(7), mdoc(7), ms(7), me(7) マクロから SGML または XML DocBook に翻訳する。
+
 ### Editing Tools
+
+2003 年半ばの現在、SGML/XML 文書用の優れたオープンソースの構造エディターがない。
+
+!!! note
+
+    何を以て XML の優れたエディターとするかを定義したい。
+
+[LyX] は印刷に LaTeX を使用し、LaTeX マークアップの構造編集を支持する GUI ワープ
+ロだ。DocBook を生成する LaTeX パッケージと LyX GUI で SGML, XML を書く方法を説
+明する how-to 文書がある。
+
+!!! note
+
+    リンク先のスクリーンショットを見る限り、数式も GUI 的に編集可能らしい。
+
+[GNU TeXmacs] は数式表示を含む技術的・数学的資料に適したエディターを作成すること
+を目的としたプロジェクトだ。XML の支援計画があるが、まだそこに至っていない。
+
+!!! note
+
+    リンク先の概要を見る限り、XML 形式で保存可能であることは謳っている。
+
+> Most people still hack DocBook tags by hand using either vi or emacs.
+
+これは現代でも変わらない気がする。Visual Studio Code でアウトライン表示くらい？
 
 ### Related Standards and Practices
 
+DocBook 自体は手段であって目的ではない。 検索可能な文書データベースという目的を
+達成するためには DocBook 以外の標準も必要になる。文書目録とメタデータだ。
+
+[ScrollKeeper] プロジェクトはこの要望に直接応えることを目的としている。
+
+ScrollKeeper は Open Metadata Format を使用している。これは図書館のカードカタロ
+グシステムに似た、オープンソース文書を索引にするための標準だ。この発想とは、文書
+の原稿だけでなく、カードカタログのメタデータを使用する贅沢な検索機能を支援するこ
+とだ。
+
 ### SGML
+
+XML には SGML (Standard Generalized Markup Language) という兄がいた。
 
 ### XML-DocBook References
 
+DocBook の学習を難しくしていることの一つは、DocBook 関連のサイトが W3C 標準の長
+い一覧や SGML 神学の膨大な練習問題、抽象的な用語の密集した藪などで初心者を圧倒し
+がちなことだ。
+
+* *XML in a Nutshell*: 一般的な入門書。
+* [*DocBook: The Definitive Guide*][Walsh]: 確かに信頼がおける資料だが、入門書と
+  しては最悪だ。
+* [*Writing Documents Using DocBook*][Goossens]: 代わりにこれを読め。
+* DocBook FAQ: 消失
+* DocBook wiki: 消失
+* The XML Cover Pages: 消失
+
 ## Best Practices for Writing Unix Documentation
+
+Unix 文化圏の人々のために文書を書くときは読者を安く見てはいけない。バカ向けに書
+いているかのごとく書くと、筆者自身そうだとみなされる。
+
+通俗化ととっつきやすくすることはまったく違う。前者が怠惰で重要なことを省略してい
+るのに対し、後者は注意深い考えと断乎とした編集を要する。
+
+分量を品質と勘違いしてはならない。そして特に、混乱を招くからといって機能的な詳細
+を省略したり、悪い印象を与えたくないからといって問題点についての警告を省略したり
+することはしてはいけない。
+
+情報密度の両極端のどちらに走るのも良くない。
+
+画面写真の使用は控えめにしろ。インターフェイスのスタイルや感触以上の情報はほとん
+ど伝わらない傾向がある。明確なテキストによる説明を代用できない。
+
+プロジェクトがそれなりの規模になれば、おそらく三種類の文書を出荷するはずだ：
+
+* 参考資料 man ページ
+* 入門者用手引
+* FAQ 一覧
+
+配布の中心となる Web サイトも用意して然るべきだ。
+
+巨大な man ページは好意的に見られない。ページが大きくなってきたら参照用の手引書
+を検討する。man ページでは手引書へのポインターを入れたり、プログラムがどのように
+起動されるかの詳細を簡単に要約する。
+
+ソースコードには README のような標準的なメタ情報ファイル ([Chapter 19]) を含めろ。
+
+* マニュアルページは伝統的な Unix の読者のための伝統的な Unix 式のコマンド参照資料
+  であるべし。
+* 入門者用手引書は非技術的な使用者向けの長文の文書であるべし。
+* FAQ は進化する資料であるべし。
+
+文書をオンラインにすることは、
+
+* 自分のソフトウェアの存在を知っている潜在的な使用者や顧客が、それを読み、それに
+  ついて学ぶことを容易にするという直接的な効果がある。
+* 自分のソフトウェアが Web 検索で発見されやすくなるという間接的な効果もある。
+
+<!-- 以下リンク -->
 
 [Chapter 8]: <../design/minilanguages.md>
 [Chapter 11]: <../design/interface.md>
 [Chapter 14]: <../implementation/languages.md>
+[Chapter 19]: <./opensource.md>
 
 [Figure 18.1]: <http://www.catb.org/esr/writings/taoup/html/graphics/docflow1.png>
 [Figure 18.2]: <http://www.catb.org/esr/writings/taoup/html/graphics/docflow2.png>
 [Figure 18.3]: <http://www.catb.org/esr/writings/taoup/html/graphics/docflow3.png>
+
+[GNU TeXmacs]: <https://www.texmacs.org/tmweb/home/welcome.en.html>
+[Goossens]: <https://web.fe.up.pt/~jmcruz/etc/web/crash-course.pdf>
 [FOP]: <https://xmlgraphics.apache.org/fop/>
+[LyX]: <https://www.lyx.org/>
+[ScrollKeeper]: <https://scrollkeeper.sourceforge.net/>
 [TEI]: <https://tei-c.org/>
 [TeX4ht]: <https://www.tug.org/tex4ht/>
+[Walsh]: <https://tdg.docbook.org/tdg/4.5/docbook.html>
