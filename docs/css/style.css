@@ -1,0 +1,27 @@
+:root{
+    --bs-font-family: 'Consolas', 'Menlo', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', monospace, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+
+    --bs-link-color: deeppink;
+    --bs-link-color-rgb: 255,20,147;
+    --bs-link-hover-color: deeppink;
+    --bs-link-hover-color-rgb: 255,20,147;
+
+    --bs-primary: deeppink;
+    --bs-primary-rgb: 255,20,147;
+    --bs-primary-bg-subtle: inherit;
+    --bs-primary-border-subtle: grey;
+}
+
+[data-bs-theme="light"]{
+    --bs-body-color: black;
+    --bs-body-color-rgb: 0,0,0;
+    --bs-primary-text-emphasis: black;
+}
+[data-bs-theme="dark"]{
+    --bs-body-color: white;
+    --bs-body-color-rgb: 255,255,255;
+    --bs-primary-text-emphasis: white;
+}
+.navbar.bg-primary {
+    background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
+}

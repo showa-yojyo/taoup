@@ -1,5 +1,6 @@
 # Project information
 copyright: © 2025 プレハブ小屋 All rights reserved.
+edit_uri: edit/main/docs/
 #remote_branch: gh-pages
 #remote_name: origin
 repo_url: https://github.com/showa-yojyo/taoup/
@@ -50,8 +51,8 @@ validation:
 # Build directories
 #docs_dir: docs
 #extra: {}
-#extra_css:
-#  - css/override.css
+extra_css:
+  - css/style.css
 #extra_javascript:
 #  - path: js/load-mathjax.js
 #    async: true
