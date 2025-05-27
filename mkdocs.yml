@@ -92,7 +92,8 @@ markdown_extensions:
       permalink: true
       title: 見出し一覧
       toc_depth: "2-6"
-
+hooks:
+  - hooks.py
 plugins:
   - search:
       enabled: True
