@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="ja" data-bs-theme="auto">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="プレハブ小屋">
+        <link rel="canonical" href="https://github.com/showa-yojyo/taoup/design/minilanguages.html">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Minilanguages - The Art of Unix Programming 読書ノート</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../css/brands.min.css" rel="stylesheet">
+        <link href="../css/solid.min.css" rel="stylesheet">
+        <link href="../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" disabled>
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <link href="../css/style.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../index.html">The Art of Unix Programming 読書ノート</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../index.html" class="nav-link">Home</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle active" aria-current="page" role="button" data-bs-toggle="dropdown"  aria-expanded="false">Notes</a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../preface.html" class="dropdown-item">Preface</a>
+</li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Context</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../context/philosophy.html" class="dropdown-item">Philosophy</a>
+</li>
+            
+<li>
+    <a href="../context/history.html" class="dropdown-item">History</a>
+</li>
+            
+<li>
+    <a href="../context/contrasts.html" class="dropdown-item">Contrasts</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Design</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="modularity.html" class="dropdown-item">Modularity</a>
+</li>
+            
+<li>
+    <a href="textuality.html" class="dropdown-item">Textuality</a>
+</li>
+            
+<li>
+    <a href="transparency.html" class="dropdown-item">Transparency</a>
+</li>
+            
+<li>
+    <a href="multiprogram.html" class="dropdown-item">Multiprogramming</a>
+</li>
+            
+<li>
+    <a href="minilanguages.html" class="dropdown-item active" aria-current="page">Minilanguages</a>
+</li>
+            
+<li>
+    <a href="generation.html" class="dropdown-item">Generation</a>
+</li>
+            
+<li>
+    <a href="configuration.html" class="dropdown-item">Configuration</a>
+</li>
+            
+<li>
+    <a href="interface.html" class="dropdown-item">Interfaces</a>
+</li>
+            
+<li>
+    <a href="optimization.html" class="dropdown-item">Optimization</a>
+</li>
+            
+<li>
+    <a href="complexity.html" class="dropdown-item">Complexity</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Implementation</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../implementation/languages.html" class="dropdown-item">Languages</a>
+</li>
+            
+<li>
+    <a href="../implementation/tools.html" class="dropdown-item">Tools</a>
+</li>
+            
+<li>
+    <a href="../implementation/reuse.html" class="dropdown-item">Reuse</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Community</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../community/portability.html" class="dropdown-item">Portability</a>
+</li>
+            
+<li>
+    <a href="../community/documentation.html" class="dropdown-item">Documentation</a>
+</li>
+            
+<li>
+    <a href="../community/opensource.html" class="dropdown-item">Open Source</a>
+</li>
+            
+<li>
+    <a href="../community/futures.html" class="dropdown-item">Futures</a>
+</li>
+    </ul>
+  </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/showa-yojyo/taoup/issues" class="nav-link">Issues</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="multiprogram.html" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="generation.html" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/showa-yojyo/taoup/edit/main/docs/design/minilanguages.md" class="nav-link"><i class="fa-brands fa-github"></i> Edit on GitHub</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                              <button id="theme-menu" aria-expanded="false" data-bs-toggle="dropdown" data-bs-display="static" aria-label="Toggle theme" class="nav-link dropdown-toggle">
+                                <i class="fa-solid fa-circle-half-stroke fa-fw"></i>
+                                <span class="d-lg-none ms-2">Toggle theme</span>
+                              </button>
+                              <ul class="dropdown-menu dropdown-menu-end">
+                                <li>
+                                  <button class="dropdown-item d-flex align-items-center" data-bs-theme-value="light" aria-pressed="false">
+                                    <i class="fa-solid fa-sun fa-fw"></i>
+                                    <span class="ms-2">Light</span>
+                                    <i class="fa-solid fa-check ms-auto d-none"></i>
+                                  </button>
+                                </li>
+                                <li>
+                                  <button class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark" aria-pressed="false">
+                                    <i class="fa-solid fa-moon fa-fw"></i>
+                                    <span class="ms-2">Dark</span>
+                                    <i class="fa-solid fa-check ms-auto d-none"></i>
+                                  </button>
+                                </li>
+                                <li>
+                                  <button class="dropdown-item d-flex align-items-center" data-bs-theme-value="auto" aria-pressed="true">
+                                    <i class="fa-solid fa-circle-half-stroke fa-fw"></i>
+                                    <span class="ms-2">Auto</span>
+                                    <i class="fa-solid fa-check ms-auto"></i>
+                                  </button>
+                                </li>
+                              </ul>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <script src="../js/darkmode.js"></script>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="2"><a href="#understanding-the-taxonomy-of-languages" class="nav-link">Understanding the Taxonomy of Languages</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="2"><a href="#applying-minilanguages" class="nav-link">Applying Minilanguages</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="3"><a href="#case-study-sng" class="nav-link">Case Study: sng</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#case-study-regular-expressions" class="nav-link">Case Study: Regular Expressions</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#case-study-glade" class="nav-link">Case Study: Glade</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#case-study-m4" class="nav-link">Case Study: m4</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#case-study-xslt" class="nav-link">Case Study: XSLT</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#case-study-the-documenters-workbench-tools" class="nav-link">Case Study: The Documenter's Workbench Tools</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#case-study-fetchmail-run-control-syntax" class="nav-link">Case Study: fetchmail Run-Control Syntax</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#case-study-awk" class="nav-link">Case Study: awk</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#case-study-postscript" class="nav-link">Case Study: PostScript</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#case-study-bc-and-dc" class="nav-link">Case Study: bc and dc</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#case-study-emacs-lisp" class="nav-link">Case Study: Emacs Lisp</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#case-study-javascript" class="nav-link">Case Study: JavaScript</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="2"><a href="#designing-minilanguages" class="nav-link">Designing Minilanguages</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="3"><a href="#choosing-the-right-complexity-level" class="nav-link">Choosing the Right Complexity Level</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#extending-and-embedding-languages" class="nav-link">Extending and Embedding Languages</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#writing-a-custom-grammar" class="nav-link">Writing a Custom Grammar</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#macros-beware" class="nav-link">Macros — Beware!</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#language-or-application-protocol" class="nav-link">Language or Application Protocol?</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="chapter-8-minilanguages">Chapter 8. Minilanguages<a class="headerlink" href="#chapter-8-minilanguages" title="Permanent link">&para;</a></h1>
+<div class="toc"><span class="toctitle">見出し一覧</span><ul>
+<li><a href="#understanding-the-taxonomy-of-languages">Understanding the Taxonomy of Languages</a></li>
+<li><a href="#applying-minilanguages">Applying Minilanguages</a><ul>
+<li><a href="#case-study-sng">Case Study: sng</a></li>
+<li><a href="#case-study-regular-expressions">Case Study: Regular Expressions</a></li>
+<li><a href="#case-study-glade">Case Study: Glade</a></li>
+<li><a href="#case-study-m4">Case Study: m4</a></li>
+<li><a href="#case-study-xslt">Case Study: XSLT</a></li>
+<li><a href="#case-study-the-documenters-workbench-tools">Case Study: The Documenter's Workbench Tools</a></li>
+<li><a href="#case-study-fetchmail-run-control-syntax">Case Study: fetchmail Run-Control Syntax</a></li>
+<li><a href="#case-study-awk">Case Study: awk</a></li>
+<li><a href="#case-study-postscript">Case Study: PostScript</a></li>
+<li><a href="#case-study-bc-and-dc">Case Study: bc and dc</a></li>
+<li><a href="#case-study-emacs-lisp">Case Study: Emacs Lisp</a></li>
+<li><a href="#case-study-javascript">Case Study: JavaScript</a></li>
+</ul>
+</li>
+<li><a href="#designing-minilanguages">Designing Minilanguages</a><ul>
+<li><a href="#choosing-the-right-complexity-level">Choosing the Right Complexity Level</a></li>
+<li><a href="#extending-and-embedding-languages">Extending and Embedding Languages</a></li>
+<li><a href="#writing-a-custom-grammar">Writing a Custom Grammar</a></li>
+<li><a href="#macros-beware">Macros — Beware!</a></li>
+<li><a href="#language-or-application-protocol">Language or Application Protocol?</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<p>プログラマーのエラー率（数百行あたりの欠陥数）は対象言語にほとんど依存しないという研究がある。ということは、より少ない行数でより多くの作業を行うことができる高水準言語は、バグもより少ないことを意味する。</p>
+<p>特定の応用領域を一つ固定して、それに特化した言語を与えれば、プログラムの量を大幅に減らせる。そのような言語の例：</p>
+<ul>
+<li>組版言語各種 (<code>troff</code>, <code>eqn</code>, <code>tbl</code>, <code>pic</code>, <code>grap</code>)</li>
+<li>シェル道具 <code>awk</code>, <code>sed</code>, <code>dc</code>, <code>bc</code></li>
+<li>ソフトウェア開発 (<code>make</code>, <code>yacc</code>, <code>lex</code>)</li>
+</ul>
+<p>著者はこの種の領域固有言語を小規模言語 (minilanguage) と呼ぶことにしている。可能な限り小さく単純に設計するのが賢明であることを強調したいので。※複雑な小規模言語が存在しないとは主張していない。</p>
+<p>小規模言語設計に至る正しい道の一本目は、小規模言語設計を使うと、あるプログラミング問題の仕様を、汎用言語で支援するよりも引き締まった表現力豊かな記法で、一段上の水準に押し上げることができるということをあらかじめ悟ることだ。</p>
+<p>小規模言語設計にたどり着く二本目の道は、仕様書のファイル形式の一つが小規模言語に似てきていることに気づくことだ。つまり、複雑な構造を開発し、制御しているアプリケーションの動作を暗示しているのだ。</p>
+<p>小規模言語設計に至るダメな道は、小出しに厄介な追加機能を拡張していくことだ。その先例を一つ：</p>
+<blockquote>
+<p>the example every Unix guru will think of (and shudder over) is the
+<code>sendmail.cf</code> configuration file associated with the <code>sendmail</code> mail
+transport.</p>
+</blockquote>
+<p>ダメな小規模言語をやってしまった場合の修正方法を後ほど Emacs Lisp の調査で見ていくそうなので楽しみにしておく。</p>
+<p>悪い小規模言語の設計に対する唯一の防御策は、良いそれの設計方法を知っていることしかない。</p>
+<h2 id="understanding-the-taxonomy-of-languages">Understanding the Taxonomy of Languages<a class="headerlink" href="#understanding-the-taxonomy-of-languages" title="Permanent link">&para;</a></h2>
+<p><a href="http://www.catb.org/esr/writings/taoup/html/graphics/taxonomy.png">Figure 8.1. Taxonomy of languages.</a> を頭に叩き込んでから本書の精読を続ける。</p>
+<ul>
+<li>基本的にはベン図であり、右の要素ほど increasing loopiness だ。</li>
+<li>集合それぞれにも右の要素ほど何らかの性質が強くなるが、あまり重要ではなさそうだ？</li>
+</ul>
+<blockquote>
+<p>In <a href="textuality.html">Chapter 5</a> we looked at Unix conventions for data files.
+There's a spectrum of complexity in these.</p>
+</blockquote>
+<p>イラストでは点線の仕切りや隣の集合との交わりで表現されている。いちばん低級であるのは名前と性質の間の単純な関係を作るファイルだ。イラストでは <code>/etc/passwd</code>,
+<code>.newsrc</code> が相当する。</p>
+<p>さらに尺度を上げるとデータ構造を相互変換する形態が出てくる。イラストでは SNG が相当する。</p>
+<blockquote>
+<p>A structured data-file format starts to border on being a minilanguage when it
+expresses not just structure but actions performed on some interpretive
+context (that is, memory that is outside the data file itself).</p>
+</blockquote>
+<ul>
+<li>XML はこの境界をまたぐ傾向がある（イラストでは XSLT が相当）。</li>
+<li>ここで取り上げる例は GUI を構築するためのコードジェネレーター、Glade だ。</li>
+</ul>
+<blockquote>
+<p>Formats that are both designed to be read and written by humans (rather than
+just programs) and are used to generate code, are firmly in the realm of
+minilanguages.</p>
+</blockquote>
+<ul>
+<li><code>yacc</code>, <code>lex</code> が典型的な例。</li>
+<li>マクロプロセッサーである <code>m4</code> もまた宣言的（イラスト中央の集合の左側）小規模言
+  語だ。</li>
+</ul>
+<p>Makefile については <a href="../implementation/tools.html">Chapter 15</a> でやるそうだ。</p>
+<p>イラスト中央の集合はよく見ると四分割されている：</p>
+<blockquote>
+<p>The spectrum of minilanguages ranges from declarative (with implicit actions)
+to imperative (with explicit actions).</p>
+</blockquote>
+<ul>
+<li>fetchmail(1) の実行制御構文は、非常に弱い命令型言語か、暗黙の制御フローを持つ
+  宣言型言語のどちらと見なすこともできる。</li>
+<li><code>troff</code> と PostScript 組版言語は多くの専門知識が組み込まれた命令型言語だ。</li>
+</ul>
+<p>課題に特化した命令型小規模言語の中には、汎用インタプリターになりかけているものもある（イラスト中央集合の右端部分）。つまり、条件分岐とループ（または再帰）の両方が制御構造として使われるように設計されている。これとは対照的に、偶発的にTuring完全であるに過ぎない言語もある。</p>
+<p>脚注：</p>
+<blockquote>
+<p>In practice, some Turing-complete languages would be far too painful to use
+for anything outside a specified and narrow problem domain.</p>
+</blockquote>
+<ul>
+<li>bc(1) と dc(1) インタープリターは明示的に Turing 完全である特殊な命令型小規模
+  言語の良い例だ。</li>
+</ul>
+<p>イラスト右集合内部には仕切線が描かれていないので、汎用度だけが違うと読める。</p>
+<p>Emacs Lisp や JavaScript のように、特殊なコンテクストで実行される完全なプログラミング言語として設計された言語まで来ると、汎用インタプリターとの境界線を越えることになる。</p>
+<p>悲しいことに、最後のパラグラフが部分的に難しくてわからない。イラスト右集合の右から二番目に <code>sh</code> と Tcl があるが……。</p>
+<blockquote>
+<p>With increasing generality there usually comes a richer ontology of data
+types. Shell and Tcl have relatively simple ontologies; Perl, Python, and Java
+more complex ones.</p>
+</blockquote>
+<h2 id="applying-minilanguages">Applying Minilanguages<a class="headerlink" href="#applying-minilanguages" title="Permanent link">&para;</a></h2>
+<p>小規模言語を使った設計には課題が二つある：</p>
+<ul>
+<li>道具箱の中に便利な既存の小規模言語があり、それをそのまま適用できる場合を認識す
+  ること。</li>
+<li>アプリケーションのために自作小規模言語を設計することが適切な状況を知ること。</li>
+</ul>
+<h3 id="case-study-sng">Case Study: <code>sng</code><a class="headerlink" href="#case-study-sng" title="Permanent link">&para;</a></h3>
+<p>SNG は <a href="transparency.html">Chapter 6</a> で一度取り扱ったツールだ。</p>
+<ul>
+<li>SNG には PNG のようなバイナリーデータ形態にはない重要な特徴、透明性がある。</li>
+<li>構造化データファイルは編集、変換、生成各ツールが互いの設計の前提を知ることなく
+  協調することを可能にする。</li>
+<li>SNG が加えたものは «it's designed to be easy to parse by eyeball and edit with
+  general-purpose tools» だ。</li>
+</ul>
+<h3 id="case-study-regular-expressions">Case Study: Regular Expressions<a class="headerlink" href="#case-study-regular-expressions" title="Permanent link">&para;</a></h3>
+<p>正規表現自体が小規模言語であるという見方は賛同するしかない。</p>
+<blockquote>
+<p>Regexps are so ubiquitous that the are hardly thought of as a minilanguage,
+but they replace what would otherwise be huge volumes of code implementing
+different (and incompatible) search capabilities.</p>
+</blockquote>
+<p>Unix における最も単純な正規表現ツールは grep(1) であり、指定された正規表現に合致する入力行をすべて出力に渡すフィルターだ。</p>
+<p>正規表現には亜種のようなものがある：</p>
+<ol>
+<li>Glob 表現 (glob expressions): Bash で言うワイルドカード <code>*</code>, <code>[...]</code>, <code>{...}</code>
+   に対応する。</li>
+<li>基本正規表現 (basic regular expressions): オリジナルの grep(1) が受理する記
+   法。</li>
+<li>拡張正規表現 (extended -): egrep(1) または <code>grep -E</code> が受理する記法。</li>
+<li>Perl 正規表現 (Perl -): Perl, Python, <code>grep -P</code> が受理する記法。</li>
+</ol>
+<p>正規表現を支援する新しい言語の設計慣習は Perl の亜種となる流れに落ち着いてきた。英数字でない文字の前のバックラッシュはその文字をリテラルとして常に意味する。これで正規表現の扱いにおける混乱が少なくなる。</p>
+<p>正規表現は小規模言語がいかに簡潔であるかを示す極端な例だ。単純な正規表現は、それを使わないのであれば何百行もの気難しくバグを起こしやすいコードで実装しなければならないような認識動作を表現するものだ。</p>
+<h3 id="case-study-glade">Case Study: Glade<a class="headerlink" href="#case-study-glade" title="Permanent link">&para;</a></h3>
+<p>Glade は GTK ツールキットライブラリー用の GUI 設計プログラム？だ。説明文を読む限り、よくあるフォームデザイナーのようなものを想像する。本質はここ：</p>
+<blockquote>
+<p>The GUI editor produces an XML file describing the interface; this, in turn,
+can be fed to one of several code generators that will actually grind out C,
+C++, Python or Perl code for the interface. The generated code then calls
+functions you write to supply behavior to the interface.</p>
+</blockquote>
+<p>生成コードが自作リスナー関数を呼び出し、動作を規定するものと考えられる。</p>
+<p>GUI を記述するための Glade の XML は単純な領域固有の小規模言語の良い例だ。</p>
+<p>Example 8.1. はおそらく <code>Hello World</code> というラベルを含むダイアログボックスか何かを定義する XML コード全体だろう。</p>
+<ul>
+<li>Glade GUI は有効仕様を構造化されたデータファイルとして扱う。</li>
+<li>Glade コード生成器は GUI を実装するプログラムを記述するために有効仕様を用い
+  る。</li>
+</ul>
+<p>XML の冗長さを乗り越えれば、Glade マークアップはかなり単純な言語だ。次の二つを行うだけだ：</p>
+<ul>
+<li>GUI ウィジェットの階層を宣言すること</li>
+<li>ウィジェットに属性を関連付けること</li>
+</ul>
+<p>このような透明性と単純性は優れた小規模言語の証だ。</p>
+<blockquote>
+<p>The ultimate functional test of a minilanguage like this one is simple: can I
+hack it without reading the manual? For a significant range of cases, the
+Glade answer is yes.</p>
+</blockquote>
+<p>例えば、ウィンドウ位置を変更したい場合は XML の</p>
+<pre><code class="language-xml">&lt;position&gt;GTK_WIN_POS_NONE&lt;/position&gt;
+</code></pre>
+<p>周囲を書き換えればいいだろうという見当が付く。</p>
+<p>Glade を使う利点は明らかだろう。コード生成に特化しているからだ。</p>
+<h3 id="case-study-m4">Case Study: m4<a class="headerlink" href="#case-study-m4" title="Permanent link">&para;</a></h3>
+<p>マクロ処理器 m4(1) はテキストの変換を記述するための宣言的な小規模言語を解釈する。</p>
+<ul>
+<li>プログラムはテキスト文字列を他の文字列に展開する方法を指定するマクロの集合だ。</li>
+<li>これらの宣言を <code>m4</code> で入力テキストに適用すると、マクロ展開が行われ、出力テキス
+  トが得られる。</li>
+<li><code>m4</code> は引数つきマクロ機能を有する。特定の固定文字列を別のものに変換する以上の
+  ことを可能にする。</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">TODO</p>
+<p>実際に <code>sudo apt install m4</code> して <code>info m4</code> を見るのが良さそうだ。</p>
+</div>
+<p>マクロ言語は条件分岐と再帰を支援している。Turing 完全だ。</p>
+<p>マクロ処理器は、通常、名前付き手続きやファイルインクルード機能が組み込まれていない小規模言語の前処理器として用いられる。これは土台となる言語の構文を拡張する簡単な方法なので、<code>m4</code> との組み合わせでこれらの両方の機能を支援する。</p>
+<p>よく知られた用途：</p>
+<blockquote>
+<p>Most system administrators now generate their <code>sendmail.cf</code> configuration
+files using an <code>m4</code> macro package supplied with the <code>sendmail</code> distribution.
+The macros start from feature names (or name/value pairs) and generate the
+corresponding (much uglier) strings in the <code>sendmail</code> configuration language.</p>
+</blockquote>
+<div class="admonition note">
+<p class="admonition-title">TODO</p>
+<p>リンク追加</p>
+</div>
+<h3 id="case-study-xslt">Case Study: XSLT<a class="headerlink" href="#case-study-xslt" title="Permanent link">&para;</a></h3>
+<p>XSLT は <code>m4</code> と同様、テキストストリームの変換を記述するための言語だ。単純なマクロの置換以上のことを行う。これは XML スタイルシートを記述するために使用される言語だ。実用的なアプリケーションについては <a href="../community/documentation.html">Chapter 18
+</a> で見るようだ。</p>
+<p>XSLT の特徴：</p>
+<ul>
+<li>純粋に宣言的で Turing 完全だ。</li>
+<li>再帰のみを支援し、ループは支援しない。</li>
+<li>非常に複雑で、間違いなく本章の事例研究の中で習得が最も難しい言語だ。</li>
+<li>型が限定されている。とりわけ、レコード構造や配列のような物がない。</li>
+<li>XSLT 処理器が標準入力を標準出力に絞り込むように設計されており、ファイルを読み
+  書きする機能は限定的だ。</li>
+</ul>
+<!-- ontology: the part of philosophy that studies what it means to exist -->
+<!-- ontology: a list of concepts and categories in a subject area that shows the relationships between them -->
+
+<p>「宣言的」が「単純」でも「弱い」でもないという点を説明するためにも、ここで XSLT
+を紹介したと述べている。XML 文書を扱う必要があるなら、いつかは XSLT という難題に直面しなければならないとも述べている。</p>
+<p>読書案内：</p>
+<blockquote>
+<p><em>XSLT: Mastering XML Transformations</em> is a good introduction to the language.
+A brief tutorial with examples is available on the <a href="https://nwalsh.com/docs/tutorials/xsl/xsl/slides.html">Web</a>.</p>
+</blockquote>
+<h3 id="case-study-the-documenters-workbench-tools">Case Study: The Documenter's Workbench Tools<a class="headerlink" href="#case-study-the-documenters-workbench-tools" title="Permanent link">&para;</a></h3>
+<p>まず Documenter's Workbench Tools を知らないとついていけない：</p>
+<blockquote>
+<p><code>troff</code> is the center of a suite of formatting tools (collectively called
+Documenter's Workbench or DWB), all of which are domain-specific minilanguages
+of various kinds.</p>
+</blockquote>
+<p>ほとんどは <code>troff</code> マークアップのための前処理器か後処理器だ。Free Software
+Foundation 版のものは groff(1) といい、機能が拡張されている。</p>
+<ul>
+<li>本格的なインタプリターになりかけている命令型小規模言語の良い例だ。</li>
+<li>条件法と再帰はあるがループはない。Turing 完全であるのは偶然だ。</li>
+</ul>
+<p>後処理器は通常、<code>troff</code> 使用者には見えない。</p>
+<blockquote>
+<p>The original <code>troff</code> emitted codes for the particular typesetter the Unix
+development group had available in 1970; later in the 1970s these were cleaned
+up into a device-independent minilanguage for placing text and simple graphics
+on a page.</p>
+</blockquote>
+<p>後処理器はこの言語を現代の画像プリンターが実際に受け入れることができるものに変換する。</p>
+<p>前処理は <code>troff</code> 言語に機能を実際に追加する。一般的なものは：</p>
+<ul>
+<li>tbl(1): 表を作成する</li>
+<li>eqn(1): 数式を組版する</li>
+<li>pic(1): 図式を作図する</li>
+</ul>
+<p>その他、grn(1), refer(1), bib(1) などがある。これらすべてのオープンソース等価版は <code>groff</code> に同梱されている。</p>
+<blockquote>
+<p>The grap(1) preprocessor provided a rather versatile plotting facility; there
+is an open-source implementation separate from <code>groff</code>.</p>
+</blockquote>
+<p>その他の前処理器の中には、オープンソースでの実装がなく、もはや一般的に使われていないものもある。例えば ideal(1) や chem(1) だ。</p>
+<p>これらの前処理器それぞれは小規模言語を受け取り、それを <code>troff</code> 要求にコンパイルする。具体的には：</p>
+<blockquote>
+<p>it is supposed to interpret by looking for a unique start and end request, and
+passes through unaltered any markup outside those (<code>tbl</code> looks for
+<code>.TS</code>/<code>.TE</code>, <code>pic</code> looks for <code>.PS</code>/<code>.PE</code>, etc.).</p>
+</blockquote>
+<p>たいていの前処理器は互いに干渉することなく、任意の順序で実行可能だ。モノによっては、例えば <code>chem</code> と <code>grap</code> はどちらも <code>pic</code> コマンドを発行するので、パイプラインでは <code>pic</code> の前に来なければならない。</p>
+<p>化学式、数式、表、書誌、プロット、図式を含む仮想的な論文を対象とした、
+Documenter's Workbench 処理パイプラインの例を本書から引用する：</p>
+<pre><code class="language-console">cat thesis.ms | chem | tbl | refer | grap | pic | eqn | groff -Tps &gt; thesis.ps
+</code></pre>
+<p>この種のビルドレシピは一度構成すれば、繰り返し使用するために Makefile やシェルスクリプトラッパーに収めておけばいい。</p>
+<p>これらの前処理器が扱う問題の範囲は、小規模言語モデルの能力をある程度示している。
+WYSIWYG ワープロに同等の知識を埋め込むのは至難の業だ。</p>
+<blockquote>
+<p>The pipeline architecture supports plugging in new, experimental preprocessors
+and postprocessors without disturbing old ones. It is modular and extensible.</p>
+</blockquote>
+<p>Documenter's Workbench はパイプ、絞り込み、小規模言語の能力の初期の見本であり、その見本は後の Unix の設計の多くに影響を与えた。個々の前処理器の設計は効果的な小規模言語の設計がどのようなものかについて、より多くの教訓を含む。</p>
+<blockquote>
+<p>Sometimes users writing descriptions in the minilanguages do unclean things
+with low-level troff markup inserted by hand.</p>
+</blockquote>
+<p>マークアップを手動でいじるのは不潔だ。</p>
+<p>前処理器言語は比較的きれいな、シェルのような構文を持っており、データファイルフォーマットの設計について <a href="textuality.html">Chapter 5</a> で説明した慣習の多くに従っている。</p>
+<p>Documenter's Workbench の少なくとも三つの小規模言語に共通する題の一つは意味を宣言的に取り扱うことだ。この考え方は GUI ツールキットにも見られる。</p>
+<p>この辺で pic(1) プログラムに図式配置を与えるコードを考察しているが、割愛。</p>
+<!-- Example 8.4. Taxonomy of languages — the pic source. -->
+
+<p>pic(1) の例は小規模言語に共通の設計主題を反映していて、それは Glade にも反映されている。つまり、制約に基づく推論をカプセル化し、それを動作に変換するために小規模言語を用いる。</p>
+<blockquote>
+<p>The <code>pic2graph</code> script we used as a case study in <a href="multiprogram.html">Chapter 7</a> was an ad-hoc
+way to accomplish this, using the retrofitted PostScript capability of
+groff(1) as a half-way step to a modern bitmap format.</p>
+</blockquote>
+<p>GNU plotutils パッケージには pic2plot(1) という、より清浄な解決策がある。</p>
+<blockquote>
+<p>The code was split into a parsing front end and a back end that generated
+troff markup, the two communicating through a layer of drawing primitives.</p>
+</blockquote>
+<p>モジュール性があるので、pic2plot(1) は GNU <code>pic</code> の解析段階を切り離し、最新の描画ライブラリーを用いて描画を再実装した。</p>
+<h3 id="case-study-fetchmail-run-control-syntax">Case Study: <code>fetchmail</code> Run-Control Syntax<a class="headerlink" href="#case-study-fetchmail-run-control-syntax" title="Permanent link">&para;</a></h3>
+<p>Example 8.5. としてファイル <code>fetchmailrc</code> の例が示される。この実行制御ファイルは命令型小規模言語と見なすことができる。</p>
+<!-- Example 8.5. Synthetic example of a `fetchmailrc`. -->
+
+<ul>
+<li>条件分岐も再帰もループもない。明示的な制御構造はまったくない。</li>
+<li>単なる関係ではなく動作を記述するので、Glade GUI 記述のような純粋に宣言的な構文
+  とは区別される。</li>
+</ul>
+<p>複雑なプログラムのための実行制御小規模言語は、この宣言言語と非常に弱い命令型言語のどっちつかずにしばしばなる。</p>
+<h3 id="case-study-awk">Case Study: <code>awk</code><a class="headerlink" href="#case-study-awk" title="Permanent link">&para;</a></h3>
+<p>前半の <code>awk</code> に関する概要はザッと目を通す程度でいい。</p>
+<p>当研究事例は <code>awk</code> が模倣の手本にはならないことを指摘する。</p>
+<ul>
+<li>1990 年以降はほとんど使われなくなった。</li>
+<li>新しいスクリプト言語、特に Perl に取って代わられた。</li>
+</ul>
+<p>もともと <code>awk</code> は報告書生成のための小さくて表現力豊かな特殊目的言語として設計された。残念なことに、<code>awk</code> は複雑さ対能力曲線の悪い点に設計されていることが判明した。</p>
+<blockquote>
+<p>Awk has also fallen out of use because more modern shells have floating point
+arithmetic, associative arrays, RE pattern matching, and substring
+capabilities, so that equivalents of small awk scripts can be done without the
+overhead of process creation. -- David Korn</p>
+</blockquote>
+<ul>
+<li>1987 年に Perl が登場してから数年間は <code>awk</code> の方が小さくて高速な実装だったとい
+  う理由だけで競争力を維持していた。しかし、計算サイクルとメモリーの経費が下がる
+  につれて、そういう倹約指向は力を失っていった。</li>
+<li>
+<p>2000 年になる頃には <code>awk</code> は古参の Unix ハッカーのほとんどにとって単なる思い出
+  に過ぎなくなっていた。</p>
+</li>
+<li>
+<p>機械資源は時間とともに安くなるが、プログラマーの頭の中の空間は高くなる一方だ。</p>
+</li>
+<li>最近の小規模言語は一般的だが非コンパクトなものと、専門的だが非常にコンパクトな
+  ものに両極化している。</li>
+</ul>
+<blockquote>
+<p>specialized but noncompact simply won't compete</p>
+</blockquote>
+<h3 id="case-study-postscript">Case Study: PostScript<a class="headerlink" href="#case-study-postscript" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>PostScript is a minilanguage specialized for describing typeset text and
+graphics to imaging devices.</p>
+</blockquote>
+<ul>
+<li>Xerox Palo Alto Research Center で行われた設計作業を基に Unix に輸入された。</li>
+<li>1984 年に初めて商用リリースされた後、何年もの間、Adobe 社の独占製品としてのみ
+  利用可能。</li>
+<li>1988年 にオープンソースに近い許諾条件でクローンされ、以来 Unix でのプリンター
+  制御の事実上標準となっている。</li>
+</ul>
+<p>PostScript は機能的には <code>troff</code> マークアップに似ている。どちらもプリンターやその他の画像デバイスを制御するためのもので、通常はプログラムやマクロパッケージが生成する。</p>
+<p>PostScript は言語として一から設計されており、はるかに表現力が豊かで強力である。</p>
+<p>PostScript で書かれた画像のアルゴリズム記述は描画するビットマップよりもはるかに小さいため、記憶域や通信帯域幅を食わない。</p>
+<p>PostScript は明示的に Turing 完全であり、条件分岐、ループ、再帰、名前付き手続きを支援している。整数、実数、文字列、配列があるが、構造体に相当するものはない。</p>
+<p>全部で 400 ほどある操作のうち、基本的なものは 40 ほどある。例えば：</p>
+<ul>
+<li>ページ上に文字列を描く</li>
+<li>現在のフォントを設定する</li>
+<li>グレーレベルや色を変更する</li>
+<li>線分、円弧、Bezier 曲線を描く</li>
+<li>閉領域を塗りつぶす</li>
+<li>くり抜き領域を設定する</li>
+</ul>
+<p>その他の PostScript 操作は算術演算、制御構造、手続きを実装する。これらにより反復画像や定型画像を、画像を組み合わせるプログラムとして表現する。</p>
+<p>PostScript の有用性の一端は SVG 性にある。ビットマップよりもはるかにかさばらず、デバイスの解像度に依存せず、ネットワークケーブルやシリアル回線でより速く移動できる。</p>
+<blockquote>
+<p>PostScript is often implemented as firmware built into a printer.</p>
+</blockquote>
+<p>Firmware とはハードウェア（この場合は印刷機）が機能し、機器上で動作する他のソフトウェアと通信できるようにする基本的な機会命令を与えるソフトウェアのことをいう。</p>
+<p>オープンソースの実装である Ghostscript は PostScript をさまざまなグラフィック形式や（ちょっとした）プリンター制御言語に変換することが可能だ。他のほとんどのソフトウェアは PostScript を最終的な出力形式として扱い、PostScript 対応の画像処理デバイスに渡すことを意図しているが、編集したり、目で見たりすることはできない。</p>
+<p>PostScript はたいへんよく設計された特殊用途制御言語の例であり、模範として注意深く研究する価値がある。</p>
+<h3 id="case-study-bc-and-dc">Case Study: <code>bc</code> and <code>dc</code><a class="headerlink" href="#case-study-bc-and-dc" title="Permanent link">&para;</a></h3>
+<p>これらは命令型の例だ。</p>
+<blockquote>
+<p><code>dc</code> is the oldest language on Unix; it was written on the PDP-7 and ported to
+the PDP-11 before Unix itself was ported. -- Ken Thompson</p>
+</blockquote>
+<p>この二つの言語の領域は無制限精度の算術演算だ。他のプログラムからは、そのような計算に必要な特殊技法を気にすることなく、これらの言語を使ってそのような計算を行うことができる。</p>
+<p>SNG や Glade マークアップ同様、これらの言語の強みの一つはその単純さだ。dc/bc それぞれの記法さえ知ってしまえば、これらの言語の対話的操作について目新しいことはほとんどない。驚き最小の法則だ。</p>
+<ul>
+<li>条件分岐とループの両方を持ち、Turing 完全である</li>
+<li>型は非常に制限されており、無制限精度の整数と文字列しかない。</li>
+</ul>
+<p>dc/bc はインタプリター型小規模言語と完全なスクリプト言語の境界線上にある。</p>
+<p>ユーザー定義手続きのライブラリーを支援する能力はプログラミング可能性という付加的な利便性を与える。これは命令形言語の最も重要な利点だ。</p>
+<p>dc/bc のインターフェイスは単純なので、他のプログラムやスクリプトはこれらのプログラムを主プロセスとして呼び出すことで、これらのすべての機能に簡単にアクセスできる。</p>
+<h3 id="case-study-emacs-lisp">Case Study: Emacs Lisp<a class="headerlink" href="#case-study-emacs-lisp" title="Permanent link">&para;</a></h3>
+<p>個人的には xyzzy 使用者だったので、この節の主張を誤解することはないと信じたい。</p>
+<p>特殊用途のインタープリタ型言語は、単に特定の課題を達成するための主プロセスとして実行されるのではなく、構造全体の核となることができる。</p>
+<p>Emacs は Lisp の方言で構築されており、編集バッファーに対する動作を記述することと、従プロセスを制御することの両方の素を備えている。</p>
+<p>Emacs が編集操作や他のプログラムのフロントエンドを記述するための強力な言語を中心に構築されているという事実は、通常の編集以外にも多くのことに使用できるということを意味する。</p>
+<p>Emacs の「モード」はユーザー定義のライブラリーであり、Emacs Lisp で書かれたプログラムであり、エディターを特定の仕事に特化させるものだ。</p>
+<p>Emacs のモードで実装されるさまざまな機能の例：</p>
+<ul>
+<li>メール送受信（システムメールサービスを従プロセスとして使う）</li>
+<li>Usenet ニュース送受信</li>
+<li>Web 閲覧</li>
+<li>チャットプログラムのフロントエンド</li>
+<li>カレンダー</li>
+<li>Emacs 独自の電卓プログラム、</li>
+<li>Emacs Lisp モードとして書かれたゲーム</li>
+</ul>
+<h3 id="case-study-javascript">Case Study: JavaScript<a class="headerlink" href="#case-study-javascript" title="Permanent link">&para;</a></h3>
+<p>この節で研究するのはクライアント側 JavaScript だ。以下、単に JavaScript と記す。</p>
+<blockquote>
+<p>JavaScript is an open-source language designed to be embedded in C programs.</p>
+</blockquote>
+<p>これは知らなんだ。</p>
+<ul>
+<li>JavaScript コードを含む Web ページを通じた使用者への攻撃を防ぐため、その機能は
+  厳しく制限されている。</li>
+<li>ディスクファイルの内容を直接変更することは不可能。</li>
+<li>ネットワーク接続を独自に開始するとは不可能。</li>
+</ul>
+<p>上の制約があるので JavaScript は汎用言語とは言い難い。</p>
+<p>JavaScript は現在、ブラウザーの DOM と呼ばれる単一の特別なオブジェクトの値を読み書きすることで、その環境と相互作用する。</p>
+<p>JavaScript は次の理由から興味深い研究になる：</p>
+<ul>
+<li>実際にその場にいなくても入手できる汎用言語に限りなく近い。</li>
+<li>単一の DOM オブジェクトを介した JavaScript とそのブラウザー環境の間の結びつき
+  はよく設計されており、他の埋め込み状況の手本として役立つ可能性がある。</li>
+</ul>
+<h2 id="designing-minilanguages">Designing Minilanguages<a class="headerlink" href="#designing-minilanguages" title="Permanent link">&para;</a></h2>
+<p>どのような場合に小規模言語を設計するのが適切か。</p>
+<ul>
+<li><a href="https://wiki.c2.com/?AlternateHardAndSoftLayers">Alternate Hard And Soft Layers</a></li>
+<li>Scripted Components: リンク切れ</li>
+<li><a href="https://www2.dmst.aueb.gr/dds/pubs/jrnl/2000-JSS-DSLPatterns/html/dslpat.html">Notable Design Patterns for Domain-Specific Languages</a></li>
+</ul>
+<h3 id="choosing-the-right-complexity-level">Choosing the Right Complexity Level<a class="headerlink" href="#choosing-the-right-complexity-level" title="Permanent link">&para;</a></h3>
+<ul>
+<li>できるだけ単純に設計しろ。</li>
+<li>解釈時に外部データを変更するような言語ではなく、構造化データファイルを設計する
+  ことで済ませられるのであればそうしろ。</li>
+</ul>
+<p>構造化データにこだわる現実的な理由の一つに、ネットワーク世界では内蔵言語機能は、不便であったり、危険であったり、悪用の対象になりうるからだ。JavaScript の設計者は不愉快なポップアップ広告に言語が使われるとは予想していなかった。</p>
+<p>Microsoft Word のマクロウイルスはこの種のものがいかに積極的に危険なものになりうるかを示している。なぜ Windows にはあって Unix にはないのか。これには、Unix が基本的に優れた安心設計であることを含む多くの理由があるが、例えば、Unix のメールエージェントは使用者が閲覧する文書の生内容を既定で実行しない。</p>
+<p>Java や JavaScript のような言語ははっきりとサンドボックス化されている。つまり、単に設計を単純化するためだけでなく、バグや悪意のあるコードによる潜在的に破壊的な操作を防ごうとするために、環境へのアクセスを制限している。</p>
+<div class="admonition note">
+<p class="admonition-title">TODO</p>
+<p>上の言い換えで良いとは思うが、サンドボックスの意味をよく調べる。</p>
+</div>
+<p>その一方で、データファイル形式ではなく言語が本当に必要だった設計も多かった。言語のような機能が後付けされることがあまりにも多いのだ。</p>
+<p>Turing 完全な小規模を偶発的に設計するのは危険だ。このようなことをすると、将来、ループや条件分岐をさせる必要があると考える人が現れる可能性が高まる。それはいいが、次がわからない：</p>
+<blockquote>
+<p>Because these are only available in an obfuscated way, he'll produce
+obfuscated code.</p>
+</blockquote>
+<p>小規模言語の設計には、小さな選択が道具の使いやすさに大きな違いをもたらす場所がたくさんある：</p>
+<p>言語設計として、エラーメッセージを出す以外の選択肢を考えることは良い原則だ。多くの場合、意図は明確であり、言語が黙って正しいことを行うようにすることは大きな恩恵となる。</p>
+<ul>
+<li>良い例：C 言語では配列の初期化リストの最後に余分なカンマを付けることが許される。</li>
+<li>悪い例：HTML リーダーの詮索好き、特に些細な入れ子エラーのために文書の一部を無言で破棄する習慣。</li>
+</ul>
+<p>(Steve Johnson)</p>
+<blockquote>
+<p>On this issue, as elsewhere, there is no substitute for good taste and
+engineering judgment.</p>
+</blockquote>
+<p>なんと和訳しにくい英文だ。</p>
+<ul>
+<li>宣言型小規模言語ならば人間が読めるように設計された、明確で一貫性のある構文を持
+  たせる。</li>
+<li>命令型小規模言語ならば使用者が慣れていると予想される言語モデルから適応された、
+  あらゆる制御構造を追加する。</li>
+</ul>
+<blockquote>
+<p>Think about the language as a language; ask yourself esthetic questions like
+“Will this be comfortable to program in?” and even “Will it be pleasant to
+look at?”</p>
+</blockquote>
+<h3 id="extending-and-embedding-languages">Extending and Embedding Languages<a class="headerlink" href="#extending-and-embedding-languages" title="Permanent link">&para;</a></h3>
+<p>根本的に重要な問題の一つは、既存のスクリプト言語を拡張したり組み込んだりして小規模言語を実装できるかどうかということだ。 これは命令型の小規模言語では正しいが、宣言型の小規模言語ではあまり適切ではない。</p>
+<p>インタープリター言語でサービス関数をコーディングするだけで、命令型言語を書くことができる場合がある。</p>
+<p>これは小規模言語を書く最も簡単な方法だ。著者を含む古くからの Lisp プログラマーはこの技法が大好きで多用している。 Emacs の設計の根底にあり、Tcl, Python, Perl のような新しいスクリプト言語でも再発見されている。</p>
+<p>これには欠点もある：</p>
+<ul>
+<li>必要とするコードライブラリーとのインターフェイスがホスト言語にはできないかもし
+  れない。</li>
+<li>内部的に、必要とする計算にとってデータ型が不適切かもしれない。</li>
+<li>プロトタイプの性能を測定したら遅過ぎるかもしれない。</li>
+</ul>
+<p>このようなことが起こった場合、通常は C/C++ でコーディングし、その結果を小規模言語に統合することで解消することになる。</p>
+<p>C コードでスクリプト言語を拡張したり、C プログラムにスクリプト言語を組み込んだりする選択は、そのために設計されたスクリプト言語の存在を当てにする。</p>
+<ul>
+<li>Perl の拡張や組み込みは可能だ。</li>
+<li>Python を拡張するのはとても簡単で、組み込むのはほんの少しだけ難しい。</li>
+<li>Java には C の「ネイティブメソッド」を呼び出すためのインターフェイスがあるが、
+  移植性が損なわれる傾向があるため、避けるようにと釘を刺している。</li>
+<li>シェルのほとんどのバージョンは組み込みや拡張のために設計されていない。Korn は
+  特筆すべき例外。</li>
+</ul>
+<p>既存のスクリプト言語に命令型小規模言語を便乗させない理由はたくさんある。数少ない良い理由の一つは、エラーチェックのために独自の文法を実装したい場合だ。</p>
+<h3 id="writing-a-custom-grammar">Writing a Custom Grammar<a class="headerlink" href="#writing-a-custom-grammar" title="Permanent link">&para;</a></h3>
+<p>宣言型小規模言語の場合、XML を基本構文として使い、文法を XML の文書型として指定するべきかどうかが一つの大きな問題となる。とあるが、現代なら JSON, YAML, etc. でも同じことが言えるだろう。</p>
+<p>独自文法が必要な場合は <code>yacc</code> と <code>lex</code> だ。詳細は <a href="generation.html">Chapter 9</a> で学ぶ。</p>
+<p>独自構文を実装すると決めたとしても、既存の道具を再利用することでどのような恩恵が得られるかを考えろ。マクロ機能が必要であれば m4(1) による前処理が正しい答えであるかどうかを検討しろ。まず次節の注意点を考慮しろ。</p>
+<h3 id="macros-beware">Macros — Beware!<a class="headerlink" href="#macros-beware" title="Permanent link">&para;</a></h3>
+<p>マクロ拡張機能は初期の Unix では言語設計者に好まれた戦術であった。C 言語にももちろんあるし、pic(1) のような、より複雑な特殊用途の小規模言語にも見られる。<code>m4</code> 前処理器はマクロ拡張前処理器を実装するための汎用道具となる。</p>
+<p>初期の設計者たちは、マクロ機能がプログラムを構成するための唯一の装置であったアセンブラーの経験に影響されていたようだ。</p>
+<p>マクロ展開の長所は、基となる言語の構文について何も知らず、その構文を拡張するために使えることだ。これが非常に簡単に悪用され、不透明で驚くべきコードや、特徴づけが難しいバグの温床となるコードを生み出してしまう。</p>
+<p>C 言語では、この種の問題の典型例は次のような不味いマクロだ：</p>
+<pre><code class="language-c">#define max(x, y)    x &gt; y ? x : y
+</code></pre>
+<p>マクロは C 言語の構文に頓着しないので、例えば式 <code>max(a = b, ++c)</code> を展開するときに演算子の優先順を考慮せずに、文字列的に上の右辺の形式に置換するからプログラマーの期待を裏切る。特に、インクリメント演算子が展開後に二度現れることに注意。</p>
+<p>現代、こんなマクロを書く技術者は存在しない。</p>
+<p>一般的に、マクロと副作用のある式の相互作用は、診断が難しい不幸な結果を招くことがある。</p>
+<p>TeX 組版言語はこの一般的な問題をよく表している。TeX は意図的に Turing 完全である（条件分岐、ループ、再帰がある）が、驚くべきことをさせることができる一方で、TeX
+のコードは読みにくく、デバッグに手間がかかる傾向がある。LaTeX ソースはその一例。</p>
+<p>マクロ展開はエラー診断を狂わせる傾向がある。プログラマーが見ているオリジナルではなく、マクロ展開されたテキストを基準にエラー報告が生じる。この関係がマクロ展開によって難読化されると、出力される診断結果が実際のエラーの場所と関連付けるのが難しくなる。次で問題になりがちだ：</p>
+<ul>
+<li>複数行にまたがる展開</li>
+<li>条件付き include/exclude</li>
+<li>展開されたテキストの行番号を変更できる前処理器やマクロ</li>
+</ul>
+<p>モノによっては行番号の補正が可能。</p>
+<p>Unix の長期的な教訓の一つは、マクロは解決するよりも問題を引き起こす傾向があるということだ。最近の（小規模）言語の設計ではマクロは使われなくなった。</p>
+<h3 id="language-or-application-protocol">Language or Application Protocol?<a class="headerlink" href="#language-or-application-protocol" title="Permanent link">&para;</a></h3>
+<p>もう一つの重要な質問は、小規模言語エンジンが他のプログラムから従プロセスとして対話的に呼び出されるかどうかだ。もしそうならば、設計は <a href="textuality.html">Chapter 5</a> で見たようなアプリケーション通信規格に近いものになる。</p>
+<p>主な違いは、交信境界がどれだけ注意深くマークされているかだ。 人間なら CLI からの会話出力がどこで終わり、どこで次の入力を促すプロンプトが出るかを見分けるのが得意だ。コンピュータープログラムはこの点で苦労する。出力に明確な終了印がないか、出力の長さを事前に知っていなければ、いつ読むのをやめればいいのかわからないのだ。</p>
+<blockquote>
+<p>Even worse is when a program's input is buffered (often inadvertently, as by
+stdio). A program that stops overtly reading at the right place can
+nonetheless eat past it.  -- Doug McIlroy</p>
+</blockquote>
+<p>従プロセス化された小規模言語と主プロセスが対話的に何かを行おうとするプログラムで、この問題を慎重に回避するように設計されていないものは、主従の同期が取れなくなり、膠着しやすいと <a href="multiprogram.html">Chapter 7</a> で教わった。</p>
+<p>それほど注意深く設計されていない小規模言語を駆動するための回避策がある。</p>
+<blockquote>
+<p>The prototype for most of them is the Tcl <code>expect</code> package. This package
+assists conversation with CLIs.</p>
+</blockquote>
+<p>指定された正規表現パターンにマッチするか、指定されたタイムアウトが経過するまで読み込む。これによって、従プロセスがその役割に合わせて調整されていない場合でも、信頼性の高い対話を行う主プログラムを構築できることが多い。</p>
+<p>これは余計な接着剤の層でもあり、物事がうまくいかなくなる場所だ。</p>
+<p>曖昧でない出力終了区切り指定パターンとバイト詰めの類比で、よりアプリケーション通信規約のごとく応答するように、交信動作を変更するオプションを追加するのが良い考えであることがある。</p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>© 2025 プレハブ小屋 All rights reserved.</p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js"></script>
+        <script src="../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

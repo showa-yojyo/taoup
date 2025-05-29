@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+<html lang="ja" data-bs-theme="auto">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="プレハブ小屋">
+        <link rel="canonical" href="https://github.com/showa-yojyo/taoup/implementation/languages.html">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Languages - The Art of Unix Programming 読書ノート</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../css/brands.min.css" rel="stylesheet">
+        <link href="../css/solid.min.css" rel="stylesheet">
+        <link href="../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" disabled>
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <link href="../css/style.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../index.html">The Art of Unix Programming 読書ノート</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../index.html" class="nav-link">Home</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle active" aria-current="page" role="button" data-bs-toggle="dropdown"  aria-expanded="false">Notes</a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../preface.html" class="dropdown-item">Preface</a>
+</li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Context</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../context/philosophy.html" class="dropdown-item">Philosophy</a>
+</li>
+            
+<li>
+    <a href="../context/history.html" class="dropdown-item">History</a>
+</li>
+            
+<li>
+    <a href="../context/contrasts.html" class="dropdown-item">Contrasts</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Design</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../design/modularity.html" class="dropdown-item">Modularity</a>
+</li>
+            
+<li>
+    <a href="../design/textuality.html" class="dropdown-item">Textuality</a>
+</li>
+            
+<li>
+    <a href="../design/transparency.html" class="dropdown-item">Transparency</a>
+</li>
+            
+<li>
+    <a href="../design/multiprogram.html" class="dropdown-item">Multiprogramming</a>
+</li>
+            
+<li>
+    <a href="../design/minilanguages.html" class="dropdown-item">Minilanguages</a>
+</li>
+            
+<li>
+    <a href="../design/generation.html" class="dropdown-item">Generation</a>
+</li>
+            
+<li>
+    <a href="../design/configuration.html" class="dropdown-item">Configuration</a>
+</li>
+            
+<li>
+    <a href="../design/interface.html" class="dropdown-item">Interfaces</a>
+</li>
+            
+<li>
+    <a href="../design/optimization.html" class="dropdown-item">Optimization</a>
+</li>
+            
+<li>
+    <a href="../design/complexity.html" class="dropdown-item">Complexity</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Implementation</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="languages.html" class="dropdown-item active" aria-current="page">Languages</a>
+</li>
+            
+<li>
+    <a href="tools.html" class="dropdown-item">Tools</a>
+</li>
+            
+<li>
+    <a href="reuse.html" class="dropdown-item">Reuse</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Community</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../community/portability.html" class="dropdown-item">Portability</a>
+</li>
+            
+<li>
+    <a href="../community/documentation.html" class="dropdown-item">Documentation</a>
+</li>
+            
+<li>
+    <a href="../community/opensource.html" class="dropdown-item">Open Source</a>
+</li>
+            
+<li>
+    <a href="../community/futures.html" class="dropdown-item">Futures</a>
+</li>
+    </ul>
+  </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/showa-yojyo/taoup/issues" class="nav-link">Issues</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../design/complexity.html" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="tools.html" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/showa-yojyo/taoup/edit/main/docs/implementation/languages.md" class="nav-link"><i class="fa-brands fa-github"></i> Edit on GitHub</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                              <button id="theme-menu" aria-expanded="false" data-bs-toggle="dropdown" data-bs-display="static" aria-label="Toggle theme" class="nav-link dropdown-toggle">
+                                <i class="fa-solid fa-circle-half-stroke fa-fw"></i>
+                                <span class="d-lg-none ms-2">Toggle theme</span>
+                              </button>
+                              <ul class="dropdown-menu dropdown-menu-end">
+                                <li>
+                                  <button class="dropdown-item d-flex align-items-center" data-bs-theme-value="light" aria-pressed="false">
+                                    <i class="fa-solid fa-sun fa-fw"></i>
+                                    <span class="ms-2">Light</span>
+                                    <i class="fa-solid fa-check ms-auto d-none"></i>
+                                  </button>
+                                </li>
+                                <li>
+                                  <button class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark" aria-pressed="false">
+                                    <i class="fa-solid fa-moon fa-fw"></i>
+                                    <span class="ms-2">Dark</span>
+                                    <i class="fa-solid fa-check ms-auto d-none"></i>
+                                  </button>
+                                </li>
+                                <li>
+                                  <button class="dropdown-item d-flex align-items-center" data-bs-theme-value="auto" aria-pressed="true">
+                                    <i class="fa-solid fa-circle-half-stroke fa-fw"></i>
+                                    <span class="ms-2">Auto</span>
+                                    <i class="fa-solid fa-check ms-auto"></i>
+                                  </button>
+                                </li>
+                              </ul>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <script src="../js/darkmode.js"></script>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="2"><a href="#unixs-cornucopia-of-languages" class="nav-link">Unix's Cornucopia of Languages</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="2"><a href="#why-not-c" class="nav-link">Why Not C?</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="2"><a href="#interpreted-languages-and-mixed-strategies" class="nav-link">Interpreted Languages and Mixed Strategies</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="2"><a href="#language-evaluations" class="nav-link">Language Evaluations</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="3"><a href="#c" class="nav-link">C</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#c_1" class="nav-link">C++</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#shell" class="nav-link">Shell</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#perl" class="nav-link">Perl</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#tcl" class="nav-link">Tcl</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#python" class="nav-link">Python</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#java" class="nav-link">Java</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#emacs-lisp" class="nav-link">Emacs Lisp</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="2"><a href="#trends-for-the-future" class="nav-link">Trends for the Future</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="2"><a href="#choosing-an-x-toolkit" class="nav-link">Choosing an X Toolkit</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="chapter-14-languages">Chapter 14. Languages<a class="headerlink" href="#chapter-14-languages" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p>To C or Not To C?</p>
+</blockquote>
+<p>『ハムレット』のパロデー。</p>
+<div class="toc"><span class="toctitle">見出し一覧</span><ul>
+<li><a href="#unixs-cornucopia-of-languages">Unix's Cornucopia of Languages</a></li>
+<li><a href="#why-not-c">Why Not C?</a></li>
+<li><a href="#interpreted-languages-and-mixed-strategies">Interpreted Languages and Mixed Strategies</a></li>
+<li><a href="#language-evaluations">Language Evaluations</a><ul>
+<li><a href="#c">C</a><ul>
+<li><a href="#c-case-study-fetchmail">C Case Study: fetchmail</a></li>
+</ul>
+</li>
+<li><a href="#c_1">C++</a><ul>
+<li><a href="#c-case-study-the-qt-toolkit">C++ Case Study: The Qt Toolkit</a></li>
+</ul>
+</li>
+<li><a href="#shell">Shell</a><ul>
+<li><a href="#case-study-xmlto">Case Study: xmlto</a></li>
+<li><a href="#case-study-sorcery-linux">Case Study: Sorcery Linux</a></li>
+</ul>
+</li>
+<li><a href="#perl">Perl</a><ul>
+<li><a href="#a-small-perl-case-study-blq">A Small Perl Case Study: blq</a></li>
+<li><a href="#a-large-perl-case-study-keeper">A Large Perl Case Study: keeper</a></li>
+</ul>
+</li>
+<li><a href="#tcl">Tcl</a><ul>
+<li><a href="#case-study-tkman">Case Study: TkMan</a></li>
+<li><a href="#moodss-a-large-tcl-case-study">Moodss: A Large Tcl Case Study</a></li>
+</ul>
+</li>
+<li><a href="#python">Python</a><ul>
+<li><a href="#a-small-python-case-study-imgsizer">A Small Python Case Study: imgsizer</a></li>
+<li><a href="#a-medium-sized-python-case-study-fetchmailconf">A Medium-Sized Python Case Study: fetchmailconf</a></li>
+<li><a href="#a-large-python-case-study-pil">A Large Python Case Study: PIL</a></li>
+</ul>
+</li>
+<li><a href="#java">Java</a><ul>
+<li><a href="#case-study-freenet">Case Study: FreeNet</a></li>
+</ul>
+</li>
+<li><a href="#emacs-lisp">Emacs Lisp</a></li>
+</ul>
+</li>
+<li><a href="#trends-for-the-future">Trends for the Future</a></li>
+<li><a href="#choosing-an-x-toolkit">Choosing an X Toolkit</a></li>
+</ul>
+</div>
+<h2 id="unixs-cornucopia-of-languages">Unix's Cornucopia of Languages<a class="headerlink" href="#unixs-cornucopia-of-languages" title="Permanent link">&para;</a></h2>
+<p>Cornucopia を辞書で引くと «a symbol of plenty consisting of a goat's horn
+overflowing with flowers, fruit, and corn» (OED) とある。豊穣の象徴？</p>
+<p>Unix は計算機の歴史における他のどの OS よりも多くの異なる言語の寄主である可能性がある。その多様性の理由は二つはある：</p>
+<ul>
+<li>Unix が研究や教育の基礎として広く使われている。</li>
+<li>アプリケーションの設計と適切な実装言語を釣り合わすことで、生産性が大きく変わる
+  という事実。</li>
+</ul>
+<p>Unix の伝統は応用領域固有言語や、現在一般的にスクリプト言語と呼ばれているものの設計を奨励している。</p>
+<p>スクリプト言語という術語は少々扱いにくい。そう呼ばれている言語はその呼び名の枠を超えた能力を持つまでに成長しており、独立した汎用プログラミング言語になっている。</p>
+<p>これらすべてを「スクリプト言語」で一緒くたにできる理由の一つは、これらの言語がほとんど同じ発達をしているからだ：</p>
+<ul>
+<li>インタープリターを持つことで、動的ストレージ管理の自動化も比較的容易になる。</li>
+<li>動的なストレージ管理を自動化するには、値のコピーや生のポインターを渡すのではな
+  く、参照を使う必要がある。</li>
+<li>参照を使うことで、実行時多態性とオブジェクト指向は次の段階に簡単に進むことがで
+  きる。</li>
+</ul>
+<p>Unix 哲学を効果的に応用するにはプログラマー個人の言語操作能力の集合に C 以上のものが含まれている必要がある。</p>
+<p>アプリケーション言語の選択は典型的な信仰の問題だ。</p>
+<blockquote>
+<p>People get very attached to these tools and will sometimes defend them past
+all reason.</p>
+</blockquote>
+<h2 id="why-not-c">Why Not C?<a class="headerlink" href="#why-not-c" title="Permanent link">&para;</a></h2>
+<p>C 言語は Unix の第一言語だ。</p>
+<p>1980 年代初頭から C 言語は計算機業界のほとんどの場所でシステムプログラミングを支配するようになった。C とその子孫である C++ は本書執筆時 2003 年時点でアプリケーションプログラミングをほぼ完全に支配している。例外は：</p>
+<ul>
+<li>科学技術計算における Fortran</li>
+<li>銀行や保険会社における COBOL 金融アプリケーション</li>
+</ul>
+<p>C/C++ は新しいアプリケーションの開発を始めるのに、今日ではほとんど常に誤った手段であると著者は断言する。</p>
+<p>C/C++ は実装とデバッグにかかる時間の増加を犠牲にして効率を最適化している。システムプログラムや時間的に重要なアプリケーションのカーネルを書くことは今でも理にかなっているが、演算装置は千倍速くなり、記憶容量は千倍大きくなり、記憶装置は万倍大きくなっている。</p>
+<p>こうしたコストの急落は、プログラミングの経済性を根本的に変えてしまう。たいていの状況では C 言語が許す限りマシンの資源を節約しようとしても、もはや意味がない。</p>
+<p>代わりに、経済的に最適な選択とは次だ：</p>
+<ul>
+<li>デバッグ時間を最小化し、</li>
+<li>人間によるコードの長期的な保守性を最大化する</li>
+</ul>
+<p>したがって、ほとんどの種類の実装（試作を含む）は新世代インタプリター型言語やスクリプト言語の方が適している。</p>
+<p>C/C++ の中心的な問題はプログラマーに独自のメモリー管理を要求することにある：</p>
+<ul>
+<li>変数の宣言</li>
+<li>ポインター連鎖リストの明示的な管理</li>
+<li>バッファーの拡張</li>
+<li>バッファーオーバーランの検出と防止</li>
+<li>動的ストレージの割り当てと解放</li>
+</ul>
+<p>この仕事の一部はガベージコレクターを C 言語に後付けすることで自動化することができる。しかし C 言語の設計上、これが完全な解決策になることはあり得ない。</p>
+<p>メモリー管理は複雑化とエラーの莫大な原因だ。</p>
+<p>[124]。バッファ・オーバーランは、クラッシュやセキュリティ・ホールの一般的な原因である。 動的メモリ管理は、メモリ・リークやステール・ポインタの問題のような、陰湿で追跡が困難なバグを生み出すことで特に悪名高い。</p>
+<ul>
+<li>複雑なデータ構造を操作するプログラムでは、開発時間の三、四割がストレージ管理に
+  費やされていると推定する研究 (Hans Boehm. <em>Advantages and Disadvantages of
+  Conservative Garbage Collection</em>) がある。</li>
+<li>（確かな数字があるわけではないが）経験豊富なプログラマーの多くは、メモリー管理
+  のバグが実世界のコードにおける永続的なエラーの唯一最大の原因であると考えている。</li>
+</ul>
+<p>今日の状況下では、メモリー管理を自動化する実装言語（少し多めのサイクルとコアを使用する代償としてバグが一桁減る）の方がはるかに理にかなっている。</p>
+<p>実世界のプログラムは演算装置そのものの使用効率よりも、I/O イベントの待ち時間、ネットワークの待ち時間、キャッシュラインのフィルによって制限される傾向がある。</p>
+<p>Unix 界では特に 1990 年前後からこのような考え方に徐々に近づいている。多くの Unix
+プログラマーは Perl や Python が教えてきたことをまだ吸収している。</p>
+<p>Unix 界以外でも同じ傾向がよりゆっくりと起きている。例えば：</p>
+<ul>
+<li>Microsoft Windows や NT のアプリケーション開発で見られる C++ から Visual Basic
+  への継続的な移り変わり</li>
+<li>メインフレームの世界における Java への移行</li>
+</ul>
+<p>C/C++ に対する反論は他の（メモリー管理をプログラマーに任せるという基本的な設計の）従来型コンパイル言語にも同じように当てはまる。従来の言語間の違いは表面的なものにとどまる。</p>
+<h2 id="interpreted-languages-and-mixed-strategies">Interpreted Languages and Mixed Strategies<a class="headerlink" href="#interpreted-languages-and-mixed-strategies" title="Permanent link">&para;</a></h2>
+<p>手作業によるメモリー管理を回避する言語では、実行ファイルのどこかにメモリーマネジャーを内蔵している。このような言語の実行時動作環境はプログラム部分（スクリプトそのもの）とインタープリター部分に分かれており、インタープリターが動的ストレージを管理している。</p>
+<p>Unix を含む最新の OS では、インタープリターの核心を複数のプログラム部分で共有し、それぞれの実際の間接費を減らすことが可能だ。</p>
+<p>1970 年代半ば、Unix シェルは完全なインタプリター型プログラミング言語として設計されていた。その当時でも、シェルだけでプログラムを書いたり、定型の実用品や C 言語の自作プログラムをつなぎ合わせて、部分の総和以上のものを作るための接着ロジックを書くためにシェルを使うことはよくあった。</p>
+<blockquote>
+<p>Advanced shell programming mixes languages freely, employing both binaries and
+interpreted elements from half a dozen or more other languages for subtasks.</p>
+</blockquote>
+<p>上の記述の要点はバイナリーとスクリプトの分量に言及していることだと思う。</p>
+<p>それぞれの言語が得意とすることを行い、各部品は他のものと狭いインターフェイスを持つモジュールであり、汎用言語で単一の怪物一枚岩としてコードされた場合よりも全体の大域的複雑度がはるかに低くなる。</p>
+<h2 id="language-evaluations">Language Evaluations<a class="headerlink" href="#language-evaluations" title="Permanent link">&para;</a></h2>
+<p>言語を混在させることはプログラミングの知識集約型様式だ。これをうまくやるには次の両方が必要となる：</p>
+<ul>
+<li>適切な種類の言語に関する実用的な知識</li>
+<li>それらの言語の得意分野や組み合わせ方に関する専門知識</li>
+</ul>
+<h3 id="c">C<a class="headerlink" href="#c" title="Permanent link">&para;</a></h3>
+<p>C 言語に適しているプログラムの性質：</p>
+<ul>
+<li>最高速度が要求される</li>
+<li>同時性が要求される</li>
+<li>OS カーネルと緊密に結合している</li>
+</ul>
+<p>小さなアプリケーションの残りの部分を C で書くことが正当化されるほど効力が大きい場合もある。</p>
+<p>現代の条件下では C を高水準アセンブラーと考えるのがおそらく最善だろう。C の標準規格は、標準 I/O ライブラリーなど、Unix 仮想機の機能の多くを他の OS に輸出してきた。OS を持たないものに可能な限り近づけたいが、ポータブルであり続けたい場合に C
+言語が使われる。</p>
+<p>C 言語を学ぶべき理由のひとつは、ハードウェアアーキテクチャー水準での考え方を学ぶのに役立つからだ。すでにプログラマーである人々にとって、C 言語の最高の参考書でありチュートリアルであるのは、やはり <em>The C Programming Language</em> だ。</p>
+<p>Unix の亜種間での C コードの移植はほとんどの場合可能であり、たいていは簡単だが、特定の亜種（シグナルやプロセス制御など）を正しく移植するのは難しい (<a href="../community/portability.html">Chapter
+17</a>)。</p>
+<p>高品質 C コンパイラーがインターネット上のオープンソースソフトウェアとして入手できる。</p>
+<blockquote>
+<p>the best-known and most widely used is the Free Software Foundation's GNU C
+compiler (part of GCC, the GNU Compiler Collection), which has become the
+native C of all open-source Unix systems and many even in the closed-source
+world.</p>
+</blockquote>
+<p>移植版は Windows でさえ利用可能だ。<a href="https://gcc.gnu.org/">FSF のサイト</a> で入手可能だ。</p>
+<p>C の長所は資源効率と機械との距離の近さ。短所はプログラミングが資源管理地獄であることだ。</p>
+<h4 id="c-case-study-fetchmail">C Case Study: <code>fetchmail</code><a class="headerlink" href="#c-case-study-fetchmail" title="Permanent link">&para;</a></h4>
+<p>C 言語の最良の事例研究は Unix カーネルそのものだ。ハードウェアの水準の操作を自然に支援する言語は強みとなる。</p>
+<p>C の構造体機能と同等のものはその代替言語のほとんどに存在しない。注目に値する例外は Python と Java だ。</p>
+<p>次のパラグラフの記述が気になる：</p>
+<blockquote>
+<p>Finally, <code>fetchmail</code> requires the ability to parse a fairly complex
+specification syntax for per-mail-server control information. In the Unix
+world this sort of thing is classically handled by using C code generators
+that grind out source code for a tokenizer and grammar parser from declarative
+specifications. The existence of <code>yacc</code> and <code>lex</code> was a point in favor of C.</p>
+</blockquote>
+<p>宣言的仕様をすり潰すことで C で書かれた字句解析コードおよび文法解析コードを生成する過程があることになる。</p>
+<blockquote>
+<p><code>fetchmail</code> might reasonably have been coded in Python, albeit with possibly
+significant loss of performance.</p>
+</blockquote>
+<p>当時の Python はべらぼうに遅いから、こういう見解になる。</p>
+<p><code>fetchmail</code> が C 言語プログラムである本当の理由は、すでにそれで書かれた祖先から徐々に変異して進化してきたからだ。</p>
+<p>本書の以前にも触れているし、この後にも触れるが、関連ツール <code>fetchmailconf</code> は C
+ではなく Python で書いた。</p>
+<h3 id="c_1">C++<a class="headerlink" href="#c_1" title="Permanent link">&para;</a></h3>
+<p>C++ は C との後方互換性を要求されたため、設計に多くの妥協を余儀なくされた。とりわけ、この要求のために、C++ は動的メモリー管理を完全自動化することができず、C の最も深刻な問題に対処することができなかった。</p>
+<p>C++ は過度に装飾的かつ複雑なものになった。</p>
+<p>今日（2003年）、オープンソースのアーカイブを調査してみると、C++ の使用は次のオブジェクト指向が上手くいく分野に集中していて、他の分野ではほとんど見られない：</p>
+<ul>
+<li>GUI</li>
+<li>マルチメディアツールキット</li>
+<li>ゲーム</li>
+</ul>
+<p>C++ プログラムの寿命費用は C, FORTRAN, Ada の同等品よりも高いという証拠がいくつかある。</p>
+<p>C++ はオブジェクト指向以外の重要なアイデアをいくつか取り入れている：</p>
+<ul>
+<li>例外処理</li>
+<li>STL を含むテンプレート</li>
+</ul>
+<!-- さらに：
+* 効率的なコンパイル言語
+* C との上位互換性
+-->
+
+<p>C++ はあらゆる人にあらゆることを可能にしようと試みているが、その代償として、個々のプログラマーの頭脳は処理し切れないほどの複雑さを抱える。C++ の主要設計者は一人のプログラマーがすべてを把握できるとは思っていないと認めている (<a href="../design/modularity.html">Chapter 4</a>)。</p>
+<p>多くの種類のアプリケーションにとって、オブジェクト指向機能は重要ではなく、C 言語に複雑さを加えるだけで、大した利点はない。</p>
+<p>次の著者の見解は私の経験とかなり異なる：</p>
+<blockquote>
+<p>if C++ were unequivocally superior to C it would now dominate.</p>
+</blockquote>
+<p>まとめ：</p>
+<ul>
+<li>優れた点<ul>
+<li>コンパイルによる効率性</li>
+<li>オブジェクト指向や汎用プログラミングのための機能を兼ね備えている</li>
+</ul>
+</li>
+<li>悪い点<ul>
+<li>過度に装飾的で複雑である</li>
+<li>複雑過ぎる設計を助長する傾向がある</li>
+</ul>
+</li>
+</ul>
+<p>古典的な C++ の参考書は Stroustrup の <em>The C++ Programming Language</em> だ。なお、第四版が最新と思われる。</p>
+<p>あと二冊紹介しているが、C++ 本の事情なら会社員時代の私のほうが詳しい。</p>
+<p>GNU コンパイラーコレクションは C++ コンパイラーを含む。</p>
+<h4 id="c-case-study-the-qt-toolkit">C++ Case Study: The Qt Toolkit<a class="headerlink" href="#c-case-study-the-qt-toolkit" title="Permanent link">&para;</a></h4>
+<p><a href="https://www.qt.io/">Qt</a> は Motif, MacOS Platinum, Microsoft Windows インターフェイスの見てくれや操作感を模倣するように意図的に（そして上手く）設計された、GUI を書くための API
+だ。また、XML, ファイルアクセス、ソケット、スレッド、タイマー、時間日付処理、データベースアクセス、抽象データ型各種、Unicode 用のクラスが用意されている。</p>
+<p>KDE プロジェクトの重要かつすぐに使える部品であり、競争力のある GUI とデスクトップ生産性ツールの統合集合を生み出すオープンソース世界の二つの取り組みの先人だ。</p>
+<p>C++ 実装は UI 部品をカプセル化するためのオブジェクト指向言語の長所を示している。オブジェクトを支援する言語では UI 要素の視覚的な階層をクラス階層によってコード上できれいに表現することができる。</p>
+<blockquote>
+<p>Comparison with the notoriously baroque C API of Motif is instructive.</p>
+</blockquote>
+<p>これは気になる。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>クラス階層の美しさは <a href="https://doc.qt.io/qt-6/classes.html">https://doc.qt.io/qt-6/classes.html</a> の索引をザッと
+見るだけでも窺い知れる。本文の趣旨に従って Qt Widgets から見るといい。</p>
+</div>
+<h3 id="shell">Shell<a class="headerlink" href="#shell" title="Permanent link">&para;</a></h3>
+<p>Version 7 Unix の Bourne Shell, <code>sh</code> は Unix 初の持ち運び可能インタープリター型言語だ。</p>
+<p>現在では <code>sh</code> は上位互換性のある KornShell, <code>ksh</code> の亜種に取って代わられており、その中で最も重要なのは Bourne Again Shell, <code>bash</code> だ。</p>
+<p>他にもシェルがいくつか存在し、対話的に使用されている。しかしプログラミング言語としては重要ではない。最もよく知られているのは、おそらく C Shell, <code>csh</code> であり、スクリプトを書くには適していないことで悪名高い。</p>
+<p>単純なシェルプログラムは極端に簡単かつ自然に書ける。</p>
+<blockquote>
+<p>The Unix tradition of rapid prototyping in interpretive languages began with
+shell.</p>
+</blockquote>
+<p>シェル構文の一部がたいへん混乱しやすいという欠点は、対話的コマンドラインインタープリターとしてのシェルの有用性を維持するために、シェルの設計におけるプログラミング言語部分の妥協に関係する。</p>
+<p>プログラムは、sort(1) などの他言語プログラム、sed(1), awk(1) のような標準的な小規模言語を多用している場合でも、シェルで書かれる。しかし、この種のプログラムは現在では Perl や Python で書かれており、シェルは最も単純な種類のラッパーやシステム起動時の初期化スクリプトのために維持されている。</p>
+<p>このような基本的なシェルプログラミングは Unix の入門書であれば十分にカバーされているはずだ。<em>The Unix Programming Environment</em> (Brian W. Kernighan, Rob Pike) は中級および上級シェルプログラミングに関する最良の教科書の一つだ。</p>
+<p>複雑なシェルスクリプトは移植性に問題があることが多いが、それはシェルそのものが原因ではなく、部品として利用可能な他のプログラムを想定しているからだ。</p>
+<p>まとめ：シェルの長所は、小さなスクリプトであれば非常に自然で素早く実行できることです。 シェルの悪い面は、大規模なシェルスクリプトは、必ずしも同じ動作をするわけでもなく、すべてのターゲットマシンに存在するわけでもない多くの補助コマンドに依存することです。 また、大規模なシェルスクリプトの依存関係を分析するのも容易ではない。</p>
+<p>Unix システムやエミュレーターにはすべてシェルが搭載されている。シェルをビルドしたりインストールしたりする必要はほとんどない。Linux や他の最先端の Unix の標準シェルは現在 bash(1) だ。</p>
+<h4 id="case-study-xmlto">Case Study: <code>xmlto</code><a class="headerlink" href="#case-study-xmlto" title="Permanent link">&para;</a></h4>
+<p>DocBook ならよく書いていたから話は理解できる。</p>
+<blockquote>
+<p><code>xmlto</code> is a driver script that calls all the commands needed to render an
+XML-DocBook document as HTML, PostScript, plain text, or in any one of several
+other formats (we'll take a closer look at DocBook in <a href="../community/documentation.html">Chapter 18</a>). It is
+written in <code>bash</code>.</p>
+</blockquote>
+<p>適切なスタイルシートで XSLT エンジンを呼び出し、その結果を後処理器に渡すという詳細を処理する。</p>
+<ul>
+<li>HTML/XHTML の場合、XSLT 変換が作業のすべてを行う。</li>
+<li>プレーンテキストの場合も XML は HTML に加工されるが、その後処理で lynx(1) の
+  <code>-dump</code> モードに渡り、フラットテキストに加工される。</li>
+<li>PostScript の場合、XML は FO に変換され、後処理において TeX マクロに変換され、
+  tex(1) によって DVI 形式に変換され、最後に dvi2ps(1) を使う。</li>
+</ul>
+<p><code>xmlto</code> は単一のフロントエンドのシェルスクリプトで構成される。スクリプトプラグインのいずれかを呼び出す。各プラグインもシェルスクリプトだ。</p>
+<p>この建築方式は指定された出力形式に関する情報のすべてが一箇所（対応するスクリプトプラグイン）に存在することを意味し、新しい出力形式を追加してもフロントエンドのコードにまったく影響を与えない。</p>
+<p><code>xmlto</code> は中規模のシェルアプリケーションの良い例だ。</p>
+<ul>
+<li>C/C++ はスクリプトを書くには厄介で、意味をなさない。</li>
+<li>内部データ構造や複雑なロジックを持たない、単純命令の発令なのでシェル十分だ。</li>
+<li>シェルには、対象とするシステムでどこにでもあるという大きな利点がある。</li>
+</ul>
+<h4 id="case-study-sorcery-linux">Case Study: Sorcery Linux<a class="headerlink" href="#case-study-sorcery-linux" title="Permanent link">&para;</a></h4>
+<blockquote>
+<p>Sorcerer GNU/Linux is a Linux distribution that you install as a small,
+bootable foothold system just powerful enough to run bash(1) and a couple of
+download utilities. With this code in place, you can invoke Sorcery, the
+Sorcerer package system.</p>
+</blockquote>
+<p>Linux の一種であるものと、パッケージシステムであるものがある。</p>
+<p>Sorcery システムはすべてシェルで書かれている。プログラムのインストール手順はシェルが適している小規模で単純なプログラムになる傾向がある。この独特なアプリケーションでは Sorcery 作者が必要な補助プログラムが足場システムに存在することを保証できるため、シェルの主な欠点は消える。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>これは少し調べただけで詳細がわからなかった。</p>
+</div>
+<h3 id="perl">Perl<a class="headerlink" href="#perl" title="Permanent link">&para;</a></h3>
+<p>Perl は強化シェルだ。awk(1) を置き換えるために特別に設計され、混合言語スクリプトプログラミングの接着剤としてシェルを置き換えるために拡張された。</p>
+<p>Perl の長所は：</p>
+<ul>
+<li>テキスト、行指向のデータ形式をパターン指向で処理するための強力な内蔵機能。</li>
+<li>シェルよりもはるかに強力なデータ構造。要素型が混在する動的配列や、名前と値のペ
+  アを便利かつ高速に検索できるハッシュ型などがある。</li>
+<li>Unix API 全体の内部バインディング。C 言語の必要性を劇的になくした。</li>
+<li>大規模で活発なオープンソース共同体が育ってきた。</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>バインディングは二つのプログラミング言語間の橋渡しをするラッパーライブラリーだ。
+ある言語用に書かれたライブラリーを別の言語でも使えるようにする。</p>
+</div>
+<p>Perl の短所：</p>
+<ul>
+<li>関数の引数渡しの規約など、言語仕様の一部が救いようのないほど醜く複雑だ。</li>
+<li>使い始めるのはシェルよりも難しい。</li>
+<li>小さなプログラムは強力だが、モジュール性を維持し、プログラムの規模が大きくなる
+  につれて設計を統率し続けるには慎重な規律が必要となる。</li>
+<li>歴史の初期に決定されたいくつかの制限的な設計を元に戻すことができなかったため、
+  より高度な機能の多くに壊れやすい感触がある。</li>
+</ul>
+<p>Perl に関する参考書の決定版は <em>Programming Perl</em> だ。ただし整理整頓が悪い。より入門的で叙述的な扱いは、<em>Learning Perl</em> にある。</p>
+<p>Perl は Unix システム上で普遍だ。同じメジャーリリースレベルの Perl スクリプトは（拡張モジュールを使用しない限り）Unix 間で容易に移植できる傾向がある。Perl の実装は Windows や MacOS でも利用可能である（かつ十分に文書化されている）。Perl/Tk
+はプラットフォーム横断的に GUI 機能が使用可能だ。</p>
+<p>Perl の最も優れた面は、正規表現を多用する小さなスクリプトのためのパワーツールであることだ。Perl の悪い面は、醜く、とげとげしく、大量に保守できないことだ。</p>
+<h4 id="a-small-perl-case-study-blq">A Small Perl Case Study: <code>blq</code><a class="headerlink" href="#a-small-perl-case-study-blq" title="Permanent link">&para;</a></h4>
+<p>スクリプト <code>blq</code> はスパムを照会する。</p>
+<p>小さな Perl スクリプトの良い例であり、この言語の長所と短所の両方を示している。</p>
+<ul>
+<li>正規表現マッチングを多用している。</li>
+<li>拡張モジュール <code>Net::DNS</code> は標準モジュールではないゆえ、条件付きでインクルード
+  しなければならない。</li>
+</ul>
+<p>Perl コードとしては <code>blq</code> は例外的にきれいで規律正しい。それでも、Perl 慣用コードに慣れていなければ一部は読めない。例：</p>
+<pre><code class="language-perl">$0 =~ s!.*/!!;
+</code></pre>
+<p>Tcl と Python はどちらもこの種の小さなスクリプトには適しているが、どちらも <code>blq</code>
+が多用する正規表現マッチングのための Perl の便利な機能がない。Emacs Lisp の実装は Perl のものよりもさらに速く、コンパクトに書けるだろう。</p>
+<h4 id="a-large-perl-case-study-keeper">A Large Perl Case Study: <code>keeper</code><a class="headerlink" href="#a-large-perl-case-study-keeper" title="Permanent link">&para;</a></h4>
+<!-- 
+keeperは、iblioの巨大なLinuxフリーソフトウェアアーカイブのために、入ってくるパッケージをファイルし、FTPとWWWの両方のインデックスファイルを維持するために使われるツールです。 ソースとドキュメントは ibiblio アーカイブの search tools サブディレクトリにあります。
+
+keeperは、中規模から大規模の対話型Perlアプリケーションの良い例です。 コマンドラインインターフェイスは行指向で、特殊なシェルやディレクトリエディタを模している。作業部分では、ファイルやディレクトリの操作、パターンマッチ、パターン指向の編集が多用されている。 プログラムテンプレートからウェブページや電子メール通知を簡単に生成することができる。 また、ディレクトリツリー上の様々な関数を自動化するために、定型のPerlモジュールが使用されている。
+
+約3300行のこのアプリケーションは、おそらく1つのPerlプログラムで試みるべきサイズと複雑さの限界に挑戦している。 とはいえ、そのほとんどは6日間で書かれたものだ。 C
+やC++やJavaでは、最低でも6週間はかかっただろうし、事後のデバッグや修正も非常に難しかっただろう。 純粋なTclでは大きすぎる。 Pythonバージョンはおそらく構造的にすっきりしていて、読みやすく、保守しやすいだろう。 EmacsのLispモードでも十分可能だが、Emacsはtelnetでの使用には向いていない。 -->
+
+<h3 id="tcl">Tcl<a class="headerlink" href="#tcl" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Tcl: Tool Command Language</li>
+<li>1990 年。</li>
+<li>コンパイルされた C ライブラリーとリンクするように設計された小規模言語インタプ
+  リター。</li>
+<li>C プログラム内から呼び出され、それらに値を返すスクリプトにも適している。</li>
+</ul>
+<p>Tcl の上に構築されたもので、Tcl 共同体以外でも広く使われているものがいくつかある。最も重要なものは二つだ：</p>
+<dl>
+<dt>Tk</dt>
+<dd>ボタン、ダイアログボックス、メニューツリー、スクロールテキストウィジェットを
+簡単に素早く作成し、入力を収集できる、より優しく親切な X インターフェイス。</dd>
+<dt>Expect</dt>
+<dd>応答が大きく変化する完全な対話型プログラムを比較的簡単にスクリプト化できる言語。</dd>
+</dl>
+<p>Tk がきわめて重要なので、この言語はしばしば Tcl/Tk と呼ばれる。Tk は Perl や
+Python でもよく使われる。</p>
+<p>Tcl の主な利点は柔軟で根本的に単純であることだ。構文はたいへん奇妙だが完全に一貫している。予約語はなく、関数呼び出しと内蔵構文との間に構文上の区別はない。したがって、Tcl 言語インタプリター自体は、Tcl の内部から効果的に再定義することができる。これが Expect のようなプロジェクトを合理的にしている。</p>
+<p>Tcl の主な欠点は</p>
+<ul>
+<li>純粋な言語には名前空間制御とモジュール化のための弱い機能しかないことで、そのう
+  ちの <code>upvar</code> と <code>uplevel</code> は細心の注意を払って使わないとかなり危険だ。</li>
+<li>連想リスト以外のデータ構造もない。そのため Tcl の拡張性は低く、適度な行数（数
+  百行以上）の純粋な Tcl プログラムを整理し、デバッグするのは難しい。</li>
+<li>文字列の引用符と中括弧の区別は頭痛になるだろうし、引用符や中括弧が必要な場合の
+  規則も少し厄介だ。</li>
+</ul>
+<p>純粋な Tcl は Unix API の比較的小さくてよく使われる部分（ファイル操作、プロセス生成、ソケット）へのアクセスしか与えない。Tcl 拡張はより豊富な機能を備えるが、どこにでもインストールされる保証はない。</p>
+<dl>
+<dt><em>Tcl and the Tk Toolkit</em></dt>
+<dd>Tcl の原典。</dd>
+<dt><em>Practical Programming in Tcl and Tk</em></dt>
+<dd>上の本を取って代わった。</dd>
+<dt><em>Experience with Tcl/Tk for Scientific and Engineering Visualization</em></dt>
+<dd>ラピッドプロトタイピングとプロダクションツールとしての Tcl の長所と短所を要約
+   した、実世界の Tcl プロジェクトの説明</dd>
+</dl>
+<p>Tcl スクリプトにはシェルスクリプトと同様の移植性の問題がある。言語自体は移植性が高いが、呼び出すコンポーネントは移植性が低い場合がある。言語自体の移植性は高いが、呼び出すコンポーネントの移植性は低いかもしれない。</p>
+<p>Tcl の実装は Windows, MacOS, その他多くのプラットフォームに存在する。Tcl/Tk スクリプトは GUI 機能を持つあらゆるプラットフォームで動作する。</p>
+<ul>
+<li>優れた点<ul>
+<li>余裕のあるコンパクトな設計</li>
+<li>インタプリターの拡張性</li>
+</ul>
+</li>
+<li>悪い点<ul>
+<li>奇妙な位置構文解析</li>
+<li>データ構造と名前空間制御の弱さ</li>
+</ul>
+</li>
+</ul>
+<h4 id="case-study-tkman">Case Study: <code>TkMan</code><a class="headerlink" href="#case-study-tkman" title="Permanent link">&para;</a></h4>
+<p>TkMan は Unix の <code>man</code> ページと Texinfo 文書の閲覧ソフトだ。Tk を用いた、純正の
+man(1) や xman(1) が支援するものよりもかなり洗練された GUI だ。</p>
+<p>TkMan は Tcl のあらゆる技法をほぼ全面的に披露しているので良い事例研究になる。ハイライトは：</p>
+<ul>
+<li>Tk との一体化</li>
+<li>他の Unix アプリケーションをスクリプトで制御（検索エンジンなど）</li>
+<li>Texinfo マークアップを解析するため Tcl を使用</li>
+</ul>
+<p>他の言語のどれを使っても、このコードの大部分を構成する Tk GUIへの直接的なインターフェイスにはならなかっただろう。</p>
+<h4 id="moodss-a-large-tcl-case-study">Moodss: A Large Tcl Case Study<a class="headerlink" href="#moodss-a-large-tcl-case-study" title="Permanent link">&para;</a></h4>
+<p><a href="https://moodss.sourceforge.net/">Moodss</a> はシステム管理者向けのグラフィカルな監視アプリケーションだ。MySQL,
+Linux, SNMP ネットワーク、Apache のログを監視し、統計情報を収集することができ、ダッシュボードと呼ばれる表計算シートのような GUI 盤を通して、それらをダイジェストで表示することが可能だ。</p>
+<ul>
+<li>監視モジュールは Tcl だけでなく、Python や Perl でも書くことができる。</li>
+<li>コードは洗練され、Tcl 共同体では模範とみなされている。</li>
+<li>プロジェクトのウェブサイトがある。</li>
+</ul>
+<p>Moodss のコアは 約 18,000 行の Tcl で構成されている。自作オブジェクトシステムを含む Tcl 拡張を使用している。</p>
+<h3 id="python">Python<a class="headerlink" href="#python" title="Permanent link">&para;</a></h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>本書出版から精読時点までの Python の成長が著しいため、記述の一部はさすがに古
+びてしまっている。</p>
+</div>
+<ul>
+<li>1991 年登場。</li>
+<li>C 言語と密接に統合するために設計されたスクリプト言語であり、C の DLL とデータ
+  を動的にアクセスすることが可能。</li>
+<li>C 言語から組み込みスクリプト言語として呼び出すことが可能。</li>
+<li>設計が綺麗かつ上品。</li>
+<li>モジュール機能が優れている。</li>
+<li>コードをオブジェクト指向の流儀で書くことも、古典的な手続き型 C 言語のような方
+  法で書くことも可能。</li>
+<li>Perl が真似たとも言われるほどの型システムを有している。コンテナーなど。</li>
+<li>Lisp ハッカーがよろこぶ無名ラムダがある。</li>
+<li>Tk が同梱されていて、GUI を簡単に構築することができる。</li>
+</ul>
+<p>Python には重要なインターネットプロトコルのほとんど (SMTP, FTP, POP3, IMAP,
+HTTP) のクライアントクラスを標準モジュールに含む。そのため、プロトコルロボットやネットワーク管理用配管の構築に適している。</p>
+<p>ここで説明するインタプリター型言語の中で、Python と Java は大規模で複雑なプロジェクトに scale up するのに最も適している。Python は多くの点で Java よりも単純であり、rapid prototyping への親和性は場合によっては Java よりも優位に立つかもしれない。</p>
+<p>Python は生の実行速度では C/C++ に太刀打ちできない。しかし、Python は C 言語と組み合わせるのが簡単なので、性能が重要な Python モジュールは C 言語に翻訳して、速度を大幅に向上させるとよい。</p>
+<p>事実、Python は主要なスクリプト言語の中で最も効率が悪く遅いと一般に考えられている。これは実行時の型多態性の代償だ。しかし、このような理由で Python を拒絶するのは待て。アプリケーションのほとんどは Python がもたらす以上の性能を必要としないし、そのように見えるものでさえ、一般的には、Python のインタプリターの間接費の影響を完全に打ち消すような、ネットワークやディスクの待ち時間のような外部の待ち時間によって制限されている。</p>
+<p>Python は小規模なプロジェクトや正規表現機能に大きく依存する接着剤スクリプトでは
+Perl に表現力で負ける。極小プロジェクトに対しては行き過ぎだ。シェルや Tcl の方が適していることがある。</p>
+<p>Perl 同様、Python には確立された開発共同体があり、<a href="https://www.python.org/">https://www.python.org/</a> には多くの有用な実装、道具、拡張モジュールが見られる。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>現代なら PyPI などか？</p>
+</div>
+<p>Python の拡張に関する広範なオンラインドキュメントも上記 Web サイトにある。</p>
+<ul>
+<li>Python のプログラムは Unix 間や他の OS 間でもかなり移植性が高い傾向がある。標
+  準ライブラリーは十分に強力で、移植性のない補助プログラムの使用を大幅に削減でき
+  る。</li>
+<li>Python の実装は Windows と MacOS で利用可能。</li>
+<li>プラットフォーム横断的 GUI 開発は Tk または他のツールキットで可能。</li>
+</ul>
+<p>まとめ：</p>
+<ul>
+<li>優れた点：きれいで読みやすいコードを奨励し、使いやすさと大規模プロジェクトへの
+  拡張性を両立させていることだ。</li>
+<li>悪い点：非効率で遅い。コンパイル言語と比べてだけでなく、他のスクリプト言語と比
+  べてもだ。</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>二十年以上経った現代では Python の効率はだいぶマシになったと考えられる。</p>
+</div>
+<h4 id="a-small-python-case-study-imgsizer">A Small Python Case Study: <code>imgsizer</code><a class="headerlink" href="#a-small-python-case-study-imgsizer" title="Permanent link">&para;</a></h4>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>なぜか本書著者の Web サイトに本ツールのヘルプがある：
+<a href="http://www.catb.org/~esr/imgsizer/imgsizer.html">http://www.catb.org/~esr/imgsizer/imgsizer.html</a></p>
+</div>
+<p>もともと Perlで書かれたもので、Perl が得意とするパターン駆動型の小さなテキスト処理ツールのほぼ理想的な例だった。後に Python に翻訳され、標準モジュールによる
+HTTP 支援を利用するようになった。</p>
+<p>動的な文字列処理と洗練された正規表現マッチングが必要なため、</p>
+<ul>
+<li>C/C++ で書いたならばはかなり骨が折れただろう。ずっと大きく、読みにくいものに
+  なっただろう。</li>
+<li>Java ならばメモリー管理の問題は解決できただろうが、テキストのパターンマッチン
+  グでは C/C++ より表現力が高いとは言い難い。</li>
+</ul>
+<h4 id="a-medium-sized-python-case-study-fetchmailconf">A Medium-Sized Python Case Study: <code>fetchmailconf</code><a class="headerlink" href="#a-medium-sized-python-case-study-fetchmailconf" title="Permanent link">&para;</a></h4>
+<p><a href="../design/interface.html">Chapter 11</a> では <code>fetchmail</code>/<code>fetchmailconf</code> を調べた。Python の強みは
+<code>fetchmailconf</code> がよく示している。</p>
+<p><code>fetchmailconf</code> は Tk 使ってマルチパネル GUI 設定エディターを実装している。</p>
+<p>Tk バインディングが Python インタプリターに標準で同梱されている事実がここでは重要。</p>
+<p>エキスパートモードでは GUI は三つの盤に分かれた約 60 の属性の編集を支援する。属性編集用チェックボックス、ラジオボタン、テキストフィールド、スクロールリストボックスなどがある。</p>
+<blockquote>
+<p>Despite this complexity, the first fully-functional version of the
+configurator took me less than a week to design and code, counting the four
+days it took to learn Python and Tk.</p>
+</blockquote>
+<h4 id="a-large-python-case-study-pil">A Large Python Case Study: PIL<a class="headerlink" href="#a-large-python-case-study-pil" title="Permanent link">&para;</a></h4>
+<p>PIL は <a href="https://python-pillow.github.io/">Pillow</a> の前身パッケージだ。概要は省略する。</p>
+<p>PIL の実装は Python インタプリターにロード可能オブジェクトコード拡張で Python を容易に拡張できる方法を示している。</p>
+<ul>
+<li>ビットマップオブジェクトに対する基本的な操作を実装するライブラリーの核心部は速
+  度のために C で書かれている。</li>
+<li>高水準や手順ロジックは Python で書かれており、速度は遅いが読み込みや変更、拡張
+  ははるかに容易だ。</li>
+</ul>
+<p>類似のツールキットを他言語で書くとどうだろう：</p>
+<ul>
+<li>Emacs Lisp やシェルで書くのは難しいか不可能だろう。</li>
+<li>Tcl には優れた C 拡張機能があるが、PIL は不快なほど大きなプロジェクトになる。</li>
+<li>Perl にはそのような機能があるが、Python と比べると即興的、文書が乏しく、複雑、
+  不安定だ。</li>
+<li>Java の Native Method Interface は Python とほぼ同等の機能を搭載しているように
+  見える。</li>
+</ul>
+<h3 id="java">Java<a class="headerlink" href="#java" title="Permanent link">&para;</a></h3>
+<p>Java は 1995 年に登場した。</p>
+<p>Java は «write once, run anywhere» であるように設計され、どの Web ブラウザーからでも実行可能な対話的プログラム（アプレット）を Web ページに埋め込むことを支援するものだった。その所有者である Sun Microsystems 社による一連の技術的＆戦略的失策のせいで、当初の目的のどちらも果たせなかった。</p>
+<ul>
+<li>C++ よりはるかに小さく単純</li>
+<li>自動メモリー管理</li>
+<li>オブジェクト指向設計を支援</li>
+<li>構文は C 言語似</li>
+<li>C 言語への呼び出しと、C 言語からの Java 呼び出しを支援</li>
+</ul>
+<p>Python などに較べて十分な点も不十分な点もある：</p>
+<ul>
+<li>クラス可視性と暗黙的スコープ規則はゆがんでいる。</li>
+<li><code>interface</code> 機能は多重継承の複雑な問題を回避する。ただし理解難度、使用難度はわ
+  ずかしか下がらない。</li>
+<li>内部クラスや匿名クラスのような機能はコードが混乱する可能性がある。</li>
+<li>デストラクターが欠けているため、メモリー以外の資源を適切に管理することが難しい。</li>
+<li>Unix OS 機能の重要部分は純正 Java からアクセス不能。</li>
+<li>I/O 機能は強力だが、テキストファイルの単純な読み込みが単純でない。</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>軽く調査した限りでは、最近の Java は資源管理用の <code>try</code> 文を支援するようだ。</p>
+</div>
+<p>Java には異なるバージョンのライブラリーを管理する方法がない。このような問題に対する唯一の対処法は環境変数 <code>CLASSPATH</code> であり、慢性的な配備問題の原因となっている。</p>
+<!-- invidious: likely to cause unhappiness or be unpleasant -->
+
+<blockquote>
+<p>Sadly, browser applets are dead. Microsoft's decision not to support Java 1.2
+in Internet Explorer effectively killed them.</p>
+</blockquote>
+<p>Java は Web アプリケーションサーバー内で実行される servelet という安全な住処を得たようだ。</p>
+<p>全体として、システムプログラミングと速度が要求されるアプリケーションを除けば、
+Java は C++ より優れていると判断できる。経験上、Java プログラマーは C++ プログラマーに比べて、過剰なオブジェクト指向多層化の罠に陥る可能性がやや低いようだ。</p>
+<blockquote>
+<p>The best single reference on paper is probably <em>Java In A Nutshell</em>, but (...)</p>
+</blockquote>
+<p>Java の実装はすべての Unix, Windows, MacOS, その他多くのプラットフォームで利用可能。</p>
+<p>Java の移植性は言語レベルでは優れている。</p>
+<p>Java の最も優れた点は、それ自体が OS に依存しない環境として有用なほど、«write
+once, run anywhere» の実現に近づいていることだ。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>古びたことが明らかな記述は読まずに捨てた。</p>
+</div>
+<h4 id="case-study-freenet">Case Study: FreeNet<a class="headerlink" href="#case-study-freenet" title="Permanent link">&para;</a></h4>
+<p>Freenet は検閲や発禁を不可能にすることを目的とした peer-to-peer ネットワーキングプロジェクトだ。開発者の想定するアプリケーションは次のとおり：</p>
+<ul>
+<li>物議を醸すような情報を検閲なしに流布する。草の根ジャーナリズムから暴露記事に至
+  るまで、匿名かつ検閲不可能な公表を可能にすることで、言論の自由を保護する。</li>
+<li>広帯域コンテンツの効率的な配信。Debian Linux ソフトウェア更新の配布に利用され
+  ているのと同じ機能を用いる。</li>
+<li>万人の個人的出版。たとえ発信者になりたい人が計算機を所有していなくて
+  も、余地制限や強制的な広告なしに、誰でも Web サイトを持つことを可能にする。</li>
+</ul>
+<p>Java がこのプロジェクトに適していた理由は少なくとも二つある：</p>
+<ul>
+<li>プロジェクト目標が可能な限り多様な計算機上で互換性のある実装をすることに重きを
+  置いているため、Java の高い移植性が圧倒的な優位性を持つ。</li>
+<li>プロジェクトの性質上、ネットワーク API が重要であり、Java には強力なものが組み
+  込まれている。</li>
+</ul>
+<p>他言語でこのプロジェクトを取り組んでいたら：</p>
+<ul>
+<li>C/C++ は、高性能が要求されるインフラプロジェクトでは伝統的な言語だが、標準化さ
+  れたネットワーク API がないため、かなり困難。</li>
+<li>Tcl, Perl, Python であれば性能面で大きな犠牲を払うことになる。</li>
+<li>Emacs Lisp は苦痛を伴うほど遅く、まったく不適切。</li>
+</ul>
+<h3 id="emacs-lisp">Emacs Lisp<a class="headerlink" href="#emacs-lisp" title="Permanent link">&para;</a></h3>
+<p>Emacs Lisp は Emacs の動作をプログラムするためのスクリプト言語だ。1984 年登場。</p>
+<p>EmacsLisp は理論的には汎用言語として使用できるほど強力ですが、伝統的には Emacs自体の制御プログラムを記述するにとどまり、最新のスクリプト言語のように他のソフトウェアと流暢に通信することはできない。</p>
+<p>それでも、Emacs Lisp が他の何よりも効果的なアプリケーションはかなりある。その多くは、C コンパイラーやリンカー、make(1), バージョン管理システム、デバッガーなどの開発道具のフロントエンドを使用可能にすることに関係している (<a href="tools.html">Chapter 15</a>)。</p>
+<p>より一般的には、Emacs はパターンや構文指向の対話型編集に適している。特殊なファイル形式やテキストデータベースを対話的にハックするようなアプリケーションはメジャーモードとして原型を作成するのに最適な候補となる。</p>
+<p>テキストエディターと密接に統合する必要があるアプリケーションや、何らかの編集機能を持つテキストビューワーとして主に機能するアプリケーションの構築にも有用だ。メールや Usenet ニュースの UA がこの区分に入る。ある種のデータベースフロントエンドも当てはまる。</p>
+<p>メモリーを自動的に管理し、従来の言語のほとんどよりもはるかにこなれていて強力である型破りな言語だ。Java や Python に対抗できるし、C/C++, Perl, シェル、Tcl にも引けを取らない。</p>
+<p>Lisp には長年の問題が二つあった：</p>
+<ul>
+<li>移植性のための、標準化された OS binding の欠如</li>
+<li>資源の浪費</li>
+</ul>
+<p>これらはそれぞれ解決されたり、現代では問題にならなかったりする。</p>
+<blockquote>
+<p>The definitive Emacs Lisp reference is <em>The GNU Emacs Lisp Reference Manual</em>,
+which may be browseable through your Emacs's <code>info</code> help system. If not, it
+can be downloaded from the FSF FTP site.</p>
+</blockquote>
+<p>Emacs Lisp プログラムの移植性はたいそう優れている。Emacs の実装はすべての Unix,
+Windows, Mac OS で利用可能だ。</p>
+<ul>
+<li>長所：優れた土台言語である Lisp とテキスト操作のための強力な領域根源を組み合わ
+  せていること</li>
+<li>短所：性能の低さと</li>
+<li>短所：他のプログラムとの通信の難しさ</li>
+</ul>
+<h2 id="trends-for-the-future">Trends for the Future<a class="headerlink" href="#trends-for-the-future" title="Permanent link">&para;</a></h2>
+<p>Table 14.1 は 2003 年 3 月現在の言語使用の大まかな分布を示している。<a href="https://sourceforge.net/">SourceForge</a>
+と Freshmeat を使用。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Freshmeat はおそらく名前を変えて Freecode になったものと考えられる。</p>
+</div>
+<blockquote>
+<p>Notably, SourceForge's query interface doesn't permit filtering on OS and
+language simultaneously, so some of these numbers represent MacOS and Windows
+projects.</p>
+</blockquote>
+<p>現代の UI では OS と言語の同時絞り込みも考慮されているように見える。</p>
+<p>Freshmeat の標本は小さいが、このサイトは Unix ベースのリリースしかない。そのため、Windows プロジェクトがないために比率が低くなると予想されるケース (C++, Java)
+を除いて、母集団の数字が SourceForge の数字とほぼ 1:2 の比率で一致しているのは興味深い。</p>
+<p>この章が起草されたのは 1997 年で、執筆時は 2003 年半ばだ。これは十分に長い時間ベースであり、上記の言語の相対的な位置は最初に書いたときからいくらか変化している。</p>
+<ul>
+<li>C, C++, Emacs Lisp はこの期間は安定</li>
+<li>C は FORTRAN なぞの従来型言語を食いつつ占有率を伸ばしている。</li>
+<li>C++ は Java にやや差をつけられている。</li>
+</ul>
+<p>Perl はそれなりに伸びているが、言語自体はしばらく停滞している。</p>
+<p>Tcl は相対的に衰退し、少なくとも知名度は低下している。Tcl は電子設計自動化、ラジオ・テレビ放送、映画産業など、いくつかの産業で特殊な部品のスクリプティングに広く使用されているという話がある。</p>
+<p>Python の人気は Tcl が落ちたのと同じくらい急速に高まっている。 Perl の共同体はまだ Python の二倍の規模だが、Perl の優秀なハッカーが Python に移行する傾向が目に見えていることは、Python にとってむしろ不吉なことだ。</p>
+<p>Java は 1997 年当時よりもわずかに普及しているに過ぎない。Linux や、より広範なオープンソース共同体のもとで、他の場所で C 言語に対して行ったような前進を Java
+は遂げていない。</p>
+<p>今回調査した言語に本気で挑戦するような新しい汎用言語は現れていない。</p>
+<ul>
+<li>PHP は Perl の CGI に挑み、Web 開発に浸透しつつあるが、ネットワークが絡まない
+  プログラミングに使われることはほとんどない。</li>
+<li>非 Emacs Lisp 方言は衰退の一途をたどっている。</li>
+<li>Ruby や Squeak といった最近の取り組みは有望に見えるが、今のところ開発グループ
+  以外のハッカーを惹きつけることも、持続力を示すこともできていない。</li>
+</ul>
+<hr />
+<p>ここで勝手に 2025 年のある時点での <a href="https://sourceforge.net/">SourceForge</a> の言語別占有率を調べる。著者の当時の分析や見通しが現代でどれだけ通用するかを検討したい：</p>
+<table>
+<thead>
+<tr>
+<th>Language</th>
+<th style="text-align: right;">2025</th>
+<th style="text-align: right;">2003</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Java</td>
+<td style="text-align: right;">43,690</td>
+<td style="text-align: right;">8,032</td>
+</tr>
+<tr>
+<td>C++</td>
+<td style="text-align: right;">36,173</td>
+<td style="text-align: right;">9,880</td>
+</tr>
+<tr>
+<td>C</td>
+<td style="text-align: right;">27,218</td>
+<td style="text-align: right;">10,296</td>
+</tr>
+<tr>
+<td>PHP</td>
+<td style="text-align: right;">23,506</td>
+<td style="text-align: right;">?</td>
+</tr>
+<tr>
+<td>Python</td>
+<td style="text-align: right;">16,701</td>
+<td style="text-align: right;">2,222</td>
+</tr>
+<tr>
+<td>Perl</td>
+<td style="text-align: right;">8,272</td>
+<td style="text-align: right;">4,394</td>
+</tr>
+<tr>
+<td>Shell</td>
+<td style="text-align: right;">4,428</td>
+<td style="text-align: right;">1,058</td>
+</tr>
+<tr>
+<td>Ruby</td>
+<td style="text-align: right;">1,772</td>
+<td style="text-align: right;">?</td>
+</tr>
+<tr>
+<td>Tcl</td>
+<td style="text-align: right;">1,211</td>
+<td style="text-align: right;">649</td>
+</tr>
+<tr>
+<td>Lisp</td>
+<td style="text-align: right;">387</td>
+<td style="text-align: right;">?</td>
+</tr>
+<tr>
+<td>Common Lisp</td>
+<td style="text-align: right;">144</td>
+<td style="text-align: right;">?</td>
+</tr>
+<tr>
+<td>Emacs-Lisp</td>
+<td style="text-align: right;">127</td>
+<td style="text-align: right;">?</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Java がまさかの占有率トップ。</li>
+<li>C++ のほうが C よりも伸びている。当時の傾向から変わった。</li>
+<li>PHP は著者の調査結果が不明だが、おそらく想像以上に躍進している。</li>
+<li>Ruby は Perl, Python, PHP のいずれをも超えていない。想像どおりだろう。</li>
+</ul>
+<p>ちなみに「新しい汎用言語」に相当するかどうか怪しいのも含めて、ランキングの上位にあるものを挙げておく：</p>
+<ul>
+<li>C# 14,294</li>
+<li>Visual Basic .NET 3,031</li>
+<li>Go 1,677</li>
+<li>Rust 506</li>
+</ul>
+<p>今なら GitHub などの他サービスで数字を見るといいだろう。</p>
+<h2 id="choosing-an-x-toolkit">Choosing an X Toolkit<a class="headerlink" href="#choosing-an-x-toolkit" title="Permanent link">&para;</a></h2>
+<p>言語の選択に関連する問題は GUI プログラミングに対する X ツールキットの選択だ。ツールキットの選択によって微妙に異なる格好と操作感が得られる。</p>
+<p>X ツールキットの選択は二つの意味でアプリケーション言語の選択と関連している：</p>
+<ul>
+<li>優先ツールキットへのバインディングと一緒に出荷される言語がある。</li>
+<li>ツールキットによっては限られた言語集合へのバインディングしか持っていない。</li>
+</ul>
+<p>Java なら次のどちらかを選択することになる：</p>
+<dl>
+<dt>AWT</dt>
+<dd>普遍的に配備されている。</dd>
+<dt>Swing</dt>
+<dd>より高性能、複雑、遅く、JDK 1.2/Java 2 にしかない。</dd>
+</dl>
+<p>Tcl を使用している場合、Tk が同梱されている。代替品を評価する意味はおそらくあまりない。</p>
+<p>2003 年に真剣に検討すべきツールキットは次の四つだ：</p>
+<ul>
+<li>Tk</li>
+<li>GTK</li>
+<li><a href="https://www.qt.io/">Qt</a></li>
+<li>wxWindows</li>
+</ul>
+<p>GTK と Qt は明らかに先頭走者だ。いずれも MacOS と Windows に移植されているので、どのツールを選んでもクロスプラットフォーム開発が可能になる。</p>
+<p>Tk の特徴：</p>
+<ul>
+<li>この四者の中で最も古い。かつ現役だ。</li>
+<li>Tcl で書かれている。</li>
+<li>バインディングは Python の純正版に同梱されている。</li>
+<li>Tk への言語バインディングを搭載するライブラリーは、一般的に C/C++ で利用可能だ。</li>
+<li>標準の情報表示要素が限られていて、かなり醜い。そして古い。</li>
+<li>Canvas には他のツールキットではまだ困難としか言いようのない機能がある。</li>
+</ul>
+<p>GTK の特徴：</p>
+<ul>
+<li>C で書かれている。</li>
+<li>Motif の代替品として誕生した。</li>
+<li>GIMP を援助するために考案された。</li>
+<li>現在では <a href="https://www.gnome.org/">GNOME</a> プロジェクトの推奨ツールキットであり、何百ものアプリケーショ
+  ンで使用されている。</li>
+<li>この四者の中で唯一、生粋の C バインディングを持つ。</li>
+<li>C++, Perl, Python 用のバインディングが利用可能。</li>
+</ul>
+<p><a href="https://www.qt.io/">Qt</a> の特徴：</p>
+<ul>
+<li><a href="https://kde.org/">KDE</a> プロジェクトに関連するツールキットだ。</li>
+<li>Python と Perl 用のバインディングが用意されている。</li>
+<li>四者の中で設計が最も良く、表現力の高い API を備えているという評判だ。</li>
+</ul>
+<p>wxWindow の特徴：</p>
+<ul>
+<li>C++ で書かれている。</li>
+<li>Perl や Python でのバインディングも可能。</li>
+<li>開発者たちはクロスプラットフォーム開発の支援を強調している。</li>
+<li>実際には各プラットフォームの OS 情報表示要素のラッパーであるため、それを使って
+  書かれたアプリケーションは OS に即した格好と使いやすさを保持する。</li>
+</ul>
+<p>建築学的には、これらのライブラリーはすべてほぼ同じ抽象化水準で書かれている。GTK と
+Qt はイベント処理にスロット＆シグナル方式を採用しており、両者間の移植はほとんど些細なことだと報告されているほど似ている。これらの中からどれを選ぶかは、選択した開発言語へのバインディングが利用可能かどうかによって決まるだろう。</p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>© 2025 プレハブ小屋 All rights reserved.</p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js"></script>
+        <script src="../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

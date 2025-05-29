@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="ja" data-bs-theme="auto">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="プレハブ小屋">
+        <link rel="canonical" href="https://github.com/showa-yojyo/taoup/design/modularity.html">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Modularity - The Art of Unix Programming 読書ノート</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../css/brands.min.css" rel="stylesheet">
+        <link href="../css/solid.min.css" rel="stylesheet">
+        <link href="../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" disabled>
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <link href="../css/style.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../index.html">The Art of Unix Programming 読書ノート</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../index.html" class="nav-link">Home</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle active" aria-current="page" role="button" data-bs-toggle="dropdown"  aria-expanded="false">Notes</a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../preface.html" class="dropdown-item">Preface</a>
+</li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Context</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../context/philosophy.html" class="dropdown-item">Philosophy</a>
+</li>
+            
+<li>
+    <a href="../context/history.html" class="dropdown-item">History</a>
+</li>
+            
+<li>
+    <a href="../context/contrasts.html" class="dropdown-item">Contrasts</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Design</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="modularity.html" class="dropdown-item active" aria-current="page">Modularity</a>
+</li>
+            
+<li>
+    <a href="textuality.html" class="dropdown-item">Textuality</a>
+</li>
+            
+<li>
+    <a href="transparency.html" class="dropdown-item">Transparency</a>
+</li>
+            
+<li>
+    <a href="multiprogram.html" class="dropdown-item">Multiprogramming</a>
+</li>
+            
+<li>
+    <a href="minilanguages.html" class="dropdown-item">Minilanguages</a>
+</li>
+            
+<li>
+    <a href="generation.html" class="dropdown-item">Generation</a>
+</li>
+            
+<li>
+    <a href="configuration.html" class="dropdown-item">Configuration</a>
+</li>
+            
+<li>
+    <a href="interface.html" class="dropdown-item">Interfaces</a>
+</li>
+            
+<li>
+    <a href="optimization.html" class="dropdown-item">Optimization</a>
+</li>
+            
+<li>
+    <a href="complexity.html" class="dropdown-item">Complexity</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Implementation</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../implementation/languages.html" class="dropdown-item">Languages</a>
+</li>
+            
+<li>
+    <a href="../implementation/tools.html" class="dropdown-item">Tools</a>
+</li>
+            
+<li>
+    <a href="../implementation/reuse.html" class="dropdown-item">Reuse</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Community</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../community/portability.html" class="dropdown-item">Portability</a>
+</li>
+            
+<li>
+    <a href="../community/documentation.html" class="dropdown-item">Documentation</a>
+</li>
+            
+<li>
+    <a href="../community/opensource.html" class="dropdown-item">Open Source</a>
+</li>
+            
+<li>
+    <a href="../community/futures.html" class="dropdown-item">Futures</a>
+</li>
+    </ul>
+  </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/showa-yojyo/taoup/issues" class="nav-link">Issues</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../context/contrasts.html" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="textuality.html" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/showa-yojyo/taoup/edit/main/docs/design/modularity.md" class="nav-link"><i class="fa-brands fa-github"></i> Edit on GitHub</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                              <button id="theme-menu" aria-expanded="false" data-bs-toggle="dropdown" data-bs-display="static" aria-label="Toggle theme" class="nav-link dropdown-toggle">
+                                <i class="fa-solid fa-circle-half-stroke fa-fw"></i>
+                                <span class="d-lg-none ms-2">Toggle theme</span>
+                              </button>
+                              <ul class="dropdown-menu dropdown-menu-end">
+                                <li>
+                                  <button class="dropdown-item d-flex align-items-center" data-bs-theme-value="light" aria-pressed="false">
+                                    <i class="fa-solid fa-sun fa-fw"></i>
+                                    <span class="ms-2">Light</span>
+                                    <i class="fa-solid fa-check ms-auto d-none"></i>
+                                  </button>
+                                </li>
+                                <li>
+                                  <button class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark" aria-pressed="false">
+                                    <i class="fa-solid fa-moon fa-fw"></i>
+                                    <span class="ms-2">Dark</span>
+                                    <i class="fa-solid fa-check ms-auto d-none"></i>
+                                  </button>
+                                </li>
+                                <li>
+                                  <button class="dropdown-item d-flex align-items-center" data-bs-theme-value="auto" aria-pressed="true">
+                                    <i class="fa-solid fa-circle-half-stroke fa-fw"></i>
+                                    <span class="ms-2">Auto</span>
+                                    <i class="fa-solid fa-check ms-auto"></i>
+                                  </button>
+                                </li>
+                              </ul>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <script src="../js/darkmode.js"></script>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="2"><a href="#encapsulation-and-optimal-module-size" class="nav-link">Encapsulation and Optimal Module Size</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="2"><a href="#compactness-and-orthogonality" class="nav-link">Compactness and Orthogonality</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="3"><a href="#compactness" class="nav-link">Compactness</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#orthogonality" class="nav-link">Orthogonality</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#the-spot-rule" class="nav-link">The SPOT Rule</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#compactness-and-the-strong-single-center" class="nav-link">Compactness and the Strong Single Center</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#the-value-of-detachment" class="nav-link">The Value of Detachment</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="2"><a href="#software-is-a-many-layered-thing" class="nav-link">Software Is a Many-Layered Thing</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="3"><a href="#top-down-versus-bottom-up" class="nav-link">Top-Down versus Bottom-Up</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#glue-layers" class="nav-link">Glue Layers</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#case-study-c-considered-as-thin-glue" class="nav-link">Case Study: C Considered as Thin Glue</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="2"><a href="#libraries" class="nav-link">Libraries</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="3"><a href="#case-study-gimp-plugins" class="nav-link">Case Study: GIMP Plugins</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="2"><a href="#unix-and-object-oriented-languages" class="nav-link">Unix and Object-Oriented Languages</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="2"><a href="#coding-for-modularity" class="nav-link">Coding for Modularity</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="chapter-4-modularity">Chapter 4. Modularity<a class="headerlink" href="#chapter-4-modularity" title="Permanent link">&para;</a></h1>
+<div class="toc"><span class="toctitle">見出し一覧</span><ul>
+<li><a href="#encapsulation-and-optimal-module-size">Encapsulation and Optimal Module Size</a></li>
+<li><a href="#compactness-and-orthogonality">Compactness and Orthogonality</a><ul>
+<li><a href="#compactness">Compactness</a></li>
+<li><a href="#orthogonality">Orthogonality</a></li>
+<li><a href="#the-spot-rule">The SPOT Rule</a></li>
+<li><a href="#compactness-and-the-strong-single-center">Compactness and the Strong Single Center</a></li>
+<li><a href="#the-value-of-detachment">The Value of Detachment</a></li>
+</ul>
+</li>
+<li><a href="#software-is-a-many-layered-thing">Software Is a Many-Layered Thing</a><ul>
+<li><a href="#top-down-versus-bottom-up">Top-Down versus Bottom-Up</a></li>
+<li><a href="#glue-layers">Glue Layers</a></li>
+<li><a href="#case-study-c-considered-as-thin-glue">Case Study: C Considered as Thin Glue</a></li>
+</ul>
+</li>
+<li><a href="#libraries">Libraries</a><ul>
+<li><a href="#case-study-gimp-plugins">Case Study: GIMP Plugins</a></li>
+</ul>
+</li>
+<li><a href="#unix-and-object-oriented-languages">Unix and Object-Oriented Languages</a></li>
+<li><a href="#coding-for-modularity">Coding for Modularity</a></li>
+</ul>
+</div>
+<blockquote>
+<p>The Rule of Modularity bears amplification here: The only way to write complex
+software that won't fall on its face is to build it out of simple modules
+connected by well-defined interfaces, so that most problems are local and you
+can have some hope of fixing or optimizing a part without breaking the whole.</p>
+</blockquote>
+<p>本章冒頭部分には Unix プログラマーがモジュール化を得意とするという記述が複数現れる。</p>
+<p>昔は関数呼び出しのオーバーヘッドが無視できぬほどだったらしく、大きな関数を書く傾向があったという。</p>
+<h2 id="encapsulation-and-optimal-module-size">Encapsulation and Optimal Module Size<a class="headerlink" href="#encapsulation-and-optimal-module-size" title="Permanent link">&para;</a></h2>
+<p>モジュール性の規則。性質の良いモジュールは次の規則に従う：</p>
+<ul>
+<li>お互いの内部を公開しない。</li>
+<li>お互いの実装の途中を呼び出さない。</li>
+<li>大域データを乱雑に共有しない。</li>
+<li>API を使って通信する。</li>
+</ul>
+<blockquote>
+<p>On the design level, it is the APIs (not the bits of implementation between
+them) that really define your architecture.</p>
+</blockquote>
+<!-- choke point: 渋滞点 -->
+
+<p>有能な開発者には、インターフェースを定義し、それを説明する簡単なコメントを書き、それからコードを書くことから始める者がいるという。</p>
+<p>1970 年代以来、計算機科学では次のことが常識となっている：ソフトウェアシステムは入れ子構造のモジュールの階層として設計し、各階層のモジュールの粒度は最小限に抑える。</p>
+<p>本書の <a href="http://www.catb.org/esr/writings/taoup/html/graphics/hatton.png">Figure 4.1</a> はモジュールの欠陥密度とモジュール規模のプロットだ。これによると：</p>
+<blockquote>
+<p>Very small and very large modules are associated with more bugs than those of
+intermediate size.</p>
+</blockquote>
+<p>以降、このバグ密度曲線を Hatton 曲線と呼ぶことにする。</p>
+<p>プロットが線形にならない理由は色々と考えられるが、モジュールの規模が小さいからといって、インターフェイスも単純になるとは限らないからなどが挙げられる？</p>
+<p>脚注の Brooks の法則を引用しておく：</p>
+<blockquote>
+<p>Brooks's Law predicts that adding programmers to a late project makes it
+later. More generally, it predicts that costs and error rates rise as the
+square of the number of programmers on a project.</p>
+</blockquote>
+<p>何かのときに出典と要旨を口述できるようにしておきたい。</p>
+<h2 id="compactness-and-orthogonality">Compactness and Orthogonality<a class="headerlink" href="#compactness-and-orthogonality" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>Unix programmers have learned to think very hard about two other properties
+when designing APIs, command sets, protocols, and other ways to make computers
+do tricks: <em>compactness</em> and <em>orthogonality</em>.</p>
+</blockquote>
+<p>計算機に数学の解析論のような芸をさせるということか？</p>
+<h3 id="compactness">Compactness<a class="headerlink" href="#compactness" title="Permanent link">&para;</a></h3>
+<p>本書のコンパクト性の定義はこうだ：</p>
+<blockquote>
+<p>Compactness is the property that a design can fit inside a human being's head.</p>
+</blockquote>
+<p>具体的には、経験豊富な使用者が手引書を普通必要とするかどうかだ。そうでなければその設計はコンパクトだと言える。</p>
+<blockquote>
+<p>Very few software designs are compact in an absolute sense, but many are
+compact in a slightly looser sense of the term. （中略） Practically speaking,
+such designs normally need a reference card or cheat sheet but not a manual.
+We'll call such designs <em>semi-compact</em>, as opposed to <em>strictly compact</em>.</p>
+</blockquote>
+<p>パラコンパクトというのは聞いたことがあるが、セミコンパクトとは。</p>
+<ul>
+<li>Unix システムコール API は半コンパクトだ。Unix プログラマーはアプリケーション
+  の大半の実装に十分なシステムコール（ファイルシステム、シグナル、プロセス）の部
+  分集合がその脳裡にある。</li>
+<li>C 言語ライブラリーはコンパクトでない。数学関数だけでもそのすべてがプログラマー
+  一人の頭蓋に収まることはない。</li>
+</ul>
+<p>認知心理学の基礎的な知見を援用し、魔法の数字とされる 7 を閾値とする：</p>
+<blockquote>
+<p>This gives us a good rule of thumb for evaluating the compactness of APIs:
+Does a programmer have to remember more than seven entry points? Anything
+larger than this is unlikely to be strictly compact.</p>
+</blockquote>
+<p>コンパクトなものの例をさらに挙げる：</p>
+<blockquote>
+<p>Among Unix tools, make(1) is compact; autoconf(1) and automake(1) are not.
+Among markup languages, HTML is semi-compact, but DocBook （中略） is not. The
+man(7) macros are compact, but troff(1) markup is not.</p>
+<p>Among general-purpose programming languages, C and Python are semi-compact;
+Perl, Java, Emacs Lisp, and shell are not (especially since serious shell
+programming requires you to know half-a-dozen other tools like sed(1) and
+awk(1)). C++ is anti-compact — the language's designer has admitted that he
+doesn't expect any one programmer to ever understand it all.</p>
+</blockquote>
+<p>知っている HTML と DocBook の対比については納得する。シェルが半コンパクトでないというのは意外だが、それは他の CLI を使いこなすことを前提としているためか。
+Python が半コンパクトとみなすことを許しても、C++ はさすがにコンパクトであるとみなすわけにはいかない。この仕様が私の頭蓋に収まるわけがない。</p>
+<blockquote>
+<p>The purpose of emphasizing compactness as a virtue is not to condition you to
+treat compactness as an absolute requirement, but to teach you to do what Unix
+programmers do: value compactness properly, design for it whenever possible,
+and not throw it away casually.</p>
+</blockquote>
+<p>コンパクト性がどのモジュールにも必要だと主張しているわけでは全然ないが、可能な限りコンパクトに設計するのは価値がある。</p>
+<h3 id="orthogonality">Orthogonality<a class="headerlink" href="#orthogonality" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>Orthogonality is one of the most important properties that can help make even
+complex designs compact. In a purely orthogonal design, operations do not have
+side effects;</p>
+</blockquote>
+<p>直交性というか、ベクトルの線形独立性のような概念だと解釈できる。画像編集ソフトの
+Brightness/Contrast コントロールは直交性がある：</p>
+<blockquote>
+<p>Imagine how much more difficult it would be to adjust a monitor on which the
+brightness knob affected the color balance: you'd have to compensate by
+tweaking the color balance every time after you changed the brightness. Worse,
+imagine if the contrast control also affected the color balance; then, you'd
+have to adjust both knobs simultaneously in exactly the right way to change
+either contrast or color balance alone while holding the other constant.</p>
+</blockquote>
+<p>単純性は直交性を含意する：</p>
+<blockquote>
+<p>Doug McIlroy's advice to “Do one thing well” is usually interpreted as being
+about simplicity. But it's also, implicitly and at least as importantly, about
+orthogonality.</p>
+</blockquote>
+<p>直交性はテストと開発の時間を短縮する。</p>
+<p>直交コードは文書化しやすく、再利用しやすい。</p>
+<p>リファクタリング：</p>
+<blockquote>
+<p>The concept of <em>refactoring</em>, which first emerged as an explicit idea from the
+‘Extreme Programming’ school, is closely related to orthogonality. To refactor
+code is to change its structure and organization without changing its
+observable behavior.</p>
+</blockquote>
+<p>Unix API は直交性の良い例なので、非 Unix プログラマーであっても研究する価値はある：</p>
+<blockquote>
+<p>But on the whole the Unix API is a good example: Otherwise it not only would
+not but <em>could</em> not be so widely imitated by C libraries on other operating
+systems. This is also a reason that the Unix API repays study even if you are
+not a Unix programmer; it has lessons about orthogonality to teach.</p>
+</blockquote>
+<h3 id="the-spot-rule">The SPOT Rule<a class="headerlink" href="#the-spot-rule" title="Permanent link">&para;</a></h3>
+<p>DRY 原則および SPOT 規則という術語を導入する最初のパラグラフがきわめて重要だ：</p>
+<blockquote>
+<p><em>The Pragmatic Programmer</em> articulates a rule for one particular kind of
+orthogonality that is especially important. Their “Don't Repeat Yourself” rule
+is: every piece of knowledge must have a single, unambiguous, authoritative
+representation within a system. In this book we prefer, following a suggestion
+by Brian Kernighan, to call this the Single Point Of Truth or SPOT rule.</p>
+</blockquote>
+<p>反復は一貫性を欠き、コードが微妙に壊れてしまう。</p>
+<ul>
+<li>全ての反復を変更する必要があるのに、一部だけを変更してしまう。</li>
+<li>コードの構成をきちんと考えていない。</li>
+</ul>
+<blockquote>
+<p>Complexity is a cost; don't pay it twice.</p>
+</blockquote>
+<p>これは標語として開発室の壁にでも掲示しておくといい。</p>
+<p>リファクタリング：</p>
+<blockquote>
+<p>Often it's possible to remove code duplication by refactoring; that is,
+changing the organization of your code without changing the core algorithms.</p>
+</blockquote>
+<p>反復や重複を発見したら、そこから DRY, SPOT に近づける方向に変更することを真剣に考えろ、と読んだ。</p>
+<h3 id="compactness-and-the-strong-single-center">Compactness and the Strong Single Center<a class="headerlink" href="#compactness-and-the-strong-single-center" title="Permanent link">&para;</a></h3>
+<p>一行目から難しいのには参った：</p>
+<blockquote>
+<p>One subtle but powerful way to promote compactness in a design is to organize
+it around a strong core algorithm addressing a clear formal definition of the
+problem, avoiding heuristics and fudging.</p>
+</blockquote>
+<!-- fudge: ごまかす -->
+
+<p>次の記述にある薄いラッパーというのは何か筋が良さそうだ：</p>
+<blockquote>
+<p>Many of its most effective tools are thin wrappers around a direct translation
+of some single powerful algorithm.</p>
+</blockquote>
+<p>しばらく diff の議論が続く。</p>
+<p>例えば diff を使う人が中心的なアルゴリズムを完璧に理解しなくても何をするのかを直感的に理解することができるのは、次の理由による：</p>
+<blockquote>
+<p>First, the central engine is solid, small, and has never needed one line of
+maintenance. Second, the results are clear and consistent, unmarred by
+surprises where heuristics fail. (Doug McIlroy)</p>
+</blockquote>
+<!-- unmarred: having no injury, defacement, or imperfection -->
+
+<blockquote>
+<p>The opposite of a formal approach is using <em>heuristics</em>—rules of thumb leading
+toward a solution that is probabilistically, but not certainly, correct.</p>
+</blockquote>
+<p>発見的手法を採用する状況は例えば：</p>
+<ul>
+<li>決定論的に正しい解答が不可能である場合（例：スパムフィルター）</li>
+<li>形式的に正しい方法が知られているが、実行不能なほど高く付く場合（例：仮想メモ
+  リー管理）</li>
+</ul>
+<p>発見的手法の厄介事とは：</p>
+<blockquote>
+<p>The trouble with heuristics is that they proliferate special cases and edge
+cases. If nothing else, you usually have to backstop a heuristic with some
+sort of recovery mechanism when it fails.</p>
+</blockquote>
+<p>特別な場合や極端な場合がべらぼうに増える。</p>
+<!-- proliferate: to increase a lot and suddenly in number -->
+
+<h3 id="the-value-of-detachment">The Value of Detachment<a class="headerlink" href="#the-value-of-detachment" title="Permanent link">&para;</a></h3>
+<p>制約は、経済性だけでなく、ある種のエレガントな設計を促した。</p>
+<blockquote>
+<p>To design for compactness and orthogonality, start from zero. Zen teaches that
+attachment leads to suffering; experience with software design teaches that
+attachment to unnoticed assumptions leads to non-orthogonality, noncompact
+designs, and projects that fail or become maintenance nightmares.</p>
+</blockquote>
+<p>ゼロから始めるというのは、要らない仮定や先入観に執着するなという心得と捉えればいい。</p>
+<blockquote>
+<p>Abstract. Simplify. Generalize.</p>
+</blockquote>
+<p>単純な文章でこの節の本質を表し切った。</p>
+<blockquote>
+<p>Jokes about the relationship between Unix and Zen are a live part of the Unix
+tradition as well.</p>
+</blockquote>
+<p>そういえば Python も禅がどうのとか言っていた記憶がある。</p>
+<h2 id="software-is-a-many-layered-thing">Software Is a Many-Layered Thing<a class="headerlink" href="#software-is-a-many-layered-thing" title="Permanent link">&para;</a></h2>
+<p>関数やオブジェクトの階層を設計する方向は大まかに二つある。どちらの方向をいつ選ぶコードの階層化に大きな影響を与える。</p>
+<h3 id="top-down-versus-bottom-up">Top-Down versus Bottom-Up<a class="headerlink" href="#top-down-versus-bottom-up" title="Permanent link">&para;</a></h3>
+<p>オブジェクト指向プログラミング言語のクラス階層と同様に、上下関係は抽象度の高いほうが上とする。</p>
+<blockquote>
+<p>One direction is bottom-up, from concrete to abstract — working up from the
+specific operations in the problem domain that you know you will need to
+perform. （中略） The other direction is top-down, abstract to concrete — from
+the highest-level specification describing the project as a whole, or the
+application logic, downwards to individual operations.</p>
+</blockquote>
+<p>トップダウンとボトムアップの違いを具体的に考えるには、設計が次のどちらを中心に構成されているのかを求めろ：</p>
+<ul>
+<li>メインループ</li>
+<li>メインループが呼び出すことが可能な操作全てのライブラリー</li>
+</ul>
+<p>この方向選択は重大事だと述べる。</p>
+<blockquote>
+<p>Purely top-down programming often has the effect of overinvesting effort in
+code that has to be scrapped and rebuilt because the interface doesn't pass a
+reality check.</p>
+<p>In self-defense against this, programmers try to do both things — express the
+abstract specification as top-down application logic, and capture a lot of
+low-level domain primitives in functions or libraries, so they can be reused
+when the high-level design changes.</p>
+</blockquote>
+<p>Unix プログラマーはシステムプログラミングを中心とした伝統を受け継いでいる。そこでは、低水準要素がハードウェア階層の操作であり重要だ。そのため、学習本能によりボトムアップ方式に傾倒する。</p>
+<p>ボトムアップの利点をいくつか述べている：</p>
+<blockquote>
+<p>Bottom-up programming gives you time and room to refine a vague specification.
+Bottom-up also appeals to programmers' natural human laziness — when you have
+to scrap and rebuild code, you tend to have to throw away larger pieces if
+you're working top-down than you do if you're working bottom-up.</p>
+</blockquote>
+<p>実際のコードはこの二つの方式のどちらも用いてプログラムされる傾向がある。そこで「接着剤」が登場する。</p>
+<h3 id="glue-layers">Glue Layers<a class="headerlink" href="#glue-layers" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>When the top-down and bottom-up drives collide, the result is often a mess.
+The top layer of application logic and the bottom layer of domain primitives
+have to be impedance-matched by a layer of glue logic.</p>
+</blockquote>
+<p>このパラグラフの英文和訳はすごく難しい。</p>
+<blockquote>
+<p>One of the lessons Unix programmers have learned over decades is that glue is
+nasty stuff and that it is vitally important to keep glue layers as thin as
+possible.</p>
+</blockquote>
+<p>接着のための層を可能な限り薄く保つことが死活的に重要だそうだ。</p>
+<p>Web ブラウザーの例では、DOM と画面の間に位置するはずの描画コードが接着層の一部だと述べている。このコードはブラウザーの中でバグが最も発生しやすいことが知られている。なので、これを一般化すると？</p>
+<blockquote>
+<p>A Web browser's glue layer has to mediate not merely between specification and
+domain primitives, but between several different external specifications:</p>
+</blockquote>
+<p>いろいろなものを仲介する必要があるので、不具合が発生しやすいという理解でいいか。</p>
+<p>接着層は縦方向に分裂しやすい。</p>
+<blockquote>
+<p>The thin-glue principle can be viewed as a refinement of the Rule of
+Separation.</p>
+</blockquote>
+<p>最後の一文も和訳しにくい：</p>
+<blockquote>
+<p>Policy (the application logic) should be cleanly separated from mechanism (the
+domain primitives), but if there is a lot of code that is neither policy nor
+mechanism, chances are that it is accomplishing very little besides adding
+global complexity to the system.</p>
+</blockquote>
+<h3 id="case-study-c-considered-as-thin-glue">Case Study: C Considered as Thin Glue<a class="headerlink" href="#case-study-c-considered-as-thin-glue" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>The C language itself is a good example of the effectiveness of thin glue.</p>
+</blockquote>
+<p>なんてことを言うのだ。</p>
+<blockquote>
+<p>the architectures in every generation of computers, from early mainframes
+through minicomputers through workstations through PCs, had tended to
+converge.</p>
+</blockquote>
+<p>この極限を classical architecture と呼んでいるのも含めて、この指摘は面白い。</p>
+<p>C 言語設計の狙いを一言で表すと「構造化アセンブラー」だ：</p>
+<blockquote>
+<p>Thompson and Ritchie designed C to be a sort of structured assembler for an
+idealized processor and memory architecture that they expected could be
+efficiently modeled on most conventional computers.</p>
+</blockquote>
+<p>言わんとすることがなんとなく理解できる。スーファミゲームプログラムのアセンブルコードを解読しているときに、メモ代わりに C 言語のコードを添える者としては。</p>
+<blockquote>
+<p>C started out as a good fit for microprocessors and, rather than becoming
+irrelevant as its assumptions fell out of date, actually became a better fit
+as hardware converged more closely on the classical architecture.</p>
+</blockquote>
+<p>ハードウェアが極限値 classical architecture にどんどん収束していった。そういうわけで、C 言語は汎用プログラミング言語としてすべてを席巻した。</p>
+<blockquote>
+<p>C, designed as a thin but flexible layer over the classical architecture,
+looks with two decades' additional perspective like almost the best possible
+design for the structured-assembler niche it was intended to fill.</p>
+</blockquote>
+<p>何か具体的な例を挙げられるようにしたい。</p>
+<blockquote>
+<p>This history is worth recalling and understanding because C shows us how
+powerful a clean, minimalist design can be.</p>
+</blockquote>
+<p>かのサンテグジュペリはかつて飛行機の設計についてこう述べた：完璧に到達するのは、これ以上加えるものがないときではなく、これ以上取り除くものがないときだ。作家というか、フランス料理の巨匠のような感性だと思う。</p>
+<blockquote>
+<p>The history of C is also a lesson in the value of having a working reference
+implementation <em>before</em> you standardize.</p>
+</blockquote>
+<h2 id="libraries">Libraries<a class="headerlink" href="#libraries" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>One consequence of the emphasis that the Unix programming style put on
+modularity and well-defined APIs is a strong tendency to factor programs into
+bits of glue connecting collections of libraries, especially shared libraries
+(the equivalents of what are called dynamically-linked libraries or DLLs under
+Windows and other operating systems).</p>
+</blockquote>
+<p>共有ライブラリーというもの関する詳細な記述などはない。読者は Windows でいうところの DLL と同等の意味を持つファイルだという一言で理解できぬようではまずい。</p>
+<blockquote>
+<p>Under Unix, it is normal practice to make this layering explicit, with the
+service routines collected in a library that is separately documented.</p>
+</blockquote>
+<p>文書がライブラリー単位で分離して整っているというのが要点。</p>
+<blockquote>
+<p>There is a flip side to this. In the Unix world, libraries which are delivered
+<em>as libraries</em> should come with exerciser programs.</p>
+</blockquote>
+<p>オープンであるということでしかなく、文書化された形がプログラムだけしかなく、C プログラムから簡単に呼び出すことができないインターフェイスを持つのは、苛つくという意見の人がいる。</p>
+<p>共有ライブラリーの一形態として、プラグインというものがある：</p>
+<blockquote>
+<p>An important form of library layering is the <em>plugin</em>, a library with a set of
+known entry points that is dynamically loaded after startup time to perform a
+specialized task.</p>
+</blockquote>
+<h3 id="case-study-gimp-plugins">Case Study: GIMP Plugins<a class="headerlink" href="#case-study-gimp-plugins" title="Permanent link">&para;</a></h3>
+<p>ここで GIMP の話題になる。著者は GIMP のアプリケーション設計を次のように分析している。アプリケーション自体が一つのライブラリーであるとみなしている：</p>
+<blockquote>
+<p>But GIMP is built as a library of image-manipulation and housekeeping routines
+called by a relatively thin layer of control code. The driver code knows about
+the GUI, but not directly about image formats; the library routines reverse
+this by knowing about image formats and operations but not about the GUI.</p>
+</blockquote>
+<p>GIMP の主要部分は libgimp と呼ばれる文書化されたライブラリー層であり、他のプログラムは libgimp を使うことがある。実際、Windows 版だが GIMP2 のインストールフォルダーを調べると、実行ファイルのあるフォルダーにファイル <code>libgimp-2.0-0.dll</code> が存在する。さらに多数の DLL ファイルが配置されていて、これらにプラグインファイルが紛れているのだろう。</p>
+<blockquote>
+<p>A registry of GIMP plugins is available on the World Wide Web.</p>
+</blockquote>
+<p>プラグインを任意に選択してアプリケーションとしての GIMP に組み込むという設計。</p>
+<blockquote>
+<p>Though most GIMP plugins are small, simple C programs, it is also possible to
+write a plugin that exposes the library API to a scripting language;</p>
+</blockquote>
+<p>GIMP プラグインも公開インターフェイスを開陳して、他のプログラムが使えるようにすることが可能と読める。</p>
+<h2 id="unix-and-object-oriented-languages">Unix and Object-Oriented Languages<a class="headerlink" href="#unix-and-object-oriented-languages" title="Permanent link">&para;</a></h2>
+<p>私は Unix とオブジェクト指向プログラミングのどちらにも助けられたと感じている者なので、次の見解は意外：</p>
+<blockquote>
+<p>There is some tension and conflict between the Unix tradition of modularity
+and the usage patterns that have developed around OO languages. Unix
+programmers have always tended to be a bit more skeptical about OO than their
+counterparts elsewhere.</p>
+<p>Even when Unix programmers use other languages, they tend to want to carry
+over the thin-glue/shallow-layering style that Unix models have taught them.</p>
+</blockquote>
+<p>オブジェクト指向言語は抽象化を容易にすることは、コードで単純な仕事を複雑な方法でやってしまうような場合に逆効果になり得る。</p>
+<p>いくら層の一枚一枚は薄くても、重ね過ぎると透明性を損なう：</p>
+<blockquote>
+<p>It becomes too difficult to see down through them and mentally model what the
+code is actually doing. The Rules of Simplicity, Clarity, and Transparency get
+violated wholesale, and the result is code full of obscure bugs and continuing
+maintenance problems.</p>
+</blockquote>
+<!-- exacerbate: to make something that is already bad even worse -->
+
+<blockquote>
+<p>Another side effect of OO abstraction is that opportunities for optimization
+tend to disappear.</p>
+</blockquote>
+<p>確かに。可換則などの代数的な性質が成り立つかどうかが示されないとも述べている。</p>
+<blockquote>
+<p>Unix programmers tend to share an instinctive sense of these problems. ...</p>
+</blockquote>
+<ul>
+<li>Unix 界では正統派オブジェクト指向プログラミングに対する批判が、よそでは許され
+  ていないほど声高に叫ばれている。</li>
+<li>Unix プログラマーはオブジェクト指向プログラミングを使わない状況を知っている。</li>
+</ul>
+<p>オブジェクト指向プログラミングは GUI では上手くいく。クラスと概念の対応関係が間違いにくいからではないかとある。</p>
+<p>まとめ：</p>
+<blockquote>
+<p>One of the central challenges of design in the Unix style is how to combine
+the virtue of detachment (simplifying and generalizing problems from their
+original context) with the virtue of thin glue and shallow, flat, transparent
+hierarchies of code and design.</p>
+</blockquote>
+<h2 id="coding-for-modularity">Coding for Modularity<a class="headerlink" href="#coding-for-modularity" title="Permanent link">&para;</a></h2>
+<p>モジュール性を向上させるのに役立つかもしれないチェックリスト。</p>
+<ul>
+<li>大域変数の個数</li>
+<li>モジュール個別の規模が <a href="http://www.catb.org/esr/writings/taoup/html/graphics/hatton.png">Hatton の急所</a> の急所に収まる</li>
+<li>関数の呼び出し側との契約を（形式的にでなくてよいので）一行で記述できる</li>
+<li>内部 API がある</li>
+<li>API, クラス、データ構造などの入口の数が七で収まる</li>
+<li>モジュールあたりの入口の数はどう分布しているか</li>
+</ul>
+<p>一行コメントの思想は Python の docstring が受け継いでいる。</p>
+<p>ここでの内部 API とは、関数呼び出しやデータ構造の集合体であって、それを単位として他の人に陳述可能であるものを指す。優れた API はその背後にある実装を見ずとも、筋が通っていて無理がないものだという：</p>
+<blockquote>
+<p>Try to describe it to another programmer over the phone. If you fail, it is
+very probably too complex, and poorly designed.</p>
+</blockquote></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>© 2025 プレハブ小屋 All rights reserved.</p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js"></script>
+        <script src="../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

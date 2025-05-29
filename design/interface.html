@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html lang="ja" data-bs-theme="auto">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="プレハブ小屋">
+        <link rel="canonical" href="https://github.com/showa-yojyo/taoup/design/interface.html">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Interfaces - The Art of Unix Programming 読書ノート</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../css/brands.min.css" rel="stylesheet">
+        <link href="../css/solid.min.css" rel="stylesheet">
+        <link href="../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" disabled>
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <link href="../css/style.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../index.html">The Art of Unix Programming 読書ノート</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../index.html" class="nav-link">Home</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle active" aria-current="page" role="button" data-bs-toggle="dropdown"  aria-expanded="false">Notes</a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../preface.html" class="dropdown-item">Preface</a>
+</li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Context</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../context/philosophy.html" class="dropdown-item">Philosophy</a>
+</li>
+            
+<li>
+    <a href="../context/history.html" class="dropdown-item">History</a>
+</li>
+            
+<li>
+    <a href="../context/contrasts.html" class="dropdown-item">Contrasts</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Design</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="modularity.html" class="dropdown-item">Modularity</a>
+</li>
+            
+<li>
+    <a href="textuality.html" class="dropdown-item">Textuality</a>
+</li>
+            
+<li>
+    <a href="transparency.html" class="dropdown-item">Transparency</a>
+</li>
+            
+<li>
+    <a href="multiprogram.html" class="dropdown-item">Multiprogramming</a>
+</li>
+            
+<li>
+    <a href="minilanguages.html" class="dropdown-item">Minilanguages</a>
+</li>
+            
+<li>
+    <a href="generation.html" class="dropdown-item">Generation</a>
+</li>
+            
+<li>
+    <a href="configuration.html" class="dropdown-item">Configuration</a>
+</li>
+            
+<li>
+    <a href="interface.html" class="dropdown-item active" aria-current="page">Interfaces</a>
+</li>
+            
+<li>
+    <a href="optimization.html" class="dropdown-item">Optimization</a>
+</li>
+            
+<li>
+    <a href="complexity.html" class="dropdown-item">Complexity</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Implementation</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../implementation/languages.html" class="dropdown-item">Languages</a>
+</li>
+            
+<li>
+    <a href="../implementation/tools.html" class="dropdown-item">Tools</a>
+</li>
+            
+<li>
+    <a href="../implementation/reuse.html" class="dropdown-item">Reuse</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Community</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../community/portability.html" class="dropdown-item">Portability</a>
+</li>
+            
+<li>
+    <a href="../community/documentation.html" class="dropdown-item">Documentation</a>
+</li>
+            
+<li>
+    <a href="../community/opensource.html" class="dropdown-item">Open Source</a>
+</li>
+            
+<li>
+    <a href="../community/futures.html" class="dropdown-item">Futures</a>
+</li>
+    </ul>
+  </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/showa-yojyo/taoup/issues" class="nav-link">Issues</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="configuration.html" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="optimization.html" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/showa-yojyo/taoup/edit/main/docs/design/interface.md" class="nav-link"><i class="fa-brands fa-github"></i> Edit on GitHub</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                              <button id="theme-menu" aria-expanded="false" data-bs-toggle="dropdown" data-bs-display="static" aria-label="Toggle theme" class="nav-link dropdown-toggle">
+                                <i class="fa-solid fa-circle-half-stroke fa-fw"></i>
+                                <span class="d-lg-none ms-2">Toggle theme</span>
+                              </button>
+                              <ul class="dropdown-menu dropdown-menu-end">
+                                <li>
+                                  <button class="dropdown-item d-flex align-items-center" data-bs-theme-value="light" aria-pressed="false">
+                                    <i class="fa-solid fa-sun fa-fw"></i>
+                                    <span class="ms-2">Light</span>
+                                    <i class="fa-solid fa-check ms-auto d-none"></i>
+                                  </button>
+                                </li>
+                                <li>
+                                  <button class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark" aria-pressed="false">
+                                    <i class="fa-solid fa-moon fa-fw"></i>
+                                    <span class="ms-2">Dark</span>
+                                    <i class="fa-solid fa-check ms-auto d-none"></i>
+                                  </button>
+                                </li>
+                                <li>
+                                  <button class="dropdown-item d-flex align-items-center" data-bs-theme-value="auto" aria-pressed="true">
+                                    <i class="fa-solid fa-circle-half-stroke fa-fw"></i>
+                                    <span class="ms-2">Auto</span>
+                                    <i class="fa-solid fa-check ms-auto"></i>
+                                  </button>
+                                </li>
+                              </ul>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <script src="../js/darkmode.js"></script>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="2"><a href="#applying-the-rule-of-least-surprise" class="nav-link">Applying the Rule of Least Surprise</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="2"><a href="#history-of-interface-design-on-unix" class="nav-link">History of Interface Design on Unix</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="2"><a href="#evaluating-interface-designs" class="nav-link">Evaluating Interface Designs</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="2"><a href="#tradeoffs-between-cli-and-visual-interfaces" class="nav-link">Tradeoffs between CLI and Visual Interfaces</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="3"><a href="#case-study-two-ways-to-write-a-calculator-program" class="nav-link">Case Study: Two Ways to Write a Calculator Program</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="2"><a href="#transparency-expressiveness-and-configurability" class="nav-link">Transparency, Expressiveness, and Configurability</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="2"><a href="#unix-interface-design-patterns" class="nav-link">Unix Interface Design Patterns</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="3"><a href="#the-filter-pattern" class="nav-link">The Filter Pattern</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#the-cantrip-pattern" class="nav-link">The Cantrip Pattern</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#the-source-pattern" class="nav-link">The Source Pattern</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#the-sink-pattern" class="nav-link">The Sink Pattern</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#the-compiler-pattern" class="nav-link">The Compiler Pattern</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#the-ed-pattern" class="nav-link">The ed pattern</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#the-roguelike-pattern" class="nav-link">The Roguelike Pattern</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#the-separated-engine-and-interface-pattern" class="nav-link">The ‘Separated Engine and Interface’ Pattern</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#the-cli-server-pattern" class="nav-link">The CLI Server Pattern</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#language-based-interface-patterns" class="nav-link">Language-Based Interface Patterns</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="2"><a href="#applying-unix-interface-design-patterns" class="nav-link">Applying Unix Interface-Design Patterns</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="3"><a href="#the-polyvalent-program-pattern" class="nav-link">The Polyvalent-Program Pattern</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="2"><a href="#the-web-browser-as-a-universal-front-end" class="nav-link">The Web Browser as a Universal Front End</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="2"><a href="#silence-is-golden" class="nav-link">Silence Is Golden</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="chapter-11-interfaces">Chapter 11. Interfaces<a class="headerlink" href="#chapter-11-interfaces" title="Permanent link">&para;</a></h1>
+<div class="toc"><span class="toctitle">見出し一覧</span><ul>
+<li><a href="#applying-the-rule-of-least-surprise">Applying the Rule of Least Surprise</a></li>
+<li><a href="#history-of-interface-design-on-unix">History of Interface Design on Unix</a></li>
+<li><a href="#evaluating-interface-designs">Evaluating Interface Designs</a></li>
+<li><a href="#tradeoffs-between-cli-and-visual-interfaces">Tradeoffs between CLI and Visual Interfaces</a><ul>
+<li><a href="#case-study-two-ways-to-write-a-calculator-program">Case Study: Two Ways to Write a Calculator Program</a></li>
+</ul>
+</li>
+<li><a href="#transparency-expressiveness-and-configurability">Transparency, Expressiveness, and Configurability</a></li>
+<li><a href="#unix-interface-design-patterns">Unix Interface Design Patterns</a><ul>
+<li><a href="#the-filter-pattern">The Filter Pattern</a></li>
+<li><a href="#the-cantrip-pattern">The Cantrip Pattern</a></li>
+<li><a href="#the-source-pattern">The Source Pattern</a></li>
+<li><a href="#the-sink-pattern">The Sink Pattern</a></li>
+<li><a href="#the-compiler-pattern">The Compiler Pattern</a></li>
+<li><a href="#the-ed-pattern">The ed pattern</a></li>
+<li><a href="#the-roguelike-pattern">The Roguelike Pattern</a></li>
+<li><a href="#the-separated-engine-and-interface-pattern">The ‘Separated Engine and Interface’ Pattern</a><ul>
+<li><a href="#configuratoractor-pair">Configurator/Actor Pair</a></li>
+<li><a href="#spoolerdaemon-pair">Spooler/Daemon Pair</a></li>
+<li><a href="#driverengine-pair">Driver/Engine Pair</a></li>
+<li><a href="#clientserver-pair">Client/Server Pair</a></li>
+</ul>
+</li>
+<li><a href="#the-cli-server-pattern">The CLI Server Pattern</a></li>
+<li><a href="#language-based-interface-patterns">Language-Based Interface Patterns</a></li>
+</ul>
+</li>
+<li><a href="#applying-unix-interface-design-patterns">Applying Unix Interface-Design Patterns</a><ul>
+<li><a href="#the-polyvalent-program-pattern">The Polyvalent-Program Pattern</a></li>
+</ul>
+</li>
+<li><a href="#the-web-browser-as-a-universal-front-end">The Web Browser as a Universal Front End</a></li>
+<li><a href="#silence-is-golden">Silence Is Golden</a></li>
+</ul>
+</div>
+<p>プログラムのインターフェイスはそのプログラムが人間や他のプログラムと通信する方法すべての総体だ。UI のコードは通常、開発時間の 40% 以上を費やす。初動での失敗や時間のかかる書き直しを避けるためには優れたデザインパターンを知ることが特に重要だ。</p>
+<p>Unix の伝統的なインターフェイス設計における課題：</p>
+<ul>
+<li>他のプログラムとの通信のための予測的 (anticipatory) 設計</li>
+<li>驚き最小の法則</li>
+</ul>
+<p>Unix のプログラムは相乗効果のある組み合わせで使用することでさらなる性能を得る。</p>
+<p>プログラムインターフェイス設計に関する Unix の伝統の多くは、初めてそれに出会ったときには奇妙で恣意的、あるいは GUI の時代には、まさに逆行しているとさえ思えるかもしれない。しかし、さまざまな汚点や不規則性にもかかわらず、その伝統には学び理解する価値のある内在論理がある。</p>
+<p>起動後、プログラムは通常次の場所から入力やコマンドを受け取る：</p>
+<ul>
+<li>プログラムの標準入力に表示されるデータとコマンド</li>
+<li>X サーバーイベントやネットワークメッセージなど、プロセス間通信で渡される入力</li>
+<li>既知の場所にあるファイル、機器、器具、装置</li>
+</ul>
+<p>プログラムはすべて同じ方法で結果を出すことができる。出力は標準出力に向かう。</p>
+<p>Unix には競合するインターフェイス様式がいくつかある。いずれもまだ存命であるのには理由があり、それぞれの状況に最適化されているからだ。仕事とインターフェイス様式の適合性を理解しろ。</p>
+<h2 id="applying-the-rule-of-least-surprise">Applying the Rule of Least Surprise<a class="headerlink" href="#applying-the-rule-of-least-surprise" title="Permanent link">&para;</a></h2>
+<p>驚き最小の法則はソフトウェアに限らず、あらゆる種類のインターフェイスの設計における一般法則だ。</p>
+<ul>
+<li>人間は一度に一つのことしか注意できないという事実からの帰結</li>
+<li>驚きがあると、仕事ではなくインターフェイスに注目してしまう</li>
+</ul>
+<p>したがって、使いやすいインターフェイスを設計するためには、可能な限り、まったく新しいインターフェイスモデルを設計しないことが最善だ。目新しさは使用者にとって参入障壁となる。</p>
+<p>可能な限り、ユーザーがインターフェイス機能を使い慣れたプログラムに委譲できるようにすること：</p>
+<blockquote>
+<p>Wherever possible, allow the user to delegate interface functions to a
+familiar program.</p>
+</blockquote>
+<p>使用者が大量のテキストを編集する必要があるプログラムでは、独自の統合エディターを組み込むのではなく、使用者が指定できるエディターを呼び出すように書くべきだ
+(<a href="multiprogram.html">Chapter 7</a>)。</p>
+<p>さらに：委譲できないときは、エミュレートせよ。</p>
+<p>驚き最小の法則の目的は、インターフェイスを使うために使用者が吸収しなければならない複雑さ減らすことだ。エディターの例を続けると、内蔵エディターを実装しなければならない場合、エディターコマンドがよく知られた汎用エディターの部分集合であることが最善であることを意味する。Bash にも Korn Shell にも、vi と Emacs の編集方式を選択できる機能がある。</p>
+<p>もう一つの例として、Unix 版の Web ブラウザーはテキスト欄が Emacs の既定キーバインディングの部分集合を認識することが挙げられている。なぜ Emacs かというと：</p>
+<blockquote>
+<p>The only way it could have been bettered was by choosing key bindings
+associated with some editor significantly more widely used than Emacs; and
+among Netscape's original user population there was no such animal.</p>
+</blockquote>
+<p>これらの原則はインターフェイス設計の他の多くの分野にも適用できる。</p>
+<blockquote>
+<p>Or even that if you are designing an arcade-style game, it is wise to look at
+the gesture sets of previous games to see if you can give new users a feeling
+of comfort by allowing them to transfer joystick skills learned in other
+games.</p>
+</blockquote>
+<p>この主張は格闘ゲームを想像するとわかりやすい（「波動拳コマンド」とか「ヨガフレイム」とか言えばその筋の連中には話が完全に通じるという良さもある）。</p>
+<h2 id="history-of-interface-design-on-unix">History of Interface Design on Unix<a class="headerlink" href="#history-of-interface-design-on-unix" title="Permanent link">&para;</a></h2>
+<p>Unix の基本コマンドのほとんど (ls(1), cat(1), grep(1), etc.) は現在でも 1969 年の最初の Unix から十年以上主流であった CLI の伝統を反映している。</p>
+<p>1980 年以降、Unix は徐々に文字枡目端末での画面描画をやるようになる。プログラムはコマンドラインとビジュアルインターフェイスを混在させるようになる。一般的なコマンドは画面に映らないキーストロークに束縛されるようになった。通常、キャレットを制御するために使用される画面描画ライブラリーにちなんで curses プログラムと呼ばれたり、それを使用した最初のアプリケーションにちなんで roguelike と呼ばれたりする。</p>
+<p>1980 年代半ば、Xerox's Palo Alto Research Center で 1970 年代初頭から行われていた GUI の先駆的な研究の成果が計算機の世界全体に浸透し始めた。</p>
+<ul>
+<li>PC では PARC の研究が Apple Macintosh のインターフェイスに影響を与えた。</li>
+<li>それを通じて Microsoft Windows の設計に影響を与えた。</li>
+</ul>
+<p>1987 年頃、X windowing system が Unix の標準的な GUI 機能となった。</p>
+<p>X にはオープンソースであるという最大の長所があった。自由に再配布・変更可能なままであった。そのため、単一の販売会社の排他的な製品に肩入れしたがらない幅広い開発者や後援企業から支持を集めることができた。</p>
+<p>X の設計者たちは“mechanism, not policy”を支持することを早くから決めていた。彼らの目的は X を可能な限りプラットフォーム間で柔軟かつ移植しやすくする一方、X プログラムのルック＆フィールにできる限り制約を与えないことだった。</p>
+<blockquote>
+<p>This approach was the polar opposite of that taken by the Macintosh and
+Windows commercial products, which enforced particular look-and-feel policies
+by designing them right into the system.</p>
+</blockquote>
+<p>X はウィンドウマネジャーを複数支援するように設計されている。ウィンドウマネジャーの意味は脚注にある：</p>
+<blockquote>
+<p>A window manager handles associations between windows on the screen and
+running tasks. Window managers handle behaviors like title bars, placement,
+minimizing, maximizing, moving, resizing, and shading windows.</p>
+</blockquote>
+<p>1990 年代半ば以降、最低性能 Unix 機でさえ X はありふれている。</p>
+<p>新しいアプリケーションのための curses 式のインターフェイスの使用も減少しており、以前はその様式で設計されていた新しいアプリケーションのほとんどは、現在では Xツールキットを使用している。Unix の古い CLI 設計の伝統は今でも活気があり、多くの分野で X とうまく競争していることは有益だ。</p>
+<p>また、curses 式の文字枡目画面インターフェイスが標準的なままである、いくつかの特定の応用分野があることも有益だ：</p>
+<ul>
+<li>テキストエディター</li>
+<li>メーラー</li>
+<li>ニュースリーダー</li>
+<li>チャットクライアントなどの対話型通信プログラム</li>
+</ul>
+<p>以上の歴史的な理由から、Unix プログラムにはさまざまなインターフェイス様式がある：</p>
+<ul>
+<li>行指向</li>
+<li>文字枡目画面指向</li>
+<li>X に基づくもの</li>
+</ul>
+<h2 id="evaluating-interface-designs">Evaluating Interface Designs<a class="headerlink" href="#evaluating-interface-designs" title="Permanent link">&para;</a></h2>
+<p>プロジェクトについて設計を決定するとき、アプリケーションと使用者層に適した方式を選んだり組み合わせたりする方法を知ることが肝要だ。</p>
+<p>ここではインターフェイス方式を分類するために次の五つの基本指標を用いる。これらの術後のうちいくつかは本書の最初のほうですでに現れたものだ：</p>
+<ul>
+<li>簡潔性 concision <!-- without using unnecessary words --></li>
+<li>表現力 expressiveness</li>
+<li>使いやすさ ease <!-- absence of difficulty or effort --></li>
+<li>透明性 transparency</li>
+<li>スクリプト可能性 scriptability</li>
+</ul>
+<p>簡潔性の定義：</p>
+<blockquote>
+<p>A program interface is ‘concise’ when the length and complexity of actions
+required to do a transaction with it has a low upper bound (the measurement
+might be in keystrokes, gestures, or seconds of attention required).</p>
+</blockquote>
+<p>表現力の定義：</p>
+<blockquote>
+<p>Interfaces are ‘expressive’ when they can readily be used to command a wide
+variety of actions.</p>
+</blockquote>
+<p>最も表現力豊かなインターフェイスは、設計者が予期していなかった動作の組み合わせを命令することができ、それにもかかわらず、使用者に有用かつ整合する結果を与えることができる。</p>
+<ul>
+<li>キーボードからの直接入力と、マウスで画面上の文字表示からクリックする方法は表現
+  力は同等だ。キーボードの方がより簡潔だ。</li>
+<li>複素数型があるプログラミング言語とない言語では、数学者や電気技師にとっては前者
+  のほうが表現力がはるかに高い。</li>
+</ul>
+<p>インターフェイスの使いやすさは、それを使うために使用者が特別に習得しなければならないことがどれだけ多いかに反比例する。</p>
+<p>透明性は <a href="transparency.html">Chapter 6</a> で習った。</p>
+<p>インターフェイスの透明性とは、使用している間、使用者が自分の問題、データ、プログラムの状態について記憶しておく必要があることがどれだけ少ないかということだ。</p>
+<p>いわゆる WYSIWYG インターフェイスは、透明性を最大化することを意図しているが、時に逆効果になる。特に、関心領域を単純化し過ぎた見方を提示すると。</p>
+<p>発見可能性という関連概念は、インターフェイス設計にも当てはまる。 発見可能性インターフェイスは、文脈依存のヘルプを指し示す挨拶メッセージや、説明的な風船のポップアップなど、利用者が学習する際の支援がある。しかし、この議論では指標として使わないことにする。</p>
+<p>コードと設計の透明性が、インターフェイスの透明性を含意するわけではないこと、あるいはその逆でもないことに注意が要る。</p>
+<p>インターフェイスのスクリプト可能性とは、他のプログラムから簡単に操作できることでだ。スクリプト可能なプログラムは、他のプログラムから部品として容易に利用できるため、経費のかかる自力でのコーディングの必要性が減り、反復課題の自動化が比較的容易になる。</p>
+<p>反復課題の自動化は通常よりももっと注目されるべきものだ。</p>
+<blockquote>
+<p>Unix programmers, administrators, and users develop a habit of thinking
+through the routine procedures they use, then packaging them so they no longer
+have to manually execute or even think about them any more. This habit depends
+on scriptable interfaces. It is a quiet but tremendous productivity booster
+not available in most other software environments.</p>
+</blockquote>
+<p>これらの指標に関して、人間とプログラムは異なる損失関数を持っている。特定の問題領域における、初心者と熟練した人間の使用者も同様だ。</p>
+<h2 id="tradeoffs-between-cli-and-visual-interfaces">Tradeoffs between CLI and Visual Interfaces<a class="headerlink" href="#tradeoffs-between-cli-and-visual-interfaces" title="Permanent link">&para;</a></h2>
+<p>初期の Unix のテレタイプ CLI スタイルの有用性：</p>
+<ul>
+<li>特に複雑な作業において、視覚的なインターフェイスよりも表現力が高い。</li>
+<li>スクリプト性が高い。</li>
+</ul>
+<p>通常、CLI は簡潔さにおいても有利だ。</p>
+<p>CLI の欠点は、ほとんどの場合、</p>
+<ul>
+<li>使いやすくない。</li>
+<li>透明性が低い。特に、技術者でない使用者は CLI は比較的不可解で学ぶのが難しいと
+  感じる。</li>
+</ul>
+<p>データベースの非技術的使用者の多くは、SQL 構文を覚えなければならないことに抵抗があり、簡潔で表現力に乏しい GUI を好む。</p>
+<p>最も強力な CLI は、限定目的のコマンドの集まりではなく、命令型の小規模言語
+(<a href="minilanguages.html">Chapter 8</a>) だ。これらは使いにくく、一般的な使用者からは目立たないようにする必要がある。インターフェイスの能力と柔軟性が最も重要なことである場合には無敵だ。適切に設計されていれば、スクリプト可能性でも高い評価を得ることができる。</p>
+<p>アプリケーションの中には、データベース照会とは異なり、もともと視覚的なものもある。ペイントプログラム、Web ブラウザー、スライドプログラムの三つがその例だ。 これらの応用領域に共通しているのは：</p>
+<ul>
+<li>透明性が貴重であること</li>
+<li>問題領域における素朴な動作自体が視覚的であること</li>
+</ul>
+<p>ペイントプログラムは、操作する画像内の関係を把握するのが難しいという欠点がある。例えば、繰り返し要素のある画像の構造を使用者に把握させるには、注意深く、思慮深い設計が必要だ。これは視覚的インターフェイスの一般的な設計問題だ。</p>
+<p>Audacity エディター (<a href="transparency.html">Chapter 6</a>) のインターフェイス設計が成功したのは、音声応用領域を（ステレオのイコライザー表示から借用した）単純な視覚的表現の集合に写像することが特にきれいにできたからだ。</p>
+<p>もともと視覚的でないアプリケーションでは、視覚的インターフェイスは初心者が行う単純な一発課題や頻度の低い課題に最も適している（データベースの例で示した）。</p>
+<p>CLI に対する抵抗は使用者が熟練するにつれて減少する傾向がある。</p>
+<blockquote>
+<p>In many problem domains, users (especially <em>frequent</em> users) reach a crossover
+point at which the concision and expressiveness of CLI becomes more valuable
+than avoiding its mnemonic load.</p>
+</blockquote>
+<p>例えば、計算機初心者は GUI デスクトップの使いやすさを好むが、経験豊富な使用者はシェルにコマンドを入力する方が好きであることを徐々に発見することが多い。</p>
+<p>CLI はまた、問題の規模が大きくなり、定型的、手続き的、反復的な行動が多くなるにつれて有用性を増す傾向がある。例えば、WYSIWYG ワープロは手紙のような比較的小さく、構造化されていない文書を執筆するための最も簡単な道だ。しかし、分節化されていて、構成中に多くの大域的な書式変更や構造操作を必要とする、複雑な書籍規模の文書では、通常、troff, Tex, XML 処理器のような小規模言語整形器がより効果的な選択となる。</p>
+<p>もともと視覚的な領域であっても、問題の規模を拡大するとトレードオフは CLI に傾く。指定された URL から Web ページを一つ取得して保存する必要があるなら、ポイントアンドクリックでも構わない。しかし、与えられた 50 の URL の一覧に対応するページを取得して保存する必要がある場合、標準入力やコマンドラインから URL を読み取ることができる CLI ツールを使えば無駄な動きを省くことができる。</p>
+<p>別の例として、画像の色表を変更することを考える。ある色を変更したい場合、カラーピッカーによる視覚的なダイアログボックスはほとんど必須だ。しかし、表全体を指定された RGB 値の集合で置き換えたり、大量のサムネイルを作成してインデックスを作成したりする必要があるとする。これらは通常、GUI が指定する表現力に欠ける操作だ。適切に設計された CLI やフィルタープログラムを呼び出すことで、はるかに簡潔に作業を行うことができる。</p>
+<p>GUI は単純にスクリプト化できない。GUI とのやりとりはすべて人間主導でなければならない。</p>
+<p>直接操作インターフェイスの暗黒面は、すべてを操作しなければならないことだ。
+-- Don Gentner and Jacob Nielsen. <em>The Anti-Mac Interface</em></p>
+<p>この問題に対する典型的な Unix 古参者の見解は、むしろ理論的でない：</p>
+<p>商業的な世界では、一般的に初心者モードが主流だ。なぜなら、</p>
+<ul>
+<li>30 秒の試用で購入が決定されることが多いから</li>
+<li>GUI を使いこなせれば顧客援助の負担が最小限に抑えられるから</li>
+</ul>
+<p>(Mike Lesk) 非 Unixシステムの多くは、例えば、百個や千個のファイルに対して何かをする方法を提供してくれないので、非常にイライラさせられる。</p>
+<p>素人にも専門家にも対応し、他のプログラムと協調し、問題領域が自然に視覚的であるかどうかにかかわらず、CLI と GUI の両方を支持することが重要だ。</p>
+<h3 id="case-study-two-ways-to-write-a-calculator-program">Case Study: Two Ways to Write a Calculator Program<a class="headerlink" href="#case-study-two-ways-to-write-a-calculator-program" title="Permanent link">&para;</a></h3>
+<p>GUI と CLI が単純な対話型プログラムである卓上計算機の設計にどのように有用に適用できるかを対比する。例は dc(1)/bc(1) vs xcalc(1) だ。</p>
+<p>dc(1)/bc(1) については <a href="multiprogram.html">Chapter 7</a> と <a href="minilanguages.html">Chapter 8</a> で触れられた。これらのプログラムはどちらも CLI だ。標準入力に式を入力し Enter を押すと式の値が標準出力に示される。</p>
+<p>一方、xcalc(1) はクリック可能なボタンと電卓風の機器であり、単純な電卓を視覚的に真似ている。</p>
+<!-- Figure 11.1. The xcalc GUI. -->
+
+<p>xcalc(1) の手法は初心者が慣れ親しんでいるインターフェイスを模倣しているため説明するのが簡単だ。このプログラムの機能はすべて目に見えるボタンのラベルによって伝わる。これは驚き最小の法則の最も強い形であり、プログラムを使用するためにマニュアルページを読む必要のない、使用頻度の少ない初心者にとって真の利点だ。</p>
+<p>しかし、電卓のほぼ完全な非透明性 (non-transparency) も継承している。複雑な式を評価するとき、自分のキーストロークを見て正気確認をすることができない。例えば、</p>
+<pre><code class="language-raw">(2.51 + 4.6) * 0.3
+</code></pre>
+<p>のような式で小数点を間違えてしまうと問題になる。</p>
+<p>一方、dc(1)/bc(1) では、式を作りながら間違いを編集することができる。インターフェイスは透明性がより高い。インタープリターは電卓の適度な大きさの見てくれに収まるものに限定されないので、より多くの機能（および条件文、変数、反復などの機能）を含むことができ、より表現力が豊かだ。もちろん mnemonic load も負うことになる。</p>
+<ul>
+<li>タイピングが得意な人なら CLI の方が簡潔だと感じるだろうし、苦手な人ならマウス
+  クリックの方が早いと感じるかもしれない。</li>
+<li><code>dc</code>/<code>bc</code> はフィルターとして使えるが、<code>xcalc</code> はまったくスクリプト化できない。</li>
+</ul>
+<p>初心者にとっての使いやすさと熟練者にとっての実用性のトレードオフ：</p>
+<ul>
+<li>暗算によるエラーチェックが難しくない状況でカジュアルに使うなら <code>xcalc</code> が優る</li>
+<li>より複雑な計算で、段階が正しいだけでなく、正しいことが見て取れなければなら
+  ない場合や、他のプログラムで生成するのが最も便利な場合は <code>dc</code>/<code>bc</code> が優る</li>
+</ul>
+<h2 id="transparency-expressiveness-and-configurability">Transparency, Expressiveness, and Configurability<a class="headerlink" href="#transparency-expressiveness-and-configurability" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>Unix programmers inherit a strong bias toward making interfaces expressive and
+configurable.</p>
+</blockquote>
+<p>対象使用者に関する不確実性に対処するやり方が他の伝統的プログラマーと異なる。</p>
+<p>Unix プログラマーはインターフェイスを表現的で透明なものにするのが通例であり、これらの性質を得るために、使いやすさを犠牲にすることを厭わない (willing to
+sacrifice ease)。</p>
+<p>Unix プログラマーは «by programmers, for programmers» の精神だ。この姿勢の弊害は：</p>
+<ul>
+<li>(Henry Spencer) 高度に構成可能で表現力豊かなインターフェイスが完成した時点で、
+  仕事は終わったと思い込む傾向があること</li>
+<li>(Henry Spencer) 構成可能性の裏返しとして、優れた既定値およびすべてをそれに設定
+  する簡単な方法がさし迫った必要だ。</li>
+<li>(Henry Spencer) 表現力の裏返しとして、プログラムであれ、文書であれ、どこから始
+  めて、どのようにして最も望まれる結果を達成するのかという導きが必要だ。</li>
+</ul>
+<p>透明性の法則も影響する。Unix プログラマーが、制御オプションの集合を定義した RFC
+やその他の標準に適合するように書いているとき、彼は自分の仕事はそれらのオプション全てに完全で透過的なインターフェイスを与えることだと思いがちだ。</p>
+<blockquote>
+<p>His job is mechanism; policy belongs to the user.</p>
+</blockquote>
+<p>Macintosh や Windows の開発者が「標準のその機能を支援する必要はない。使用者のほとんどは気にしないだろうし、彼らにとっては複雑であり過ぎる」と言うような場合、
+Unix の開発者はこう言うだろう。「誰もこの機能やオプションを欲しがらないとは限らない。したがって、我々はそれを支援しなければならない」。</p>
+<p>このような態度は Unix プログラマーが他の人と仕事をするときに衝突を引き起こす可能性がある。</p>
+<p>Unix の態度がどこまで適切かはさまざまである。相手の意見に耳を傾けることを学び、反対意見の背景にある前提を理解することが賢明だ。<a href="transparency.html">Chapter 6</a> の Audacity と KMail
+の研究事例はそれに倣うべき良い例だ。</p>
+<p>人が UI を直感的であるというのは、次を満たすそれをいう：</p>
+<ul>
+<li>発見可能である</li>
+<li>使用中は透明である</li>
+<li>驚き最小の法則に従う</li>
+</ul>
+<blockquote>
+<p>Of these three rules, Least Surprise is the least binding; initial surprises
+can be coped with if discoverability and transparency make longer-term use
+rewarding.</p>
+</blockquote>
+<!-- be coped with: to deal successfully with a difficult situation -->
+
+<p>人々は、単純な操作が簡単で、インターフェイスのより難しい角を一歩ずつ吸収できるような発見経路がある限り、mnemonic load のかなり高い透明なインターフェイスについて、直感と思われるものを発達させることができる。</p>
+<h2 id="unix-interface-design-patterns">Unix Interface Design Patterns<a class="headerlink" href="#unix-interface-design-patterns" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>There are no design patterns in graphical user interfaces themselves that are
+specifically native to Unix.</p>
+</blockquote>
+<p>プログラムには複数のインターフェイスパターンに適合するモードがあることに注意。例えば、コンパイラーのようなインタフェイスを持つプログラムは、コマンドラインでファイル引数が指定されていない場合、フィルターとして動作することがある。型変換プログラムの多くはこのように動作する。</p>
+<h3 id="the-filter-pattern">The Filter Pattern<a class="headerlink" href="#the-filter-pattern" title="Permanent link">&para;</a></h3>
+<p>Unix に最も典型的に関連したインターフェイス設計パターンは、フィルターだ。フィルタープログラムは標準入力のデータを受け取り、何らかの変換をし、その結果を標準出力に送る。</p>
+<p>フィルタの典型的な例は tr(1), grep(1), sort(1) だ。</p>
+<p>grep(1) と sort(1) はコマンドラインで指定されたファイルからデータを入力することもできる。この場合、標準入力を読み込まず、あたかもその入力が、名前付きファイルを順番に読み込んだ連結物であるかのように振る舞う。このような <code>cat</code> 風フィルターの原型は cat(1) であり、コマンドラインで指定されたファイルを異なるように扱うアプリケーション固有の理由がない限り、フィルターはこのように振る舞うことが期待される。</p>
+<p>フィルターを設計する際には次を覚えておくとよい (<a href="../context/philosophy.html">Chapter 1</a>):</p>
+<ol>
+<li>Postel の処方箋を忘れるな。<em>Be generous in what you accept, rigorous in what you emit.</em></li>
+<li>必要のない情報は決して捨てるな。</li>
+<li>雑音を決して加えるな。必要でない情報を加えないようにし、下流のプログラムに
+   とって解析が難しくなるような再整形は避けろ。</li>
+</ol>
+<blockquote>
+<p>The term “filter” for this pattern is long-established Unix jargon.</p>
+</blockquote>
+<p>「フィルター」はパイプの初日に使われるようになった。データの流れを表す配管の比喩がすでに確立されていたため、「回路」が考慮されることはなかった。(Doug McIlroy)</p>
+<h3 id="the-cantrip-pattern">The Cantrip Pattern<a class="headerlink" href="#the-cantrip-pattern" title="Permanent link">&para;</a></h3>
+<p>単語 cantrip の意味については後述。</p>
+<blockquote>
+<p>No input, no output, just an invocation and a numeric exit status. A cantrip's
+behavior is controlled only by startup conditions.</p>
+</blockquote>
+<p>初期条件や制御情報のごく単純な設定以外に、プログラムが使用者との実行時の対話を必要としない場合にこのパターンを適用する。</p>
+<p>例：</p>
+<ul>
+<li>clear(1)</li>
+<li>rm(1)</li>
+<li>touch(1)</li>
+<li>startx(1): X を起動するプログラム。</li>
+</ul>
+<p>このデザインパターンはかなり一般的なものではあるが、従来は名前がつけられていなかった。著者がこのように命名した。</p>
+<blockquote>
+<p>the term “cantrip” is my invention. (In origin, it's a Scots-dialect word for
+a magic spell, which has been picked up by a popular fantasy-role-playing game
+to tag a spell that can be cast instantly, with minimal or no preparation.)</p>
+</blockquote>
+<p>この人気 RPG とは Dungeons &amp; Dragons を指す。コマンドをゲームの呪文であるかのように見立てるのは当たり前のことだ。</p>
+<h3 id="the-source-pattern">The Source Pattern<a class="headerlink" href="#the-source-pattern" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>A <em>source</em> is a filter-like program that requires no input; its output is
+controlled only by startup conditions.</p>
+</blockquote>
+<p>典型的な例：</p>
+<ul>
+<li>ls(1)</li>
+<li>who(1)</li>
+<li>ps(1)</li>
+</ul>
+<p>Unix では上記のような報告プログラムはソースパターンに強く従う傾向があるので、それらの出力は標準的なツールで絞り込むことができる。</p>
+<h3 id="the-sink-pattern">The Sink Pattern<a class="headerlink" href="#the-sink-pattern" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>A <em>sink</em> is a filter-like program that consumes standard input but emits
+nothing to standard output. Again, its actions on the input data are
+controlled only by startup conditions.</p>
+</blockquote>
+<p>このインターフェイスパターンは珍しく、よく知られた例はほとんどない。</p>
+<ul>
+<li>lpr(1): 標準入力で指定されたテキストやファイルを印刷キューに押し込む。</li>
+<li>mail(1) のメール送信モード。</li>
+</ul>
+<p>シンクパターンのように見えるプログラムの多くは、標準入力からデータだけでなく制御情報も受け取っており、実際には <code>ed</code> パターン（後述）のようなものだ。</p>
+<p>スポンジという用語が、sort(1) のような、入力を処理する前に入力全体を読まなければならないシンクプログラムに特に適用されることがある。</p>
+<h3 id="the-compiler-pattern">The Compiler Pattern<a class="headerlink" href="#the-compiler-pattern" title="Permanent link">&para;</a></h3>
+<p>コンパイラー風プログラムは標準出力も標準入力も使わない。その代わり、コンパイコマンドラインからファイル名や材料名を受け取り、それらの名前を何らかの方法で変換し、変換された名前で出力する。コンパイラー風は起動後に使用者による操作を必要としない。</p>
+<p>このパターンはその枠組が cc(1)/gcc(1) であることからそう呼ばれる。画像ファイルの変換や圧縮解凍を行うプログラムにも広く使われている。例：</p>
+<ul>
+<li>gif2png(1)</li>
+<li>gzip(1)</li>
+<li>gunzip(1)</li>
+</ul>
+<p>おそらく ImageMagick の conjure(1) や ffmpeg(1) も該当するだろう。</p>
+<p>一般に、コンパイラーパターンは、プログラムが複数の名前付き素材に関して動作する必要があることが多く、かつ対話性を低くするように書ける（制御情報を起動時に与える）場合に適したモデルだ。</p>
+<p>コンパイラー風プログラムは容易にスクリプトにできる。</p>
+<h3 id="the-ed-pattern">The <code>ed</code> pattern<a class="headerlink" href="#the-ed-pattern" title="Permanent link">&para;</a></h3>
+<p>起動時以降も使用者との継続的な対話によって駆動される必要があるプログラムは多い。</p>
+<ul>
+<li>ed(1)</li>
+<li>ftp(1)</li>
+<li>sh(1)</li>
+</ul>
+<blockquote>
+<p>An actual sample ed(1) session will be included in <a href="complexity.html">Chapter 13</a>.</p>
+</blockquote>
+<p>Unix のブラウザーやエディターに似たプログラムの多くは、編集対象の名前付き物資がテキストファイル以外のものであってもこのパターンに従う。例：gdb(1).</p>
+<p>このパターンのプログラムは容易にスクリプト化できない。このようなプログラムを動かすには、通信規約と、呼び出しプロセスに対応する状態機械が必要になる。
+<a href="multiprogram.html">Chapter 7</a> の主プロセス制御の議論で指摘された問題が起こる。</p>
+<p>それでも、対話的プログラムを完全に支援する最も単純なスクリプト可能なパターンだ。ゆえに、後述の「分離エンジンとインターフェース」パターンの構成要素として、今でもかなり有用だ。</p>
+<h3 id="the-roguelike-pattern">The Roguelike Pattern<a class="headerlink" href="#the-roguelike-pattern" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>Roguelike programs are designed to be run on a system console, an X terminal
+emulator, or a video display terminal. They use the full screen and support a
+visual interface style, but with character-cell display rather than graphics
+and a mouse.</p>
+</blockquote>
+<p>この節を読むときだけ頭をゲームモードに切り替えるのはありだ。</p>
+<!--
+Figure 11.2. Screen shot of the original Rogue game.
+
+                                                a) some food
+                                                b) +1 ring mail [4] being worn
+-----------------------              ########## c) a +1,+2 mace in hand 
+|                     +###############          d) a +1,+0 short bow
+|                     |                         e) 28 +0,+0 arrows
+---------------+-------                         f) a short bow
+               #                                i) a magnesium wand
+               #                                g) a magnesium wand
+             ###               ---------------- j) a potion of detect things
+     --------+----------       |                l) a scroll of teleportation
+     |                 |      #+                --press space to continue--
+     |                 |      #|                 |             #
+     |                 +#######|                 |            ##
+     |                 |       |                 +##############
+     --------+----------       -------------------             #
+        ######                                                 #
+  ------+----------                                            ######
+  |...........@..!|                                                 #
+  |...........%...|                 ----------------                #
+  |...............|                #+              |          #######
+  |...............+#################|              |          #
+  |...............|                 |              +###########
+  -----------------                 ----------------
+Level: 3  Gold: 73     Hp: 36(36)   Str: 14(16) Arm: 4  Exp: 4/78
+-->
+
+<p>コマンド：</p>
+<ul>
+<li>通常は画面にエコーバックがない単一キーストロークだ。</li>
+<li>より手の込んだコマンドを入力するコマンドウィンドウを開くものもある。</li>
+<li>コマンド体系では矢印キーを多用する。</li>
+</ul>
+<p>このパターンで書かれたプログラムは vi(1) か emacs(1) のどちらかをモデルにし、ヘルプの取得やプログラムの終了といった一般的な操作にそれらのコマンドシーケンスを使う傾向がある。これは驚き最小の法則による。</p>
+<p>このパターンに関連する他のインターフェイス表現には、以下のようなものがある：</p>
+<ul>
+<li>一行に一項目のメニューが使われる。選択中の項目が太字などの強調表示で描かれる。</li>
+<li>モード行。強調表示された画面行に表示されるプログラム状態の要約。画面下部または
+  上部にあることが多い。</li>
+</ul>
+<p>キーボードの h, j, k, l キーに関する約束事：</p>
+<blockquote>
+<p>a traditional but now archaic part of the roguelike pattern is the use of the
+h, j, k, and l as cursor keys whenever they are not being interpreted as
+self-inserting characters in an edit window; invariably k is up, j is down, h
+is left, and l is right.</p>
+</blockquote>
+<p>そういえば Google 日本語入力では <code>zh</code>, <code>zj</code>, <code>zk</code>, <code>zl</code> をそれぞれ←↓↑→に変換できる。</p>
+<p>このパターンに従ったプログラムは無数にある：</p>
+<ul>
+<li>vi(1)</li>
+<li>emacs(1)</li>
+<li>elm(1)</li>
+<li>pine(1)</li>
+<li>mutt(1), その他の Unixメールリーダーの大半</li>
+<li>tin(1)</li>
+<li>slrn(1), その他の Usenet ニュースリーダーの大半</li>
+<li>lynx(1)</li>
+<li>その他多数</li>
+</ul>
+<p>ローグライクパターンはスクリプトを書くのが難しい。書こうとすることさえめったにない。また、Figure 11.2 を見ればわかるように、出力をプログラムで解釈するのもかなり難しい。</p>
+<p>このパターンには、マウスで操作する完全 GUI のような視覚的な滑らかさもない。ローグライクプログラムは依然として使用者にコマンドを習得させる必要がある。ローグライクパターンに基づいて作られたインターフェイスは «only hard-core hackers can love»だ。このパターンは、スクリプト可能性もなく、初心者向け設計における最近の流行にも適合していないという、両方の悪い面を持っているように思われる。</p>
+<p>ローグライクプログラムは依然として人気がある。さらに、ローグライクパターンは広く浸透しているため、Unix では GUI プログラムでさえもしばしばしのごうとする。このパターンの人気が衰えない理由とは？</p>
+<blockquote>
+<p>Efficiency, and perceived efficiency, seem to be important factors. Roguelike
+programs tend to be fast and lightweight relative to their nearest GUI
+competitors.</p>
+</blockquote>
+<p>マウスを動かすためにキーボードから手を離さなくて済むので、熟練タイピストはローグライクプログラムを好むことが多い。</p>
+<blockquote>
+<p>Given a choice, touch-typists will prefer interfaces that minimize keystrokes
+far off the home row;</p>
+</blockquote>
+<p>画面の使い方の分析。GUI 障害物で画面内が乱雑になることがない。ゆえに、他のプログラムと使用者の注意を頻繁に共有しなければならないプログラムでの使用に適している。先に挙げられたプログラム群にはその性質がある。</p>
+<blockquote>
+<p>the roguelike pattern tends to appeal more than GUIs to people who value the
+concision and expressiveness of a command set enough to tolerate the added
+mnemonic load.</p>
+</blockquote>
+<p>それならゲームやエディターに向いているのは納得だ。</p>
+<h3 id="the-separated-engine-and-interface-pattern">The ‘Separated Engine and Interface’ Pattern<a class="headerlink" href="#the-separated-engine-and-interface-pattern" title="Permanent link">&para;</a></h3>
+<dl>
+<dt>エンジン</dt>
+<dd>応用領域に特化した核心算法と論理インターフェイス</dd>
+<dd>使用者からコマンドを受け付け、結果を示し、ヘルプや履歴などの業務</dd>
+</dl>
+<blockquote>
+<p>In fact, this separated-engine-and-interface pattern is probably the one most
+characteristic interface design pattern of Unix.</p>
+</blockquote>
+<p>Xerox PARC の初期の GUI の研究は、原型として model-view-controller パターンを提案するに至った。</p>
+<ul>
+<li>モデルは Unix 界では通常エンジン（上の意味で）と呼ばれるものだ。データベース
+  サーバーはモデルの典型的な例だ。</li>
+<li>ビューは問題領域物トを目に見える形に表現するものだ。MVC が本当にうまく分離され
+  たアプリケーションでは、ビュー部分はモデルの更新を通知され、コントローラーに
+  よって同期的に駆動されたり、明示的な更新要求によって駆動されたりするのではな
+  く、独自に応答する。</li>
+<li>コントローラーは使用者の要求を処理し、それをコマンドとしてモデルに渡す。</li>
+</ul>
+<p>実際には、V と C の部分は、どちらかが M に結合しているよりも密接に結合している傾向がある。アプリケーションが M の V を複数要求する場合にしか、これらは分離されない傾向がある。</p>
+<p>Unix では MVC の適用が他の場所よりもはるかに一般だ。それは、まさに強い «do one
+thing well» 伝統があり、プロセス間通信が簡単で柔軟だからだ。</p>
+<p>この技法の特に強力な形は、ポリシーインターフェイス（多くの場合、V と C 機能を組み合わせた GUI）と、問題領域固有の小規模言語のインタプリター (<a href="minilanguages.html">Chapter 8</a>) を含むエンジン (M) とを結びつけるものだ。</p>
+<h4 id="configuratoractor-pair">Configurator/Actor Pair<a class="headerlink" href="#configuratoractor-pair" title="Permanent link">&para;</a></h4>
+<p>インターフェイス部分がフィルターや使用者コマンドを必要としないデーモン風プログラムの起動環境を制御する。</p>
+<p>fetchmail(1) と fetchmailconf(1) の対は当パターンの良い例だ。</p>
+<p>このデザインパターンによって、<code>fetchmail</code> と <code>fetchmailconf</code> のそれぞれが得意とすることに特化することができ、実際、それぞれの仕事領域に適した異なる言語で書くことができる。</p>
+<ul>
+<li>通常デーモンとしてバックグラウンドで実行される <code>fetchmail</code> は GUI コードで大き
+  くなる必要はない。</li>
+<li><code>fetchmailconf</code> は <code>fetchmail</code> から規模と複雑さの費用を要求することなく、精巧
+  GUI に特化することができる。</li>
+<li><code>fetchmailconf</code> と <code>fetchmailconf</code> の間の情報経路は狭く、明確に定義されている
+  ため、コマンドラインや <code>fetchmailconf</code> 以外のスクリプトから <code>fetchmail</code> を動か
+  すことが可能だ。</li>
+</ul>
+<blockquote>
+<p>The term “configurator/actor” is my invention.</p>
+</blockquote>
+<h4 id="spoolerdaemon-pair">Spooler/Daemon Pair<a class="headerlink" href="#spoolerdaemon-pair" title="Permanent link">&para;</a></h4>
+<p>Configurator/Actor Pair の若干の変形は、バッチモードで（個々のジョブが使用者との対話を必要としない場合で）共有資源へのシリアライズされたアクセスを必要とする状況で有用だ。</p>
+<p>当パターンでは、Spooler つまりフロントエンドは単にジョブ要求とデータを Spool 領域に放つ。</p>
+<ul>
+<li>ジョブ要求とデータは単なるファイル</li>
+<li>Spool 領域は通常、単なるディレクトリー</li>
+</ul>
+<p>ディレクトリーの場所とジョブ要求の形態は Spooler と Daemon が合意している。</p>
+<p>Daemon はバックグラウンドで永遠に実行され、Spool ディレクトリーを能動的かつ反復的に行うべき仕事を採取しようとする。ジョブ要求を見つけると、関連するデータを処理しようとする。成功するとジョブ要求とデータは Spool 領域から削除される。</p>
+<p>例：</p>
+<ul>
+<li>Unix の印刷システム lpr(1)/lpd(1). 前者と後者がそれぞれ Spooler/Daemon だ。
+  Spool 領域には印刷対象ファイルが置かれる。</li>
+<li>at(1)/atd(1). 指定された時間にコマンドを実行するようスケジュールする。</li>
+<li>UUCP. 1990 年代初頭にダイヤルアップ回線でのメール転送によく使われていた Unix
+  間コピープログラム。</li>
+</ul>
+<p>Spooler/Daemon Pair パターンはメール転送プログラムにおいて依然重要だ。送信失敗時にメールが Spool 領域に置かれる。後で送信を再試行する。</p>
+<p>Spooler/Daemon Pair は通常次の四部構成だ。実際、最初の三つが存在することは、その背後に Daemon が存在することを示す確実な手がかりとなる：</p>
+<ul>
+<li>a job launcher</li>
+<li>a queue lister</li>
+<li>a job-cancellation utility</li>
+<li>a spooling daemon</li>
+</ul>
+<blockquote>
+<p>The terms “spooler” and “daemon” are well-established Unix jargon. (‘Spooler’
+actually dates back to early mainframe days.)</p>
+</blockquote>
+<h4 id="driverengine-pair">Driver/Engine Pair<a class="headerlink" href="#driverengine-pair" title="Permanent link">&para;</a></h4>
+<p>このパターンでは、前二つのものとは異なり、インターフェース部分は起動後にエンジンにコマンドを供給し、エンジンからの出力を解釈する。エンジンはドライバーの主プロセスであってもよいし、エンジンとドライバーはソケットや共有メモリー、その他のプロセス間通信法を使って通信してもよい。重要な点は次の二点だ：</p>
+<ul>
+<li>Driver と Engine の双方向性</li>
+<li>Engine が独自のインターフェイスで単品で実行可能</li>
+</ul>
+<p>Configurator/Actor よりも結合度が高いので書くのが難しい：</p>
+<blockquote>
+<p>the driver must have knowledge not merely about the engine's expected startup
+environment but about its command set and response formats as well.</p>
+</blockquote>
+<p>Engine がスクリプト可能性のために設計されている場合、Driver が Engine 作者以外の誰かによって書かれたり、ある Engine のフロントエンドに Driver が複数使われたりすることはよくある。例：</p>
+<ul>
+<li>gv(1), ghostview(1)/gs(1)</li>
+<li>xcdroast(1)/cdrecord(1)</li>
+</ul>
+<!-- Figure 11.3. The Xcdroast GUI. -->
+
+<p>xcdroast(1) は他の CLI ツールも呼び出す：</p>
+<ul>
+<li>cdda2wav(1): サウンドファイル変換</li>
+<li>mkisofs(1): ファイル一覧から ISO-9660 CD-ROM ファイルイメージを作成</li>
+</ul>
+<p>(Steve Johnson) Driver/Engine 編成における重要な落とし穴は、Driver が Engine の状態を理解しなければ、それを使用者に反映できないことが頻繁にあることだ。動作が実質的に瞬時であれば問題ないが、時間がかかる場合にはフィードバックの欠如は重大な問題となりうる。</p>
+<p>Engine が正しいことをするだけでなく、Driver に何をしているかを通知し、Driver が適切な反応を呈する奥ゆかしいインターフェイスを提示できるように設計することも重要だ。</p>
+<blockquote>
+<p>The terms “driver” and “engine” are uncommon but established in the Unix
+community.</p>
+</blockquote>
+<h4 id="clientserver-pair">Client/Server Pair<a class="headerlink" href="#clientserver-pair" title="Permanent link">&para;</a></h4>
+<p>Client/Server Pair は Driver/Engine Pair のようなものではあるが、Engine 部分は</p>
+<ul>
+<li>バックグラウンドで実行される</li>
+<li>対話的に実行されることは期待されていない</li>
+<li>独自の UI を有しない</li>
+<li>プログラムが起動されるたびに高く付く何かを実行するのを避ける意味がある</li>
+</ul>
+<p>典型的な例：</p>
+<ul>
+<li>FTP を実装する ftp(1)/ftpd(1).</li>
+<li>sendmail(1) の二つのインスタンス。フォアグラウンドでは送信者、バックグラウンド
+  では聴取者。</li>
+<li>Web ブラウザーと Web サーバー。</li>
+<li>psql(1)/postmaster(1)</li>
+</ul>
+<p>これらの例はペア間のシリアライズされる通信規約が清浄であることが重要であるという、Client/Server 構成の重要な特性を示している。</p>
+<p>Separeted Engine and Interface プログラムはきれいな機能分離からこのような恩恵を得られる可能性があるが、Client/Server の場合、共有資源の管理が本質的に難しいため、それを正しく行うことの見返りが特に高くなる傾向がある。</p>
+<p>Client と Server を別々の計算機で実行できることの利点がたいへん大きいので、現代では Client/Server Pair のほとんどは TCP/IP ソケットを使用している。</p>
+<h3 id="the-cli-server-pattern">The CLI Server Pattern<a class="headerlink" href="#the-cli-server-pattern" title="Permanent link">&para;</a></h3>
+<p>サーバープロセスが inetd(8) のようなハーネスプログラムによって呼び出されるのは
+Unix の世界では普通のことで、ハーネスプログラムはサーバーの標準入力と標準出力が指定された TCP/IP サービスポートに接続されていることを確認する。この役割分担の利点のひとつは、ハーネスプログラムが起動するサーバー全てに対して、単一の用心棒として機能することだ。</p>
+<p>ハーネスプログラムの定義：</p>
+<blockquote>
+<p>A harness program is a wrapper whose job it is to make some special sort of
+resource available to the program(s) it calls. The term is most often used for
+test harnesses, which make available test loads and (often) examples of
+correct output for the actual output to be checked against.</p>
+</blockquote>
+<p>古典的なインターフェイスパターンの一つは CLI サーバーだ：</p>
+<ul>
+<li>フォアグラウンドモードで起動されると標準入力から読み込んで標準出力に書き込む、
+  単純な CLI インターフェイスを有するプログラムだ。</li>
+<li>バックグラウンドで起動されると、サーバーがこれを検出し、標準入力と標準出力を指
+  定された TCP/IP サービスポートに接続する。</li>
+</ul>
+<p>サーバーのほとんどのコードは、それがフォアグラウンドで実行されているのか、TCP/IP
+ハーネスで実行されているのかを知ることも気にすることもないというのが要諦だ。</p>
+<p>POP, IMAP, SMTP, HTTP サーバーは通常このパターンに従う。前述の Client/Server パターンのどれかと組み合わせることができる。</p>
+<blockquote>
+<p>Though this pattern is quite traditional, the term “CLI server” is my
+invention.</p>
+</blockquote>
+<h3 id="language-based-interface-patterns">Language-Based Interface Patterns<a class="headerlink" href="#language-based-interface-patterns" title="Permanent link">&para;</a></h3>
+<p>問題領域固有の小規模言語 (<a href="minilanguages.html">Chapter 8</a>) の長所は、Unix シェルに代表されるように、言語に基づく CLI を Unix インターフェイスの重要な様式にしている。</p>
+<p>このパターンの長所は dc(1)/bc(1) と xcalc(1) を比較した事例研究でよく示されている。</p>
+<p>最も強力な Unix デザインパターンの一つは、GUI フロントエンドと CLI 小規模言語バックエンドの組み合わせだ。この種のよく設計された例は必然的にかなり複雑になるが、小規模言語で実現できることのごく一部を網羅するために必要な間に合わせのコードの量に比べれば、はるかに単純で柔軟性が高いことがよくある。</p>
+<p>最近のデータベーススイートは通常どこでも一つ以上の GUI フロントエンドと報告作成で構成され、そのすべてが SQL のような言語を使用して共通のバックエンドと対話する。このパターンは主に Unix の下で発展してきたものであり、他の場所よりも Unix の方がよりよく理解され、より広く適用されている。</p>
+<p>Unix 界では Emacs がこのパターンの最もよく知られた例の一つだ。</p>
+<p>GIMP の Script-fu 機能も良い例だ。これを使えば Scheme を使って GIMP をスクリプト化できる。Tcl, Perl, Python を使ったスクリプトも可能だ。これらの言語で書かれたプログラムはプラグインインターフェイスを通じて GIMP の内部を呼び出せる。</p>
+<h2 id="applying-unix-interface-design-patterns">Applying Unix Interface-Design Patterns<a class="headerlink" href="#applying-unix-interface-design-patterns" title="Permanent link">&para;</a></h2>
+<p>スクリプトとパイプライン (<a href="multiprogram.html">Chapter 7</a>) を容易にするためには、できるだけ単純なインターフェイスパタンを選ぶのが賢明だ。</p>
+<p>上述した単一部品パターンの多くは、起動時間後に使用者による操作を必要としないことが強調されている。使用者は人間でなく、別のプログラムであることが多いため、これはスクリプト性を最大化する、価値のある機能だ。</p>
+<ul>
+<li>初心者や非技術的な使用者に適した GUI やデザインパターンと、</li>
+<li>熟練者の役に立ち、スクリプト可能性を最大化する GUI やデザインパターン</li>
+</ul>
+<p>との間には、強く本質的な緊張関係がある。</p>
+<p>「最も単純なパターンを選択する」ことと、GUI を作成する要件が矛盾する場合、Unixの方法は、プログラムを二つに分割し、Separeted Engine and Interface デザインパターンを適用することだ。</p>
+<h3 id="the-polyvalent-program-pattern">The Polyvalent-Program Pattern<a class="headerlink" href="#the-polyvalent-program-pattern" title="Permanent link">&para;</a></h3>
+<ol>
+<li>プログラムの応用領域論理は、文書化された API を持つライブラリーの中にあり、他
+   のプログラムと連結することができる。他の世界に対するプログラムのインターフェ
+   イス論理は、ライブラリーの上に薄い層がある。あるいは、異なる UI スタイルを持
+   つ層がいくつかあり、そのどれでもライブラリーに連結することができる。</li>
+<li>バッチモードで対話的コマンドを実行する Cantrip, Compiler-like, CLI パターンの
+   いずれかである UI モードがある。</li>
+<li>GUI であり、中心ライブラリーに直接連結されるか、CLI を駆動する別プロセスとし
+   て動作する UI モードがある。</li>
+<li>最新の汎用スクリプト言語を使ったスクリプティングインターフェイスモードがある。</li>
+<li>curses(3) を使ったローグライクなインターフェイスがオマケで存在する。</li>
+</ol>
+<!-- Figure 11.4. Caller/callee relationships in a polyvalent program. -->
+
+<p>GIMP は実際にこのパターンを満たしている。</p>
+<h2 id="the-web-browser-as-a-universal-front-end">The Web Browser as a Universal Front End<a class="headerlink" href="#the-web-browser-as-a-universal-front-end" title="Permanent link">&para;</a></h2>
+<p>多くのアプリケーションでは、自作 GUI フロントエンドを全く書かず、むしろ Web ブラウザーをその役割に押し付けることが理にかなうようになった。この取り組み方には利点が多くある：</p>
+<ul>
+<li>手続き的な GUI コードを書く必要がない。代わりに、所望の GUI をそれに特化した言
+  語 (HTML, JavaScript) で記述することが可能。</li>
+<li>アプリケーションを即座にインターネット対応にできる。</li>
+<li>アプリケーションの細かい表現の詳細（フォントや色など）を、ブラウザーの環境設定
+  や CSS のような仕組みによって、使用者が自分好みに変えられる。</li>
+<li>Web インターフェイスの一様な要素が使用者の学習作業を大幅に容易にする。</li>
+</ul>
+<p>短所もある：</p>
+<ul>
+<li>Web が強制するバッチスタイルの対話が難しい</li>
+<li>ステートレスプロトコルを使った永続的セッションの管理が難しい</li>
+</ul>
+<p>CGI はきめ細かな相互作用性をうまく対応していない。また、テンプレートシステム、アプリケーションサーバー、埋め込みサーバースクリプトも、徐々に CGI に取って代わりつつある。この節ではこれらすべてを CGI と呼ぶ。</p>
+<p>CGI は基本的にバッチ式の相互作用であり、パンチされたカードを入力ホッパーに落として印字されたものが戻ってくるのとそれほど変わらない。JavaScript を使って使用者とやりとりし、メッセージにまとめてサーバーに送ることでより使いやすくすることができる。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Java の話題は割愛。</p>
+</div>
+<p>複数の CGI フォーム間でセッション情報を維持するのは厄介だ。サーバーは CGI 更新間のクライアントセッションに関する状態を保持しないので、同じ使用者による以前のフォーム送信と後のフォーム送信を接続するためにそれに頼ることはできない。これを回避する標準的な方法は：</p>
+<ul>
+<li>連鎖フォーム</li>
+<li>クッキー</li>
+</ul>
+<blockquote>
+<p>When you chain forms, you arrange for the CGI for the first form to generate a
+unique ID in an invisible field of the second form, and for the second and all
+subsequent forms to pass that ID to their successors.</p>
+</blockquote>
+<p>クッキーは環境変数に類似した、より直接的でない方法で同様の効果を与える。</p>
+<p>どちらの場合でも、CGI は ID をセッションインデックスとして使い（あるいはクッキーで状態を直接キャッシュし）、セッションの多重化を明示的に処理する必要がある。</p>
+<blockquote>
+<p>That per-user state can be a problem; it eats resources, and it has to be
+timed out, because between transactions there is no way to know that the user
+is still on the other end of the wire.</p>
+</blockquote>
+<p>CGI とクッキーで十分なのに、Java やアプリケーションサーバーに依存した重量級設計を行おうとするな。できるだけ単純なパターンを選ぶのが最善だ。</p>
+<p>Web Browser as a Universal Front End の取り組み方の問題は、CGI バックエンドがブラウザー環境から容易に分離できないことだ。</p>
+<blockquote>
+<p>The Unix answer is a three-tier architecture — Web forms calling CGIs which
+call commands. The automation interface is the commands.</p>
+</blockquote>
+<h2 id="silence-is-golden">Silence Is Golden<a class="headerlink" href="#silence-is-golden" title="Permanent link">&para;</a></h2>
+<p><a href="../context/philosophy.html">Chapter 1</a> では、沈黙の規則を習った：よく設計された Unix プログラムでは面白いことや驚くようなことは何も言わないので黙っていろ。</p>
+<p>標準エラーには本当のエラーしか送らず、要求されていないデータはまったく送らない方がよい：</p>
+<blockquote>
+<p>If your CLI program emits status messages to standard output, then programs
+that try to interpret that output will be put to the trouble of interpreting
+or discarding those messages (even if nothing went wrong!).</p>
+</blockquote>
+<p>画面の縦の空間は貴重だ。</p>
+<p>迷惑メッセージは人間の帯域幅を無造作に浪費する。</p>
+<p>データを失う可能性のある操作を保護する必要がある場合を除いて、GUI を確認ポップアップで散らかすな。</p>
+<p>一般的に、使用者がすでに知っていることを伝えるのは悪い流儀だ。インターフェイスの設計は全体として驚き最小の法則に従うべきだが、メッセージの内容は驚き最大の法則に従え。</p>
+<p>このルールは、確認プロンプトに対してさらに大きな効力を持つ。</p>
+<blockquote>
+<p>Constantly asking for confirmation where the answer is almost always “yes”
+conditions the user to press “yes” without thinking about it, a habit that can
+have very unfortunate consequences. Programs should request confirmation only
+when there is good reason to suspect that the answer might be “no no no!”</p>
+</blockquote>
+<p>確認プロンプトがまったくない場合、インターフェイスに本当に必要なのは undo コマンドだという兆候かもしれない。</p>
+<p>デバッグのためにおしゃべりな進捗メッセージが必要な場合は、verbosity スイッチを使って既定で無効にしろ。本番用にリリースする前に、できるだけ多くの通常メッセージを、verbosity がオンのときしか表示されるないようにしろ。</p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>© 2025 プレハブ小屋 All rights reserved.</p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js"></script>
+        <script src="../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

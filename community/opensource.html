@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="ja" data-bs-theme="auto">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="プレハブ小屋">
+        <link rel="canonical" href="https://github.com/showa-yojyo/taoup/community/opensource.html">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Open Source - The Art of Unix Programming 読書ノート</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../css/brands.min.css" rel="stylesheet">
+        <link href="../css/solid.min.css" rel="stylesheet">
+        <link href="../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" disabled>
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <link href="../css/style.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../index.html">The Art of Unix Programming 読書ノート</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../index.html" class="nav-link">Home</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle active" aria-current="page" role="button" data-bs-toggle="dropdown"  aria-expanded="false">Notes</a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../preface.html" class="dropdown-item">Preface</a>
+</li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Context</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../context/philosophy.html" class="dropdown-item">Philosophy</a>
+</li>
+            
+<li>
+    <a href="../context/history.html" class="dropdown-item">History</a>
+</li>
+            
+<li>
+    <a href="../context/contrasts.html" class="dropdown-item">Contrasts</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Design</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../design/modularity.html" class="dropdown-item">Modularity</a>
+</li>
+            
+<li>
+    <a href="../design/textuality.html" class="dropdown-item">Textuality</a>
+</li>
+            
+<li>
+    <a href="../design/transparency.html" class="dropdown-item">Transparency</a>
+</li>
+            
+<li>
+    <a href="../design/multiprogram.html" class="dropdown-item">Multiprogramming</a>
+</li>
+            
+<li>
+    <a href="../design/minilanguages.html" class="dropdown-item">Minilanguages</a>
+</li>
+            
+<li>
+    <a href="../design/generation.html" class="dropdown-item">Generation</a>
+</li>
+            
+<li>
+    <a href="../design/configuration.html" class="dropdown-item">Configuration</a>
+</li>
+            
+<li>
+    <a href="../design/interface.html" class="dropdown-item">Interfaces</a>
+</li>
+            
+<li>
+    <a href="../design/optimization.html" class="dropdown-item">Optimization</a>
+</li>
+            
+<li>
+    <a href="../design/complexity.html" class="dropdown-item">Complexity</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Implementation</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../implementation/languages.html" class="dropdown-item">Languages</a>
+</li>
+            
+<li>
+    <a href="../implementation/tools.html" class="dropdown-item">Tools</a>
+</li>
+            
+<li>
+    <a href="../implementation/reuse.html" class="dropdown-item">Reuse</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Community</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="portability.html" class="dropdown-item">Portability</a>
+</li>
+            
+<li>
+    <a href="documentation.html" class="dropdown-item">Documentation</a>
+</li>
+            
+<li>
+    <a href="opensource.html" class="dropdown-item active" aria-current="page">Open Source</a>
+</li>
+            
+<li>
+    <a href="futures.html" class="dropdown-item">Futures</a>
+</li>
+    </ul>
+  </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/showa-yojyo/taoup/issues" class="nav-link">Issues</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="documentation.html" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="futures.html" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/showa-yojyo/taoup/edit/main/docs/community/opensource.md" class="nav-link"><i class="fa-brands fa-github"></i> Edit on GitHub</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                              <button id="theme-menu" aria-expanded="false" data-bs-toggle="dropdown" data-bs-display="static" aria-label="Toggle theme" class="nav-link dropdown-toggle">
+                                <i class="fa-solid fa-circle-half-stroke fa-fw"></i>
+                                <span class="d-lg-none ms-2">Toggle theme</span>
+                              </button>
+                              <ul class="dropdown-menu dropdown-menu-end">
+                                <li>
+                                  <button class="dropdown-item d-flex align-items-center" data-bs-theme-value="light" aria-pressed="false">
+                                    <i class="fa-solid fa-sun fa-fw"></i>
+                                    <span class="ms-2">Light</span>
+                                    <i class="fa-solid fa-check ms-auto d-none"></i>
+                                  </button>
+                                </li>
+                                <li>
+                                  <button class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark" aria-pressed="false">
+                                    <i class="fa-solid fa-moon fa-fw"></i>
+                                    <span class="ms-2">Dark</span>
+                                    <i class="fa-solid fa-check ms-auto d-none"></i>
+                                  </button>
+                                </li>
+                                <li>
+                                  <button class="dropdown-item d-flex align-items-center" data-bs-theme-value="auto" aria-pressed="true">
+                                    <i class="fa-solid fa-circle-half-stroke fa-fw"></i>
+                                    <span class="ms-2">Auto</span>
+                                    <i class="fa-solid fa-check ms-auto"></i>
+                                  </button>
+                                </li>
+                              </ul>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <script src="../js/darkmode.js"></script>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="2"><a href="#unix-and-open-source" class="nav-link">Unix and Open Source</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="2"><a href="#best-practices-for-working-with-open-source-developers" class="nav-link">Best Practices for Working with Open-Source Developers</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="3"><a href="#good-patching-practice" class="nav-link">Good Patching Practice</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#good-project-and-archive-naming-practice" class="nav-link">Good Project- and Archive-Naming Practice</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#good-development-practice" class="nav-link">Good Development Practice</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#good-distribution-making-practice" class="nav-link">Good Distribution-Making Practice</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#good-communication-practice" class="nav-link">Good Communication Practice</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="2"><a href="#the-logic-of-licenses-how-to-pick-one" class="nav-link">The Logic of Licenses: How to Pick One</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="2"><a href="#why-you-should-use-a-standard-license" class="nav-link">Why You Should Use a Standard License</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="2"><a href="#varieties-of-open-source-licensing" class="nav-link">Varieties of Open-Source Licensing</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="3"><a href="#mit-or-x-consortium-license" class="nav-link">MIT or X Consortium License</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#bsd-classic-license" class="nav-link">BSD Classic License</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#artistic-license" class="nav-link">Artistic License</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#general-public-license" class="nav-link">General Public License</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#mozilla-public-license" class="nav-link">Mozilla Public License</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="chapter-19-open-source">Chapter 19. Open Source<a class="headerlink" href="#chapter-19-open-source" title="Permanent link">&para;</a></h1>
+<div class="toc"><span class="toctitle">見出し一覧</span><ul>
+<li><a href="#unix-and-open-source">Unix and Open Source</a></li>
+<li><a href="#best-practices-for-working-with-open-source-developers">Best Practices for Working with Open-Source Developers</a><ul>
+<li><a href="#good-patching-practice">Good Patching Practice</a><ul>
+<li><a href="#do-send-patches-dont-send-whole-archives-or-files">Do send patches, don't send whole archives or files</a></li>
+<li><a href="#send-patches-against-the-current-version-of-the-code">Send patches against the current version of the code</a></li>
+<li><a href="#dont-include-patches-for-generated-files">Don't include patches for generated files</a></li>
+<li><a href="#dont-send-patch-bands-that-just-tweak-rcs-or-sccs-symbols">Don't send patch bands that just tweak RCS or SCCS $-symbols</a></li>
+<li><a href="#do-use-c-or-u-format-dont-use-the-default-e-format">Do use -c or -u format, don't use the default (-e) format</a></li>
+<li><a href="#do-include-documentation-with-your-patch">Do include documentation with your patch</a></li>
+<li><a href="#do-include-an-explanation-with-your-patch">Do include an explanation with your patch</a></li>
+<li><a href="#do-include-useful-comments-in-your-code">Do include useful comments in your code</a></li>
+<li><a href="#dont-take-it-personally-if-your-patch-is-rejected">Don't take it personally if your patch is rejected</a></li>
+</ul>
+</li>
+<li><a href="#good-project-and-archive-naming-practice">Good Project- and Archive-Naming Practice</a><ul>
+<li><a href="#use-gnu-style-names-with-a-stem-and-majorminorpatch-numbering">Use GNU-style names with a stem and major.minor.patch numbering</a></li>
+<li><a href="#but-respect-local-conventions-where-appropriate">But respect local conventions where appropriate</a></li>
+<li><a href="#try-hard-to-choose-a-name-prefix-that-is-unique-and-easy-to-type">Try hard to choose a name prefix that is unique and easy to type</a></li>
+</ul>
+</li>
+<li><a href="#good-development-practice">Good Development Practice</a><ul>
+<li><a href="#dont-rely-on-proprietary-code">Don't rely on proprietary code</a></li>
+<li><a href="#use-gnu-autotools">Use GNU Autotools</a></li>
+<li><a href="#test-your-code-before-release">Test your code before release</a></li>
+<li><a href="#sanity-check-your-code-before-release">Sanity-check your code before release</a></li>
+<li><a href="#spell-check-your-documentation-and-readmes-before-release">Spell-check your documentation and READMEs before release</a></li>
+<li><a href="#recommended-cc-portability-practices">Recommended C/C++ Portability Practices</a></li>
+</ul>
+</li>
+<li><a href="#good-distribution-making-practice">Good Distribution-Making Practice</a><ul>
+<li><a href="#make-sure-tarballs-always-unpack-into-a-single-new-directory">Make sure tarballs always unpack into a single new directory</a></li>
+<li><a href="#include-a-readme">Include a README</a></li>
+<li><a href="#respect-and-follow-standard-file-naming-practices">Respect and follow standard file-naming practices</a></li>
+<li><a href="#design-for-upgradability">Design for upgradability</a></li>
+<li><a href="#under-linux-provide-rpms">Under Linux, provide RPMs</a></li>
+<li><a href="#provide-checksums">Provide checksums</a></li>
+</ul>
+</li>
+<li><a href="#good-communication-practice">Good Communication Practice</a><ul>
+<li><a href="#announce-to-freshmeat">Announce to Freshmeat</a></li>
+<li><a href="#announce-to-a-relevant-topic-newsgroup">Announce to a relevant topic newsgroup</a></li>
+<li><a href="#have-a-website">Have a website</a></li>
+<li><a href="#host-project-mailing-lists">Host project mailing lists</a></li>
+<li><a href="#release-to-major-archives">Release to major archives</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#the-logic-of-licenses-how-to-pick-one">The Logic of Licenses: How to Pick One</a></li>
+<li><a href="#why-you-should-use-a-standard-license">Why You Should Use a Standard License</a></li>
+<li><a href="#varieties-of-open-source-licensing">Varieties of Open-Source Licensing</a><ul>
+<li><a href="#mit-or-x-consortium-license">MIT or X Consortium License</a></li>
+<li><a href="#bsd-classic-license">BSD Classic License</a></li>
+<li><a href="#artistic-license">Artistic License</a></li>
+<li><a href="#general-public-license">General Public License</a></li>
+<li><a href="#mozilla-public-license">Mozilla Public License</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<ul>
+<li>Unix は、その実践がオープンソースに最も近いときに繁栄し、そうでないときに停滞
+  した。</li>
+<li>オープンソースの開発ツールは高品質である傾向がある。</li>
+<li>オープンソースの振る舞いのほとんどは長い歴史のある Unix の伝統的な慣習を強化し
+  たものに過ぎない。</li>
+<li>Unix がオープンソース共同体から得た重要な民俗習慣の慣習の多くは、他の現代的 OS
+  の開発者にも有益だ。</li>
+</ul>
+<h2 id="unix-and-open-source">Unix and Open Source<a class="headerlink" href="#unix-and-open-source" title="Permanent link">&para;</a></h2>
+<p>オープンソースの開発では、バグの叙述と修正が、例えば何らかの算法の実装とは異なり、複数の並列部分課題に分割するのに適した課題であるという事実を利用している。試作設計の近傍の可能性の探索も並列化しやすい。</p>
+<p>AT&amp;T 分割前の初期 Unix 共同体はオープンソースの典型的な例であった。</p>
+<p>分割前の Unix コードは技術的にも法的にも専有財であったが、使用者・開発者共同体内では共有財 (commons) として扱われていた。問題解決に最も強い意欲を持つ人々が奉仕活動を自主的に行った。</p>
+<p>参考資料：</p>
+<ul>
+<li><em>The Cathedral and the Bazaar</em> (1999)</li>
+<li><em>Understanding Open Source Software Development</em> (2002)</li>
+</ul>
+<p>著者の内省的な述懐が続き、汲み取りにくいので残念だがカット。</p>
+<p>オープンソース開発の規則は単純だ：</p>
+<ol>
+<li>
+<p><strong>ソースを公にする。</strong>
+   コードとそれを生み出す過程を公開する。第三者による査読を奨励する。他の人が
+   コードを自由に修正し、再配布できるようにする。共同体を大きくする。</p>
+</li>
+<li>
+<p><strong>早く、頻繁にリリースする。</strong>
+   リリースのテンポが速いと、効果的なフィードバックが素早く得られる。段階的なリ
+   リースが少量であれば、実際のフィードバックに応じて軌道修正することも容易だ。
+   最初のリリースが有望であることを実証しろ。コンパイルも実行もできない最初のリ
+   リースはプロジェクトの命取りになる。
+   コンパイルできないリリースは開発者がプロジェクトを完成させることができないこ
+   とを示唆する。</p>
+</li>
+<li>
+<p><strong>貢献には賞賛で報いる。</strong>
+   物質的な報酬を与えられないなら心理的な報酬を与えよう。人は往々にして金のため
+   よりも評判のために懸命に働くものだ。</p>
+</li>
+</ol>
+<p>Henry Spencer: 規則 2. の系として、個々のリリースは、多くの準備が必要な、重大なイベントであってはならない。</p>
+<ul>
+<li>すべてが完璧になるまで次のリリースを出荷できないと考えるな。</li>
+<li>バージョンが増えても動揺するな。</li>
+</ul>
+<p>一般的に、任意のプロジェクトへの貢献者のほとんどは志願者であり、ソフトウェアの有用性の向上や評判の誘因により貢献している。気軽な貢献者を奨励するには、彼らと中核組の間に障壁を作らないことが重要だ。特権的地位を最小限に抑えたい。</p>
+<p>多くのプロジェクトはバージョン管理システムを使ってネットワークからアクセス可能なコードリポジトリーを保有している。自動化されたバグ追跡システムや差分追跡システムの使用も一般的だ。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>現代の GitHub のようなサービスを当時の言葉で説明していると解釈した。</p>
+</div>
+<p>Linux, Apache, Mozilla のようなプロジェクトは成功を収め、世間からの認知度も高くなった。</p>
+<p>秘密主義の習慣を捨て、工程の透明性と査読を優先させることが錬金術が化学になる決定的な一歩だった。</p>
+<h2 id="best-practices-for-working-with-open-source-developers">Best Practices for Working with Open-Source Developers<a class="headerlink" href="#best-practices-for-working-with-open-source-developers" title="Permanent link">&para;</a></h2>
+<p>オープンソース共同体における習慣を構成するものの多くは、分散開発への自然な適応だ。
+Unix の慣習が恣意的なものである場合、それらはしばしば 1980 年代初期の Usenet や
+GNU プロジェクトの慣習や標準に遡る。</p>
+<h3 id="good-patching-practice">Good Patching Practice<a class="headerlink" href="#good-patching-practice" title="Permanent link">&para;</a></h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>本文で述べられる差分に関するコツは現代では GitHub などのサービスにあるプルリクエストページ上で実践すればいい。</p>
+</div>
+<p>ほとんどの人は、自分のプロジェクトをリリースする前に、他人のソフトウェアに差分を書くことでオープンソースソフトウェアに関わるようになる。今、他人のベースラインコードに対してソースコードの変更点を書いたとする。その人はその差分を含めるかどうかをどのように判断するだろうか。</p>
+<p>彼らは差分提出者の流儀や通信行動から品質の手がかりを探す。</p>
+<p>著者はこう言う：何百人もの見知らぬ人からの差分を長年扱ってきたが、自分の時間を尊重し、思慮深く提示されたもので、技術的には偽物というのを見たことはめったにない。</p>
+<h4 id="do-send-patches-dont-send-whole-archives-or-files">Do send patches, don't send whole archives or files<a class="headerlink" href="#do-send-patches-dont-send-whole-archives-or-files" title="Permanent link">&para;</a></h4>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>オープンソースプロジェクトの環境が整備された現代では手動実践不要。</p>
+</div>
+<ul>
+<li>diff(1) と patch(1) の双子はオープンソース開発の最も基本的な工具だ。</li>
+<li>全体を送るよりも <code>diff</code> による差分のほうが良い理由は、先方がベースラインから変
+  更したコードがある場合を考えればわかる。</li>
+</ul>
+<h4 id="send-patches-against-the-current-version-of-the-code">Send patches against the current version of the code<a class="headerlink" href="#send-patches-against-the-current-version-of-the-code" title="Permanent link">&para;</a></h4>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>要旨を現代風に解釈すると「プルリクエストブランチを先方指定のものにしろ」だ。</p>
+</div>
+<h4 id="dont-include-patches-for-generated-files">Don't include patches for generated files<a class="headerlink" href="#dont-include-patches-for-generated-files" title="Permanent link">&para;</a></h4>
+<p>提出する前に、patch(1) を適用して作り直すと自動的に再生成されるファイルを削除しろ。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>まともなプロジェクトならば、バージョン管理リポジトリーの構成がそのようなファイルを登録不能にしている可能性が高い。</p>
+</div>
+<h4 id="dont-send-patch-bands-that-just-tweak-rcs-or-sccs-symbols">Don't send patch bands that just tweak RCS or SCCS $-symbols<a class="headerlink" href="#dont-send-patch-bands-that-just-tweak-rcs-or-sccs-symbols" title="Permanent link">&para;</a></h4>
+<p>例えば、RCS や CVS で使われる <code>$Id$</code> など、ソースコードに特別なトークンを入れて、ファイル更新が確定したときにバージョン管理システムによって展開されるようにしている人もいる。この手のコードは送らない方が配慮がある。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>現代のコミット単位で履歴を管理する VCS ではこれを支持していないのではないか。
+少し調べた限りでは Git でも <code>.gitattributes</code> で構成すれば実現可能らしい。</p>
+</div>
+<h4 id="do-use-c-or-u-format-dont-use-the-default-e-format">Do use <code>-c</code> or <code>-u</code> format, don't use the default (<code>-e</code>) format<a class="headerlink" href="#do-use-c-or-u-format-dont-use-the-default-e-format" title="Permanent link">&para;</a></h4>
+<blockquote>
+<p>The default (<code>-e</code>) format of diff(1) is very brittle.</p>
+</blockquote>
+<p>オープンソース開発抜きで重要。オプション <code>-c</code> か <code>-u</code> を明示的に使うということを理解しろ。</p>
+<ul>
+<li><a href="https://www.gnu.org/software/diffutils/manual/html_node/Context-Format.html">Context format</a></li>
+<li><a href="https://www.gnu.org/software/diffutils/manual/html_node/Unified-Format.html">Unified format</a></li>
+</ul>
+<h4 id="do-include-documentation-with-your-patch">Do include documentation with your patch<a class="headerlink" href="#do-include-documentation-with-your-patch" title="Permanent link">&para;</a></h4>
+<p>ソフトウェアの機能に使用者から見える追加や変更を加えるのであれば、適切な手引書や文書への変更も含めろ。</p>
+<p>優れた文書は通常、堅実な貢献と迅速で汚いハックを分ける最も明らかなきざしだ。</p>
+<h4 id="do-include-an-explanation-with-your-patch">Do include an explanation with your patch<a class="headerlink" href="#do-include-an-explanation-with-your-patch" title="Permanent link">&para;</a></h4>
+<p>現代で言えばプルリクエストの description に相当する：</p>
+<blockquote>
+<p>Your patch should include cover notes explaining why you think the patch is
+necessary or useful. This is explanation directed not to the users of the
+software but to the maintainer to whom you are sending the patch.</p>
+</blockquote>
+<ul>
+<li>「このパッチで更新された文書を参照してください」とだけ言うのはダメだ。</li>
+<li>パッチを適用することで起こるかもしれない悪いことを率直に伝えるのもいい。</li>
+</ul>
+<!-- featuritis:  excessive ongoing expansion or addition of new features in a product -->
+
+<h4 id="do-include-useful-comments-in-your-code">Do include useful comments in your code<a class="headerlink" href="#do-include-useful-comments-in-your-code" title="Permanent link">&para;</a></h4>
+<p>悪いコメントを入れておくと責任者がそれを削る。</p>
+<h4 id="dont-take-it-personally-if-your-patch-is-rejected">Don't take it personally if your patch is rejected<a class="headerlink" href="#dont-take-it-personally-if-your-patch-is-rejected" title="Permanent link">&para;</a></h4>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>提出したパッチが却下される理由は質が低いからと考えていいと思う。</p>
+</div>
+<h3 id="good-project-and-archive-naming-practice">Good Project- and Archive-Naming Practice<a class="headerlink" href="#good-project-and-archive-naming-practice" title="Permanent link">&para;</a></h3>
+<p>管理者の負担が増えるにつれ、投稿の一部または全部を（手動ではなく）自動で処理する傾向が強まっている。このため、プロジェクト名やファイル名が、プログラムが解析し理解できる規則的なパターンに適合することが重要になってる。</p>
+<h4 id="use-gnu-style-names-with-a-stem-and-majorminorpatch-numbering">Use GNU-style names with a stem and major.minor.patch numbering<a class="headerlink" href="#use-gnu-style-names-with-a-stem-and-majorminorpatch-numbering" title="Permanent link">&para;</a></h4>
+<p>アーカイブファイルがすべて GNU 流の名前、つまり、すべて小文字の英数字からなる語幹の接頭辞、ハイフン、バージョン番号、拡張子、その他接尾辞を持つ名前であれば皆にとって便利だ。</p>
+<p>語幹は音節を区切るために <code>-</code> または <code>_</code> を含むことができる。</p>
+<p>ソースアーカイブとバイナリーアーカイブを区別する必要がある場合、異なる種類のバイナリーを区別する必要がある場合、何らかのビルドオプションをファイル名に表現する必要がある場合は、バージョン番号の後に付ける拡張子として扱え。例：</p>
+<table>
+<thead>
+<tr>
+<th>ファイル</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>foobar-1.2.3.src.tar.gz</code></td>
+<td>ソース一式</td>
+</tr>
+<tr>
+<td><code>foobar-1.2.3.bin.tar.gz</code></td>
+<td>バイナリー</td>
+</tr>
+<tr>
+<td><code>foobar-1.2.3.bin.i386.tar.gz</code></td>
+<td>i386 バイナリー</td>
+</tr>
+<tr>
+<td><code>foobar-1.2.3.bin.i386.static.tar.gz</code></td>
+<td>i386 バイナリー静的リンク版</td>
+</tr>
+<tr>
+<td><code>foobar-1.2.3.bin.SPARC.tar.gz</code></td>
+<td>SPARC バイナリー</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>バージョン部に関しては現代では semantic versioning を適用すればよい。</p>
+</div>
+<h4 id="but-respect-local-conventions-where-appropriate">But respect local conventions where appropriate<a class="headerlink" href="#but-respect-local-conventions-where-appropriate" title="Permanent link">&para;</a></h4>
+<blockquote>
+<p>Some projects and communities have well-defined conventions for names and
+version numbers that aren't necessarily compatible with the above advice.</p>
+</blockquote>
+<p>この本を含むその筋の権威のおかげでローカルルールが縮小していく傾向がある。</p>
+<h4 id="try-hard-to-choose-a-name-prefix-that-is-unique-and-easy-to-type">Try hard to choose a name prefix that is unique and easy to type<a class="headerlink" href="#try-hard-to-choose-a-name-prefix-that-is-unique-and-easy-to-type" title="Permanent link">&para;</a></h4>
+<p>語幹接頭辞はプロジェクトのすべてのファイルで共通であるべきで、読みやすく、入力しやすく、覚えやすいものでなければならない。</p>
+<ul>
+<li><code>_</code> は使わない。</li>
+<li>正当な理由なく大文字や小文字を変えたりしない。<ul>
+<li>人間の目から見た自然な検索順序を狂わせる。</li>
+<li>マーケティング（訳しにくい概念）に暗い人が賢くなろうとしているように見える。</li>
+</ul>
+</li>
+</ul>
+<p>既存プロジェクトの語幹名とかぶってはいけない。</p>
+<h3 id="good-development-practice">Good Development Practice<a class="headerlink" href="#good-development-practice" title="Permanent link">&para;</a></h3>
+<p>多くの貢献者を得て成功するプロジェクトと、関心を集められずに停滞するプロジェクトの違いを生む行動とは？</p>
+<h4 id="dont-rely-on-proprietary-code">Don't rely on proprietary code<a class="headerlink" href="#dont-rely-on-proprietary-code" title="Permanent link">&para;</a></h4>
+<p>市販の言語やライブラリー、その他コードに依存するとはオープンソース共同体では無礼な行為とされている。オープンソースの開発者はソースを査読できないコードを信用しない。</p>
+<h4 id="use-gnu-autotools">Use GNU Autotools<a class="headerlink" href="#use-gnu-autotools" title="Permanent link">&para;</a></h4>
+<p>構成選択はコンパイル時に行うべし。オープンソースの頒布の重要な利点は、コンパイル時にパッケージが見つけた環境に適応できることだ。これは、開発者が見たこともないプラットフォームでパッケージが動作することを可能にし、ソフトウェアの使用者共同体が独自の移植を行うことを可能にするのに重要だ。</p>
+<p>GNU autotools を使って移植性の問題を処理し、システム設定の探索を行い、<code>Makefile</code>
+を調整しろ。使用者に <code>configure; make; make install</code> をさせろ。</p>
+<p>コンパイル時になって使用者にシステム情報を尋ねるな。ソフトウェアはコンパイル時やインストール時に必要と思われる情報を自分で判断できないようではダメだ。</p>
+<p>可能な限り、POSIX のような標準に従ってプログラムし、システムに構成情報を求めることも控えろ。</p>
+<h4 id="test-your-code-before-release">Test your code before release<a class="headerlink" href="#test-your-code-before-release" title="Permanent link">&para;</a></h4>
+<p>優れた試験集合によってリリース前に回帰試験を簡単に実行できる。強力で使いやすい試験枠組を使うことでソフトウェアに段階的に試験を追加することが可能だ。</p>
+<p>試験集合を配布することで、使用者共同体は自分たちの移植を試験してから、それを組に還元することができる。</p>
+<p>さまざまなプラットフォームで試験をするように開発者に奨励しろ。そうすれば、通常の開発の一環として、移植性の欠陥についてコードを継続的に試験するようになる。</p>
+<p>試験集合が <code>make test</code> で実行できるようにしておくのが良い実践だ。</p>
+<h4 id="sanity-check-your-code-before-release">Sanity-check your code before release<a class="headerlink" href="#sanity-check-your-code-before-release" title="Permanent link">&para;</a></h4>
+<p>人間が見落としがちな錯誤を発見する合理的な工具を使用しろ。</p>
+<p>C/C++ に関するコツ：</p>
+<ul>
+<li>GCC ならばオプション <code>-Wall</code> を使ってコンパイルし、リリース前に警告すべてが消
+  えるようにコードを修正しろ。</li>
+<li>可能な限りすべてのコンパイラーでコードをコンパイルしろ。異なるコンパイラーは異
+  なる問題をしばしば見つける。</li>
+<li><code>lint</code> を実行しろ。</li>
+<li>メモリーリークやその他の実行時エラーを探す工具を実行しろ。Electric Fence と
+  Valgrind はオープンソースで利用可能な良い工具だ。</li>
+</ul>
+<p>Python プロジェクトに関しては PyChecker プログラムが有用だ。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>現代なら Ruff あたりだろう。</p>
+</div>
+<p>Perl を書いているなら <code>perl -c</code> でコードを検めろ。場合によっては <code>-T</code> も付けろ。
+<code>perl -w</code> と <code>use strict</code> は必ず使え。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul>
+<li><code>-c</code> は構文解析のみを行い、コードを実行しない。</li>
+<li><code>-T</code> は脆弱コードを検出するのに使うらしい。</li>
+<li><code>-w</code> は GCC の <code>-Wall</code> だろう。</li>
+</ul>
+</div>
+<h4 id="spell-check-your-documentation-and-readmes-before-release">Spell-check your documentation and READMEs before release<a class="headerlink" href="#spell-check-your-documentation-and-readmes-before-release" title="Permanent link">&para;</a></h4>
+<p>ずさんなコード、コンパイルすると警告が出るコード、<code>README</code> ファイルやエラーメッセージのミススペリングはすべて、その背後にある技術もずさんだと使用者に思わせる。</p>
+<h4 id="recommended-cc-portability-practices">Recommended C/C++ Portability Practices<a class="headerlink" href="#recommended-cc-portability-practices" title="Permanent link">&para;</a></h4>
+<p>ANSI 機能を完全に使ってかまわない（特に関数プロトタイプ）。</p>
+<p>GCC <code>-pipe</code> オプションや入れ子関数のような、コンパイラー固有の機能が利用可能であると仮定するな。</p>
+<p>移植性のために必要なコードは単一領域に分離しろ。サブディレクトリーを使うのが良い。移植性に問題のあるコンパイラー、ライブラリー、OS のインターフェイスは、このディレクトリーのファイルで抽象化しろ。</p>
+<blockquote>
+<p>A portability layer is a library (or perhaps just a set of macros in header
+files) that abstracts away just the parts of an operating system's API your
+program is interested in. Portability layers make it easier to do new software
+ports.</p>
+</blockquote>
+<p>移植層を分離して設けておくことで、あるプラットフォームに詳しい専門家が、移植層以外のことを理解することなく、ソフトウェアを移植することが可能になる。</p>
+<p>移植層はアプリケーションを単純にもする。複雑なシステムコールの全機能をソフトウェアが必要とすることはまれだ。抽象インターフェイスを持つ移植層は、システムから限定された必要な機能しか持ち込ませないことを可能にし、アプリケーションコードを単純にする。</p>
+<blockquote>
+<p>A “platform” is always selected on at least two axes: the compiler and the
+library/operating system release. In some cases there are three axes, as when
+Linux vendors select a C library independently of the operating system
+release.</p>
+</blockquote>
+<p>プラットフォーム数はこの三構成要素の積になる。一方、ANSI や POSIX 1003.1 のような言語とシステムの標準を使えば、機能集合は比較的制約される。</p>
+<p>実装が大きく異なる場合（例：共有メモリーマッピング）には、異なるプラットフォーム用の移植性のあるコードを別々のファイルに移し、違いが最小限の場合（例：現在の時刻を知る）には、移植性のあるコードを単一ファイルのままにしておく。</p>
+<p>(Doug McIlroy) <code>#ifdef</code> は最後の手段だ。</p>
+<p><code>#ifdef</code> の使用は移植層の中では（うまく制御されていれば）許される。移植層の外では <code>#include</code> 条件に限定しろ。</p>
+<p>システムの他の部分の名前空間には決して侵入しない。</p>
+<p>コーディング標準を選択する。複数のコーディング標準を使って構築されたソフトウェアを保守するのはあまりにも困難で経費がかかるため、何らかの共通の流儀を選択しなければならない。コードの一貫性と清潔さが最優先事項であり、標準自体の詳細は大差の二着目だ。</p>
+<h3 id="good-distribution-making-practice">Good Distribution-Making Practice<a class="headerlink" href="#good-distribution-making-practice" title="Permanent link">&para;</a></h3>
+<p>解凍したときにどうなるべきか。</p>
+<h4 id="make-sure-tarballs-always-unpack-into-a-single-new-directory">Make sure tarballs always unpack into a single new directory<a class="headerlink" href="#make-sure-tarballs-always-unpack-into-a-single-new-directory" title="Permanent link">&para;</a></h4>
+<p>配布物を作業ディレクトリーに解凍する tarball をビルドすることは最も迷惑だ。すでにそこにあるファイルを上書きしてしまう可能性がある。</p>
+<p>作業ディレクトリーの直下にある単一の最上位ディレクトリーに解凍されるように作れ。例えば <code>foo-0.23.tar.gz</code> という名前で tarball を作る場合には、解凍サブディレクトリーの名前が <code>foo-0.23</code> となるように作れ。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Example 19.1 はこれを実現する <code>Makefile</code> のスケッチだが、慣れていないと読めない。</p>
+</div>
+<h4 id="include-a-readme">Include a <code>README</code><a class="headerlink" href="#include-a-readme" title="Permanent link">&para;</a></h4>
+<blockquote>
+<p>By ancient convention (originating with Dennis Ritchie himself before 1980,
+and promulgated on Usenet in the early 1980s), this is the first file intrepid
+explorers will read after unpacking the source.</p>
+</blockquote>
+<!-- promulgate: to announce something publicly, especially a new law: -->
+<!-- intrepid: brave -->
+
+<p><code>README</code> ファイルは短く、読みやすいものであるべきだ。紹介、導入にする。詩のようにはするな。<code>README</code> に書くべきこと：</p>
+<ol>
+<li>プロジェクトの簡単な説明</li>
+<li>プロジェクトの Web サイト</li>
+<li>開発者のビルド環境とあるかもしれない移植性の問題についての覚書</li>
+<li>重要なファイルやサブディレクトリー</li>
+<li>ビルド、インストール手順、またはそれを含むファイル (e.g. <code>INSTALL</code>) への指示</li>
+<li>保守者、クレジット一覧、またはそれを含むファイル (e.g. <code>CREDITS</code>) への指示</li>
+<li>最近のプロジェクトのニュースか、それを含むファイル (e.g. <code>NEWS</code>) への指示</li>
+<li>プロジェクトのメーリングリストのアドレス</li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code>NEWS</code> ファイルはもしかしたらバージョン別の更新ログかもしれない。</p>
+</div>
+<blockquote>
+<p>At one time this file was commonly <code>READ.ME</code>,</p>
+</blockquote>
+<p>そうだったかもしれない。</p>
+<h4 id="respect-and-follow-standard-file-naming-practices">Respect and follow standard file-naming practices<a class="headerlink" href="#respect-and-follow-standard-file-naming-practices" title="Permanent link">&para;</a></h4>
+<p>標準的最上位ファイル名一覧：</p>
+<ul>
+<li><code>README</code></li>
+<li><code>INSTALL</code></li>
+<li><code>AUTHORS</code></li>
+<li><code>NEWS</code></li>
+<li><code>HISTORY</code></li>
+<li><code>CHANGES</code></li>
+<li><code>COPYING</code>, <code>LICENSE</code></li>
+<li><code>FAQ</code></li>
+</ul>
+<p>大文字のファイル名はビルド部品ではなく、パッケージに関する人間が読めるメタ情報であるという慣習がある。</p>
+<p><code>FAQ</code> ファイルは救済の意味がある。ある質問がプロジェクトに関してよく出てきたら、それを <code>FAQ</code> に書け。そして、使用者が質問やバグ報告を送る前に <code>FAQ</code> を読むように誘導する。よく育てられた <code>FAQ</code> はプロジェクト保守者の負担を一桁以上減らす。</p>
+<p>各リリースのタイムスタンプが入った <code>HISTORY</code> や <code>NEWS</code> ファイルを持つことは価値がある。とりわけ、特許侵害訴訟を起こされたときに、先行技術を立証するのに役立つことがある。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>現代ではリポジトリー自体がオープンだから、その心配は当時よりかなり薄れた。</p>
+</div>
+<h4 id="design-for-upgradability">Design for upgradability<a class="headerlink" href="#design-for-upgradability" title="Permanent link">&para;</a></h4>
+<p>ソフトウェアのリリースの変更の中には後方互換性がないものもあり得る。インストールされた複数のバージョンのコードが同じシステム上で共存できるように、インストール配置を設計しろ。ライブラリーの場合は特に重要だ。</p>
+<p>Emacs, Python, Qt 各プロジェクトではバージョン番号付きディレクトリーという、これを扱うための良い慣習がある。</p>
+<p>取引先プログラムは必要なライブラリーのバージョンを指定しなければならない。インターフェイスが壊れるよりはましだ。</p>
+<h4 id="under-linux-provide-rpms">Under Linux, provide RPMs<a class="headerlink" href="#under-linux-provide-rpms" title="Permanent link">&para;</a></h4>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>使わせてもらうことはよくあるが、自分で作る未来がないので割愛。</p>
+</div>
+<h4 id="provide-checksums">Provide checksums<a class="headerlink" href="#provide-checksums" title="Permanent link">&para;</a></h4>
+<p>バイナリーファイルについてはチェックサムを用意しろ。これにより、バイナリーが破損していないか、トロイの木馬のコードがねじ込まれていないかを確認する。</p>
+<p>この目的には暗号学的に安全なハッシュ関数を使用するのが最善だ</p>
+<ul>
+<li>GPG パッケージは <code>--detach-sign</code> オプションでハッシュを与えろ。</li>
+<li>GNU <code>md5sum</code> も同様。</li>
+</ul>
+<p>出荷する各バイナリーファイルについて、プロジェクトの Web ページにはチェックサムとそれを生成するために使用したコマンドの一覧を示せ。</p>
+<h3 id="good-communication-practice">Good Communication Practice<a class="headerlink" href="#good-communication-practice" title="Permanent link">&para;</a></h3>
+<p>インターネット上で目に見える形でプロジェクトの存在を示すことは、使用者や共同開発者の募集に役立つ。</p>
+<h4 id="announce-to-freshmeat">Announce to Freshmeat<a class="headerlink" href="#announce-to-freshmeat" title="Permanent link">&para;</a></h4>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>本書では Freshmeat がちょくちょく現れてきたが、現存しないので忘れていい。</p>
+</div>
+<blockquote>
+<p>Bad example: “Announcing the latest release of FooEditor, now with themes and
+ten times faster”. Good example: “Announcing the latest release of FooEditor,
+the scriptable editor for touch-typists, now with themes and ten times
+faster”.</p>
+</blockquote>
+<h4 id="announce-to-a-relevant-topic-newsgroup">Announce to a relevant topic newsgroup<a class="headerlink" href="#announce-to-a-relevant-topic-newsgroup" title="Permanent link">&para;</a></h4>
+<p>自分のアプリケーションに直接関係する Usenet のトピックグループを見つけて、そこでも発表しろ。コードの機能が関連するところにしか投稿するな。</p>
+<p>例えば Perl で書いた IMAP サーバーに問い合わせるプログラムをリリースする場合、確かに comp.mail.imap には投稿するのが筋だ。しかし、そのプログラムが Perl の最先端の技術を示す有益な例でない限り、comp.lang.perl には投稿しないのが筋だ。</p>
+<p>発表にはプロジェクトの Web サイトの URL を含めるべし。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Usenet という単語が当然のように現れるのにとまどっている。</p>
+</div>
+<h4 id="have-a-website">Have a website<a class="headerlink" href="#have-a-website" title="Permanent link">&para;</a></h4>
+<p>プロジェクトの周囲に使用者や開発者の共同体を作ろうとするなら Web サイトを持つのが当然だ。</p>
+<p>Web サイトに掲載する標準的なもの：</p>
+<ul>
+<li>プロジェクト憲章（存在意義、対象者など）</li>
+<li>プロジェクトソースのダウンロードリンク</li>
+<li>プロジェクトのメーリングリストへの参加方法の説明</li>
+<li>FAQ 一覧</li>
+<li>プロジェクト文書の HTML バージョン</li>
+<li>関連プロジェクトや競合プロジェクトへのリンク</li>
+</ul>
+<!-- charter: a document issued by a government that gives rights to a person or group -->
+
+<p>教育の行き届いたプロジェクトの Web サイトに関しては <a href="../implementation/reuse.html">Chapter 16</a> を見ろ。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>現代なら GitHub やその競合サービスで上記の事項を十分実現可能だ。</p>
+</div>
+<h4 id="host-project-mailing-lists">Host project mailing lists<a class="headerlink" href="#host-project-mailing-lists" title="Permanent link">&para;</a></h4>
+<p>プロジェクトの協力者たちが連絡を取り合ったり、パッチを交換したりできるよう、非公開の開発リストを持つのが標準的なやり方だ。また、プロジェクトの進捗を知らせたい人のための告知名簿を持つのも良かろう。</p>
+<p>「非公開」の開発名簿をどの程度非公開にするかということが重要だ。設計の議論に広く参加することは良いことでありがちだが、名簿が比較的開かれていれば、遅かれ早かれ、新規使用者から質問を受けることになる。新規使用者は初歩的な質問をしないようにと文書に記しておくだけでは解決しない。</p>
+<p>告知用メールアドレス一覧は厳重に管理する必要がある。このような名簿の目的は、何か重要なことが起こったときに知りたいが、日々の詳細については聞きたくないという人たちに対応することだ。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Twitter で良さそうだ。</p>
+</div>
+<h4 id="release-to-major-archives">Release to major archives<a class="headerlink" href="#release-to-major-archives" title="Permanent link">&para;</a></h4>
+<p>主なオープンソースのアーカイブサイトについては、<a href="../implementation/reuse.html">Chapter 16</a> Where Should I
+Look? の節を見ろ。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>プログラミング言語によっては定番のサイトが存在する。それを使え。</p>
+</div>
+<h2 id="the-logic-of-licenses-how-to-pick-one">The Logic of Licenses: How to Pick One<a class="headerlink" href="#the-logic-of-licenses-how-to-pick-one" title="Permanent link">&para;</a></h2>
+<p>使用許諾条項の選択には、作者がそのソフトウェアを使って人々が何をするかに制限を加えたい場合、どのような制限を加えるかについての決定が含まれる。</p>
+<p>全く制限を設けたくなければ知的財産権消失状態にするのだ。これを行う適切な方法は、各ファイルの先頭に以下のような文章を含める：</p>
+<blockquote>
+<p>Placed in public domain by J. Random Hacker, 2003.  Share and enjoy!</p>
+</blockquote>
+<p>誰でもテキストのどの部分でも好きなようにできる。これほど自由なことはない。</p>
+<p>しかし、オープンソースのソフトウェアが実際に知的財産権消失状態になることはほとんどない。</p>
+<ul>
+<li>コードの所有権を利用して、開かれた状態を維持したいと考えるオープンソース開発者
+  もいる。</li>
+<li>オープンソース使用許諾条件すべてに共通していることの一つは、保証の放棄だ。</li>
+</ul>
+<h2 id="why-you-should-use-a-standard-license">Why You Should Use a Standard License<a class="headerlink" href="#why-you-should-use-a-standard-license" title="Permanent link">&para;</a></h2>
+<p>オープンソース定義に準拠した広く知られた使用許諾条項は解釈の伝統が確立されている。可能な限り、OSI サイトに掲載されている標準使用許諾条項のいずれかを採用しろ。</p>
+<p>独自の使用許諾条項を作成しなければならない場合は必ず OSI の認定を受けろ。そうすることで多くの議論や間接費を避ける。</p>
+<p>法の教義では、裁判所は許諾条項や契約を、それが生まれた共同体の期待や慣習に従って解釈することになっている。したがって、裁判制度が最終的に対処しなければならなくなったときに、オープンソース共同体の慣習が決定的になることを期待する十分な理由がある。</p>
+<h2 id="varieties-of-open-source-licensing">Varieties of Open-Source Licensing<a class="headerlink" href="#varieties-of-open-source-licensing" title="Permanent link">&para;</a></h2>
+<h3 id="mit-or-x-consortium-license">MIT or X Consortium License<a class="headerlink" href="#mit-or-x-consortium-license" title="Permanent link">&para;</a></h3>
+<p>最も緩い種類のフリーソフトウェアライセンスは、著作権と許諾条項のコピーがすべての改変版に保持されている限り、改変を複製、利用、改変、再配布する権利を無制限に認めるものだ。この許諾条件を受け入れると、保守者を訴える権利を放棄することになる。</p>
+<p>X Consortium の標準使用許諾条項の雛形は <a href="https://opensource.org/license/mit">OSI のサイト</a>にある。</p>
+<h3 id="bsd-classic-license">BSD Classic License<a class="headerlink" href="#bsd-classic-license" title="Permanent link">&para;</a></h3>
+<p>次に制限の少ない種類の許諾条件。著作権と許諾条項のコピーが改変版のすべてに保持され、パッケージに関連する広告や文書に謝辞が述べられている限り、改変コピーを複製、利用、改変、再配布する権利を無制限に認める。被許諾者は保守者を訴える権利を放棄しなければならない。</p>
+<p>オリジナルの BSD License はこの種の許諾条件として最もよく知られている。</p>
+<p>また、著作権者を変更し、宣伝の要求を省略した(事実上 MIT License と同等にした)
+BSD License の軽微な変種を見かけることも珍しくない。</p>
+<p><a href="https://www.opensource.org/licenses/bsd-license.html">BSD License の雛形</a></p>
+<h3 id="artistic-license">Artistic License<a class="headerlink" href="#artistic-license" title="Permanent link">&para;</a></h3>
+<p>次に制限の厳しい種類の許諾条件。複製、使用、ローカルでの改変に関する無制限の権利を認めるものだ。改変されたバイナリーの再配布は許容されるが、改変ソースの再配布は、作者とフリーソフトウェア共同体の利益を守ることを意図した形で制限される。</p>
+<p>Perl のために考案され、Perl 開発者共同体で広く使われている Artistic License はこの種のものだ。要求が二つ：</p>
+<ul>
+<li>改変ファイルに対して、改変されたという prominent notice を含めること。</li>
+<li>変更を再配布する人々には、自由に利用できるようにし、それをフリーソフトウェア共
+  同体に広める努力をすること。</li>
+</ul>
+<p><a href="https://www.opensource.org/licenses/artistic-license.html">Artistic License の雛形</a></p>
+<h3 id="general-public-license">General Public License<a class="headerlink" href="#general-public-license" title="Permanent link">&para;</a></h3>
+<p>GNU 一般公衆使用許諾条項（およびその派生版である LGPL）は唯一、最も広く使われているフリーソフトウェアライセンスだ。Artistic License 同様、改変ファイルに
+prominent notice があれば、改変ソースの再配布を認めている。</p>
+<p>GPL は、GPL の下にある部分を含むプログラムはすべて GPL であることを要求する。</p>
+<p>このような余計な要求があるため、GPL は一般的に使われている他のどの使用許諾条件よりも制限的だ。Perl はこれらを避けるために Artistic License を開発したのだ。</p>
+<p><a href="https://www.gnu.org/licenses/copyleft.en.html">What is Copyleft?</a></p>
+<h3 id="mozilla-public-license">Mozilla Public License<a class="headerlink" href="#mozilla-public-license" title="Permanent link">&para;</a></h3>
+<p>Mozilla Public License はオープンソースのソフトウェアを支援するが、閉じたソースのモジュールや拡張機能と連結されている場合がある。この許諾条件は配布されたソフトウェアが開かれたままであることを要求するが、定義された API を通して呼び出されたアドオンが閉じたままであることを許容する。</p>
+<p><a href="https://www.mozilla.org/en-US/MPL/1.1/">Mozilla Public License 1.1</a></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>© 2025 プレハブ小屋 All rights reserved.</p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js"></script>
+        <script src="../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

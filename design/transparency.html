@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="ja" data-bs-theme="auto">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="プレハブ小屋">
+        <link rel="canonical" href="https://github.com/showa-yojyo/taoup/design/transparency.html">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Transparency - The Art of Unix Programming 読書ノート</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../css/brands.min.css" rel="stylesheet">
+        <link href="../css/solid.min.css" rel="stylesheet">
+        <link href="../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" disabled>
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <link href="../css/style.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../index.html">The Art of Unix Programming 読書ノート</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../index.html" class="nav-link">Home</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle active" aria-current="page" role="button" data-bs-toggle="dropdown"  aria-expanded="false">Notes</a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../preface.html" class="dropdown-item">Preface</a>
+</li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Context</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../context/philosophy.html" class="dropdown-item">Philosophy</a>
+</li>
+            
+<li>
+    <a href="../context/history.html" class="dropdown-item">History</a>
+</li>
+            
+<li>
+    <a href="../context/contrasts.html" class="dropdown-item">Contrasts</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Design</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="modularity.html" class="dropdown-item">Modularity</a>
+</li>
+            
+<li>
+    <a href="textuality.html" class="dropdown-item">Textuality</a>
+</li>
+            
+<li>
+    <a href="transparency.html" class="dropdown-item active" aria-current="page">Transparency</a>
+</li>
+            
+<li>
+    <a href="multiprogram.html" class="dropdown-item">Multiprogramming</a>
+</li>
+            
+<li>
+    <a href="minilanguages.html" class="dropdown-item">Minilanguages</a>
+</li>
+            
+<li>
+    <a href="generation.html" class="dropdown-item">Generation</a>
+</li>
+            
+<li>
+    <a href="configuration.html" class="dropdown-item">Configuration</a>
+</li>
+            
+<li>
+    <a href="interface.html" class="dropdown-item">Interfaces</a>
+</li>
+            
+<li>
+    <a href="optimization.html" class="dropdown-item">Optimization</a>
+</li>
+            
+<li>
+    <a href="complexity.html" class="dropdown-item">Complexity</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Implementation</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../implementation/languages.html" class="dropdown-item">Languages</a>
+</li>
+            
+<li>
+    <a href="../implementation/tools.html" class="dropdown-item">Tools</a>
+</li>
+            
+<li>
+    <a href="../implementation/reuse.html" class="dropdown-item">Reuse</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Community</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../community/portability.html" class="dropdown-item">Portability</a>
+</li>
+            
+<li>
+    <a href="../community/documentation.html" class="dropdown-item">Documentation</a>
+</li>
+            
+<li>
+    <a href="../community/opensource.html" class="dropdown-item">Open Source</a>
+</li>
+            
+<li>
+    <a href="../community/futures.html" class="dropdown-item">Futures</a>
+</li>
+    </ul>
+  </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/showa-yojyo/taoup/issues" class="nav-link">Issues</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="textuality.html" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="multiprogram.html" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/showa-yojyo/taoup/edit/main/docs/design/transparency.md" class="nav-link"><i class="fa-brands fa-github"></i> Edit on GitHub</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                              <button id="theme-menu" aria-expanded="false" data-bs-toggle="dropdown" data-bs-display="static" aria-label="Toggle theme" class="nav-link dropdown-toggle">
+                                <i class="fa-solid fa-circle-half-stroke fa-fw"></i>
+                                <span class="d-lg-none ms-2">Toggle theme</span>
+                              </button>
+                              <ul class="dropdown-menu dropdown-menu-end">
+                                <li>
+                                  <button class="dropdown-item d-flex align-items-center" data-bs-theme-value="light" aria-pressed="false">
+                                    <i class="fa-solid fa-sun fa-fw"></i>
+                                    <span class="ms-2">Light</span>
+                                    <i class="fa-solid fa-check ms-auto d-none"></i>
+                                  </button>
+                                </li>
+                                <li>
+                                  <button class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark" aria-pressed="false">
+                                    <i class="fa-solid fa-moon fa-fw"></i>
+                                    <span class="ms-2">Dark</span>
+                                    <i class="fa-solid fa-check ms-auto d-none"></i>
+                                  </button>
+                                </li>
+                                <li>
+                                  <button class="dropdown-item d-flex align-items-center" data-bs-theme-value="auto" aria-pressed="true">
+                                    <i class="fa-solid fa-circle-half-stroke fa-fw"></i>
+                                    <span class="ms-2">Auto</span>
+                                    <i class="fa-solid fa-check ms-auto"></i>
+                                  </button>
+                                </li>
+                              </ul>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <script src="../js/darkmode.js"></script>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="2"><a href="#studying-cases" class="nav-link">Studying Cases</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="3"><a href="#case-study-audacity" class="nav-link">Case Study: audacity</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#case-study-fetchmails-v-option" class="nav-link">Case Study: fetchmail's -v option</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#case-study-gcc" class="nav-link">Case Study: GCC</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#case-study-kmail" class="nav-link">Case Study: kmail</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#case-study-sng" class="nav-link">Case Study: SNG</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#case-study-the-terminfo-database" class="nav-link">Case Study: The Terminfo Database</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#case-study-freeciv-data-files" class="nav-link">Case Study: Freeciv Data Files</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="2"><a href="#designing-for-transparency-and-discoverability" class="nav-link">Designing for Transparency and Discoverability</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="3"><a href="#the-zen-of-transparency" class="nav-link">The Zen of Transparency</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#coding-for-transparency-and-discoverability" class="nav-link">Coding for Transparency and Discoverability</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#transparency-and-avoiding-overprotectiveness" class="nav-link">Transparency and Avoiding Overprotectiveness</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#transparency-and-editable-representations" class="nav-link">Transparency and Editable Representations</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#transparency-fault-diagnosis-and-fault-recovery" class="nav-link">Transparency, Fault Diagnosis, and Fault Recovery</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="2"><a href="#designing-for-maintainability" class="nav-link">Designing for Maintainability</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="chapter-6-transparency">Chapter 6. Transparency<a class="headerlink" href="#chapter-6-transparency" title="Permanent link">&para;</a></h1>
+<div class="toc"><span class="toctitle">見出し一覧</span><ul>
+<li><a href="#studying-cases">Studying Cases</a><ul>
+<li><a href="#case-study-audacity">Case Study: audacity</a></li>
+<li><a href="#case-study-fetchmails-v-option">Case Study: fetchmail's -v option</a></li>
+<li><a href="#case-study-gcc">Case Study: GCC</a></li>
+<li><a href="#case-study-kmail">Case Study: kmail</a></li>
+<li><a href="#case-study-sng">Case Study: SNG</a></li>
+<li><a href="#case-study-the-terminfo-database">Case Study: The Terminfo Database</a></li>
+<li><a href="#case-study-freeciv-data-files">Case Study: Freeciv Data Files</a></li>
+</ul>
+</li>
+<li><a href="#designing-for-transparency-and-discoverability">Designing for Transparency and Discoverability</a><ul>
+<li><a href="#the-zen-of-transparency">The Zen of Transparency</a></li>
+<li><a href="#coding-for-transparency-and-discoverability">Coding for Transparency and Discoverability</a></li>
+<li><a href="#transparency-and-avoiding-overprotectiveness">Transparency and Avoiding Overprotectiveness</a></li>
+<li><a href="#transparency-and-editable-representations">Transparency and Editable Representations</a></li>
+<li><a href="#transparency-fault-diagnosis-and-fault-recovery">Transparency, Fault Diagnosis, and Fault Recovery</a></li>
+</ul>
+</li>
+<li><a href="#designing-for-maintainability">Designing for Maintainability</a></li>
+</ul>
+</div>
+<p>「透明である」の定義：</p>
+<blockquote>
+<p>Software systems are transparent when they don't have murky corners or hidden
+depths. Transparency is a passive quality. A program is transparent when it is
+possible to form a simple mental model of its behavior that is actually
+predictive for all or most cases, because you can see through the machinery to
+what is actually going on.</p>
+</blockquote>
+<p>予測可能性と言い換えてもいいかもしれない（社会科学系の知識人が使う語彙にある印象がある）。</p>
+<!-- murky: dark and dirty or difficult to see through -->
+<!-- machinery: a group of large machines or the parts of a machine that make it work -->
+
+<p>「発見可能である」の定義：</p>
+<blockquote>
+<p>Software systems are discoverable when they include features that are designed
+to help you build in your mind a correct mental model of what they do and how
+they work.</p>
+</blockquote>
+<p>発見可能性の意味はわかりやすい：</p>
+<blockquote>
+<p>So, for example, good documentation helps discoverability to a user. Good
+choice of variable and function names helps discoverability to a programmer.</p>
+</blockquote>
+<p>Unix プログラマーの言う elegant とは、数学者のそれと本質的に同等だ：</p>
+<blockquote>
+<p>Unix programmers, borrowing from mathematicians, often use the more specific
+term “elegance” for the quality Gelernter speaks of. Elegance is a combination
+of power and simplicity.</p>
+</blockquote>
+<ul>
+<li>こなれたコードは少しのことで多くのことを行う。</li>
+<li>こなれたコードは単に正しいだけでなく、目に見える形で、透明な形で正しい。</li>
+<li>こなれたコードは透明性と発見可能性がある。</li>
+</ul>
+<h2 id="studying-cases">Studying Cases<a class="headerlink" href="#studying-cases" title="Permanent link">&para;</a></h2>
+<!-- intersperse: to put things of one type in different parts or places among other things -->
+
+<h3 id="case-study-audacity">Case Study: audacity<a class="headerlink" href="#case-study-audacity" title="Permanent link">&para;</a></h3>
+<p><a href="https://www.audacityteam.org/">Audacity</a> は Unix, Mac OS X, Windows 上で動作するサウンドファイル用のオープンソースエディターだ。</p>
+<blockquote>
+<p>The UI is superbly simple; the sound waveforms are shown in the audacity
+window. The image of the waveform can be cut and pasted; operations on that
+image are directly reflected in the audio sample as soon as they are
+performed.</p>
+</blockquote>
+<p>音声波形がビットマップとして描画されているから、それを画像編集ソフトと同等のコマンドで扱うことで作業する。</p>
+<!-- superbly: in a way that is extremely good or impressive -->
+
+<p>«Several features of this UI are subtly excellent and worthy of emulation» であり、ツール全体としては次の評価になる：</p>
+<blockquote>
+<p>The central virtue of this program is that it has a superbly transparent and
+natural user interface, one that erects as few barriers between the user and
+the sound file as possible.</p>
+</blockquote>
+<h3 id="case-study-fetchmails-v-option">Case Study: fetchmail's <code>-v</code> option<a class="headerlink" href="#case-study-fetchmails-v-option" title="Permanent link">&para;</a></h3>
+<p>メールプログラム <a href="https://www.fetchmail.info/">Fetchmail</a> には 60 を下らないコマンドラインオプションがあるが、最重要オプションは <code>-v</code> であるという。他の CLI でもしばしば見かけられる冗舌フラグだ。動作は次のとおり：</p>
+<blockquote>
+<p>When <code>-v</code> is on, <code>fetchmail</code> dumps each one of its POP, IMAP, and SMTP
+transactions to standard output as they happen. A developer can actually see
+the code doing protocol with remote mailservers and the mail transport program
+it forwards to, in real time.</p>
+</blockquote>
+<!-- Example 6.1. An example fetchmail -v transcript. -->
+
+<p>オプション <code>-v</code> は <code>fetchmail</code> が行っていることを発見可能にする。ここでは通信規約交換を見ることができるようにする。著者が自身の具体的な工夫を紹介している：</p>
+<blockquote>
+<p>This is <em>immensely</em> useful. I considered it so important that I wrote special
+code to mask account passwords out of <code>-v</code> transaction dumps so that they
+could be passed around and posted without anyone having to remember to edit
+sensitive information out of them.</p>
+</blockquote>
+<!-- immensely: to an exceedingly great extent or degree; extremely -->
+
+<p>デバッグライトから引き出される一般的な教訓：</p>
+<blockquote>
+<p>Don't let your debugging tools be mere afterthoughts or treat them as
+throwaways. They are your windows into the code; don't just knock crude holes
+in the walls, finish and glaze them.</p>
+</blockquote>
+<!-- throwaways: 使い捨て -->
+<!-- crude: simple and not skilfully done or mad -->
+<!-- glaze: 光沢を付ける -->
+
+<h3 id="case-study-gcc">Case Study: GCC<a class="headerlink" href="#case-study-gcc" title="Permanent link">&para;</a></h3>
+<p>本書は C 言語に対する言及が多い。そのコンパイラーにも当然言及する。</p>
+<blockquote>
+<p>GCC is organized as a sequence of processing stages knit together by a driver
+program. The stages are: preprocessor, parser, code generator, assembler, and
+linker.</p>
+</blockquote>
+<p>このうち、最初の三段階すべてが入出力のどちらもテキスト形式であることに注目する。</p>
+<blockquote>
+<p>With various command-line options of the gcc(1) driver, you can see not just
+the results after C preprocessing, after assembly generation, and after object
+code generation — but you can also monitor the results of many intermediate
+steps in parsing and code generation.</p>
+</blockquote>
+<p>回帰テストは、ソフトウェアが変更される際に発生するバグを検出するためのテストだ。ある固定されたテスト入力に対して、変更されたソフトウェアの出力を、既知の正しい出力のスナップショットに対して継続的に検査するものだ。</p>
+<p>中間形態がテキスト形式であるため、回帰テスト出力の差分を取れば発見、分析が容易だ。</p>
+<blockquote>
+<p>The design pattern to extract from this example is that the driver program has
+monitoring switches that merely (but sufficiently) expose the textual data
+flows among the components.</p>
+</blockquote>
+<p>設計意図としては <code>fetchmail</code> のオプション <code>-v</code> と同じく、発見可能性を高めることだ。</p>
+<h3 id="case-study-kmail">Case Study: kmail<a class="headerlink" href="#case-study-kmail" title="Permanent link">&para;</a></h3>
+<p><a href="https://apps.kde.org/kmail2/">KMail</a> は KDE における GUI メールクライアントだ。Mozilla Thunderbird のようなものを想像すればいい。</p>
+<p>ステータスバーのセンスが良い。よくある統計表示の他に、交信に関するメッセージも表示する：</p>
+<blockquote>
+<p>If you watch closely during the send, you will observe that each line of the
+SMTP transaction with the remote mail transport is echoed into the <em>kmail</em>
+status bar as it happens.</p>
+</blockquote>
+<p>視覚的には無視しやすいという設計にしてあるのが急所で、一般人も専門家も困らせない。</p>
+<blockquote>
+<p>The really smart thing is to find a way to leave the details accessible, but
+make them unobtrusive.</p>
+</blockquote>
+<!-- unobtrusive: not noticeable; 目立たない -->
+
+<h3 id="case-study-sng">Case Study: SNG<a class="headerlink" href="#case-study-sng" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>The program <code>sng</code> translates between PNG format and an all-text representation
+of it (SNG or Scriptable Network Graphics format) that can be examined and
+modified with an ordinary text editor. Run on a PNG file, it produces an SNG
+file; run on an SNG file, it recovers the equivalent PNG. The transformation
+is 100% faithful and lossless in both directions.</p>
+</blockquote>
+<p>ビットマップはテキスト的に表現することが可能であるはずとは思っていたが、こういうツールがやはり存在していた。</p>
+<p>Example 6.2. An SNG Example はおそらく手動で作成したテキストだろう。</p>
+<ul>
+<li>PNG のバイナリーデータを編集するために特別なコードを必要としなくて済む。単に画
+  像をテキスト表現に変換し、それを編集して元に戻せばいい。</li>
+<li>バージョン管理システムでは、テキストファイルはバイナリーブロブよりもはるかに管
+  理しやすく、SNG 差分が有用であることがある。</li>
+</ul>
+<p>PNG 内容全体に発見可能性を与えることで、より大規模なプログラムシステムの透過性を促進する。</p>
+<h3 id="case-study-the-terminfo-database">Case Study: The Terminfo Database<a class="headerlink" href="#case-study-the-terminfo-database" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>Terminfo entries live in a directory hierarchy, usually on modern Unixes under
+<code>/usr/share/terminfo</code>. Consult the terminfo(5) man page to find the location
+on your system.</p>
+</blockquote>
+<p>実際に <code>ls /usr/share/terminfo</code> の出力を見ると、大量の一文字サブディレクトリーが確認できた。さらに <code>ls /usr/share/terminfo/*</code> を実行すると……。</p>
+<blockquote>
+<p>Under each of these are the entries for each terminal type that has a name
+beginning with that letter. The goal of this organization was to avoid having
+to do a linear search of a very large directory;</p>
+</blockquote>
+<p>Git のインデックスと同じ狙いだろう。</p>
+<blockquote>
+<p>Terminfo uses the file system itself as a simple hierarchical database. This
+is a superb bit of constructive laziness, obeying the Rule of Economy and the
+Rule of Transparency.</p>
+</blockquote>
+<p>この編成のもうひとつの利点は、Unix のファイルシステム権限機構を使うことができることだ。</p>
+<p>対照的な例として Windows のレジストリーファイルを挙げている。</p>
+<ul>
+<li>Windows 本体とアプリケーションの両方が使用する</li>
+<li>各レジストリーは単一の巨大なファイルに格納されている</li>
+<li>レジストリーを編集するには専用ツールが必要</li>
+<li>レジストリー項目を追加すればするほど平均アクセス時間が増加する</li>
+<li>レジストリーを編集するための標準 API がシステムから与えられていない</li>
+</ul>
+<p>過去に邦訳版を読んだときにこの記述があったことははっきりと記憶している。</p>
+<h3 id="case-study-freeciv-data-files">Case Study: Freeciv Data Files<a class="headerlink" href="#case-study-freeciv-data-files" title="Permanent link">&para;</a></h3>
+<p><a href="https://freeciv.org/">Freeciv</a> はビデオゲームだそうだが、全然聞いたことがないので紹介文を丸々引用しておく：</p>
+<blockquote>
+<p>Freeciv is an open-source strategy game inspired by Sid Meier's classic
+Civilization II. In it, each player begins with a wandering band of neolithic
+nomads and builds a civilization. Player civilizations may explore and
+colonize the world, fight wars, engage in trade, and research technological
+advances. Some players may actually be artificial intelligences; solitaire
+play against these can be challenging. One wins either by conquering the world
+or by being the first player to reach a technology level sufficient to get a
+starship to Alpha Centauri.</p>
+</blockquote>
+<p>このゲームプログラムはデータファイルの取り扱いが優れているという。</p>
+<ul>
+<li>テキスト形式で記述する</li>
+<li>文字列をゲームサーバー内の重要データの内部リストに組み立てる</li>
+<li><code>include</code> ディレクティブがあり、設定ファイルの分割が可能（個別編集可能性）</li>
+</ul>
+<p>ゲームエンジンのコードに触れることなく、データファイルの中で新しい宣言を作成するだけで、国家や単位型を定義することができる。</p>
+<p>ゲーム側が未知のプロパティー名を無視するという性質がある。これは一長一短がある：</p>
+<ul>
+<li>起動中のデータファイル解析を中断することなく、プロパティーを宣言することができ
+  る。これはゲームデータとゲームエンジンの開発をきれいに分離できることを意味する。</li>
+<li>同時に、プロパティー名の誤字を検出できないことも意味する。</li>
+</ul>
+<p>Freeciv データファイルの集合体を考えると、機能的には Windows のレジストリーに似ている。しかし、どのプログラムもこれらのファイルに書き込みをしないため、Windows
+レジストリーで指摘した不快な問題が突然持ち上がることはない。</p>
+<h2 id="designing-for-transparency-and-discoverability">Designing for Transparency and Discoverability<a class="headerlink" href="#designing-for-transparency-and-discoverability" title="Permanent link">&para;</a></h2>
+<p>透明性と発見容易性を設計するためには、コードを単純に保つためのあらゆる戦術を適用する必要がある。この設計は機能するだろうかと考えた後に、次も自問する：</p>
+<ul>
+<li>他の人が読めるか</li>
+<li>こなれているか</li>
+</ul>
+<h3 id="the-zen-of-transparency">The Zen of Transparency<a class="headerlink" href="#the-zen-of-transparency" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>If you want transparent code, the most effective route is simply not to layer
+too much abstraction over what you are manipulating with the code.</p>
+</blockquote>
+<p>プログラミング理論本は行き過ぎた抽象化を戒めることが多い。行き過ぎていない抽象化が望ましい。</p>
+<blockquote>
+<p>Too many OO designs are spaghetti-like tangles of is-a and has-a
+relationships, or feature thick layers of glue in which many of the objects
+seem to exist simply to hold places in a steep-sided pyramid of abstractions.
+Such designs are the opposite of transparent; they are (notoriously) opaque
+and difficult to debug.</p>
+</blockquote>
+<p>Unix プログラマーのやり方はこうだ。低く構える：</p>
+<blockquote>
+<p>Keeping glue layers thin is part of it; more generally, our tradition teaches
+us to build lower, hugging the ground with algorithms and structures that are
+designed to be simple and transparent.</p>
+</blockquote>
+<h3 id="coding-for-transparency-and-discoverability">Coding for Transparency and Discoverability<a class="headerlink" href="#coding-for-transparency-and-discoverability" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>Transparency and discoverability, like modularity, are primarily properties of
+designs, not code.</p>
+</blockquote>
+<ul>
+<li>コールスタックが深くなり過ぎないか。</li>
+<li>コードに強力で目に見える不変性があるか。</li>
+<li>API の関数呼び出しは個別に直交しているか（一つの関数が多過ぎる引数によってさま
+  ざまな挙動を呈してはいないか）。</li>
+<li>システムの高水準状態を把握するために、目立つデータ構造がひとつまみあるのか、単
+  一の大域的特典掲示板があるのか。</li>
+<li>プログラム内のデータ構造やクラスと、それらが表現する実世界の実体との間に、きれ
+  いな一対一の写像があるか。</li>
+<li>ある機能を担当しているコードを見つけるのが簡単か。</li>
+<li>マジックナンバー（説明のつかない定数）があるか。</li>
+</ul>
+<blockquote>
+<p>It's best for code to be simple.</p>
+</blockquote>
+<p><a href="modularity.html">第四章</a>のチェックリストと比較するといい。</p>
+<h3 id="transparency-and-avoiding-overprotectiveness">Transparency and Avoiding Overprotectiveness<a class="headerlink" href="#transparency-and-avoiding-overprotectiveness" title="Permanent link">&para;</a></h3>
+<p>隠すこととアクセスできないようにすることには重要な違いがある。</p>
+<p>何をしているのか明らかにできないプログラムは、トラブルシューティングをはるかに困難にする。</p>
+<blockquote>
+<p>Thus, experienced Unix users actually take the presence of debugging and
+instrumentation switches as a good sign, （中略） presence suggests one with
+enough wisdom to follow the Rule of Transparency.</p>
+</blockquote>
+<p>GUI アプリケーションでは過剰防衛傾向がさらに強い。Unix 開発者が GUI に対して冷淡である理由の一つは、設計者が予測した狭い範囲以外で GUI を介して操作しなければならない人にとってイラつくほど不透明になる点だ。</p>
+<p>何をやっているのか不透明なプログラムは多くの仮定が組み込まれている傾向がある。</p>
+<blockquote>
+<p>Unix tradition pushes for programs that are flexible for a broader range of
+uses and troubleshooting situations, including the ability to present as much
+state and activity information to the user as the user indicates he is willing
+to handle. This is good for troubleshooting; it is also good for growing
+smarter, more self-reliant users.</p>
+</blockquote>
+<!-- reliant:  needing a particular thing or person in order to continue, to work correctly, or to succeed -->
+
+<p>Unix は使用者も成長する。</p>
+<h3 id="transparency-and-editable-representations">Transparency and Editable Representations<a class="headerlink" href="#transparency-and-editable-representations" title="Permanent link">&para;</a></h3>
+<p>透明性が難しい領域からそれが簡単な領域に問題を反転させるプログラムの価値。</p>
+<blockquote>
+<p>All three applications turn manipulation of their binary file formats into a
+problem to which human beings can more readily apply intuition and competences
+gained from everyday experience.</p>
+</blockquote>
+<p>可逆的かつ無劣化に変換するという特性はきわめて重要であり、実装する価値がある。</p>
+<blockquote>
+<p>All the advantages of textual data-file formats that we discussed in Chapter 5
+also apply to the textual formats that sng(1), infocmp(1) and their kin
+generate.</p>
+</blockquote>
+<p>ある種の複雑なバイナリーオブジェクトの編集を伴う設計上の問題に直面した場合、最初に、編集可能なテキスト形式への逆写像を行うことができるツールを書くことが可能かどうかを考えるのが良い。</p>
+<blockquote>
+<p>If the binary object is dynamically generated or very large, then it may not
+be practical or possible to capture all the state with a textualizer. In that
+case, the equivalent task is to write a browser.</p>
+</blockquote>
+<p>これは難しいように聞こえるが、例えば psql(1) のようなものもブラウザーとみなせる。</p>
+<p>テキスト化ツールやブラウザーを製作することが価値がある理由は：</p>
+<ul>
+<li>学習経験を積む</li>
+<li>検査やデバッグのために構造体の中身をダンプする能力を得る</li>
+<li>試験負荷や異常な事例を簡単に生成できる</li>
+<li>再使用可能コードを得る</li>
+</ul>
+<h3 id="transparency-fault-diagnosis-and-fault-recovery">Transparency, Fault Diagnosis, and Fault Recovery<a class="headerlink" href="#transparency-fault-diagnosis-and-fault-recovery" title="Permanent link">&para;</a></h3>
+<p>透明性は耐バグ性でもある：</p>
+<blockquote>
+<p>Yet another benefit of transparency, related to ease of debugging, is that
+transparent systems are easier to perform recovery actions on after a bug
+bites — and, often, more resistant to damage from bugs in the first place.</p>
+</blockquote>
+<ul>
+<li>Windows のレジストリーはバグのあるアプリケーションコードによって破損されやす
+  い。これにより、システム全体が使用不能になる可能性がある。そうでなくても、レジ
+  ストリーの破損がレジストリー編集ツールを混乱させると、復旧が困難になることがあ
+  る。</li>
+<li>対照的に、terminfo データベースは一枚岩のファイルではないので、項目一つ間違え
+  たからといってデータセット全体が使用不能になるけではない。一枚岩であっても、
+  termcap のような完全にテキスト化されている形式は、通常、単一障害点から回復可能
+  な手段で解析される。</li>
+<li>SNG ファイルの構文エラーは破損した PNG 画像の読み込みを拒否するような特殊なエ
+  ディターを必要とせず、手作業で修正することが可能。</li>
+</ul>
+<p>テキスト化ツールやブラウザーなどの発見可能性ツールは故障診断をも容易にする。理由は：</p>
+<ul>
+<li>テキスト化されたデータは人間がシステムの状態を検査しやすくする。</li>
+<li>単一障害によって修復不可能なほど破壊されにくくする効果がある。</li>
+</ul>
+<blockquote>
+<p>Over and over again, the Rule of Robustness is clear. Simplicity plus
+transparency lowers costs, reduces everybody's stress, and frees people to
+concentrate on new problems rather than cleaning up after old mistakes.</p>
+</blockquote>
+<h2 id="designing-for-maintainability">Designing for Maintainability<a class="headerlink" href="#designing-for-maintainability" title="Permanent link">&para;</a></h2>
+<p>保守性が要求するのはコードが動作するというだけでなく、Rule of Clarity に従い、コンピュータにも人間にも良く通じるということもだ。</p>
+<blockquote>
+<p>Unix programmers have a lot of implicit knowledge available to them about what
+makes for maintainable code, because Unix hosts source code that goes back
+decades.</p>
+</blockquote>
+<p>Unix プログラマーはスクラップ＆リビルドする傾向があるので、十年単位の進化の圧力に耐えてきたソースは保守性があるために生き残ったと言える。</p>
+<blockquote>
+<p>“Is this code live, dormant, or dead?”</p>
+</blockquote>
+<!-- dormant: not active or growing now, but having the ability to become active in the future -->
+
+<ul>
+<li>生きているコード：活発な開発者共同体がある</li>
+<li>休眠コード：維持することの苦痛がその創始者にとっての有用性を上回ったか</li>
+<li>死んだコード：同じようなものをゼロから再実装する方が簡単</li>
+</ul>
+<p>重要な実践を二つ挙げている：</p>
+<ul>
+<li>«Rule of Clarity: choosing simple algorithms»</li>
+<li>案内文書を含める</li>
+</ul>
+<p>複雑なアルゴリズムの代償は、最初に実装したときにバグが発生しやすいということだけでなく、保守担当者が理解するのが難しい。</p>
+<p>ソースコードの配布において、コード中の主要なデータ構造やアルゴリズムを非公式に記述した文書を含めておく。</p>
+<blockquote>
+<p>In fact, Unix programmers have often been better about producing hacker's
+guides than they are about writing end-user documentation.</p>
+</blockquote>
+<p>オープンソースプロジェクトのためのハッカーズガイドは、将来の保守人への助言であるだけでなく、気軽な貢献者が機能を追加したり修正したりしやすいように設計されている。</p>
+<blockquote>
+<p>The Linux kernel sources include literally dozens of these.</p>
+</blockquote></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>© 2025 プレハブ小屋 All rights reserved.</p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js"></script>
+        <script src="../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

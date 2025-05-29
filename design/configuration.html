@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="ja" data-bs-theme="auto">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="プレハブ小屋">
+        <link rel="canonical" href="https://github.com/showa-yojyo/taoup/design/configuration.html">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Configuration - The Art of Unix Programming 読書ノート</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../css/brands.min.css" rel="stylesheet">
+        <link href="../css/solid.min.css" rel="stylesheet">
+        <link href="../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" disabled>
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <link href="../css/style.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../index.html">The Art of Unix Programming 読書ノート</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../index.html" class="nav-link">Home</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle active" aria-current="page" role="button" data-bs-toggle="dropdown"  aria-expanded="false">Notes</a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../preface.html" class="dropdown-item">Preface</a>
+</li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Context</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../context/philosophy.html" class="dropdown-item">Philosophy</a>
+</li>
+            
+<li>
+    <a href="../context/history.html" class="dropdown-item">History</a>
+</li>
+            
+<li>
+    <a href="../context/contrasts.html" class="dropdown-item">Contrasts</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Design</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="modularity.html" class="dropdown-item">Modularity</a>
+</li>
+            
+<li>
+    <a href="textuality.html" class="dropdown-item">Textuality</a>
+</li>
+            
+<li>
+    <a href="transparency.html" class="dropdown-item">Transparency</a>
+</li>
+            
+<li>
+    <a href="multiprogram.html" class="dropdown-item">Multiprogramming</a>
+</li>
+            
+<li>
+    <a href="minilanguages.html" class="dropdown-item">Minilanguages</a>
+</li>
+            
+<li>
+    <a href="generation.html" class="dropdown-item">Generation</a>
+</li>
+            
+<li>
+    <a href="configuration.html" class="dropdown-item active" aria-current="page">Configuration</a>
+</li>
+            
+<li>
+    <a href="interface.html" class="dropdown-item">Interfaces</a>
+</li>
+            
+<li>
+    <a href="optimization.html" class="dropdown-item">Optimization</a>
+</li>
+            
+<li>
+    <a href="complexity.html" class="dropdown-item">Complexity</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Implementation</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../implementation/languages.html" class="dropdown-item">Languages</a>
+</li>
+            
+<li>
+    <a href="../implementation/tools.html" class="dropdown-item">Tools</a>
+</li>
+            
+<li>
+    <a href="../implementation/reuse.html" class="dropdown-item">Reuse</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Community</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../community/portability.html" class="dropdown-item">Portability</a>
+</li>
+            
+<li>
+    <a href="../community/documentation.html" class="dropdown-item">Documentation</a>
+</li>
+            
+<li>
+    <a href="../community/opensource.html" class="dropdown-item">Open Source</a>
+</li>
+            
+<li>
+    <a href="../community/futures.html" class="dropdown-item">Futures</a>
+</li>
+    </ul>
+  </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/showa-yojyo/taoup/issues" class="nav-link">Issues</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="generation.html" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="interface.html" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/showa-yojyo/taoup/edit/main/docs/design/configuration.md" class="nav-link"><i class="fa-brands fa-github"></i> Edit on GitHub</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                              <button id="theme-menu" aria-expanded="false" data-bs-toggle="dropdown" data-bs-display="static" aria-label="Toggle theme" class="nav-link dropdown-toggle">
+                                <i class="fa-solid fa-circle-half-stroke fa-fw"></i>
+                                <span class="d-lg-none ms-2">Toggle theme</span>
+                              </button>
+                              <ul class="dropdown-menu dropdown-menu-end">
+                                <li>
+                                  <button class="dropdown-item d-flex align-items-center" data-bs-theme-value="light" aria-pressed="false">
+                                    <i class="fa-solid fa-sun fa-fw"></i>
+                                    <span class="ms-2">Light</span>
+                                    <i class="fa-solid fa-check ms-auto d-none"></i>
+                                  </button>
+                                </li>
+                                <li>
+                                  <button class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark" aria-pressed="false">
+                                    <i class="fa-solid fa-moon fa-fw"></i>
+                                    <span class="ms-2">Dark</span>
+                                    <i class="fa-solid fa-check ms-auto d-none"></i>
+                                  </button>
+                                </li>
+                                <li>
+                                  <button class="dropdown-item d-flex align-items-center" data-bs-theme-value="auto" aria-pressed="true">
+                                    <i class="fa-solid fa-circle-half-stroke fa-fw"></i>
+                                    <span class="ms-2">Auto</span>
+                                    <i class="fa-solid fa-check ms-auto"></i>
+                                  </button>
+                                </li>
+                              </ul>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <script src="../js/darkmode.js"></script>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="2"><a href="#what-should-be-configurable" class="nav-link">What Should Be Configurable?</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="2"><a href="#where-configurations-live" class="nav-link">Where Configurations Live</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="2"><a href="#run-control-files" class="nav-link">Run-Control Files</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="3"><a href="#case-study-the-netrc-file" class="nav-link">Case Study: The .netrc File</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#portability-to-other-operating-systems" class="nav-link">Portability to Other Operating Systems</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="2"><a href="#environment-variables" class="nav-link">Environment Variables</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="3"><a href="#system-environment-variables" class="nav-link">System Environment Variables</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#user-environment-variables" class="nav-link">User Environment Variables</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#when-to-use-environment-variables" class="nav-link">When to Use Environment Variables</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#portability-to-other-operating-systems_1" class="nav-link">Portability to Other Operating Systems</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="2"><a href="#command-line-options" class="nav-link">Command-Line Options</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="3"><a href="#the-a-to-z-of-command-line-options" class="nav-link">The -a to -z of Command-Line Options</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#portability-to-other-operating-systems_2" class="nav-link">Portability to Other Operating Systems</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="2"><a href="#how-to-choose-among-the-methods" class="nav-link">How to Choose among the Methods</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="3"><a href="#case-study-fetchmail" class="nav-link">Case Study: fetchmail</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#case-study-the-xfree86-server" class="nav-link">Case Study: The XFree86 Server</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="2"><a href="#on-breaking-these-rules" class="nav-link">On Breaking These Rules</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="chapter-10-configuration">Chapter 10. Configuration<a class="headerlink" href="#chapter-10-configuration" title="Permanent link">&para;</a></h1>
+<div class="toc"><span class="toctitle">見出し一覧</span><ul>
+<li><a href="#what-should-be-configurable">What Should Be Configurable?</a></li>
+<li><a href="#where-configurations-live">Where Configurations Live</a></li>
+<li><a href="#run-control-files">Run-Control Files</a><ul>
+<li><a href="#case-study-the-netrc-file">Case Study: The .netrc File</a></li>
+<li><a href="#portability-to-other-operating-systems">Portability to Other Operating Systems</a></li>
+</ul>
+</li>
+<li><a href="#environment-variables">Environment Variables</a><ul>
+<li><a href="#system-environment-variables">System Environment Variables</a></li>
+<li><a href="#user-environment-variables">User Environment Variables</a></li>
+<li><a href="#when-to-use-environment-variables">When to Use Environment Variables</a></li>
+<li><a href="#portability-to-other-operating-systems_1">Portability to Other Operating Systems</a></li>
+</ul>
+</li>
+<li><a href="#command-line-options">Command-Line Options</a><ul>
+<li><a href="#the-a-to-z-of-command-line-options">The -a to -z of Command-Line Options</a></li>
+<li><a href="#portability-to-other-operating-systems_2">Portability to Other Operating Systems</a></li>
+</ul>
+</li>
+<li><a href="#how-to-choose-among-the-methods">How to Choose among the Methods</a><ul>
+<li><a href="#case-study-fetchmail">Case Study: fetchmail</a></li>
+<li><a href="#case-study-the-xfree86-server">Case Study: The XFree86 Server</a></li>
+</ul>
+</li>
+<li><a href="#on-breaking-these-rules">On Breaking These Rules</a></li>
+</ul>
+</div>
+<p>Unix ではプログラムは豊富な方法で環境と通信することができる。これらを起動環境照会と対話型情報経路に分けるのが便利だ。この章では、起動環境照会に主に焦点を当てる。</p>
+<h2 id="what-should-be-configurable">What Should Be Configurable?<a class="headerlink" href="#what-should-be-configurable" title="Permanent link">&para;</a></h2>
+<p>質問を逆にして、どのようなことが構成可能であってはならないのかと問う方が、おそらくより有益だろう。Unix の実践はこのガイドラインをいくつか示している。</p>
+<ol>
+<li>自動検出可能なものに構成項目を用意するな</li>
+<li>最適化項目を備えるな</li>
+<li>スクリプトラッパーやつまらぬパイプラインでできることを構成項目として設けるな</li>
+</ol>
+<blockquote>
+<p>A good rule of thumb is this: Be adaptive unless doing so costs you 0.7
+seconds or more of latency.</p>
+</blockquote>
+<p>人間は 0.7 秒よりも短い待ち時間にはほとんど気づかない。だから柔軟に構えろと。</p>
+<p>最適化オプションが使用者に与えるかもしれないわずかな性能の向上は、通常、インターフェイスの複雑さに見合う経費ではない。オプションが多い構成ファイル形態は KISS の教えに反する。</p>
+<p>他のプログラムに仕事を手伝ってもらうことが簡単にできるのに、自分のプログラムの中に複雑さを持ち込むな（以前のページャーの議論を思い出せ）。</p>
+<p>項目の追加を考えているときに考慮する一般的な質問：</p>
+<ul>
+<li>この機能を省いてもいいのか</li>
+<li>この項目が不要になるような無害な方法でプログラムの通常の動作を変更できるか</li>
+<li>この項目は単なる化粧品か</li>
+<li>この項目で有効になる動作を別のプログラムにできないか</li>
+</ul>
+<p>不必要な選択肢を増やすことは多くの弊害をもたらす。その中でも test coverage に与える影響は深刻だ。</p>
+<p>(Steve Johnson) よほど注意深く行わない限り、on/off 型項目を追加するとテストの量が倍になることがある。項目が十個もあればテストは 1024 倍になる。</p>
+<h2 id="where-configurations-live">Where Configurations Live<a class="headerlink" href="#where-configurations-live" title="Permanent link">&para;</a></h2>
+<p>古典的には、Unix プログラムは起動時の環境の五つの場所で制御情報を探す：</p>
+<ol>
+<li><code>/etc</code> の下にある実行制御 (rc) ファイル</li>
+<li>システムが設定した環境変数</li>
+<li>使用者の <code>HOME</code> にある実行制御（ドット）ファイル (<a href="../context/contrasts.html">Chapter 3</a>)</li>
+<li>使用者が設定した環境変数</li>
+<li>プログラムを起動したコマンドラインでプログラムに渡されるオプションと引数。</li>
+</ol>
+<p>これらの照会は通常、上記の順序で行われる。後の（よりローカルな）設定が前の（よりグローバルな）設定を上書きする。先に発見された設定は、後に構成ファイルデータを検索する際に、プログラムが場所を計算するのに役立つ。</p>
+<p>構成項目をプログラムに渡すためにどの仕組みを使うかを決めるとき、Unix の習慣では、プリファレンスの予想される寿命に最も近いものを使うことが要求される。つまり、</p>
+<ul>
+<li>起動ごとに変更される可能性が高い環境設定はコマンドラインで指定する。</li>
+<li>めったに変更されないが、各使用者が掌握するべき環境設定には、使用者の <code>HOME</code> に
+  ある構成ファイルで指定する。</li>
+<li>システム管理者がサイト全体に設定し、使用者が変更できないようにする必要がある環
+  境設定情報にはシステム領域にある実行制御ファイルで指定する。</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>ソフトウェアを自作するときにはこの流れで構成するライブラリーを組み込め。</p>
+</div>
+<h2 id="run-control-files">Run-Control Files<a class="headerlink" href="#run-control-files" title="Permanent link">&para;</a></h2>
+<p>「実行制御ファイル」を定義する：</p>
+<blockquote>
+<p>A run-control file is a file of declarations or commands associated with a
+program that it interprets on startup.</p>
+</blockquote>
+<p>全使用者が共有する固有の構成がある場合、<code>/etc</code> の下に実行制御ファイルを持つことが多い。そのようなデータを集積する <code>/etc/conf</code> サブディレクトリーがある Unix もある。</p>
+<p>使用者固有の構成情報は、多くの場合、使用者の <code>HOME</code> にある隠し実行制御ファイルに格納されている。このようなファイルは、「ドットファイル」と呼ばれることが多いが、ドットで始まるファイル名は通常、<code>ls</code> などからは見えないという Unix の慣例を悪用していることによる。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>現代なら XDG Base Directory 仕様というものがある。</p>
+</div>
+<p>プログラムは実行制御ディレクトリーやドットディレクトリーを持つこともある。これらは、プログラムに関連するが、別々に扱うのが便利な複数の構成ファイルをまとめたたものだ。</p>
+<p>どちらの形式でも、実行制御情報のある場所はそれを読み込む実行形式ファイルと同じ
+basename を持つというのが現在の慣例だ。</p>
+<p>例：プログラム <code>seekstuff</code> に関しては関連パスは次のようになっているだろう：</p>
+<ul>
+<li><code>/etc/seekstuff</code></li>
+<li>使用者の <code>${HOME}/.seekstuff</code></li>
+</ul>
+<p>実行制御ファイルは通常、プログラム起動時に一度だけ読み込まれ、書き込まれることはない。相互運用性と透明性の両方が、人間が読み、普通のテキストエディターで変更できるように設計されたテキスト形式を推し進める (<a href="textuality.html">Chapter 5</a>)。</p>
+<p>実行制御ファイルの内容の意味はともかく、構文については、広く守られている設計規則がある。</p>
+<p>プログラムがある言語のインタプリターである場合、起動時に実行される、その言語の構文によるコマンドの単なるファイルであることが期待される。Unix の伝統は、あらゆる種類のプログラムを特殊目的言語や小規模言語として設計することを強く推奨しているのでこれは重要だ。この種のドットファイルを使ったよく知られた例：</p>
+<ul>
+<li>Unix コマンドシェル各種</li>
+<li>Emacs</li>
+</ul>
+<p>実行制御構文に関する通常の流儀：</p>
+<ol>
+<li>コメントを援助する。記号 <code>#</code> で始めるものとする。構文は <code>#</code> の前の空白も無視
+   するようにし、構成内容と同じ行にあるコメントを援助する。</li>
+<li>陰湿な空白の区別をしない。つまり、空白やタブの連続を、構文的には単一の空白と
+   同じように扱う。書式が行指向であれば行末の空白やタブを無視すると良い。</li>
+<li>複数の空白行やコメント行を単一の空白行として扱う。</li>
+<li>ファイルを、空白で区切られた単純なトークンの列または行として単語の集まりのよ
+   うに扱う。</li>
+<li>しかし、空白が埋め込まれたトークンのための文字列構文をサポートする。</li>
+<li>バックスラッシュ構文を援助する。標準的なパターンは C コンパイラーが援助してい
+   るバックスラッシュエスケープ構文だ。</li>
+</ol>
+<!-- insidious: (of something unpleasant or dangerous) gradually and secretly causing harm -->
+
+<p>他方で、シェル構文のいくつかの点は rc 構文で模倣しないほうがいい：</p>
+<ul>
+<li>引用符と括弧のひどく凝った規則</li>
+<li>ワイルドカードと変数置換のための特殊なメタキャラクター</li>
+</ul>
+<blockquote>
+<p>It bears repeating that the point of these conventions is to reduce the amount
+of novelty that users have to cope with when they read and edit the
+run-control file for a program they have never seen before.</p>
+</blockquote>
+<p>これらの標準流儀はトークン化とコメントに関する規則のみを記述している。実行制御ファイルの名前、その上位レベルの構文、および構文の意味的解釈は、通常アプリケーション固有のものだ。</p>
+<blockquote>
+<p>Sharing run-control file formats in this way reduces the amount of novelty
+users have to cope with.</p>
+</blockquote>
+<p>ファイル <code>.netrc</code> は使用者のホストとパスワードを追跡しなければならないインターネットクライアントプログラムが共有するものと考えられる。このドットファイルが存在すれば、通常、これから情報を取得することができる。</p>
+<h3 id="case-study-the-netrc-file">Case Study: The <code>.netrc</code> File<a class="headerlink" href="#case-study-the-netrc-file" title="Permanent link">&para;</a></h3>
+<p>ファイル <code>.netrc</code> は標準的な規則が機能している良い例だ。</p>
+<!-- Example 10.1. A .netrc example. -->
+
+<p>このファイルを見たことがなくても、目で見て簡単に解析できることに注意。
+<code>machine</code>/<code>login</code>/<code>password</code> の三組の集合で、それぞれが遠隔ホストのアカウントを記述している。このような透明性は重要だ。</p>
+<blockquote>
+<p>It economizes the far more valuable resource that is <em>human</em> time, by making
+it likely that a human being will be able to read and modify the format
+without having to read a manual or use a tool less familiar than a plain old
+text editor.</p>
+</blockquote>
+<p>このファイルが複数のサービスの情報を与えるために使用されるということは、機密性の高い情報を一箇所に保存するだけでよいという利点があるということだ。</p>
+<p>このファイルはオリジナルの Unix FTP クライアントプログラムのために設計された。
+GNU のサイトにヘルプを発見したのでリンクを記しておく：
+<a href="https://www.gnu.org/software/inetutils/manual/html_node/The-_002enetrc-file.html">The .netrc file (GNU Inetutils)</a></p>
+<p>すべての FTP クライアントで使用され、いくつかの <code>telnet</code> クライアントや
+smbclient(1) コマンドラインツール、<code>fetchmail</code> でも理解される。</p>
+<p>遠隔ログインでパスワード認証が必要なインターネットクライアントを書いている場合、驚き最小の法則から <code>.netrc</code> の内容を既定として使用することが求められる。</p>
+<h3 id="portability-to-other-operating-systems">Portability to Other Operating Systems<a class="headerlink" href="#portability-to-other-operating-systems" title="Permanent link">&para;</a></h3>
+<p>ほとんどの非 Unix OS に欠けている重要な点：</p>
+<ul>
+<li>真の複数使用者機能</li>
+<li>使用者別ホームディレクトリー概念</li>
+</ul>
+<p>例えば、DOS と ME までの Windows にはそのような概念がまったくない。古い話だが。</p>
+<blockquote>
+<p>Windows NT has some notion of per-user home directories (which made its way
+into Windows 2000 and XP), but it is only poorly supported by the system
+tools.</p>
+</blockquote>
+<p>現代では Windows 11 まで登場したが、文脈からこれも NT に含まれると解釈するべきだろう。</p>
+<h2 id="environment-variables">Environment Variables<a class="headerlink" href="#environment-variables" title="Permanent link">&para;</a></h2>
+<p>プログラムが起動すると、それにアクセス可能な環境は名前と値の対応を含む（名前と値は両方とも文字列）。これらのうちいくつかは使用者が手動で設定するもので、その他はログイン時にシステムが設定したり、シェルや端末エミュレーターが設定したりする。</p>
+<p>端末で <code>set</code> を実行すると現在定義されているシェル変数のすべてが示される。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Bash 内蔵 <code>set</code> の他、プログラムなら <code>env</code> や <code>printenv</code> も使う。</p>
+</div>
+<ul>
+<li>C/C++ ではライブラリー関数 getenv(3) で環境変数の値を問い合わせることができる。</li>
+<li>Perl と Python は起動時に環境辞書オブジェクトを初期化する。</li>
+<li>他の言語はこれら二つのモデルのどちらかに従うのが一般的だ。</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code>man 3 getenv</code> を確認したら、この関数とその亜種は文字列を戻り値で得るシグニチャーになっている。
+C 言語では珍しいような気がする。</p>
+<p>Python ならば <code>os.environ</code> が環境変数辞書オブジェクトだ。</p>
+</div>
+<h3 id="system-environment-variables">System Environment Variables<a class="headerlink" href="#system-environment-variables" title="Permanent link">&para;</a></h3>
+<p>シェルから起動するプログラムには、それらが定義されていると期待して良い、よく知られた環境変数がいくつかある。これらは、ローカルのドットファイルを読み込む<strong>前に</strong>
+評価する必要があることが多い。代表的な環境変数：</p>
+<dl>
+<dt><code>USER</code>, <code>LOGNAME</code></dt>
+<dd>(BSD, System V) このセッションに対するアカウントのログイン名</dd>
+<dt><code>HOME</code></dt>
+<dd>このセッションを実行している使用者のホームディレクトリー</dd>
+<dt><code>COLUMN</code></dt>
+<dd>端末ウィンドウ一行に何文字あるか</dd>
+<dt><code>LINES</code></dt>
+<dd>端末ウィンドウ一画面に何行あるか</dd>
+<dt><code>SHELL</code></dt>
+<dd>使用者のコマンドシェルの名前 (e.g. <code>/bin/bash</code>)</dd>
+<dt><code>PATH</code></dt>
+<dd>シェルが実行可能コマンドを探すときに検索するディレクトリーの集合</dd>
+<dt><code>TERM</code></dt>
+<dd>
+<p>セッションコンソールまたは端末ウィンドウの端末型名 (e.g. <code>xterm-256color</code>)</p>
+<blockquote>
+<p><code>TERM</code> is special in that programs to create remote sessions over the network
+(such as telnet and ssh) are expected to pass it through and set it in the
+remote session.</p>
+</blockquote>
+</dd>
+</dl>
+<p>これらのシステム環境変数の一部または全部は、シェル生成以外の方法でプログラムを起動したときには設定されない場合があることに注意が要る。特に、TCP/IP ソケット上のデーモンリスナーには、これらの変数が設定されていないことが多い。</p>
+<p>環境変数が複数のフィールドを含む必要がある場合、特にそのフィールドが何らかの検索パスとして解釈できる場合、区切り文字としてコロンを使う伝統があることに注意</p>
+<ul>
+<li>変数 <code>PATH</code> はその代表だ。</li>
+<li>Bash や Korn Shell など、シェルによっては環境変数内のコロンで区切られたフィー
+  ルドをファイル名として常に解釈するものがある。特に <code>~</code> は上記 <code>HOME</code> に置き換
+  わる。</li>
+</ul>
+<h3 id="user-environment-variables">User Environment Variables<a class="headerlink" href="#user-environment-variables" title="Permanent link">&para;</a></h3>
+<p>環境変数は文字列でしかないなので、使用者定義の環境変数が役に立つ設計パターンは限定的だ：</p>
+<blockquote>
+<p><em>Application-independent preferences that need to be shared by a large number
+of different programs</em></p>
+</blockquote>
+<dl>
+<dt><code>VISUAL</code>, <code>EDITOR</code></dt>
+<dd>優先エディタープログラム（前者のほうがより preferred と考えられる）</dd>
+<dt><code>MAILER</code></dt>
+<dd>優先メールクライアント</dd>
+<dt><code>PAGER</code></dt>
+<dd>優先プレインテキスト閲覧プログラム (e.g. <code>/bin/less</code>)</dd>
+<dt><code>BROWSER</code></dt>
+<dd>優先 Web ブラウザー (e.g. <code>/usr/bin/wslview</code>)</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code>MAILER</code> を用いるアプリケーションを調べたが不明。</p>
+</div>
+<h3 id="when-to-use-environment-variables">When to Use Environment Variables<a class="headerlink" href="#when-to-use-environment-variables" title="Permanent link">&para;</a></h3>
+<ul>
+<li>実行制御ファイル項目と違って、環境変数はアプリケーション別に複製する機会がない。</li>
+<li>通常、環境変数はシェルセッションの起動ファイルで値を設定する。</li>
+</ul>
+<p>一般に、使用者定義の環境変数は、ドットファイルを毎回編集するのが不便になるほど頻繁に値が変わる場合に、効果的な設計の選択肢となり得る。このような環境変数は通常、ローカルのドットファイルの後で評価されるべきであり、ファイル設定を上書きすることが許されるようにしたい。</p>
+<blockquote>
+<p>Sometimes, user-set environment variables are used as a lightweight substitute
+for expressing a program preference in a run-control file.</p>
+</blockquote>
+<p>上記のパターンは新しいプログラムには適用しない。</p>
+<blockquote>
+<p>The problem with the older style is that it makes tracking where your
+preference information lives more difficult than it would be if you knew the
+program had a run-control file under your home directory.</p>
+</blockquote>
+<p>環境変数はシェルの rc ファイルのどこにでも設定できる。例えば Bash なら：</p>
+<ul>
+<li><code>.profile</code></li>
+<li><code>.bash_profile</code></li>
+<li><code>.bashrc</code></li>
+</ul>
+<p>これらのファイルは雑線としていて壊れやすいので、オプション解析器を持つことによるコードの間接費が大してないと判断されると、環境変数からドットファイルに環境情報が移行する傾向がある。</p>
+<h3 id="portability-to-other-operating-systems_1">Portability to Other Operating Systems<a class="headerlink" href="#portability-to-other-operating-systems_1" title="Permanent link">&para;</a></h3>
+<p>環境変数の Unix からの移植性は非常に限られている。例えば Windows には Unix を手本にした環境変数機能があり、実行形式検索パスを設定するために <code>PATH</code> 変数を使用するが、Unix シェルプログラマーが当然のように使用する他の変数のほとんどは援助されていない。</p>
+<h2 id="command-line-options">Command-Line Options<a class="headerlink" href="#command-line-options" title="Permanent link">&para;</a></h2>
+<p>Unix の伝統ではスクリプトからオプションを指定できるように、コマンドラインスイッチを使用してプログラムを制御することが推奨されている。これは、パイプやフィルターとして機能するプログラムでは特に重要だ。</p>
+<p>Unix の伝統ではコマンドラインオプションはハイフン一つで始まる一文字だ。後続する引数を取らないモードフラグオプションは一緒にまとめることができる。したがって：</p>
+<blockquote>
+<p>if <code>-a</code> and <code>-b</code> are mode options, <code>-ab</code> or <code>-ba</code> is also correct and enables
+both.</p>
+</blockquote>
+<p>オプションの引数があれば、その後に続く（オプションで空白で区切られる）。このスタイルでは、大文字よりも小文字のオプションが優先される。大文字のオプションを使う場合は、小文字のオプションの特別な変形にするのがよい。</p>
+<ul>
+<li>小文字オプション名が好まれるのは Shift キーを押し続けるのに力が必要だから</li>
+<li>同じような理由で <code>+</code> ではなく <code>-</code> が使われる</li>
+</ul>
+<p>GNU スタイルでは、オプションキーワードの前に二つのハイフンをつける。読みやすいので今でも人気がある。</p>
+<p>GNU スタイルのオプションは空白を区切らずに一緒にまとめることはできない。オプションの引数がもしあれば、空白か <code>=</code> 一文字で区切ることができる。</p>
+<p>GNU スタイルを使用する場合、少なくとも最も一般的なオプションについては、一文字の等価物を支援するのが良い習慣だ。</p>
+<p>X ツールキットスタイルは、紛らわしいことに、ハイフン一つとキーワードオプションを用いる。古典的な Unix スタイルとも GNU スタイルとも適切な互換性がなく、古い X 規約との互換性が高いと思われない限り、新しいプログラムではなるべく使用しない。</p>
+<p>多くのツールは、標準入力から読み込むようアプリケーションに指示する擬似ファイル名として、いかなるオプション文字にも関連付けられない、素のハイフン <code>-</code> を受け入れる。また、二重ハイフン <code>--</code> をオプションの解釈を停止する合図として認識し、それに続くすべての引数を文字通りに扱うことも慣例となっている。</p>
+<p>ほとんどの Unix プログラミング言語には、古典的 Unix または GNU スタイルでコマンドラインを解析してくれるライブラリーが用意されている。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Python なら標準モジュール <code>argparse</code> がその一つだ。</p>
+</div>
+<h3 id="the-a-to-z-of-command-line-options">The <code>-a</code> to <code>-z</code> of Command-Line Options<a class="headerlink" href="#the-a-to-z-of-command-line-options" title="Permanent link">&para;</a></h3>
+<p>時間の経過とともに、よく知られた Unix プログラムで頻繁に使われるオプションは、さまざまなフラグが何を意味するのかについて、緩やかな意味標準のようなものを確立してきた。</p>
+<ul>
+<li><code>-a</code>: all; add, append.<br />
+  特に GNU 式の <code>--all</code> がある場合は <code>-a</code> の別名でしかない。
+  追加の意味にする場合、削除オプション <code>-d</code> と対になりがちだ。</li>
+<li><code>-b</code>: buffer, block size (e.g. du(1), df(1), tar(1)); batch (e.g. flex(1)).</li>
+<li><code>-c</code>: command; check.<br />
+  引数ありでコマンドの意味とする。この規約は特にシェルやインタープリターに強く適
+  用したい。Cf. <code>-e</code>. 例としては sh(1), bash(1), python(1) などがある。
+  引数なしで check の意味とする。
+  コマンドに対するファイルの引数が正しいかどうかを検めるが、通常の処理は行わない。
+  プログラムの構文検査オプションとしてよく使われる。例: getty(1), perl(1) など。</li>
+<li><code>-d</code>: debug.<br />
+  デバッグメッセージのレベルを設定する。
+  たまに delete や directory の意味を持つものがある。</li>
+<li><code>-D</code>: define.<br />
+  インタープリター、コンパイラー、特にマクロプロセッサーのようなアプリケーション
+  で、あるシンボルの値を設定する。この意味は Unix プログラマーのほとんどが強く連
+  想する。</li>
+<li><code>-e</code>: execute, expression (e.g. xterm(1), perl(1), sed(1)); edit (e.g. crontab(1)).<br />
+  編集オプションの場合、エディターを開いて何かのテキストを編集可能にする。</li>
+<li><code>-f</code>: file (e.g. tar(1), awk(1), grep(1)); force (e.g. ssh(1), httpd(1)).<br />
+  引数付きでファイル (<code>--file</code>) の意味とする。入力ファイルを指定するために用いら
+  れる。
+  引数なしでは強制の意味。通常は条件付きで実行される操作を強制的に実行する。これ
+  はあまり一般的ではない。
+  デーモンはこの二つの意味を合わせた形で <code>-f</code> を使用し、既定以外の場所から設定
+  ファイルを強制的に処理する。例: , etc.</li>
+<li><code>-h</code>: header (pr(1), ps(1)); help.<br />
+  ヘッダー (<code>--header</code>) 行の意味では、プログラムが出力する表のヘッダーを有効化、
+  抑制、修正する。
+  ヘルプ (<code>--help</code>) オプションの意味である場合は、一般的にはそれほど多くない。  <blockquote>
+<p>for much of Unix's early history developers tended to think of on-line help
+as memory-footprint overhead they couldn't afford. Instead they wrote manual
+pages (this shaped the man-page style in ways we'll discuss in <a href="../community/documentation.html">Chapter 18</a>).</p>
+</blockquote>
+</li>
+<li><code>-i</code>: initialize (e.g. ci(1)); interactive (e.g. rm(1), mv(1)).<br />
+  初期化フラグの場合、プログラムに関連する重要な資源やデータベースを初期状態に設
+  定する。
+  対話的フラグの場合、通常は確認の問い合わせをしないプログラムにそれをさせる。</li>
+<li><code>-I</code>: include.<br />
+  アプリケーションが検索した資源に、ファイル名やディレクトリ名を追加する。ソース
+  ファイルのインクルードと同等の機能を持つ Unix コンパイラーはすべて、この意味で
+  <code>-I</code> を使用する。</li>
+<li><code>-k</code>: keep (e.g. passwd(1), bzip(1), fetchmail(1)); kill.<br />
+  ファイル、メッセージ、各種資源に対する通常の削除を抑止する。</li>
+<li><code>-l</code>: list (e.g. arc(1), binhex(1), unzip(1)); load (e.g. gcc(1), f77(1),
+  emacs(1)); login (e.g. rlogin(1), ssh(1)); length; lock.<br />
+  報告プログラムでは <code>-l</code> はほとんど必ず long を意味し、既定よりもより詳細に表示
+  する。</li>
+<li><code>-m</code>: message (e.g. ci(1), cvs(1)); mail; mode; mtime.<br />
+  メッセージオプションは VCS プログラムのコマンドオプションでありがちだ。</li>
+<li><code>-n</code>: number (e.g. head(1), tail(1), nroff(1), troff(1)); not (make(1)).<br />
+  DNS 名を表示するネットワークツールの中には、代わりに生の IP アドレスを表示する
+  オプションとして <code>-n</code> を受け付けるものがある。E.g. ifconfig(1), tcpdump(1).
+  ちなみに <code>make -n</code> は憶えておくと便利だ。現代の CLI ならば <code>--dry-run</code> という
+  GNU 式オプションの別名であることも多い。</li>
+<li><code>-o</code>: output (e.g. as(1), cc(1), sort(1)).<br />
+  コンパイラー風インターフェイスを持つもので、オプション <code>-o</code> が出力ファイルやデ
+  バイスの名前を指定する以外の方法で使われるのを見るのは驚くことだ。
+  通常の引数の後でも、引数の前でも、出力先を指定、認識できるようなロジックを持っ
+  ている CLI は多い。</li>
+<li><code>-p</code>: port (e.g. cvs(1), psql, smbclient(1), snmpd(1), ssh(1)); protocol (e.g.
+  fetchmail(1), snmpnetstat(1)).<br />
+  特に TCP/IP ポート番号を指定するオプションに <code>-p</code> を用いる。</li>
+<li><code>-q</code>: quiet (e.g. ci(1), co(1), make(1)).<br />
+  正常な結果または診断出力を抑制する。これはとても一般的だ。</li>
+<li><code>-r</code> (also <code>-R</code>): recurse (e.g. cp(1), grep(1), ls(1)); reverse (e.g. ls(1),
+  sort(1)).</li>
+<li><code>-s</code>: silent (e.g. csplit(1), ex(1), fetchmail(1)); subject (mail(1), elm(1),
+  mutt(1)); size.<br />
+  ちなみに quiet <code>-q</code> と silent <code>-s</code> は通例別物とみなされる。後者のほうが強い。</li>
+<li><code>-t</code>: tag (e.g. cvs(1), ex(1), less(1), vi(1)).<br />
+  検索キーとして使用する場所を指定するか、プログラム用の文字列を指定する。特にテ
+  キストエディターやビューワーで用いられる。</li>
+<li><code>-u</code>: user (e.g. crontab(1), emacs(1), fetchmail(1), fuser(1), ps(1)).</li>
+<li><code>-v</code>: verbose (e.g. cvs(1), chattr(1), patch(1), uucp(1)); version (e.g.
+  cvs(1), chattr(1), patch(1), uucp(1)).<br />
+  バージョン出力は次の <code>-V</code> が普通。</li>
+<li><code>-V</code>: version (e.g. gcc(1), flex(1), hostname(1), etc.)<br />
+  このスイッチがそれ以外の使われ方をするのはかなり驚く。</li>
+<li><code>-w</code>: width (e.g. faces(1), grops(1), od(1), pr(1), shar(1)); warning (e.g.
+  fetchmail(1), flex(1), nsgmls(1)).</li>
+<li><code>-x</code>: debug (sh(1), uucp(1)); extract (e.g. tar(1), zip(1)).</li>
+<li><code>-y</code>: yes (e.g. fsck(1), rz(1)).<br />
+  プログラムが通常確認を必要とするような、破壊的な行為を許可する。</li>
+<li><code>-z</code>: compression (e.g. bzip(1), GNU tar(1), zcat(1), zip(1), cvs(1)).</li>
+</ul>
+<p>開発するプログラムのコマンドラインオプション文字を選ぶときは、類似のツールのマニュアルページを見本にしろ。類似の機能に対して、先行者と同じオプション文字を使うようにしろ。</p>
+<blockquote>
+<p>Anybody who wrote a mail agent that used <code>-s</code> as anything but a Subject
+switch, for example, would have scorn rightly heaped upon the choice.</p>
+</blockquote>
+<p>GNU プロジェクトは GNU コーディング標準のいくつかの <code>--</code> オプションについて従来の意味を推奨している：<a href="https://www.gnu.org/prep/standards/">GNU coding standards</a></p>
+<p>また、標準化されてはいないものの、多くの GNU プログラムで使われている長いオプションも挙げている。必要なオプションが列挙されたものと似た機能を持っているならば、驚き最小の法則に従って、その名前を再利用しろ。</p>
+<h3 id="portability-to-other-operating-systems_2">Portability to Other Operating Systems<a class="headerlink" href="#portability-to-other-operating-systems_2" title="Permanent link">&para;</a></h3>
+<p>Windows では GUI で隠されており、コマンドラインオプションの使用は推奨されていない。</p>
+<p>MacOS classic やその他の純粋な GUI 環境には、コマンドラインオプションに相当するものがない。</p>
+<h2 id="how-to-choose-among-the-methods">How to Choose among the Methods<a class="headerlink" href="#how-to-choose-among-the-methods" title="Permanent link">&para;</a></h2>
+<ul>
+<li>実行制御ファイル</li>
+<li>環境変数</li>
+<li>コマンドラインオプション</li>
+</ul>
+<p>行儀の良い Unix プログラムでは、これらの場所を複数使用する場合、指定順に、後の設定が前の設定を上書きするという強力な慣例がある。</p>
+<blockquote>
+<p>(there are specific exceptions, such as command-line options that specify
+where a dotfile should be found).</p>
+</blockquote>
+<p>make(1) の <code>-e</code>, <code>--environment-overrides</code> のように、環境設定や rc ファイルの宣言を上書きできるコマンドラインオプションを備えるのは良い習慣だ。</p>
+<p>これらの場所のどれを見るかは、プログラムが起動の間にどれだけの永続的な設定状態を保持する必要があるかによって決まる。</p>
+<ul>
+<li>主にバッチモードで使用するように設計されたプログラム（例：パイプラインの始点や
+  フィルター。ls(1), grep(1), sort(1), etc.）は通常、コマンドラインオプションで
+  完全に構成される。</li>
+<li>複雑な対話的動作をする大規模なプログラムは rc ファイルと環境変数に完全に依存
+  し、通常の使用ではコマンドラインオプションはほとんど使用しない。X window
+  manager のほとんどはこのパターンの良い例だ。</li>
+</ul>
+<h3 id="case-study-fetchmail">Case Study: <code>fetchmail</code><a class="headerlink" href="#case-study-fetchmail" title="Permanent link">&para;</a></h3>
+<p>Fetchmail が使用する環境変数は <code>USER</code> と <code>HOME</code> の二つ。これらの変数はシステムが初期化してある。</p>
+<p><code>HOME</code> の値はドットファイル <code>.fetchmailrc</code> を見つけるために使う。Fetchmail の構成はいったん仕込むとまれにしか変更されないので適切だ。</p>
+<p>Fetchmail にはシステム全体に対する構成ファイルの概念がない。</p>
+<blockquote>
+<p>the name of the local postmaster, and a few switches and values describing the
+local mail transport setup (such as the port number of the local SMTP
+listener)</p>
+</blockquote>
+<p>これらをコンパイル時の既定値から変更することはめったにない。変更する場合は使用者固有の方法で変更されることが多い。そのため、システム rc ファイルに対する需要はない。</p>
+<p>Fetchmail はファイル <code>.netrc</code> からホスト、ログイン名、パスワードの三組を取得することが可能だ。驚き最小の方法で認証情報を得ることが可能だ。</p>
+<p>Fetchmail には精巧なコマンドラインオプション集合があり、rc ファイルが表現できることをほぼ再現しているが完全ではない。</p>
+<blockquote>
+<p>The set was not originally large, but grew over time as new constructs were
+added to the .fetchmailrc minilanguage and parallel command-line options for
+them were added more or less reflexively.</p>
+</blockquote>
+<p>なぜ rc ファイルで可能なことをコマンドラインからも可能であるようにしたかったかというと、使用者がコマンドラインから実行制御の一部を上書きできるようにすることで
+<code>fetchmail</code> をより簡単に自動化できるようにすることだった。しかし、大半のオプションにはその需要がないことが後で判明した。むしろ上述のオプション <code>-f</code> があれば十分だった。</p>
+<p>そもそも、オプション追加は経費ゼロではない：</p>
+<blockquote>
+<p>options increase the chances of error in code, particularly due to unforeseen
+interactions among rarely used options. Worse, they bulk up the manual, which
+is a burden on everybody. -- Doug McIlroy</p>
+</blockquote>
+<p>実行制御ファイルの部分を文字列で与えるオプションを実装するという手法もある：</p>
+<blockquote>
+<p>A more powerful variant of this is what <code>ssh</code> does with its <code>-o</code> option: the
+argument to <code>-o</code> is treated as if it were a line appended to the configuration
+file, with the full config-file syntax available. -- Henry Spencer</p>
+</blockquote>
+<h3 id="case-study-the-xfree86-server">Case Study: The XFree86 Server<a class="headerlink" href="#case-study-the-xfree86-server" title="Permanent link">&para;</a></h3>
+<p>念のため：</p>
+<blockquote>
+<p>The X windowing system is the engine that supports bitmapped displays on Unix
+machines.</p>
+</blockquote>
+<p>X サーバーは人を寄せ付けぬほど複雑なインターフェイスを備えている。さまざまなハードウェアや使用者の好みに対応しなければならないのだ。それゆえ、X(1) と Xserver(1)
+のページで文書化されている、すべての X サーバーに共通する環境照会は研究のための有用な例となる。ここで調べる実装は XFree86 であり、Linux や他のオープンソース
+Unix で使われている X の実装だ。</p>
+<p>起動時、XFree86 サーバーはシステム全体用 rc ファイル <code>XF86Config</code> を調べる。</p>
+<!-- 
+Example 10.2. X configuration example.
+
+# The 16-color VGA server
+
+Section "Screen"
+    Driver      "vga16"
+    Device      "Generic VGA"
+    Monitor     "LCD Panel 1024x768"
+    Subsection  "Display"
+        Modes       "640x480" "800x600"
+        ViewPort    0 0
+    EndSubsection
+EndSection
+-->
+
+<p>Example 10.2 X configuration example を見ると、ホスト機の <code>Driver</code>, <code>Device</code>,
+<code>Monitor</code> といった項目が確認できる。このような情報はマシンの全使用者に適用されるため、システム全体の実行制御ファイルに記述するのは適切だ。</p>
+<p>X は rc ファイルからハードウェア構成を取得すると、環境変数 <code>HOME</code> の値を使用して呼び出し元の使用者のドットファイル二つを見つける：</p>
+<ul>
+<li><code>.Xdefaults</code></li>
+<li><code>.xinitrc</code></li>
+</ul>
+<blockquote>
+<p>The <code>.Xdefaults</code> file specifies per-user, application-specific resources
+relevant to X (trivial examples of these might include font and
+foreground/background colors for a terminal emulator).</p>
+</blockquote>
+<p>「X に関連する」という表現が設計上の問題を示しているという。何が <code>.Xdefaults</code> で宣言されるべきで、何がアプリケーション固有のドットファイルに属するかが、必ずしも明確ではない。</p>
+<blockquote>
+<p>The <code>.xinitrc</code> file specifies the commands that should be run to initialize
+the user's X desktop just after server startup. These programs will almost
+always include a window or session manager.</p>
+</blockquote>
+<p>X サーバーにある数多くのコマンドラインオプションには、使用する場合、テスト実行のたびにかなり頻繁に変化する可能性があり、実行制御ファイルに含めるには適していない。非常に重要なオプションは、サーバーの表示番号を設定するだ。複数のサーバーが単一のホスト上で実行される場合、各サーバーは固有の表示番号を持つが、すべてのインスタンスは同じ rc ファイルを共有する。</p>
+<h2 id="on-breaking-these-rules">On Breaking These Rules<a class="headerlink" href="#on-breaking-these-rules" title="Permanent link">&para;</a></h2>
+<p>この章で説明した規約をもし破るのであれば、「修理の規則」に従い、伝統的方法での物事の試みが音を立てて破れるようにしろ。</p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>© 2025 プレハブ小屋 All rights reserved.</p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js"></script>
+        <script src="../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="ja" data-bs-theme="auto">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="プレハブ小屋">
+        <link rel="canonical" href="https://github.com/showa-yojyo/taoup/implementation/tools.html">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Tools - The Art of Unix Programming 読書ノート</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../css/brands.min.css" rel="stylesheet">
+        <link href="../css/solid.min.css" rel="stylesheet">
+        <link href="../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" disabled>
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <link href="../css/style.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../index.html">The Art of Unix Programming 読書ノート</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../index.html" class="nav-link">Home</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle active" aria-current="page" role="button" data-bs-toggle="dropdown"  aria-expanded="false">Notes</a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../preface.html" class="dropdown-item">Preface</a>
+</li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Context</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../context/philosophy.html" class="dropdown-item">Philosophy</a>
+</li>
+            
+<li>
+    <a href="../context/history.html" class="dropdown-item">History</a>
+</li>
+            
+<li>
+    <a href="../context/contrasts.html" class="dropdown-item">Contrasts</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Design</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../design/modularity.html" class="dropdown-item">Modularity</a>
+</li>
+            
+<li>
+    <a href="../design/textuality.html" class="dropdown-item">Textuality</a>
+</li>
+            
+<li>
+    <a href="../design/transparency.html" class="dropdown-item">Transparency</a>
+</li>
+            
+<li>
+    <a href="../design/multiprogram.html" class="dropdown-item">Multiprogramming</a>
+</li>
+            
+<li>
+    <a href="../design/minilanguages.html" class="dropdown-item">Minilanguages</a>
+</li>
+            
+<li>
+    <a href="../design/generation.html" class="dropdown-item">Generation</a>
+</li>
+            
+<li>
+    <a href="../design/configuration.html" class="dropdown-item">Configuration</a>
+</li>
+            
+<li>
+    <a href="../design/interface.html" class="dropdown-item">Interfaces</a>
+</li>
+            
+<li>
+    <a href="../design/optimization.html" class="dropdown-item">Optimization</a>
+</li>
+            
+<li>
+    <a href="../design/complexity.html" class="dropdown-item">Complexity</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Implementation</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="languages.html" class="dropdown-item">Languages</a>
+</li>
+            
+<li>
+    <a href="tools.html" class="dropdown-item active" aria-current="page">Tools</a>
+</li>
+            
+<li>
+    <a href="reuse.html" class="dropdown-item">Reuse</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Community</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../community/portability.html" class="dropdown-item">Portability</a>
+</li>
+            
+<li>
+    <a href="../community/documentation.html" class="dropdown-item">Documentation</a>
+</li>
+            
+<li>
+    <a href="../community/opensource.html" class="dropdown-item">Open Source</a>
+</li>
+            
+<li>
+    <a href="../community/futures.html" class="dropdown-item">Futures</a>
+</li>
+    </ul>
+  </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/showa-yojyo/taoup/issues" class="nav-link">Issues</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="languages.html" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="reuse.html" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/showa-yojyo/taoup/edit/main/docs/implementation/tools.md" class="nav-link"><i class="fa-brands fa-github"></i> Edit on GitHub</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                              <button id="theme-menu" aria-expanded="false" data-bs-toggle="dropdown" data-bs-display="static" aria-label="Toggle theme" class="nav-link dropdown-toggle">
+                                <i class="fa-solid fa-circle-half-stroke fa-fw"></i>
+                                <span class="d-lg-none ms-2">Toggle theme</span>
+                              </button>
+                              <ul class="dropdown-menu dropdown-menu-end">
+                                <li>
+                                  <button class="dropdown-item d-flex align-items-center" data-bs-theme-value="light" aria-pressed="false">
+                                    <i class="fa-solid fa-sun fa-fw"></i>
+                                    <span class="ms-2">Light</span>
+                                    <i class="fa-solid fa-check ms-auto d-none"></i>
+                                  </button>
+                                </li>
+                                <li>
+                                  <button class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark" aria-pressed="false">
+                                    <i class="fa-solid fa-moon fa-fw"></i>
+                                    <span class="ms-2">Dark</span>
+                                    <i class="fa-solid fa-check ms-auto d-none"></i>
+                                  </button>
+                                </li>
+                                <li>
+                                  <button class="dropdown-item d-flex align-items-center" data-bs-theme-value="auto" aria-pressed="true">
+                                    <i class="fa-solid fa-circle-half-stroke fa-fw"></i>
+                                    <span class="ms-2">Auto</span>
+                                    <i class="fa-solid fa-check ms-auto"></i>
+                                  </button>
+                                </li>
+                              </ul>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <script src="../js/darkmode.js"></script>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="2"><a href="#a-developer-friendly-operating-system" class="nav-link">A Developer-Friendly Operating System</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="2"><a href="#choosing-an-editor" class="nav-link">Choosing an Editor</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="3"><a href="#useful-things-to-know-about-vi" class="nav-link">Useful Things to Know about vi</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#useful-things-to-know-about-emacs" class="nav-link">Useful Things to Know about Emacs</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#the-antireligious-choice-using-both" class="nav-link">The Antireligious Choice: Using Both</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="2"><a href="#special-purpose-code-generators" class="nav-link">Special-Purpose Code Generators</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="3"><a href="#yacc-and-lex" class="nav-link">yacc and lex</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#case-study-glade" class="nav-link">Case Study: Glade</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="2"><a href="#make-automating-your-recipes" class="nav-link">make: Automating Your Recipes</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="3"><a href="#basic-theory-of-make" class="nav-link">Basic Theory of make</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#make-in-non-cc-development" class="nav-link">make in Non-C/C++ Development</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#utility-productions" class="nav-link">Utility Productions</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#generating-makefiles" class="nav-link">Generating Makefiles</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#version-control-systems" class="nav-link">Version-Control Systems</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#why-version-control" class="nav-link">Why Version Control?</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#version-control-by-hand" class="nav-link">Version Control by Hand</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#automated-version-control" class="nav-link">Automated Version Control</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#unix-tools-for-version-control" class="nav-link">Unix Tools for Version Control</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="2"><a href="#runtime-debugging" class="nav-link">Runtime Debugging</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="2"><a href="#profiling" class="nav-link">Profiling</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="2"><a href="#combining-tools-with-emacs" class="nav-link">Combining Tools with Emacs</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="3"><a href="#emacs-and-make" class="nav-link">Emacs and make</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#emacs-and-runtime-debugging" class="nav-link">Emacs and Runtime Debugging</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#emacs-and-version-control" class="nav-link">Emacs and Version Control</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#emacs-and-profiling" class="nav-link">Emacs and Profiling</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#like-an-ide-only-better" class="nav-link">Like an IDE, Only Better</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="chapter-15-tools">Chapter 15. Tools<a class="headerlink" href="#chapter-15-tools" title="Permanent link">&para;</a></h1>
+<div class="toc"><span class="toctitle">見出し一覧</span><ul>
+<li><a href="#a-developer-friendly-operating-system">A Developer-Friendly Operating System</a></li>
+<li><a href="#choosing-an-editor">Choosing an Editor</a><ul>
+<li><a href="#useful-things-to-know-about-vi">Useful Things to Know about vi</a></li>
+<li><a href="#useful-things-to-know-about-emacs">Useful Things to Know about Emacs</a></li>
+<li><a href="#the-antireligious-choice-using-both">The Antireligious Choice: Using Both</a></li>
+</ul>
+</li>
+<li><a href="#special-purpose-code-generators">Special-Purpose Code Generators</a><ul>
+<li><a href="#yacc-and-lex">yacc and lex</a><ul>
+<li><a href="#case-study-the-fetchmailrc-grammar">Case Study: The fetchmailrc Grammar</a></li>
+</ul>
+</li>
+<li><a href="#case-study-glade">Case Study: Glade</a></li>
+</ul>
+</li>
+<li><a href="#make-automating-your-recipes">make: Automating Your Recipes</a><ul>
+<li><a href="#basic-theory-of-make">Basic Theory of make</a></li>
+<li><a href="#make-in-non-cc-development">make in Non-C/C++ Development</a><ul>
+<li><a href="#case-study-make-for-document-file-translation">Case Study: make for Document-File Translation</a></li>
+</ul>
+</li>
+<li><a href="#utility-productions">Utility Productions</a></li>
+<li><a href="#generating-makefiles">Generating Makefiles</a><ul>
+<li><a href="#makedepend">makedepend</a></li>
+<li><a href="#imake">Imake</a></li>
+<li><a href="#autoconf">autoconf</a></li>
+<li><a href="#automake">automake</a></li>
+</ul>
+</li>
+<li><a href="#version-control-systems">Version-Control Systems</a></li>
+<li><a href="#why-version-control">Why Version Control?</a></li>
+<li><a href="#version-control-by-hand">Version Control by Hand</a></li>
+<li><a href="#automated-version-control">Automated Version Control</a></li>
+<li><a href="#unix-tools-for-version-control">Unix Tools for Version Control</a><ul>
+<li><a href="#source-code-control-system-sccs">Source Code Control System (SCCS)</a></li>
+<li><a href="#revision-control-system-rcs">Revision Control System (RCS)</a></li>
+<li><a href="#concurrent-version-system-cvs">Concurrent Version System (CVS)</a></li>
+<li><a href="#other-version-control-systems">Other Version-Control Systems</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#runtime-debugging">Runtime Debugging</a></li>
+<li><a href="#profiling">Profiling</a></li>
+<li><a href="#combining-tools-with-emacs">Combining Tools with Emacs</a><ul>
+<li><a href="#emacs-and-make">Emacs and make</a></li>
+<li><a href="#emacs-and-runtime-debugging">Emacs and Runtime Debugging</a></li>
+<li><a href="#emacs-and-version-control">Emacs and Version Control</a></li>
+<li><a href="#emacs-and-profiling">Emacs and Profiling</a></li>
+<li><a href="#like-an-ide-only-better">Like an IDE, Only Better</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<h2 id="a-developer-friendly-operating-system">A Developer-Friendly Operating System<a class="headerlink" href="#a-developer-friendly-operating-system" title="Permanent link">&para;</a></h2>
+<p>優れた IDE に慣れていると、Unix の方法論は偶発的で、見通しが悪く、原始的に見えるかもしれない。しかし、実はそこには秩序がある。</p>
+<p>ツールに乏しい環境での単一言語プログラミングには、IDE は大いに意味がある。しかし、Unix 環境では言語や実装の選択肢はもっと多岐にわたる。複数のコード生成器や自作構成器、その他多くの標準ツールや自作ツールを使うのが一般的だ。</p>
+<p>Unix でも IDE は存在する。しかし、仕様に制限のないさまざまなプログラミングツールを IDE で制御するのは難しく、あまり使われていない。Unix は編集、コンパイル、デバッグの反復を中心としない、より柔軟なスタイルを推奨している。</p>
+<p>コードの構築、コード構成の管理、性能分析、デバッグ、そしてこれらの仕事に関連する多くの苦役を自動化することで、楽しい部分に集中できるようにするのが Unix での開発戦術だ。</p>
+<p>この章のツールのほとんどは <em>Programming with GNU Software</em> でよく説明されている。</p>
+<p>これらのツールの多くは、より時間がかかり、間違うことも多くなる手作業でできることを自動化するものだ。学習曲線を登るための一時的な費用は十二分に回収できるはずだ。より効率的にプログラムを書くことができ、低水準の細部に注意する必要がなくなり、設計により多くの時間を費やすことができるようになる。</p>
+<p>道具の習得は Unix の学習曲線の大きな部分だ。</p>
+<h2 id="choosing-an-editor">Choosing an Editor<a class="headerlink" href="#choosing-an-editor" title="Permanent link">&para;</a></h2>
+<p>最初の、そして最も基本的な開発用具は、プログラムを修正したり書いたりするのに適したテキストエディターだ。</p>
+<p>本格的な編集作業では、二つのエディターが Unix プログラミングシーンを完全に支配している。<code>vi</code> と Emacs だ。これらについては <a href="../design/complexity.html">Chapter 13</a> で、ソフトウェアの適切な規模についての議論の一環として述べた。</p>
+<p>この二つのエディターは対照的な設計哲学で、どちらも人気がある。Unix プログラマーを対象とした調査では、常に両者がほぼ半々であり、他のエディターはほとんど存在しないことが示されている。</p>
+<p>実用性の問題としても、Unix の教養の問題としても、これらのエディターについて知る価値は他にもたくさんある。</p>
+<h3 id="useful-things-to-know-about-vi">Useful Things to Know about <code>vi</code><a class="headerlink" href="#useful-things-to-know-about-vi" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>The name of <code>vi</code> is an abbreviation for “visual editor” and is pronounced /vee
+eye/ (not /vie/ and definitely not /siks/!).</p>
+</blockquote>
+<p>Unix 用に作られたスクリーン指向のエディターの中で最も長命で、今でも使われており、
+Unix の伝統の神聖な一部となっている。</p>
+<ul>
+<li>原版 <code>vi</code> は 1976 年開始の初期 BSD に存在したバージョン。現在は時代遅れ。</li>
+<li>代わりとなるものは、4.4BSD に同梱され、BSD/OS, FreeBSD, NetBSD など、最近の
+  4.4BSD の亜種に見られる新しい <code>vi</code> だ。</li>
+</ul>
+<p>機能を拡張した亜種がいくつかあり、その中でも <code>vim</code> はおそらく最も人気があり、多くの Linux が搭載している。すべての亜種はかなり似ており、原版から変更されていない芯コマンド集合を共にしている。</p>
+<p><code>vi</code> は Windows と MacOS に移植されている。</p>
+<p>Unix 入門書のほとんどには <code>vi</code> の基本的な使い方を説明した章がある。</p>
+<h3 id="useful-things-to-know-about-emacs">Useful Things to Know about Emacs<a class="headerlink" href="#useful-things-to-know-about-emacs" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>Emacs stands for ‘EDiting MACroS’ (pronounce it /ee´·maks/).</p>
+</blockquote>
+<p>最初は 1970 年代後半に TECO というエディターでマクロの集合として書かれたもので、その後何度か再実装された。</p>
+<p>複雑性の議論では Emacs を過度に重量級だと考えている人が多くいることを指摘したが、
+Emacs を学ぶために時間を投資することは、生産性において豊かな報酬を得ることができる。</p>
+<p>Emacs は様々なプログラミング言語の構文を支援する強力な編集モードを多数支援している。Emacs を他の開発用具と組み合わせることで、従来の IDE に匹敵する（場合によっては凌駕する）機能を実現する方法がある。</p>
+<p>標準的な Emacs は GNU Emacs であり、最近の Unix で普遍的に利用できる。ソースと文書は FSF の Web サイトで入手可能。</p>
+<p><a href="https://www.xemacs.org/">XEmacs</a> はより優れた X インターフェイスを持っており、それ以外の機能はよく似ている。</p>
+<p>Emacs は MS-DOS, Windows 95, NT にも移植されている。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Meadow というのが存在した気がする。</p>
+</div>
+<ul>
+<li>Emacs には独自の対話型チュートリアルとべらぼうに充実したオンライン文書が用意さ
+  れており、Emacs 起動画面にはその両方を呼び出す方法が既定で記載されている。</li>
+<li>紙の入門書としては <em>Learning GNU Emacs</em> が良かろう。</li>
+</ul>
+<p>Web ブラウザーやメールクライアントのテキストエリアにおける基本的なテキスト編集に関するキーバインドは、純正 Emacs のそれがそのまま通じる。</p>
+<h3 id="the-antireligious-choice-using-both">The Antireligious Choice: Using Both<a class="headerlink" href="#the-antireligious-choice-using-both" title="Permanent link">&para;</a></h3>
+<p><code>vi</code> と Emacs の両方を常用する人は、それぞれ異なる用途に使う傾向があり、両方を知っていることに価値を見出す。</p>
+<p>一般的に、<code>vi</code> はちょっとした作業（短いメール、システム設定の微調整など）に最適である。特に、新しいシステムや遠隔システムを使っていて、Emacs の自作ファイルが手元にない場合に便利だ。</p>
+<p>Emacs が本領を発揮するのは、複雑な仕事を処理したり、ファイルを複数修正したり、編集途中で他のプログラムの出力を使用したりしなければならない長時間セッションだ。</p>
+<p>コンソールで X を使うプログラマーにとって、ログイン後すぐに大きなウィンドウで
+Emacs を起動し、そのまま終了させないようにしておくのは普通のことだ。おそらく何十ものファイルにアクセスし、複数の Emacs 子ウィンドウでプログラムを実行することすらあり得る。</p>
+<h2 id="special-purpose-code-generators">Special-Purpose Code Generators<a class="headerlink" href="#special-purpose-code-generators" title="Permanent link">&para;</a></h2>
+<p>様々な特化用途に対して特別に設計されたコードを生成するツールが宿るという、長年にわたる伝統が Unix にはある。</p>
+<p>この伝統の由緒ある祈念碑は Version 7 以前まで遡り、1970 年代に原版の Portable C
+Compiler を書くために実際に使われたものであり、lex(1) と yacc(1) だ。現代の後継は flex(1) と bison(1) であり、GNU ツールキットの一部であり、現在でも多用されている。</p>
+<h3 id="yacc-and-lex"><code>yacc</code> and <code>lex</code><a class="headerlink" href="#yacc-and-lex" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p><code>yacc</code> and <code>lex</code> are tools for generating language parsers.</p>
+</blockquote>
+<p>解析器生成器は偶発的で場当たり的な実装よりもましなことをするための道具だ。解析器生成器は文法仕様をより高い水準で表現できるようにするだけでなく、解析器の実装の複雑さをコードのそれ以外の部分から遮断する。</p>
+<p>ゼロから小規模言語を実装しようと考えているのであれば、おそらく <code>yacc</code> と <code>lex</code>
+が C コンパイラーの次に重要な用具だろう。</p>
+<p>それぞれの解析器は一つの関数コードを生成する：</p>
+<ul>
+<li><code>lex</code>: 入力ストリームからトークンを取得する</li>
+<li><code>yacc</code>: トークンの連なりが文法に合致するかどうかを解析する</li>
+</ul>
+<p><code>yacc</code> が生成する解析関数は通常、別のトークンを取得するたびに <code>lex</code> が生成するトークン抽出関数を呼び出す。もし <code>yacc</code> が生成した解析関数に使用者が書いた C のコールバックが全くなければ構文検査を行う。返り値は入力が期待した文法に合致しているかどうかを表す。</p>
+<p>大半の場合、生成された解析器に組み込まれた使用者 C コードが、入力を解析する副次的な効果として実行時データ構造をいくつか生成する。</p>
+<p>小規模言語が宣言的であれば、アプリケーションはこれらの実行時データ構造を直接使用することができる。もし使用者の設計が命令型小規模言語であれば、データ構造には構文木が含まれ、すぐに何らかの評価関数に渡されることがある。</p>
+<p><code>yacc</code> のインターフェイスはかなり醜く、接頭辞 <code>yy_</code> を持つ大域的変数だ。これは C
+言語の構造体よりも古いことによる。</p>
+<p><code>yacc</code> は C よりも古い。最初の実装は C の前身である B で書かれた。</p>
+<p><code>yacc</code> が生成する解析器は、解析エラーからの回復を試みるために、粗雑ではあるが効果的な算法を用いるが、メモリーリークなどの問題を引き起こす可能性がある。</p>
+<!-- Steve Johnson 氏による `yacc` のメモリーリークに対する解説がここにある -->
+
+<p><code>lex</code> は字句解析器を生成する。grep(1) や awk(1) と同じ機能群に属しますが、合致するたびに任意の C コードを実行できるため強力だ。宣言的小規模を言語を入力とし、スケルトン C コードを出力する。</p>
+<p><code>lex</code> が生成する字句解析器の仕事とは、雑に言えば逆 grep(1) のようなものだ：</p>
+<ul>
+<li>grep(1) は正規表現を受け取り、入力されるデータストリームに合致する一覧を返す。</li>
+<li>字句解析器の呼び出しそれぞれは正規表現の一覧を受け取り、データストリームでどの
+  表現が次に出現するかを示す。</li>
+</ul>
+<!-- Henry Spencer 氏の解説がここに来る -->
+
+<blockquote>
+<p><code>lex</code> was written to automate the task of generating lexical analyzers
+(tokenizers) for compilers. It turned out to have a surprisingly wide range of
+uses for other kinds of pattern recognition, and has since been described as
+“the Swiss-army knife of Unix programming”.</p>
+</blockquote>
+<p>最も重要なのは、<code>lex</code> 仕様の小規模言語は、同等の手作り C 言語よりもはるかに高水準でコンパクトであるということだ。オープンソース版である <code>flex</code> を Perl で使用するためのモジュールが用意されており、Python の PLY にも同様の実装が含まれている。</p>
+<blockquote>
+<p><code>lex</code> generates parsers that are up to an order of magnitude slower than
+hand-coded parsers. This is not a good reason to hand-code, however</p>
+</blockquote>
+<p><code>yacc</code> は解析器を生成する。これもコンパイラーを書く作業の一部を自動化するために書かれた。BNF に似た宣言型小規模言語で文法仕様を入力とし、文法の各要素に C コードを関連付ける。呼び出されると、入力ストリームから文法に合致したテキストを受け取る解析関数のコードを生成する。各文法要素が認識されると、解析関数は関連する C
+コードを実行する。</p>
+<p>Unix プログラマーの大半は汎用コンパイラーを書くことはないが、実行制御ファイル構文や応用領域固有の小規模言語の解析器を書くにはとても便利だ。</p>
+<p><code>lex</code> と <code>yacc</code> はそれぞれの得意なものと不得意なものが反対であるような性質がある。</p>
+<p>C 言語よりも高水準の言語で解析器を実装できるのであれば、次のパッケージのような同等の機能を探せ：</p>
+<ul>
+<li>Python: PLY</li>
+<li>Perl: PY と Parse::Yapp</li>
+<li>Jav: CUP, Jack, YACC/M</li>
+</ul>
+<p>マクロ処理器と同様に、コード生成器と前処理器の問題の一つは、生成コードのコンパイル時エラーが、修正する必要がある場所ではなく、生成されたコード（手で編集したくない場所）に対する相対的な行番号を持つ場合があることだ。</p>
+<ul>
+<li><code>yacc</code> と <code>lex</code> は <code>#line</code> 指令を生成することでこの問題に対処している。</li>
+</ul>
+<blockquote>
+<p>More generally, well-designed procedural-code generators should never require
+the user to hand-alter or even look at the generated parts. Getting those
+right is the code generator's job.</p>
+</blockquote>
+<h4 id="case-study-the-fetchmailrc-grammar">Case Study: The <code>fetchmailrc</code> Grammar<a class="headerlink" href="#case-study-the-fetchmailrc-grammar" title="Permanent link">&para;</a></h4>
+<p><code>fetchmail</code> の <code>run-control-file</code> 解析器の文法は <code>lex</code> と <code>yacc</code> の使い方の良い中規模事例研究を与えてくれる。いくつか興味深い点がある。</p>
+<p>ファイル <code>rcfile_l.l</code> の <code>lex</code> 指定はシェルのような構文の典型的な実装だ。二つの補完規則が単一引用符または二重引用符の文字列を支援していることに注意。符号付き整数リテラルを受け入れ、コメントを破棄する規則もかなり一般的だ。</p>
+<p>ファイル <code>rcfile_y.y</code> にある <code>yacc</code> 指定は長いが簡単だ。Fetchmail の動作は何も行わず、内部制御ブロックの一覧のビットをただ設定する。起動後、Fetchmail の通常の動作モードは、遠隔サイトとの検索セッションを駆動するために各レコードを使用して、その一覧を繰り返し歩くだけだ。</p>
+<h3 id="case-study-glade">Case Study: Glade<a class="headerlink" href="#case-study-glade" title="Permanent link">&para;</a></h3>
+<p>Glade (<a href="../design/minilanguages.html">Chapter 8</a>) はアプリケーションコード生成器の現代的な良い例だ。Glade を
+Unix 的なものにしているのは次の機能だ：</p>
+<ul>
+<li>Glade GUI と Glade コード生成器は、単一の巨大一枚岩として接着されるのではな
+  く、分離の規則、Separated Engine and Interface 設計パターンの法則に従う。</li>
+<li>GUI とコード生成器は、XML ベースのテキストデータファイル形式で連結しており、他
+  のツールで読み込んで変更することが可能。</li>
+<li>複数の対象言語を援助している。もっと増やすことも簡単だ。</li>
+</ul>
+<p>この設計は Glade GUI 編集部品を置き換えることも可能であることを示唆している。</p>
+<h2 id="make-automating-your-recipes"><code>make</code>: Automating Your Recipes<a class="headerlink" href="#make-automating-your-recipes" title="Permanent link">&para;</a></h2>
+<p>プログラムソースはそれだけではアプリケーションにはならない。それをどのようにまとめ、パッケージの形にするかも重要だ。Unix ではこれらの工程を半自動化するツール
+make(1) が使用可能だ。</p>
+<ul>
+<li>GNU <code>make</code> を支持する Unix のほとんどは GNU Emacs も支持する。</li>
+<li>GNU <code>make</code> の DOS と Windows への移植版は FSF から入手可能。</li>
+</ul>
+<h3 id="basic-theory-of-make">Basic Theory of <code>make</code><a class="headerlink" href="#basic-theory-of-make" title="Permanent link">&para;</a></h3>
+<p>プロジェクト内のファイル間の依存関係は一つ以上のファイル <code>Makefile</code> に記述されている。各 <code>Makefile</code> は一連の「製造」で構成され、それぞれプログラム <code>make</code>に、ある目標ファイルがあるソースファイルの集合に依存していることを伝え、ソースのどれかが目標より新しい場合にする処理を記述する。</p>
+<p>プログラム <code>make</code> はファイル名や拡張子から明らかな依存関係の多くを推測できるので、実際にすべての依存関係を書き出す必要はない。例えば、ファイル <code>myprog</code> がファイル <code>myprog.o</code>, <code>helper.o</code>, <code>stuff.o</code> に依存していることを <code>Makefile</code> に記述するとする。もしソースファイル <code>myprog.c</code>, <code>helper.c</code>, <code>stuff.c</code> があれば、<code>make</code>
+はそれぞれの <code>.o</code> ファイルが対応する <code>.c</code>ファイルに依存していることを言われなくても知っており、<code>.c</code> ファイルから <code>.o</code>ファイルをビルドするための独自の標準処方箋を使える。</p>
+<p>Stuart Feldman 氏による <code>make</code> 誕生秘話があるので読んでおく。</p>
+<p>非常に複雑な <code>Makefile</code> は、特に補助的な <code>Makefile</code> を呼び出す場合、ビルド工程を単純化するどころか、むしろ複雑化の原因になりかねない。</p>
+<p><em>Recursive Make Considered Harmful</em> (1997) が警告していた。この論文の議論は広く受け入れられるようになり、以前の慣習を覆すところまで来ている。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>この論文は Google 検索などですぐに見つかるようだ。</p>
+</div>
+<p><code>Makefile</code> と言えば行頭タブが使いにくいという印象があるが、これは設計ミスだそうだ。Stuart Feldman 氏本人によると、<code>lex</code>/<code>yacc</code> に不慣れだったため、何かを単純にするためにタブ文字を採用したそうだ。人気がすぐに出て、もう直せなくなった。</p>
+<h3 id="make-in-non-cc-development"><code>make</code> in Non-C/C++ Development<a class="headerlink" href="#make-in-non-cc-development" title="Permanent link">&para;</a></h3>
+<p><a href="languages.html">Chapter 14</a> で説明したようなスクリプト言語は従来のコンパイルやリンクの手順は不要かもしれないが、make(1) が手助けしてくれる依存関係がしばしば存在する。</p>
+<p>例えば、<a href="../design/generation.html">Chapter 9</a> の技法の一つを使って仕様ファイルからコードの一部を実際に生成したとしよう。<code>make</code> を使って、仕様ファイルと生成されたソースを結びつけることができる。こうすることで、仕様を変更して作り直すたびに、生成されるコードも自動的に作り直されるようになる。</p>
+<p><code>Makefile</code> を使って文書を作成する処方箋を表現することはよくある。この手法はマークアップ言語で書かれたマスターから、PostScript やその他の派生文書を自動的に生成するのによく用いる。</p>
+<h4 id="case-study-make-for-document-file-translation">Case Study: <code>make</code> for Document-File Translation<a class="headerlink" href="#case-study-make-for-document-file-translation" title="Permanent link">&para;</a></h4>
+<p>実際の <code>Makefile</code> を見ると理解が話が早い。<a href="https://gitlab.com/fetchmail/fetchmail">fetchmail</a> から見つけてきたファイルの一部を抜粋する：</p>
+<pre><code class="language-makefile">FAQ: fetchmail-FAQ.html $(srcdir)/dist-tools/html2txt
+    AWK=$(AWK) $(SHELL) $(srcdir)/dist-tools/html2txt $(srcdir)/fetchmail-FAQ.html &gt;$@
+
+FEATURES: fetchmail-features.html $(srcdir)/dist-tools/html2txt
+    AWK=$(AWK) $(SHELL) $(srcdir)/dist-tools/html2txt $(srcdir)/fetchmail-features.html &gt;$@
+
+NOTES: design-notes.html esrs-design-notes.html $(srcdir)/dist-tools/html2txt
+       echo &quot;This file contains two articles reformatted from HTML.&quot; &gt; $@ \
+    &amp;&amp; echo &quot;------------------------------------------------------&quot; &gt;&gt; $@ \
+    &amp;&amp; echo &quot;&quot; &gt;&gt; $@ \
+    &amp;&amp; AWK=$(AWK) $(SHELL) $(srcdir)/dist-tools/html2txt $(srcdir)/design-notes.html &gt;&gt;$@ \
+    &amp;&amp; AWK=$(AWK) $(SHELL) $(srcdir)/dist-tools/html2txt $(srcdir)/esrs-design-notes.html &gt;&gt;$@
+</code></pre>
+<p>いずれもソースが HTML ファイルで、目標がプレーンテキストファイルだ。本文では
+<code>lynx -dump</code> でテキストを得るとあるが、リポジトリーにある版では専用スクリプトを用いるように改良したようだ。</p>
+<h3 id="utility-productions">Utility Productions<a class="headerlink" href="#utility-productions" title="Permanent link">&para;</a></h3>
+<p>一般的な <code>Makefile</code> で最も多用される目標のいくつかは、ファイル依存性をまったく表現していない。 配布パッケージを作ったり、ゼロからビルドするためにオブジェクトファイルをすべて削除したりといった、開発者が機械化したい手順を束ねるためのものだ。</p>
+<dl>
+<dt><code>all</code></dt>
+<dd>プロジェクトのすべての実行可能ファイルを作成する必要がある。通常、明示的な規
+   則を持たない。一般的には、これは <code>Makefile</code> の最初の規則であるべきで、開発者
+   が引数なしで<code>make</code> を走らせると実行する。</dd>
+<dt><code>test</code></dt>
+<dd>プログラムの自動化されたテストスイートを実行する。通常、単体試験の集合で構成
+   され、開発過程において後退や不具合、その他の期待される動作からの逸脱を発見す
+   る。</dd>
+</dl>
+<p><code>test</code> はソフトウェア最終使用者が、インストールが正しく機能していることを確認
+   するために使用することもできる。</p>
+<dl>
+<dt><code>clean</code></dt>
+<dd><code>all</code> を作成する際に通常作成されるファイルをすべて削除する。
+   <code>make clean</code> はソフトウェアをビルドする工程を初期状態に直すはずだ。</dd>
+<dt><code>dist</code></dt>
+<dd>ソースアーカイブを tar(1) などを用いて作成する。このアーカイブは単品で出荷す
+   ることができ、別の計算機でプログラムをリビルドするために使用することができ
+   る。この目標は配布用アーカイブを作成する前に、<code>make dist</code> がプロジェクト全体
+   をリビルドするように、<code>all</code> に依存するのと同等のことを行うはずだ。</dd>
+<dt><code>distclean</code></dt>
+<dd>ソースを <code>make dist</code> でまとめる場合に含めるもの以外をすべて捨てる。</dd>
+<dt><code>realclean</code></dt>
+<dd><code>Makefile</code> を使ってリビルドできるものをすべて捨てる。</dd>
+<dt><code>install</code></dt>
+<dd>プロジェクトの実行ファイルと文書をシステムディレクトリーにインストールし、一
+   般使用者がアクセスできるようにする（通常 root 権限が必要）。実行ファイルが機
+   能するために必要なデータベースやライブラリーを初期化または更新する。</dd>
+<dt><code>uninstall</code></dt>
+<dd><code>make install</code> によってシステムディレクトリーにインストールされたファイルを削
+   除する（通常 root 権限が必要）。これにより <code>make install</code> を完全に取り消すこ
+   とができる。</dd>
+</dl>
+<p>これらの標準的な目標を使用する利点の一つは、プロジェクトの暗黙のロードマップを形成することだ。</p>
+<p>目標を上記のものに限定する必要はない。ひとたび <code>make</code> を習得すれば、プロジェクトファイルの状態に依存するちょっとした作業を自動化するために、<code>Makefile</code> という機械を使うことがますます多くなるだろう。<code>Makefile</code> はこれらを置くのに便利な中心的な場所だ。</p>
+<div class="admonition note">
+<p class="admonition-title">TODO</p>
+<p>上記で習ったことを自作の <code>Makefile</code> に活用する。</p>
+</div>
+<h3 id="generating-makefiles">Generating Makefiles<a class="headerlink" href="#generating-makefiles" title="Permanent link">&para;</a></h3>
+<p>Unix <code>make</code> の捉えがたい利点の一つは、<code>Makefile</code> が単純なテキストファイルであるからプログラムから生成できるファイルであるということだ。</p>
+<p>1980 年代半ば、大規模な Unix プログラム頒布では環境を調査し、収集した情報を使って独自 <code>Makefile</code> を構築するシェルスクリプトを含むことがかなり一般的だった。これらは手が込んでいて、とんでもない規模に達していた。</p>
+<p>最終的にさまざまな人たちが <code>Makefile</code> を管理する工程を自動化するツールを書き始めた。これらのツールは一般的に二つの問題に対処しようとした：</p>
+<ul>
+<li>移植性</li>
+<li>依存関係を導出する</li>
+</ul>
+<p>おそらく一ダース以上試みられたが、ほとんどは不十分か、運転が難し過ぎるか、その両方であることが判明した。</p>
+<div class="admonition note">
+<p class="admonition-title">TODO</p>
+<p>この節の内容を演習したい。</p>
+</div>
+<h4 id="makedepend"><code>makedepend</code><a class="headerlink" href="#makedepend" title="Permanent link">&para;</a></h4>
+<p>X Window System とともに配布されているこのツールは最も速く、最も便利で、Linux を含むすべての現代的 Unix にインストール済みだ。</p>
+<blockquote>
+<p><code>makedepend</code> takes a collection of C sources and generates dependencies for
+the corresponding <code>.o</code> files from their <code>#include</code> directives. These can be
+appended directly to a <code>makefile</code>, and in fact <code>makedepend</code> is defined to do
+exactly that.</p>
+</blockquote>
+<p>ということで、C プロジェクト以外では役に立たない。</p>
+<h4 id="imake"><code>Imake</code><a class="headerlink" href="#imake" title="Permanent link">&para;</a></h4>
+<p>Imake は X Window System 用の <code>Makefile</code> 生成を機械化する試みで書かれた。
+<code>makedepend</code> を土台にして依存関係の解消と移植性の両方の問題に取り組んでいる。</p>
+<p>Imake システムは従来の <code>Makefile</code> を効果的に <code>Imakefile</code> に置き換える。これらはよりコンパクトで強力な記法で書かれており、<code>Makefile</code> に事実上コンパイルされる。コンパイルにはシステム固有でローカル環境に関する多くの情報を含む規則ファイルを用いる。</p>
+<blockquote>
+<p>However, it has not achieved much popularity outside the X developer
+community. It's hard to learn, hard to use, hard to extend, and produces
+generated makefiles of mind-numbing size and complexity.</p>
+</blockquote>
+<p>Imake は Linux を含む X を支援するすべての Unix で利用可能。</p>
+<h4 id="autoconf"><code>autoconf</code><a class="headerlink" href="#autoconf" title="Permanent link">&para;</a></h4>
+<p><code>autoconf</code> は Imake を否定した人々が書いた。昔ながらの <code>configure</code> シェルスクリプトを生成する。これらのスクリプトはとりわけ <code>Makefile</code> を生成する。</p>
+<ul>
+<li>移植性に重点を置いており、依存性導出はまったく行っていない。</li>
+<li>Imake と同じくらい複雑だが、より柔軟で拡張しやすい。</li>
+<li>システムごとの規則データベースに依存するのではなく、<code>configure</code> スクリプトを生
+  成してシステムを検索する。</li>
+</ul>
+<p><code>configure</code> スクリプトは <code>configure.in</code> と呼ばれる、人が書かなければならないプロジェクトごとの雛形からビルドされる。いったん生成されたスクリプトは自己完結的なものとなり、autoconf(1) 自体を持たないシステム上でもプロジェクトを設定することが可能となる。</p>
+<blockquote>
+<p>But <code>autoconf</code>'s <code>Makefile.in</code> files are basically just <code>Makefile</code>s with
+placeholders in them for simple text substitution; there's no second notation
+to learn. If you want dependency derivation, you must take explicit steps to
+call makedepend(1) or some similar tool — or use automake(1).</p>
+</blockquote>
+<p><code>autoconf</code> は多くの Unix や Linux にインストールされている。Emacs のヘルプシステムからこのマニュアルを閲覧できるはずだ。</p>
+<p>依存関係の導出を直接支援していないにもかかわらず、また、一般的に暫定的な策であるにもかかわらず、2003 年半ば、<code>autoconf</code> は明らかに <code>Makefile</code> 生成ツールの中で最も人気がある。</p>
+<p>参考書としては <em>GNU Autoconf, Automake, and Libtool</em> がある。ヤギ本と呼ばれているらしい。</p>
+<h4 id="automake"><code>automake</code><a class="headerlink" href="#automake" title="Permanent link">&para;</a></h4>
+<p><code>automake</code> は autoconf(1) の上に Imake 風の依存関係の導出を追加する試みだ。</p>
+<ol>
+<li>人が雛形 <code>Makefile.am</code> を Imake 風記法で書く。</li>
+<li>automake(1) がそれをファイル <code>Makefile.in</code> にコンパイルする。</li>
+<li><code>autoconf</code> による <code>configure</code> スクリプトがそれを操作する。</li>
+</ol>
+<p>2003 年半ばでは <code>automake</code> は比較的新しい技術だ。 FSF のプロジェクトのいくつかで使われているが、他の地域ではまだ広く採用されていない。</p>
+<ul>
+<li><a href="https://ftp.gnu.org/gnu/autoconf/">https://ftp.gnu.org/gnu/autoconf/</a></li>
+<li><a href="https://ftp.gnu.org/gnu/automake/">https://ftp.gnu.org/gnu/automake/</a></li>
+</ul>
+<h3 id="version-control-systems">Version-Control Systems<a class="headerlink" href="#version-control-systems" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>Tracking all that detail is just the sort of thing computers are good at and
+humans are not.</p>
+</blockquote>
+<h3 id="why-version-control">Why Version Control?<a class="headerlink" href="#why-version-control" title="Permanent link">&para;</a></h3>
+<p>コードに変更を加えた後、それが実行不可能であることが判明した場合、どのようにして良いことが分かっているコードに戻すことができるだろうか。もし元に戻すのが難しかったり、信頼できなかったりするのであれば、変更を加える冒険をすることは難しい。</p>
+<p>変更追跡も重要だ。コードが変更されたことは知っているはずだが、その理由を知っているだろうか。変更の理由を忘れてしまい、後でそれを踏みにじるのは簡単だ。プロジェクトに共同作業者がいる場合、誰が何を変更したのか、そしてそれぞれの変更に誰が責任を持ったのかをどうやって知ることができるだろうか。</p>
+<!-- Henry Spencer -->
+
+<p>バグ追跡も問題だ。ある特定のバージョンについて、コードがそのバージョンから突然変異した後に新たなバグ報告を受けることはよくある。 そのバグがすでに踏みつぶされた（おしゃれな表現だ）ものだとすぐにわかる場合もあるが、そうでない場合も多い。新しいバージョンで再現しなかったとしよう。 そのバグを再現し理解するために、どうやって古いバージョンのコードの状態を取り戻すのか。</p>
+<p>こうした問題に対処するには次の方法が必要だ：</p>
+<ul>
+<li>プロジェクトの履歴を残す</li>
+<li>履歴を説明する注釈をつける手順</li>
+<li>プロジェクトに複数の開発者がいる場合、開発者がお互いのバージョンを上書きしない
+  ようにする仕組み</li>
+</ul>
+<h3 id="version-control-by-hand">Version Control by Hand<a class="headerlink" href="#version-control-by-hand" title="Permanent link">&para;</a></h3>
+<p>プロジェクトのすべてを手動でバックアップにコピーすることで、プロジェクトを定期的にスナップショットを撮る。ソースファイルに履歴コメントを入れる。誰かが特定のファイルを編集している間、他の開発者がそれに手を触れぬよう、口頭やメールで取り決めをする。</p>
+<p>この手動方式の隠れた費用は高く、特に故障したときに高く付く。手順には時間と集中力が必要で、プロジェクトが窮地に陥ったときに間違いを犯しやすい。</p>
+<blockquote>
+<p>As with most hand-hacking, this method does not scale well.</p>
+</blockquote>
+<p>技術者ならばこの一文を肝に銘じなければならない。</p>
+<h3 id="automated-version-control">Automated Version Control<a class="headerlink" href="#automated-version-control" title="Permanent link">&para;</a></h3>
+<p>基本術語である VCS を定義する：</p>
+<blockquote>
+<p>To avoid these problems, you can use a <em>version-control system</em> (VCS), a suite
+of programs that automates away most of the drudgery involved in keeping an
+annotated history of your project and avoiding modification conflicts.</p>
+</blockquote>
+<p>ほとんどの VCS は論理構成を共にしている。まずソースファイルの集合を登録することから始める。その後、これらのファイルの一つを編集したいときには、そのファイルをチェックアウトしなければならない。編集が終わったら、ファイルをチェックインして、変更内容をアーカイブに追加し、ロックを解除して、何をしたかを説明する変更コメントを入力する。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>現代からすると古い管理手法が部分的にある。</p>
+</div>
+<p>プロジェクトの歴史は必ずしも直線的ではない。一般的に使われている VCS のすべてに次の機能がある：</p>
+<ul>
+<li>ブランチ</li>
+<li>マージ</li>
+</ul>
+<p>この機能は、開発陣の規模やばらつきが大きくなるほど重要になる。</p>
+<p>VCS が行うことのそれ以外のほとんどは利便性だ。ラベル付けや、これらの基本的な操作を取り囲む報告機能、バージョン間の差分を表示したり、指定バージョンのファイル群を、後の変更を失うことなく、いつでも調査、復元できる名前付きリリースとして集約することが可能な道具などだ。</p>
+<blockquote>
+<p>VCSs have their problems. The biggest one is that using a VCS involves extra
+steps every time you want to edit a file, steps that developers in a hurry
+tend to want to skip if they have to be done by hand.</p>
+</blockquote>
+<p>これは現代では解決した。</p>
+<blockquote>
+<p>Another problem is that some kinds of natural operations tend to confuse VCSs.
+Renaming files is a notorious trouble spot;</p>
+</blockquote>
+<p>これも解決した。</p>
+<p>それでも VCS は、たとえ小規模な一人開発者のプロジェクトであっても、多くの点で生産性と品質に大きな恩恵をもたらす。最も重要なのは、既知の良い状態に戻すのが常に簡単であることを保証することで、プログラマーが自由に実験できるようになることだ。</p>
+<blockquote>
+<p>(VCSs, by the way, are not merely good for program code; the manuscript of
+this book was maintained as a collection of files under RCS while it was being
+written.)</p>
+</blockquote>
+<p>文書もバージョン管理の守備範囲に収まるから当然そうなる。RCS は下記参照。</p>
+<h3 id="unix-tools-for-version-control">Unix Tools for Version Control<a class="headerlink" href="#unix-tools-for-version-control" title="Permanent link">&para;</a></h3>
+<p>歴史的に、Unix の世界では三つの VCS が大きな意義を持っていた。</p>
+<h4 id="source-code-control-system-sccs">Source Code Control System (SCCS)<a class="headerlink" href="#source-code-control-system-sccs" title="Permanent link">&para;</a></h4>
+<ul>
+<li>1980 年頃、Bell Labs が開発した。System III Unix に搭載された。</li>
+<li>VCS に関する最初の本格的な試みだったと思われる。</li>
+<li>開拓したコンセプトは商用 Unix および Windows 製品を含む、すべての後続のシステ
+  ムにおいて、今でもある程度見られる。</li>
+<li>SCCS 自体はもはや時代遅れだ。</li>
+<li>SCCS の完全なオープンソース実装は存在しない。</li>
+</ul>
+<h4 id="revision-control-system-rcs">Revision Control System (RCS)<a class="headerlink" href="#revision-control-system-rcs" title="Permanent link">&para;</a></h4>
+<ul>
+<li>SCCS の数年後に Purdue University で生まれた。</li>
+<li>よりすっきりとした CLI を持ち、プロジェクト全体のリリースを識別名でまとめるた
+  めの優れた機能を備えている。</li>
+<li>本書出版当時、Unix 界で最も広く使われている VCS であり、RCS をバックエンドや下
+  敷きとして使っている VCS もある。</li>
+<li>少人数のプロジェクトに適している。</li>
+<li>ソースは FSF が保守、頒布している。</li>
+</ul>
+<h4 id="concurrent-version-system-cvs">Concurrent Version System (CVS)<a class="headerlink" href="#concurrent-version-system-cvs" title="Permanent link">&para;</a></h4>
+<p>CVS は 1990 年代初頭に開発された RCS のフロントエンドとして始まったが、使用されているバージョン管理のモデルが十分に異なっていたため、すぐに新しい設計として認められるようになった。現代の実装は RCS に依存していない。</p>
+<ul>
+<li>ファイルを排他的にロックすることはない。衝突が生じると人間の助けが要る。</li>
+<li>CLI が RCS よりも複雑。</li>
+<li>より多くのストレージ容量を要する。</li>
+<li>インターネット接続された複数の開発拠点に分散している大規模な開発者の作業に適し
+  ている。別のホストにあるリポジトリーを操作するのが容易だ。</li>
+<li>ソースは FSF が保守、頒布している。</li>
+</ul>
+<p>次の記述が本質的。リポジトリーを中心に開発共同体が形成することがよくわかる：</p>
+<blockquote>
+<p>The social machinery and philosophy accompanying the use of CVS is as
+important as the details of the tools. The assumption is that projects will be
+open and decentralized, with code subject to peer review and inspection even
+by developers who are not officially members of the project group.</p>
+</blockquote>
+<p>ロックなしの理念も重要。あるプログラマーが何か変更を加えている最中にいなくなっても、プロジェクトがロックによって行き詰まることがない。</p>
+<ul>
+<li>プロジェクトの境界が流動的</li>
+<li>プロジェクトに対する寄与が比較的容易</li>
+<li>プロジェクトが緻密な管理階層を持つ必要がない</li>
+</ul>
+<p>CVS には重大な問題がある。基本的な問題の一つは、プロジェクトのファイル名前空間が、ファイルそのものへの変更と同じようにバージョン管理されていないことだ。そのため、CVS はファイル名の変更、削除、追加によって混乱しやすい。</p>
+<h4 id="other-version-control-systems">Other Version-Control Systems<a class="headerlink" href="#other-version-control-systems" title="Permanent link">&para;</a></h4>
+<p>CVS の設計上の問題はより良いオープンソースの VCS という要求を生み出す。</p>
+<blockquote>
+<p>Aegis has the longest history of any of these alternatives, has hosted its own
+development since 1991, and is a mature production system. It features a heavy
+emphasis on regression-testing and validation.</p>
+</blockquote>
+<p>Aegis は聞いたことがない。</p>
+<blockquote>
+<p>Subversion is positioned as “CVS done right”, with the known design problems
+fully addressed, and in 2003 probably has the best near-term prospect of
+replacing CVS.</p>
+</blockquote>
+<p>この見通しは正しかった。</p>
+<blockquote>
+<p>The BitKeeper project explores some interesting design ideas related to
+change-sets and multiple distributed code repositories. Linus Torvalds uses
+Bitkeeper for the Linux kernel sources. Its non-open-source license is,
+however, controversial, and has significantly retarded the acceptance of the
+product.</p>
+</blockquote>
+<p>その後 BitKeeper に見切りをつけて Git を自作することになった。</p>
+<h2 id="runtime-debugging">Runtime Debugging<a class="headerlink" href="#runtime-debugging" title="Permanent link">&para;</a></h2>
+<p>構文的に正しいプログラムが期待どおりに動作しないのはなぜか。</p>
+<p>開発者がこの問題を予期して、透明性を保つように設計することが奨励されている。特に、内部のデータの流れが肉眼や簡単な道具で容易に監視でき、精神的に容易にモデル化できるようにプログラムを設計することだ。<a href="../design/transparency.html">Chapter 6</a> を見ろ。透明性のための設計はバグを防止する上でも、実行時のデバッグ作業を容易にする上でも価値がある。</p>
+<p>実行時デバッグをする場合、プログラムの状態を調べ、ブレイクポイントを設定し、統率された方法で単一文水準まで実行できることはきわめて便利だ。オープンソースの Unix
+には C/C++ のデバッグを支援する <code>gdb</code> という強力なものがある。</p>
+<p>Perl, Python, Java, Emacs Lisp はすべて、ブレイクポイントを設定したり、実行を制御したり、一般的な実行時デバッガーを実行できる標準パッケージやプログラムを支援している。</p>
+<blockquote>
+<p>Remember the Unix philosophy. Spend your time on design quality, not the
+low-level details, and automate away everything you can — including the detail
+work of runtime debugging.</p>
+</blockquote>
+<h2 id="profiling">Profiling<a class="headerlink" href="#profiling" title="Permanent link">&para;</a></h2>
+<p>一般的な法則として、プログラムの実行時間の九割はコードの一割で費やされる。プロファイラーとは、プログラムの速さを制約する一割の多発地点を特定するのに役立つ道具だ。</p>
+<p>Unix の伝統では上記は次のように解釈するようだ：九割を最適化せずに済むのだ。単に作業の節約になるからと良いいうだけではない。ほんとうに価値ある効果は、九割を最適化しないことで、全体的な複雑さを抑えてバグを減らすことができるということだ。</p>
+<p>プロファイラーを使う良い習慣を身につければ、時期尚早の最適化という悪い習慣を取り除くことができる。仕事のやり方も考え方も変わる。</p>
+<p>コンパイル言語のプロファイラーは、オブジェクトコードの計装に依存しているため、コンパイラーよりもプラットフォームにより強く依存する。ソース言語は気にしない。Unix
+では単一のプロファイラー gprof(1) が C/C++, その他すべてのコンパイル済み言語を扱う。</p>
+<p>Perl, Python, Emacs Lisp には標準に含まれる独自のプロファイラーがある。Java にはプロファイリングが組み込まれている。</p>
+<h2 id="combining-tools-with-emacs">Combining Tools with Emacs<a class="headerlink" href="#combining-tools-with-emacs" title="Permanent link">&para;</a></h2>
+<p>この章で取り上げたほとんどの道具は Emacs セッションにおいて、道具単品で動作するよりも大きな実用性を与えるフロントエンドを通して動作する。</p>
+<p>Emacs についてだけでなく、プログラム間の相乗効果を探し、それを生み出すという精神的習慣についても習え。</p>
+<h3 id="emacs-and-make">Emacs and <code>make</code><a class="headerlink" href="#emacs-and-make" title="Permanent link">&para;</a></h3>
+<p>例えば <code>make</code> は Emacs のコマンド <kbd>M-x</kbd> <code>compile</code> で起動できる。カレントディレクトリーで make(1) を実行し、出力を Emacs バッファーに取り込む。</p>
+<p>Emacs の <code>make</code> モードは Unix の C コンパイラーや他の多くが発するエラーメッセージの書式（ソースファイルと行番号）を知っている。</p>
+<p>もし <code>make</code> がエラーメッセージを出した場合、コマンド <kbd>C-x</kbd> <kbd>`</kbd>
+はエラーメッセージを解析し、適切なファイルのウィンドウを開き、キャレットをエラー行に移動させながら、順番に各エラーの場所を表示する。これにより、エラーメッセージを順番に巡って最後のコンパイル以降に壊れた箇所を修正するのが簡単になる。</p>
+<h3 id="emacs-and-runtime-debugging">Emacs and Runtime Debugging<a class="headerlink" href="#emacs-and-runtime-debugging" title="Permanent link">&para;</a></h3>
+<p>実行時エラーを検出するために、Emacs はシンボリックデバッガーと同様の統合を搭載している。つまり、専用モードを使ってプログラムにブレイクポイントを設定し、実行時の状態を調べることが可能だ。</p>
+<p>Emacs の Grand Unified Debugger モードはすべての主要な C デバッガーを支援している：</p>
+<ul>
+<li>gdb(1)</li>
+<li>sdb(1)</li>
+<li>dbx(1)</li>
+<li>xdb(1)</li>
+</ul>
+<p>また、Perl のシンボリックデバッグや、Java と Python の標準デバッガーも支援している。Emacs Lisp 自体に組み込まれた機能は、Emacs Lisp コードの対話的なデバッグを支援する。</p>
+<h3 id="emacs-and-version-control">Emacs and Version Control<a class="headerlink" href="#emacs-and-version-control" title="Permanent link">&para;</a></h3>
+<p>Emacs は SCCS, RCS, CVS, Subversion のための使いやすいフロントエンドを実装している。<kbd>C-x</kbd> <kbd>v</kbd> <kbd>v</kbd> というコマンドひとつで、今見ているファイルに対して次に行うべき論理的なバージョン管理操作を推測してくれる。</p>
+<p>Emacs はバージョン管理されたファイルの変更履歴を見たり、不要な変更を取り消したりするのにも役立つ。 ファイル集合全体やプロジェクトのディレクトリーツリーにバージョン管理操作を適用するのも簡単だ。Emacs はバージョン管理操作に関してかなり良い仕事をする。</p>
+<p>これらの機能が持つ意味は慣れる前に想像するよりも大きい。</p>
+<blockquote>
+<p>You'll find, once you get used to fast and easy version control, that it's
+extremely liberating. Because you know you can always revert to a known-good
+state, you'll find you feel more free to develop in a fluid and exploratory
+way, trying lots of changes out to see their effects.</p>
+</blockquote>
+<p>プログラマーは Emacs と VCS の強力な支援を受けて伸び伸びと編集できるということだ。</p>
+<h3 id="emacs-and-profiling">Emacs and Profiling<a class="headerlink" href="#emacs-and-profiling" title="Permanent link">&para;</a></h3>
+<p>おそらく開発周期の中でこの段階だけ、Emacs は助けにならないだろう。性能分析は本質的に一括処理であり、プログラムを計測し、実行し、統計情報を見て、エディターでコードを調整し、これを繰り返す。この周期の性能分析に特化した部分で Emacs が活用できる余地はまずない。</p>
+<p>性能分析報告をたくさん分析していることに気づいたら、報告行をマウスでクリックしたりキーバインドを呼び出したりすると、関連する関数のソースにアクセスするようなモードを書くといいかもしれない。これは Emacs の tags を使えば簡単にできる。</p>
+<blockquote>
+<p>Don't drudge — drudging wastes your time and productivity!</p>
+</blockquote>
+<p>格言をもう一つ：</p>
+<blockquote>
+<p>Use your toolkit to automate or semi-automate the task.</p>
+</blockquote>
+<p>解決策をオープンソースソフトウェアとして公開することで、貰い受けたものすべてに恩返しをしろ。仲間を苦役から解放しろ。</p>
+<h3 id="like-an-ide-only-better">Like an IDE, Only Better<a class="headerlink" href="#like-an-ide-only-better" title="Permanent link">&para;</a></h3>
+<p>ここまで読んだら、Emacs の内部から開発プロジェクト全体を実行することができ、数回のキー操作で低水準の仕組みを動かすことができ、場面を切り替えることによる精神的労力を省くことができるようになっている。</p>
+<p>Emacs を使った開発様式はプログラム構造を図形的に表現するなど、先進的な IDE が持ついくつかの機能と折り合いをつける。その代わりに Emacs が与えてくれるのは柔軟性と統制だ。Emacs Lisp を使って、微調整、個別化、仕事関連の解決能力を追加することができる。</p>
+<p>オープンソース共同体に目を向けることで、自分と同じような課題に直面している何千人もの Emacs 使用開発者の仕事から恩恵を受ける。その方がずっと効果的で楽しい。</p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>© 2025 プレハブ小屋 All rights reserved.</p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js"></script>
+        <script src="../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

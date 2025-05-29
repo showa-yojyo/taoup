@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="ja" data-bs-theme="auto">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="プレハブ小屋">
+        <link rel="canonical" href="https://github.com/showa-yojyo/taoup/community/portability.html">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Portability - The Art of Unix Programming 読書ノート</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../css/brands.min.css" rel="stylesheet">
+        <link href="../css/solid.min.css" rel="stylesheet">
+        <link href="../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" disabled>
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <link href="../css/style.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../index.html">The Art of Unix Programming 読書ノート</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../index.html" class="nav-link">Home</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle active" aria-current="page" role="button" data-bs-toggle="dropdown"  aria-expanded="false">Notes</a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../preface.html" class="dropdown-item">Preface</a>
+</li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Context</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../context/philosophy.html" class="dropdown-item">Philosophy</a>
+</li>
+            
+<li>
+    <a href="../context/history.html" class="dropdown-item">History</a>
+</li>
+            
+<li>
+    <a href="../context/contrasts.html" class="dropdown-item">Contrasts</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Design</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../design/modularity.html" class="dropdown-item">Modularity</a>
+</li>
+            
+<li>
+    <a href="../design/textuality.html" class="dropdown-item">Textuality</a>
+</li>
+            
+<li>
+    <a href="../design/transparency.html" class="dropdown-item">Transparency</a>
+</li>
+            
+<li>
+    <a href="../design/multiprogram.html" class="dropdown-item">Multiprogramming</a>
+</li>
+            
+<li>
+    <a href="../design/minilanguages.html" class="dropdown-item">Minilanguages</a>
+</li>
+            
+<li>
+    <a href="../design/generation.html" class="dropdown-item">Generation</a>
+</li>
+            
+<li>
+    <a href="../design/configuration.html" class="dropdown-item">Configuration</a>
+</li>
+            
+<li>
+    <a href="../design/interface.html" class="dropdown-item">Interfaces</a>
+</li>
+            
+<li>
+    <a href="../design/optimization.html" class="dropdown-item">Optimization</a>
+</li>
+            
+<li>
+    <a href="../design/complexity.html" class="dropdown-item">Complexity</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Implementation</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../implementation/languages.html" class="dropdown-item">Languages</a>
+</li>
+            
+<li>
+    <a href="../implementation/tools.html" class="dropdown-item">Tools</a>
+</li>
+            
+<li>
+    <a href="../implementation/reuse.html" class="dropdown-item">Reuse</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Community</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="portability.html" class="dropdown-item active" aria-current="page">Portability</a>
+</li>
+            
+<li>
+    <a href="documentation.html" class="dropdown-item">Documentation</a>
+</li>
+            
+<li>
+    <a href="opensource.html" class="dropdown-item">Open Source</a>
+</li>
+            
+<li>
+    <a href="futures.html" class="dropdown-item">Futures</a>
+</li>
+    </ul>
+  </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/showa-yojyo/taoup/issues" class="nav-link">Issues</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../implementation/reuse.html" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="documentation.html" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/showa-yojyo/taoup/edit/main/docs/community/portability.md" class="nav-link"><i class="fa-brands fa-github"></i> Edit on GitHub</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                              <button id="theme-menu" aria-expanded="false" data-bs-toggle="dropdown" data-bs-display="static" aria-label="Toggle theme" class="nav-link dropdown-toggle">
+                                <i class="fa-solid fa-circle-half-stroke fa-fw"></i>
+                                <span class="d-lg-none ms-2">Toggle theme</span>
+                              </button>
+                              <ul class="dropdown-menu dropdown-menu-end">
+                                <li>
+                                  <button class="dropdown-item d-flex align-items-center" data-bs-theme-value="light" aria-pressed="false">
+                                    <i class="fa-solid fa-sun fa-fw"></i>
+                                    <span class="ms-2">Light</span>
+                                    <i class="fa-solid fa-check ms-auto d-none"></i>
+                                  </button>
+                                </li>
+                                <li>
+                                  <button class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark" aria-pressed="false">
+                                    <i class="fa-solid fa-moon fa-fw"></i>
+                                    <span class="ms-2">Dark</span>
+                                    <i class="fa-solid fa-check ms-auto d-none"></i>
+                                  </button>
+                                </li>
+                                <li>
+                                  <button class="dropdown-item d-flex align-items-center" data-bs-theme-value="auto" aria-pressed="true">
+                                    <i class="fa-solid fa-circle-half-stroke fa-fw"></i>
+                                    <span class="ms-2">Auto</span>
+                                    <i class="fa-solid fa-check ms-auto"></i>
+                                  </button>
+                                </li>
+                              </ul>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <script src="../js/darkmode.js"></script>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="2"><a href="#evolution-of-c" class="nav-link">Evolution of C</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="3"><a href="#early-history-of-c" class="nav-link">Early History of C</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#c-standards" class="nav-link">C Standards</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="2"><a href="#unix-standards" class="nav-link">Unix Standards</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="3"><a href="#standards-and-the-unix-wars" class="nav-link">Standards and the Unix Wars</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#the-ghost-at-the-victory-banquet" class="nav-link">The Ghost at the Victory Banquet</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#unix-standards-in-the-open-source-world" class="nav-link">Unix Standards in the Open-Source World</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="2"><a href="#ietf-and-the-rfc-standards-process" class="nav-link">IETF and the RFC Standards Process</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="2"><a href="#specifications-as-dna-code-as-rna" class="nav-link">Specifications as DNA, Code as RNA</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="2"><a href="#programming-for-portability" class="nav-link">Programming for Portability</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="3"><a href="#portability-and-choice-of-language" class="nav-link">Portability and Choice of Language</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#avoiding-system-dependencies" class="nav-link">Avoiding System Dependencies</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#tools-for-portability" class="nav-link">Tools for Portability</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="2"><a href="#internationalization" class="nav-link">Internationalization</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="2"><a href="#portability-open-standards-and-open-source" class="nav-link">Portability, Open Standards, and Open Source</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="chapter-17-portability">Chapter 17. Portability<a class="headerlink" href="#chapter-17-portability" title="Permanent link">&para;</a></h1>
+<div class="toc"><span class="toctitle">見出し一覧</span><ul>
+<li><a href="#evolution-of-c">Evolution of C</a><ul>
+<li><a href="#early-history-of-c">Early History of C</a></li>
+<li><a href="#c-standards">C Standards</a></li>
+</ul>
+</li>
+<li><a href="#unix-standards">Unix Standards</a><ul>
+<li><a href="#standards-and-the-unix-wars">Standards and the Unix Wars</a></li>
+<li><a href="#the-ghost-at-the-victory-banquet">The Ghost at the Victory Banquet</a></li>
+<li><a href="#unix-standards-in-the-open-source-world">Unix Standards in the Open-Source World</a></li>
+</ul>
+</li>
+<li><a href="#ietf-and-the-rfc-standards-process">IETF and the RFC Standards Process</a></li>
+<li><a href="#specifications-as-dna-code-as-rna">Specifications as DNA, Code as RNA</a></li>
+<li><a href="#programming-for-portability">Programming for Portability</a><ul>
+<li><a href="#portability-and-choice-of-language">Portability and Choice of Language</a><ul>
+<li><a href="#c-portability">C Portability</a></li>
+<li><a href="#c-portability_1">C++ Portability</a></li>
+<li><a href="#shell-portability">Shell Portability</a></li>
+<li><a href="#perl-portability">Perl Portability</a></li>
+<li><a href="#python-portability">Python Portability</a></li>
+<li><a href="#tcl-portability">Tcl Portability</a></li>
+<li><a href="#java-portability">Java Portability</a></li>
+<li><a href="#emacs-lisp-portability">Emacs Lisp Portability</a></li>
+</ul>
+</li>
+<li><a href="#avoiding-system-dependencies">Avoiding System Dependencies</a></li>
+<li><a href="#tools-for-portability">Tools for Portability</a></li>
+</ul>
+</li>
+<li><a href="#internationalization">Internationalization</a></li>
+<li><a href="#portability-open-standards-and-open-source">Portability, Open Standards, and Open Source</a></li>
+</ul>
+</div>
+<p>Unix は異なるプロセッサー族間で移植された最初 (Version 6 Unix, 1976-77) の量産
+OS だ。</p>
+<p>移植性はつねに Unix の主な利点の一つだ。</p>
+<p>ハードウェア依存のコードは Unix 社会では悪い形式とみなされ、OS カーネルのようなひじょうに特殊な場合にしか許容されない。</p>
+<p>Unix プログラマーはソフトウェアを特定の腐りやすい技術に依存させることを避け、公開標準に大きく依存する傾向がある。移植性のために書くというこのような習慣が Unix
+の伝統に根付いているため、小さな単一用途のプロジェクトにさえ適用されている。これらの習慣は Unix 開発ツールキットの設計や、Unix の下で開発された Perl, Python,
+Tcl などのプログラミング言語にも二次的な影響を与えている。</p>
+<p>移植性の直接的な利点は、Unix ソフトウェアが元のハードウェアプラットフォームより長生きするのが普通なので、ツールやアプリケーションを数年ごとに再発明する必要がないことだ。</p>
+<p>移植性の間接的な利点は工法、インターフェイス、実装を単純化する効果がある。これはプロジェクトの成功確率を高め、生存過程の維持費を削減する。</p>
+<h2 id="evolution-of-c">Evolution of C<a class="headerlink" href="#evolution-of-c" title="Permanent link">&para;</a></h2>
+<p>1973 年に開発された言語が、これほど変更を必要としなかったという事実は本当に驚くべきことであり、計算機科学・工学の他のどこにも類似点がない。</p>
+<p><a href="../design/modularity.html">Chapter 4</a> では、C 言語が成功したのは、標準工法に近似した計算機上で、薄い接着剤の層として機能したからだと論じたのだった。</p>
+<h3 id="early-history-of-c">Early History of C<a class="headerlink" href="#early-history-of-c" title="Permanent link">&para;</a></h3>
+<ul>
+<li>BCPL (Basic Common Programming Language) → B インタープリター (1970) → C 言語
+  (1971)</li>
+<li>Dennis Ritchie の オリジナル C コンパイラー (DMR) は Unix version 5, 6, 7 あた
+  りで貢献した。</li>
+<li>最近の C 言語の実装のほとんどは Steven C. Johnson による PCC に依っている。
+  Version 7 でデビューし、System V と BSD 4.x の両リリースで DMR コンパイラーを
+  完全に置き換えた。</li>
+<li>1976 年、Version 6 C は <code>typedef</code>, <code>union</code>, <code>unsigned int</code> を導入した。変数の
+  初期化と複合演算子のいくつかで構文を変更した。</li>
+<li>C 言語に関する記述の原典は <em>The C Programming Language</em> (1978) だ。白本と呼ば
+  れている。</li>
+<li>Version 7 C は <code>enum</code> を導入した。<code>struct</code> と <code>union</code> の値をコピー代入したり、
+  引数として渡したり、関数から返したりできる第一級オブジェクトとして扱うようにし
+  た。</li>
+</ul>
+<p>Steve Johnson 氏によるヘッダーファイルに関する陳述が興味深い：</p>
+<blockquote>
+<p>Another major change in V7 was that Unix data structure declarations were now
+documented on header files, and included. Previous Unixes had actually printed
+the data structures (e.g., for directories) in the manual, from which people
+would copy it into their code. Needless to say, this was a major portability
+problem.</p>
+</blockquote>
+<p>ANSI C Standard Draft:</p>
+<ul>
+<li><code>const</code>/<code>volatile</code> を追加。</li>
+<li><code>unsigned</code> 型修飾子があらゆる型に適用できるように一般化。対称性のため <code>signed</code>
+  を追加。</li>
+<li><code>auto</code> 配列、<code>struct</code> 型、<code>union</code> 型それぞれに対して初期化構文を追加。</li>
+<li>関数プロトタイプを追加。</li>
+</ul>
+<p>初期の C 言語における最も重要な変化は、ANSI C Standard Draft における定義参照への切り替えと関数プロトタイプの導入であった。</p>
+<p>初期の詳しい履歴は設計者 Ritchie による <em>The Development of the C Language</em>
+(1993) を見ろ。</p>
+<h3 id="c-standards">C Standards<a class="headerlink" href="#c-standards" title="Permanent link">&para;</a></h3>
+<p>C 標準開発はオリジナルの精神を守ることに細心の注意を払い、新しい機能を発明するよりも、既存のコンパイラーでの実験を追認することに重点を置いた保守的な過程であった。</p>
+<p>言語への主な機能追加は 1986 年末までに決着し、この時点で K&amp;R C と ANSI C を区別するのが一般的になった。</p>
+<p>ANSI C の中核部分については早期に決着がついたが、標準ライブラリーの内容をめぐる論争は何年も続いた。</p>
+<p>正式な規格が発行されたのは 1989 年末だ。この規格は 1990 年に ISO が主催者を引き継ぎ、ISO/IEC 9899:1990として再指定された。この規格で記述されている言語バージョンは一般に C89 または C90 として知られている。</p>
+<p>著者のこぼれ話：</p>
+<blockquote>
+<p>The first book on C and Unix portability practice, <em>Portable C and Unix
+Systems Programming</em>, was published in 1987 (I wrote it under a corporate
+pseudonym forced on me by my employers at the time).</p>
+</blockquote>
+<p>K&amp;R 本の第二版は 1988 年に出版された。</p>
+<p>1993 年、ワイド文字と Unicode を支援。(ISO/IEC 9899-1:1994)</p>
+<p>規格の改訂は 1993 年に始まった。1999 年、ISO によって ISO/IEC 9899 (C99) が採択された。きわめて多くの細かい機能が追加された。おそらくほとんどのプログラマーにとって最も重要なものは、C++ 同様、どの時点でも変数を宣言できるようになったことだろう。</p>
+<p>C 言語の標準化は、標準化作業が開始される以前から、実用的でほぼ互換性のある実装が多種多様なシステム上で実行されていたという事実によって、大いに助けられてきた。そのため、どのような機能を標準に含めるべきかについて議論することが難しくなった。</p>
+<h2 id="unix-standards">Unix Standards<a class="headerlink" href="#unix-standards" title="Permanent link">&para;</a></h2>
+<p>1973 年に Unix を C 言語で書き直したことで、移植や変更がかつてないほど容易になった。その結果、Unix の祖先は早くから OS の一族へと分岐していった。</p>
+<p>実世界の Unix は公開標準に忠実に従っているので、開発者はたまたま使っている Unix
+の公式マニュアルのページよりも、POSIX 仕様のような文書に頼ることができる（頻繁にそうしている）。</p>
+<p>新しいオープンソース の Unix (Linux) では、OS の機能が公開されている標準規格を仕様として設計されているのが一般的だ。</p>
+<h3 id="standards-and-the-unix-wars">Standards and the Unix Wars<a class="headerlink" href="#standards-and-the-unix-wars" title="Permanent link">&para;</a></h3>
+<p>Unix 標準の開発の最初の動機は AT&amp;T と Berkeley の開発線分裂 (<a href="../context/history.html">Chapter 2</a>) だった。</p>
+<p>1979 年の Version 7 から 4.x BSD Unix が派生。</p>
+<p>1980 年の 4.1 BSD リリース後、BSD 線は Unix の最先端としての評判を急速に高めていった。重要な追加物：</p>
+<ul>
+<li><code>vi</code></li>
+<li>ジョブ制御機能：複数フォアグラウンドタスクとバックグラウンドタスクを管理する</li>
+<li>シグナル (<a href="../design/multiprogram.html">Chapter 7</a>) の改良</li>
+<li>TCP/IP ネットワーキング</li>
+</ul>
+<p>1980 年に Berkeley は最も重要な追加機能である TCP/IP の開発契約を結んだものの、三年間、外部リリースとして出荷されることはなかった。</p>
+<p>1981 年の System III がその後の AT&amp;T の開発の基礎となった。</p>
+<ul>
+<li>System III は Version 7 の端末インターフェイスをよりきれいな形に作り直した</li>
+<li>Berkeley の機能拡張とは互換性が全くない</li>
+<li>シグナル (<a href="../design/multiprogram.html">Chapter 7</a>) の古さはそのまま</li>
+</ul>
+<p>1983 年にリリースされた System V Release 1 では、vi(1) などの BSD ユーティリティがいくつか組み込まれた。</p>
+<p>1983 年、この隔たりを埋める最初の試みが出された。</p>
+<ul>
+<li>どこから：Unix 使用者団体 UniForum</li>
+<li>何を：UniForum 1983 Draft Standard (UDS 83)</li>
+</ul>
+<p>1983 年、4.2BSD によって問題が悪化。4.2BSD は TCP/IP ネットワーキングを含む多くの新機能を追加し、祖先である Version 7 との微妙な非互換性を導入した。</p>
+<p>1984 年の Bell 事業会社の分割と Unix 戦争 (<a href="../context/history.html">Chapter 2</a>) の始まりは問題を著しく複雑にした。Unix 戦争中、技術標準化は協力的な技術者たちが推し進めるものとなった。</p>
+<p>1984 年に AT&amp;T が System V Release 2 (SVr2) を発表したとき、標準の設定において使用者団体と協力することを宣言した。その年の UniForum Draft Standard の二回目の改訂は SVr2 の API をたどり、影響を与えた。</p>
+<p>その後の Unix 標準も、BSD の機能が明らかに機能的に優れている分野を除いては
+System V に追従する傾向があった。例えば、現代の Unix 標準は、同じ機能に対する
+BSD のインタフェイースではなく、System V の端末制御を記述している。</p>
+<p>1985 年、AT&amp;T は System V Interface Definition をリリース。UDS 84 を組み込んだ
+SVr2 API のより正式な記述。後の改訂は System V リリース 3 と 4 のインターフェイスをだとった。SVID が POSIX 標準の基礎となり、最終的にシステムコールと C ライブラリーコールをめぐる Berkeley と AT&amp;T の紛争の大半を AT&amp;T に有利に傾けた。</p>
+<p>1985 年、ネットワーク上でファイルシステムを共有するための競合する API 標準がリリースされた：</p>
+<ul>
+<li>Network File System (NFS)</li>
+<li>Remote File System (RFS)</li>
+</ul>
+<p>Sun の NFSが優勢だったのは、単なる仕様だけでなくオープンソースのコードも他と共有することに積極的だったからだ。</p>
+<p>この成功の教訓は RFS が純粋に論理的な根拠において優れたモデルであったからこそより強く指摘されるべきであった。</p>
+<p>1985 年以降、Unix の標準化の主要な推進力は IEEE に移った。IEEE 1003 委員会は
+POSIX として一般に知られる一連の標準を開発した：</p>
+<ul>
+<li>システムコールと C ライブラリー機能</li>
+<li>シェルの詳細な語義と最小限のコマンド集合</li>
+<li>さまざまな非 C プログラミング言語用の詳細なバインディング</li>
+</ul>
+<p>1990 年の最初のリリースに続き、1996 年に第二版（注：原文単数形）がリリースされた。ISO が ISO/IEC 9945 として採用した。</p>
+<div class="admonition note">
+<p class="admonition-title">TODO</p>
+<p>主な POSIX 標準一覧</p>
+</div>
+<ul>
+<li>オリジナルの POSIX 標準は後のすべての Unix 標準化作業の基礎となった。</li>
+<li>POSIX 標準は <em>POSIX Programmer's Guide</em> のような参照文献を通して、今でも権威と
+  して引用されている。</li>
+<li>事実上の Unix API 標準はいまだに「POSIX プラスソケット」であり、それ以降の標準
+  は主に機能の追加と、珍しいエッジケースにおける適合性をより詳細に規定している。</li>
+</ul>
+<p>1984 年、X/Open（後に Open Group と改名）結成。</p>
+<ul>
+<li>Unix 販売業者の共同団体</li>
+</ul>
+<p>X/Open Portability Guides (XPGs) を開発した。</p>
+<ul>
+<li>XPGs は当初は POSIX 草稿と並行して発展し、1990 年以降は POSIX を組み込んで拡張
+  した。</li>
+<li>XPG は POSIX とは異なり、最先端での一般的な慣習をより志向した。</li>
+<li>1987 年の XPG2 は基本的に System V の curses(3) である端末処理 API を追加した。</li>
+<li>1990 年の XPG3 では X11 API が統合された。</li>
+<li>1992 年の XPG4 では ANSI C 標準への完全準拠が義務付けられた。</li>
+<li>XPG2, 3, 4 は国際化のサポートに重点を置き、コードセットとメッセージカタログを
+  扱うための精巧な API を記述した。</li>
+</ul>
+<p>1993 年、すべての主要 Unix 企業を含む 75 のシステムおよびソフトウェア販売業者が
+Unixの共通定義を開発するために X/Open を支持することを宣言し、Unix 戦争は終結した。</p>
+<p>1999 年、X/Open は POSIX の活動を吸収した。</p>
+<p>2001 年、X/Open は Single Unix Standard version 3 を発行した。Unix API 標準化のすべての糸が最終的に一つの束に撚られた。さまざまな Unix が共通の API に再集結したのだ。</p>
+<h3 id="the-ghost-at-the-victory-banquet">The Ghost at the Victory Banquet<a class="headerlink" href="#the-ghost-at-the-victory-banquet" title="Permanent link">&para;</a></h3>
+<p>この取り組みを支援してきた旧来の Unix 販売業者はオープンソース Unix の新派から厳しい圧力を受けており、場合によっては専売 Unix を放棄しようとしていたのだ。</p>
+<p>Single Unix Specification への適合性を検証するために必要な適合試験は高価だ。ほとんどのオープンソース OS の配布業者には手が届かない。いずれにせよ、Linux はとても速く変化するので、どのリリースも、おそらく認定を受ける頃には時代遅れになる。</p>
+<h3 id="unix-standards-in-the-open-source-world">Unix Standards in the Open-Source World<a class="headerlink" href="#unix-standards-in-the-open-source-world" title="Permanent link">&para;</a></h3>
+<p>1990 年代半ば、オープンソース共同体は独自の標準化活動を開始した。特に Linux は
+POSIX のような Unix API 標準の可用性に依存する形でゼロから書かれていた。</p>
+<p>新派の Unix にとっての問題はソースコードレベルでの API の互換性ではなかった。新たな問題はソースの互換性ではなく、バイナリーの互換性だった。</p>
+<p>昔は、それぞれの Unix は事実上独自のハードウェアプラットフォーム上で動いていた。演算装置の命令集合や計算機構造には十分な種類があり、アプリケーションを動かすにはソースレベルで移植する必要があった。</p>
+<p>しかしその後、ミニコンやワークステーションの販売業者は安価な 386 ベースのスーパーマイクロに席巻され、オープンソースの Unix が規則を変えた。業者はバイナリーを出荷する安定したプラットフォームがなくなった。</p>
+<p>Linux 市場が統合されるにつれて、真の問題は時間の経過とともに変化する速度であることが明らかになった。API は安定していたが、システム管理ファイル、ユーティリティープログラム、ユーザーメールボックス名やシステムログファイルへのパスの接頭辞のようなものの予想される場所は変わり続けていた。</p>
+<p>1993 年に始まった新派の Linux と BSD 共同体自身の中で開発された最初の標準化の努力は Filesystem Hierarchy Standard (FHS) だ。Linux Standards Base (LSB) に組み込まれ、期待されるサービスライブラリーと補助アプリケーションの集合も標準化された。この二つの標準は Free Standards Group の活動となり、2001 年までには旧式 Unix 業者の中で X/Open のような役割を担うようになった。</p>
+<h2 id="ietf-and-the-rfc-standards-process">IETF and the RFC Standards Process<a class="headerlink" href="#ietf-and-the-rfc-standards-process" title="Permanent link">&para;</a></h2>
+<div class="admonition note">
+<p class="admonition-title">TODO</p>
+<p>きちんと要約する。</p>
+</div>
+<p>Unix 共同体がインターネット技師の文化と融合したとき、Internet Engineering Task
+Force (IETF) の RFC 標準化過程が形成した考え方も受け継いだ。標準は実用的な試作実装の経験から生まれなければならないが、いったん標準になると、それに準拠しないコードは廃棄される。</p>
+<p>これは標準が通常開発される方法ではない。これまで実装されたものとは似ても似つかない仕様が生み出された。さらに、その多くは現実的に実装できないほど要求が厳しかったり、混乱を引き起こすほど仕様が不十分だったりした。そしてそれらは販売業者に広められ、都合の悪いところでは無視された。</p>
+<p>標準のバカらしさについて悪名高い例の一つが 1980 年代に一時 TCP/IP と争った Open
+Systems Interconnect ネットワーク規格だ。</p>
+<p>その七レイヤーモデルは遠目には上品に見えたが、実際には複雑過ぎて実装不可能であることが判明した。似たような規格の怖い話は、この本くらいの大きさの本が一冊埋まるほどだ。</p>
+<p>IETF の哲学は次のようにまとめられる：</p>
+<blockquote>
+<p>We reject kings, presidents, and voting. We believe in rough consensus and
+running code. (Dave Clark, 1992)</p>
+</blockquote>
+<p>最初に動く実装を求めるこの要求が、IETFを最悪の失態の範疇から救ってきた。 実際、その基準はより強い：</p>
+<p>(RFC 2026) 仕様の候補は、インターネット標準として採用される前に、複数の独立した当事者によって実装され、正しい動作と相互運用性がテストされ、ますます要求の厳しくなる環境で利用されなければならない。</p>
+<p>IETF 標準はすべて RFC (Requests for Comment) として一段階を超える。</p>
+<ul>
+<li>RFC の提出プロセスは意図的に非公式である。</li>
+<li>RFC は標準の提案、調査結果、後続の RFC のための哲学的基盤、あるいは冗談を言う
+  ことさえある。冗談 RFC は即座に RFC になる唯一の種類の提出だ。</li>
+<li>真剣な提案はパブリックコメントのために提出される Internet-Drafts として開始する。</li>
+</ul>
+<p>個々の Internet-Draft には正式な地位はなく、起案者はいつでも変更したり撤回したりすることが可能だ。半年経っても RFC にならなかったものは削除される。</p>
+<p>ソフトウェアの実装者や販売業者は Internet-Draft をあたかも仕様であるかのように準拠を主張することを特に禁じられている。Internet-Draft は通常、メーリングリストを通じて接続された作業集団において、議論の中心となるものだ。団長が適切と判断した場合、Internet-Draft は RFC 編者に提出され、番号が割り当てられる。Internet-Draft
+が RFC 番号とともに発行されると、実装者が準拠を主張できる仕様となる。</p>
+<p>IETF の運営委員会 (Internet Engineering Steering Group) は成功した RFC を標準化路線に乗せる責任を負う。これは、RFC を Proposed Standard に指定することによって行われる。RFC がその資格を得るためには、仕様が安定し、査読を受け、インターネット共同体から大きな関心を集めていなければならない。</p>
+<p>RFC が Proposed Standard に指定される前に、実装経験が非常に望ましいと考えられており、RFC がインターネット中核規格に触れたり、そうでなければ不安定になる可能性がある場合、IESG はそれを要求することがある。</p>
+<p>IESG と IETF がより良い解決策を見出した場合、Proposed Standard は改訂される可能性があり、撤回される可能性もある。「混乱に敏感な環境」での使用は推奨されていない。航空管制システムや集中治療装置には使ってはいけない。</p>
+<p>提案された規格について、作業可能で、完全で、独立に起草され、相互運用可能な実装が少なくとも二つ存在する場合、IESG はその規格を Draft Standard に昇格させることができる。Draft Standard への昇格は、その仕様が成熟し、有用であるという強い確信を示す、状況の大きな前進だ。</p>
+<p>RFC の状況が Draft Standard に達した後は、仕様の論理バグに対処するためにしか変更されない。Draft Standard は「混乱に敏感な環境」での配備の準備が整うことが期待される。</p>
+<p>Draft Standard が広く実装される試験に合格し、一般に受け入れられるようになると、インターネット標準として祝福されることがある。インターネット標準は RFC 番号を保持するが、STD シリーズの番号も取得する。この記事を書いている時点で RFC は 3000
+以上あるが、STD は 60 しかない。</p>
+<p>標準トラックに乗らない RFC には次のラベルを付ける：</p>
+<ul>
+<li>Experimental</li>
+<li>Informational: 冗談 RFC はこのラベルを付ける</li>
+<li>Historic: 廃止された標準</li>
+</ul>
+<p>IETF の標準化工程は理論よりも実践による標準化を奨励し、標準規格が厳格な査読と試験を受けていることを保証するように設計されている。</p>
+<h2 id="specifications-as-dna-code-as-rna">Specifications as DNA, Code as RNA<a class="headerlink" href="#specifications-as-dna-code-as-rna" title="Permanent link">&para;</a></h2>
+<p>PDP-7 時代でさえ、Unix プログラマーは古いコードを使い捨てにする傾向が強かった。これは Unix の伝統であるモジュール性を重視した結果であり、すべてを失うことなくシステムの小片を廃棄したり交換したりすることを容易にする。他のプログラミング文化ではパッチを当てようとする本能があるが、Unix の本能はスクラップアンドリビルドだ。</p>
+<blockquote>
+<p>The IETF tradition reinforced this by teaching us to think of code as
+secondary to standards.</p>
+</blockquote>
+<p>1980 年以降、この教訓の影響は Unix 共同体でますます広く感じられるようになった。したがって、ANSI/ISO C 標準 (1989-) は、欠点がないとは言わないが、その規模と重要性を持つ標準としては、例外的にきれいで実践的だ。</p>
+<p>Single Unix Specification はより複雑な領域での三十年にわたる実験と失敗の化石を含んでおり、したがって ANSI C よりも厄介だ。しかし、その部品規格は非常に優れている。Linus Torvalds がそれを読んで Unix をゼロから作ることに成功したことがその強力な証拠だ。</p>
+<p>公開された標準と IETF 工程を尊重することが Unix の文化に深く根付いている。</p>
+<p>Unix プログラマーが公開されている標準を尊重するのは、他の種類の先験的な仕様に対してむしろ敵対的である可能性が高いからだ。</p>
+<p>「ウォーターフォールモデル」がソフトウェア工学の文献で支持されなくなる頃には、
+Unix プログラマーの間では何年も愚弄の対象になっていた。</p>
+<p>Unix のベストプラクティスでは、プログラムの文書は Internet Proposed Standard と改訂の対象となる仕様として類比的に用いられる。</p>
+<p>Keith Packard: Unix の開発では文書はプログラムより先に書かれるか、少なくともプログラムと一緒に書かれることが多い。</p>
+<p>Keith Packard: X11 では X の核となる標準は X の最初のリリースの前に完成しており、それ以来基本的に変更されていない。異なる X システム間の互換性は、厳格な仕様主導の試験によってさらに改善されている。</p>
+<p>Keith Packard: よく書かれた仕様書が存在することで、X のテストスイートの開発はべらぼうに容易になった。X 仕様の各陳述は実装を試験するためのコードに翻訳された。この工程で仕様に小さな矛盾がいくつか見つかったが、その結果、試供 X ライブラリーとサーバー内のコードパスのかなりの部分を網羅するテストスイートが完成した。</p>
+<p>テストスイート生成の半自動化は大きな利点であることが証明された。X の実装は驚くべき水準の安定性と販売業者間の相互運用性を達成した。</p>
+<p>Jim Gettys: X では仕様がどんなときでも支配してきた。（インクの価値がある仕様書なら）仕様書にも修正すべきバグがあるが、コードは仕様書よりもバグが多いのが普通だ。</p>
+<p>システムの動作に関する議論は、仕様書に関して機能的な水準で行うことができ、実装の問題に過度に絡むことを避けることができるのだ。</p>
+<p>Keith Packard:</p>
+<ul>
+<li>よく検討された仕様が開発の原動力となることで、バグか機能かという議論はほとんど
+  なくなる。</li>
+<li>仕様が正しく実装されていないシステムは壊れており、修正されるべきである。</li>
+</ul>
+<p>標準優先の姿勢は末端使用者にも恩恵がある。1988 年に X11 用に書かれた GUI アプリケーションは今日の X 実装でも変更なく動いている。Unix 界ではこのような長寿は普通のことであり、standards-as-DNA の姿勢がその理由だ。</p>
+<p>標準を尊重し、スクラップアンドリビルドを繰り返す Unix の文化は、標準のないコードベースの永続的なパッチ適用よりも、長期にわたってより良い相互運用性をもたらす傾向がある。Unix の最も重要な教訓の一つかもしれない。</p>
+<h2 id="programming-for-portability">Programming for Portability<a class="headerlink" href="#programming-for-portability" title="Permanent link">&para;</a></h2>
+<p>ソフトウェアの移植性は、通常、横移動可能かという観点で語られる。しかし、時間経過による耐久性が同じくらい重要だ。移植性を考慮したプログラミングをする際には、そのソフトウェアが存続する可能性が最も高い環境の機能に基づいてソフトウェアを選択し、予見可能な将来に終息する可能性が高そうな技術を避けるように考えるべきだ。</p>
+<p>Unix では、移植可能な API を指定する問題に二十年間取り組んできた結果、この問題はほぼ解決した。Single Unix Specification に記述されている機能は、今日、すべての現代的 Unix プラットフォームに存在する可能性が高く、将来的になくなる可能性はほとんどない。</p>
+<h3 id="portability-and-choice-of-language">Portability and Choice of Language<a class="headerlink" href="#portability-and-choice-of-language" title="Permanent link">&para;</a></h3>
+<p>移植性を考慮したプログラミングにおける最初の問題は実装言語の選択だ。</p>
+<p><a href="../implementation/languages.html">Chapter 14</a> で調査した主要な言語はすべて、互換性のある実装が現代的 Unix で利用できるという意味で移植性が高い。移植性の問題は、コア言語ではなく、支援ライブラリーやローカル環境との統合度（特に、GUI の基盤を含む IPC と並行プロセス管理）に生じる傾向がある。</p>
+<h4 id="c-portability">C Portability<a class="headerlink" href="#c-portability" title="Permanent link">&para;</a></h4>
+<p>C 言語は移植性が非常に高い。Unix の標準的な実装は GCC で、オープンソースの Unix
+だけでなく、最近の市販 Unix でも広く使われている。GCC は Windows や Classic Mac
+OS にも移植されているが、GUI への移植可能バインディングがないため、どちらの環境でも広く使われていない。</p>
+<ul>
+<li>標準入出力</li>
+<li>数学的操作</li>
+<li>国際化</li>
+</ul>
+<p>はすべての C 実装で移植可能だ。</p>
+<ul>
+<li>ファイル入出力</li>
+<li>シグナル</li>
+<li>プロセス制御</li>
+</ul>
+<p>は Single Unix Specification 最新 API のみを使用するように注意すれば Unix 間で移植可能。</p>
+<p>古い C コードは移植性のために <code>#ifdef</code> 文の茂みがあることが多い。これらは時代遅れか、古の専売 Unix の POSIX 以前の遺物インターフェイスを扱うものだ。</p>
+<p>C 言語の移植性が問題になる点：</p>
+<ul>
+<li>プロセス間通信</li>
+<li>スレッド</li>
+<li>GUI</li>
+</ul>
+<p>プロセス間通信とスレッドの移植性の問題については <a href="../design/multiprogram.html">Chapter 7</a> を見ろ。</p>
+<p>現実的な問題は GUI ツールキットだ。<a href="../implementation/tools.html">Chapter 15</a> に対処の指針がいくつかある。</p>
+<p>移植性のある C コードの書き方については次が著者推薦書籍：</p>
+<ul>
+<li><em>Recommended C Style and Coding Standards</em></li>
+<li><em>The Practice of Programming</em></li>
+</ul>
+<h4 id="c-portability_1">C++ Portability<a class="headerlink" href="#c-portability_1" title="Permanent link">&para;</a></h4>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>この節の記述は現代ではもう意味がないことを知っている。</p>
+</div>
+<p>C++ には C 言語と同じ OS 水準の移植性の問題がすべてあり、独自の問題もいくつかある。さらに、オープンソースの C++ 用 GNU コンパイラーはその存在のほとんどにおいて市販品に大きく遅れをとっている。2003 年半ばの時点では、事実上標準の基礎となる
+GCC と同等のものがまだ普遍的に配備されていない。</p>
+<p>さらに、GNU C++ が最も近いとはいえ、C++ 言語の ISO 標準 C++99 を完全に実装している C++コンパイラーはまだない。</p>
+<h4 id="shell-portability">Shell Portability<a class="headerlink" href="#shell-portability" title="Permanent link">&para;</a></h4>
+<p>シェルスクリプトの移植性は残念ながら低い。</p>
+<p>純粋な bash(1) スクリプトはほとんどどこでも実行できる。問題なのは、シェルスクリプトの大部分が、移植性がはるかに低い他のコマンドやフィルターを多用していることであり、任意の対象機のツールキットにあることが保証されているわけでは決してない。</p>
+<p>シェルで行われていたような重いプログラミングのほとんどは Perl, Python, Tcl のような第二世代のスクリプト言語に移ってしまった。</p>
+<h4 id="perl-portability">Perl Portability<a class="headerlink" href="#perl-portability" title="Permanent link">&para;</a></h4>
+<p>Perl は移植性に優れている。純正 Perl には Tk ツールキットへ移植可能なバインディング集合まで用意されており、Unix, Mac OS, Windows にまたがる移植可能 GUI を支援している。Perl スクリプトは <a href="https://www.cpan.org/">CPAN</a> からのアドオン・ライブラリーを必要とすることが多い。これは、すべての Perl 実装に存在することを保証するものではない。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>特定の OS でしか動作しないアドオンに依存するという意味でなければ、問題にはならない。</p>
+</div>
+<h4 id="python-portability">Python Portability<a class="headerlink" href="#python-portability" title="Permanent link">&para;</a></h4>
+<p>Python は移植性に優れている。Perl 同様、Python は Tk ツールキットへの移植可能バインディング集合さえ搭載しており、Unix, Mac OS, Windows にまたがる移植可能
+GUI を支援している。</p>
+<blockquote>
+<p>Stock Python has a much richer standard library than does Perl and no
+equivalent of CPAN for programmers to rely on;</p>
+</blockquote>
+<p>この指摘に関しては現代では PyPI という形で解決している。</p>
+<h4 id="tcl-portability">Tcl Portability<a class="headerlink" href="#tcl-portability" title="Permanent link">&para;</a></h4>
+<p>Tcl の移植性は全体的に良好だが、プロジェクトの複雑さによって大きく異なる。</p>
+<p>Tk は Tcl を第一言語とする。Python 同様に、コア言語の進化は比較的順調で、バージョンスキューの問題はほとんどない。残念なことに、Tcl は Perl 以上に拡張機能に依存しており、すべての実装に同梱される保証はない。</p>
+<p>大規模なプロジェクトでは、拡張機能と（シェルプログラミングのように）対象機に存在するかどうかわからない外部コマンドの呼び出しの両方に大きく依存する傾向があるため、移植性は悪くなりがちだ。</p>
+<p>Tcl は拡張機能の追加が容易であったためにかえって苦しんできたのかもしれない。ある拡張機能が標準配布パッケージの一部として興味を持ち始める頃には、その拡張機能にはいくつかの異なるバージョンが存在していた。</p>
+<p>標準 Tcl にオブジェクト指向支援がない理由を、開発者である John Ousterhout 氏が多数派異教徒に取り囲まれる喩えで述べた。</p>
+<h4 id="java-portability">Java Portability<a class="headerlink" href="#java-portability" title="Permanent link">&para;</a></h4>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Java に関しては昔の話であるということを特に注意しろ。</p>
+</div>
+<p>Java の移植性は優れている。Java は write once, run everywhere を第一の目標として設計されたのだ。しかし、移植性は完璧ではない。 その困難の大部分は JDK 1.1 と古い
+AWT GUI ツールキット（一方）と、JDK 1.2 と新しい Swing GUI ツールキットとの間のバージョンスキューの問題だ。これらにはいくつかの重要な理由がある：</p>
+<ul>
+<li>Sun の AWT 設計が欠陥だらけで、Swing に置き換えなければならなかった。</li>
+<li>Microsoft が Windows での Java 開発を支援せず、C# に置き換えようとした。</li>
+<li>Internet Explorer のアプレットサポートを JDK 1.1 水準に留めるという Microsoft
+  の決定。</li>
+<li>JDK 1.2 のオープンソース実装を不可能にし、展開を遅らせた Sun の使用許諾条項。</li>
+</ul>
+<p>Java スレッド支持には移植性の問題がある。Java API は異なる OS が供給する分岐したプロセスモデル間の裂け目に橋を架けようとしている。しかし、うまくいっていない。</p>
+<h4 id="emacs-lisp-portability">Emacs Lisp Portability<a class="headerlink" href="#emacs-lisp-portability" title="Permanent link">&para;</a></h4>
+<p>Emacs Lisp の移植性は素晴らしい。Emacs のインストールは頻繁にアップグレードされる傾向にあるため、著しく古い環境は稀だ。どこでも同じ拡張 Lisp が支援されており、事実上すべての拡張機能が Emacs 本体に同梱されている。</p>
+<p>エディター本来の仕事については、何年も前に完全性を達成している。移植性の問題は、たいてい OS 機能の C 水準でのバインディングのクセが顕在化したものだ。このような問題が頻発するのは、メールモードにおける子プロセスの制御くらいだ。</p>
+<h3 id="avoiding-system-dependencies">Avoiding System Dependencies<a class="headerlink" href="#avoiding-system-dependencies" title="Permanent link">&para;</a></h3>
+<p>主要なシステムファイルやディレクトリーのパスも移植性の問題の一部だ。この種の問題の典型は、メールを溜める場所は <code>/var/spool/mail</code> か <code>/var/mail</code> かということだ。</p>
+<p>直接ファイルを開こうとせず、例えばそこから読み出すのであれば、POP3 や IMAP サーバーを通して問い合わせればいい。</p>
+<p>ログファイルを手動で開いているのであれば、代わりに syslog(3) を使え。C ライブラリーを介した関数呼び出しインターフェイスの方がシステムファイルの場所よりも標準化されている。それを利用しろ。</p>
+<p>コードにシステムファイルの場所を持たなければならない場合、ソースコードで配布するのかバイナリーで配布するのかによって、最適な選択肢は異なる。</p>
+<ul>
+<li>ソースコードで配布する場合、<code>autoconf</code> が役立つ。</li>
+<li>バイナリーで配布するのであれば、実行時にあちこちのパスを探らせ、「現地」の状況
+  に自動的に適応できるかどうかを確認するのがよい。</li>
+</ul>
+<h3 id="tools-for-portability">Tools for Portability<a class="headerlink" href="#tools-for-portability" title="Permanent link">&para;</a></h3>
+<p>GNU autoconf(1) (<a href="../implementation/tools.html">Chapter 15</a>) を使えば、移植性の問題を処理したり、システム構成の調査を行ったり、<code>Makefile</code> を調整したりすることができる。</p>
+<p>バイナリーで配布している場合でも、autoconf(1) は異なるプラットフォーム用にコードを条件づける問題を自動化するのに役立る。</p>
+<h2 id="internationalization">Internationalization<a class="headerlink" href="#internationalization" title="Permanent link">&para;</a></h2>
+<p>コードの国際化＝インターフェイスが複数の言語や異なる文字集合を容易に取り込めるようにソフトウェアを設計すること。</p>
+<p>まず、メッセージベース（使用者から見えるテキストの意？）をコードから切り離せ。プログラムが使用するメッセージ文字列をコードから分離することで、コードを修正することなく他の言語のメッセージ辞書を差し込むように作れ。</p>
+<p>この作業で最もよく知られているツールは GNU gettext で、国際化が必要な言語の文字列を特別なマクロでラップする必要がある。このマクロは、各文字列を言語ごとの辞書のキーとして使用する。そのような辞書がない場合、マクロは単に引数を返し、暗黙のうちにコード内の言語に引き下がる。</p>
+<p>最近の Unix では Unicode 文字集合の 8 ビットシフト符号化である UTF-8 をアプリケーションで最初から話すようにしようという明確な傾向がある。UTF-8 の 下位 128 文字は ASCII で下位 256 文字は Latin-1 だ。つまり、この選択は最も広く使われている二つの文字集合と下位互換性がある。</p>
+<p>正規表現における文字範囲に気をつけろ。正規表現 <code>[a-z]</code> はそのスクリプトやプログラムが例えばドイツ語やフランス語に適用されている場合、必ずしもすべての小文字を捕らえるとは限らない。<code>[[:lower:]]</code> や POSIX 標準に記述されているその他の記号の範囲を使う方が安全だ。</p>
+<h2 id="portability-open-standards-and-open-source">Portability, Open Standards, and Open Source<a class="headerlink" href="#portability-open-standards-and-open-source" title="Permanent link">&para;</a></h2>
+<p>移植性には標準が必要だ。公開された標準のオープンソース実装は、開発者のコーディングの負担を大幅に軽減し、開発製品が他の人の労力から利益を得ることを可能にする。</p>
+<p>例えば、デジタルカメラ用の画像キャプチャーソフトを設計しているとしよう。オープンソースには PNG を記述するための十分に試験された完全機能のライブラリーがある
+(<a href="../design/textuality.html">Chapter 5</a>) のに、画像ビットを保存するための独自のフォーマットを書いたり、市販コードを購入したりするだろうか。</p>
+<p>オープンソースの（再）発明は標準化工程にも大きな影響を与えた。IETF は 1997 年ごろから、少なくとも一つのオープンソースの参照実装を持たない標準追従 RFC に対する抵抗感を強めている。</p>
+<p>Henry Spencer: 裏を返せば、何かを標準にする最善の方法は、高品質のオープンソース実装を配布することである場合が多いということだ。</p>
+<p>結局のところ、コードの移植性を確保するためにできる最も効果的な手段は、専売技術に依存しないことだ。オープンソースのコードなら、たとえ最先端のバージョンが自分のプロジェクトを壊すような形で変更されたとしても、前進する道がある。ソースコードにアクセスできるため、必要であれば新しいプラットフォームに移植することもできる。</p>
+<p>インターネットがすべてを変えた。2003 年半ばには Linux やその他のオープンソース
+Unix が存在し、量産品質のソフトウェアを与えるプラットフォームとしての実力を示した。</p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>© 2025 プレハブ小屋 All rights reserved.</p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js"></script>
+        <script src="../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

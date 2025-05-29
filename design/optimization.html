@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="ja" data-bs-theme="auto">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="プレハブ小屋">
+        <link rel="canonical" href="https://github.com/showa-yojyo/taoup/design/optimization.html">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Optimization - The Art of Unix Programming 読書ノート</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../css/brands.min.css" rel="stylesheet">
+        <link href="../css/solid.min.css" rel="stylesheet">
+        <link href="../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" disabled>
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <link href="../css/style.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../index.html">The Art of Unix Programming 読書ノート</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../index.html" class="nav-link">Home</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle active" aria-current="page" role="button" data-bs-toggle="dropdown"  aria-expanded="false">Notes</a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../preface.html" class="dropdown-item">Preface</a>
+</li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Context</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../context/philosophy.html" class="dropdown-item">Philosophy</a>
+</li>
+            
+<li>
+    <a href="../context/history.html" class="dropdown-item">History</a>
+</li>
+            
+<li>
+    <a href="../context/contrasts.html" class="dropdown-item">Contrasts</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Design</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="modularity.html" class="dropdown-item">Modularity</a>
+</li>
+            
+<li>
+    <a href="textuality.html" class="dropdown-item">Textuality</a>
+</li>
+            
+<li>
+    <a href="transparency.html" class="dropdown-item">Transparency</a>
+</li>
+            
+<li>
+    <a href="multiprogram.html" class="dropdown-item">Multiprogramming</a>
+</li>
+            
+<li>
+    <a href="minilanguages.html" class="dropdown-item">Minilanguages</a>
+</li>
+            
+<li>
+    <a href="generation.html" class="dropdown-item">Generation</a>
+</li>
+            
+<li>
+    <a href="configuration.html" class="dropdown-item">Configuration</a>
+</li>
+            
+<li>
+    <a href="interface.html" class="dropdown-item">Interfaces</a>
+</li>
+            
+<li>
+    <a href="optimization.html" class="dropdown-item active" aria-current="page">Optimization</a>
+</li>
+            
+<li>
+    <a href="complexity.html" class="dropdown-item">Complexity</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Implementation</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../implementation/languages.html" class="dropdown-item">Languages</a>
+</li>
+            
+<li>
+    <a href="../implementation/tools.html" class="dropdown-item">Tools</a>
+</li>
+            
+<li>
+    <a href="../implementation/reuse.html" class="dropdown-item">Reuse</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Community</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../community/portability.html" class="dropdown-item">Portability</a>
+</li>
+            
+<li>
+    <a href="../community/documentation.html" class="dropdown-item">Documentation</a>
+</li>
+            
+<li>
+    <a href="../community/opensource.html" class="dropdown-item">Open Source</a>
+</li>
+            
+<li>
+    <a href="../community/futures.html" class="dropdown-item">Futures</a>
+</li>
+    </ul>
+  </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/showa-yojyo/taoup/issues" class="nav-link">Issues</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="interface.html" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="complexity.html" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/showa-yojyo/taoup/edit/main/docs/design/optimization.md" class="nav-link"><i class="fa-brands fa-github"></i> Edit on GitHub</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                              <button id="theme-menu" aria-expanded="false" data-bs-toggle="dropdown" data-bs-display="static" aria-label="Toggle theme" class="nav-link dropdown-toggle">
+                                <i class="fa-solid fa-circle-half-stroke fa-fw"></i>
+                                <span class="d-lg-none ms-2">Toggle theme</span>
+                              </button>
+                              <ul class="dropdown-menu dropdown-menu-end">
+                                <li>
+                                  <button class="dropdown-item d-flex align-items-center" data-bs-theme-value="light" aria-pressed="false">
+                                    <i class="fa-solid fa-sun fa-fw"></i>
+                                    <span class="ms-2">Light</span>
+                                    <i class="fa-solid fa-check ms-auto d-none"></i>
+                                  </button>
+                                </li>
+                                <li>
+                                  <button class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark" aria-pressed="false">
+                                    <i class="fa-solid fa-moon fa-fw"></i>
+                                    <span class="ms-2">Dark</span>
+                                    <i class="fa-solid fa-check ms-auto d-none"></i>
+                                  </button>
+                                </li>
+                                <li>
+                                  <button class="dropdown-item d-flex align-items-center" data-bs-theme-value="auto" aria-pressed="true">
+                                    <i class="fa-solid fa-circle-half-stroke fa-fw"></i>
+                                    <span class="ms-2">Auto</span>
+                                    <i class="fa-solid fa-check ms-auto"></i>
+                                  </button>
+                                </li>
+                              </ul>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <script src="../js/darkmode.js"></script>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="2"><a href="#dont-just-do-something-stand-there" class="nav-link">Don't Just Do Something, Stand There!</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="2"><a href="#measure-before-optimizing" class="nav-link">Measure before Optimizing</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="2"><a href="#nonlocality-considered-harmful" class="nav-link">Nonlocality Considered Harmful</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="2"><a href="#throughput-vs-latency" class="nav-link">Throughput vs. Latency</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="3"><a href="#batching-operations" class="nav-link">Batching Operations</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#overlapping-operations" class="nav-link">Overlapping Operations</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#caching-operation-results" class="nav-link">Caching Operation Results</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="chapter-12-optimization">Chapter 12. Optimization<a class="headerlink" href="#chapter-12-optimization" title="Permanent link">&para;</a></h1>
+<div class="toc"><span class="toctitle">見出し一覧</span><ul>
+<li><a href="#dont-just-do-something-stand-there">Don't Just Do Something, Stand There!</a></li>
+<li><a href="#measure-before-optimizing">Measure before Optimizing</a></li>
+<li><a href="#nonlocality-considered-harmful">Nonlocality Considered Harmful</a></li>
+<li><a href="#throughput-vs-latency">Throughput vs. Latency</a><ul>
+<li><a href="#batching-operations">Batching Operations</a></li>
+<li><a href="#overlapping-operations">Overlapping Operations</a></li>
+<li><a href="#caching-operation-results">Caching Operation Results</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<p>この見出しの章に対するエピグラフはこれしかない：</p>
+<blockquote>
+<p>Premature optimization is the root of all evil. -- C. A. R. Hoare</p>
+</blockquote>
+<p>性能の最適化について Unix の経験が教えてくれる主なことは、いつ最適化してはいけないかを知る方法だ。</p>
+<h2 id="dont-just-do-something-stand-there">Don't Just Do Something, Stand There!<a class="headerlink" href="#dont-just-do-something-stand-there" title="Permanent link">&para;</a></h2>
+<p>プログラマーでできる最も強力な最適化技法とは何もしないことだ。</p>
+<p>理由は Moore の法則の指数関数的効果だ。最も賢く、最も安く、そして多くの場合最も早く能率を向上させる方法は、対象ハードウェアがより高性能になるのを数ヶ月待つことだ。ハードウェアとプログラマーの時間の費用比を考えると、稼働中のシステムを最適化するよりも、時間を使った方がいいことがほとんどだ。</p>
+<div class="admonition note">
+<p class="admonition-title">TODO</p>
+<ul>
+<li>数式対応 (MathJax or MkDoc plugin)</li>
+<li>ビッグオー記法の説明が良いので控えておきたい。</li>
+</ul>
+</div>
+<p>平均的状況での実行時間や空間の使用量を二次から線形や線形対数に削減可能である場合、またはより高次の状況から削減可能な場合に労力を注ぎ込むのが賢明だ。</p>
+<p>何もしないことのもう一つの形はコードを書かないことだ。ないコードによってプログラムが遅くなることはない。あるコードによって遅くなることはあっても、効率が悪くなることはある。</p>
+<h2 id="measure-before-optimizing">Measure before Optimizing<a class="headerlink" href="#measure-before-optimizing" title="Permanent link">&para;</a></h2>
+<p>アプリケーションが遅過ぎるという現実的な証拠が得られたら、そのとき、そしてそのときに限り、コードの最適化を考えるときだ。しかし、その前に測定しろ。</p>
+<p><a href="../context/philosophy.html">Chapter 1</a> の Rob Pike の六規則を思い出せ。どれだ？</p>
+<p>直感はボトルネックがどこにあるのかを知る手がかりにはならない。Unix には、他のほとんどの OS とは異なり、プロファイラーが付属している。それを使え。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>プロファイルの一般的な意味は a detailed description of someone or something だから、
+ここではプログラムの動作に関するそれだと解釈して通じる。</p>
+</div>
+<p>プロファイラーの結果を読むのは一種の芸術だ。繰り返される問題がいくつかある：</p>
+<ul>
+<li>計装雑情報</li>
+<li>外部からの遅延の影響</li>
+<li>呼び出しグラフの上位ノードの重み付け</li>
+</ul>
+<p>計装雑情報問題は基本的だ。プロファイラーはサブルーチンの入口と出口、またルーチンのインラインコード内に一定間隔で実行時間を報告する命令を挿入することで機能する。これらの命令自体も実行に時間がかかる。ごく短いサブルーチンでは呼び出し時間の比較に雑情報が多く、実際よりも高く見える傾向がある。</p>
+<p>ゆえに、最速最短のサブルーチンの時間は、多くの泡や空気を含んでいると考えた方が賢明だ。しかし、これらのサブルーチンが頻繁に呼び出される場合は、多くの時間を食っている可能性がある。呼び出し回数の統計には特に注意を要する。</p>
+<p>外部遅延の問題も基本的だ。プロファイラーの背後にはさまざまな遅延や歪みが存在する。最も単純なのは、予測不可能な待ち時間を伴う操作による間接費だ。</p>
+<ul>
+<li>ディスクやネットワークへのアクセス</li>
+<li>キャッシュフィル（キャッシュメモリーに読み込む操作）</li>
+<li>プロセスコンテキストの切り替え</li>
+</ul>
+<p>特に、システム全体の性能に注目している場合はなおさらだ。これらの間接費にはランダムな要素があるため、個々のプロファイリングの実行結果があまり役に立たない可能性があることが問題だ。</p>
+<p>このような雑情報源の影響を最小限に抑え、平均的な事例で時間がどこに向かっているのかをよりよく把握する一つの方法は、多くのプロファイリング実行の結果を加えることだ。最適化を行う前にテストハーネスを構築し、プログラムの負荷を試験することには多くの理由がある。最も重要な理由は、プログラムを変更する際に、そのプログラムが正しいかどうかを回帰テストできることだ。</p>
+<blockquote>
+<p>Once you've done this, being able to profile repeated tests under load is a
+nice side effect that will often give you better information than a few runs
+by hand.</p>
+</blockquote>
+<p>呼び出しグラフの上位モードが太り過ぎ、呼び出し先ルーチンではなく、呼び出し元ルーチンに時間が割り当てられる傾向がある。例えば、関数コールの間接費は、しばしば呼び出し元ルーチンに負わせる。マクロやインライン関数は、まともなコンパイラーを使っていればプロファイリング報告にはまったく表示されない。</p>
+<p>さらに重要なことは、時間報告ツールの多くは、サブルーチンで費やされた時間が呼び出し元に負うような表示をすることだ。同じルーチンに複数の呼び出し元がある場合、呼び出し元の時間から呼び出し元の時間を素朴に差し引いても有用な結果は得られない。複数の呼び出し元を持つ便利関数の一般的な場合は特に厄介だ。</p>
+<p>より透明性の高い結果を得るには、インラインコードではなく、上位ルーチンができるだけ下位ルーチンの呼び出しで構成されるようにコードを構成する。</p>
+<p>プロファイラーを個々の性能数値を収集するためのものではなく、興味深い変数の関数として性能がどのように変化するかを知るためのものと考えれば、プロファイラーを使うことでより多くの知見が得られるだろう。興味深い変数とは次のようなものだ：</p>
+<ul>
+<li>問題規模</li>
+<li>CPU 速度</li>
+<li>ディスク速度</li>
+<li>メモリー規模</li>
+<li>コンパイラー最適化</li>
+<li>その他関連するものすべて</li>
+</ul>
+<h2 id="nonlocality-considered-harmful">Nonlocality Considered Harmful<a class="headerlink" href="#nonlocality-considered-harmful" title="Permanent link">&para;</a></h2>
+<p>非局所性は有害と考えられる。</p>
+<p>コードの中心となるデータ構造と時間制約が厳しいループがキャッシュから落ちることがないようにしたい。</p>
+<p>対象計算機を演算装置 (the processor) からの距離によって配列されたメモリー型の階層として考えろ：</p>
+<ul>
+<li>プロセッサ独自のレジスター</li>
+<li>命令パイプライン</li>
+<li>L1 キャッシュ</li>
+<li>L2 キャッシュ</li>
+<li>場合によっては L3 キャッシュ</li>
+<li>主メモリー</li>
+<li>スワップ領域があるディスクドライブ</li>
+</ul>
+<p>演算装置が高速化するにつれて、ストレージ階層間の速度比が上昇している。そのため、キャッシュミスの相対的な費用は増加している。</p>
+<p>計算機資源が急落するにつれ、大きなデータ構造に期待される費用は下落する。しかし、隣接するキャッシュ階層間の費用の広がりも大きくなっているため、キャッシュの境界を壊すのに十分な大きさであることの性能への影響も上昇している。</p>
+<!-- plummet: to fall very quickly and suddenly -->
+
+<blockquote>
+<p>“Small is beautiful” is therefore better advice than ever, particularly with
+regard to central data structures that must live in the fastest possible
+cache. The advice applies to code as well; the average instruction spends more
+time being loaded than it does executing.</p>
+</blockquote>
+<p>ループのアンロールのようなコンパイラの最適化はもはややる価値がないかもしれない。三角関数の表は、キャッシュミスが引き起こされるのを増やすよりも、毎回再計算する方が速いかもしれない。</p>
+<p>多くの最適化は一時的なものであり、費用比率が変われば、悲観的な最適化に容易に変わる可能性がある。それを知る唯一の方法は測定して見ることだ。</p>
+<h2 id="throughput-vs-latency">Throughput vs. Latency<a class="headerlink" href="#throughput-vs-latency" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>Another effect of fast processors is that performance is usually bounded by
+the cost of I/O and — especially with programs that use the Internet — network
+transactions.</p>
+</blockquote>
+<p>演算装置が高速であれば CPU bound ということはないから、必然的に I/O bound ということになるという理解で良いか？</p>
+<p>最も重要な問題は通信の往復をできるだけ避けることだ。ハンドシェイクを必要とする通信規約の交信はすべて、接続待ち時間を深刻な速度低下に変える可能性がある。</p>
+<blockquote>
+<p>so many protocol designs lose huge amounts of performance to them.</p>
+<p>Anytime you can get a client to do something without having to contact the
+server, you have a tremendous win. -- Jim Gettys</p>
+</blockquote>
+<p>経験則によれば、プロファイリングで指示があるまで、可能な限り低遅延で設計し、帯域幅費用を無視するのがよい。帯域幅の問題は通信規約ストリームを圧縮するようなごまかしによって開発の後半で解決する。</p>
+<blockquote>
+<p>getting rid of high latency baked into an existing design is much, much harder
+(often, effectively impossible).</p>
+</blockquote>
+<p>アプリケーションを書くとき、高価な計算が何度も使われることを想定して一度だけ計算するか、実際に必要になるときにしか計算しない（何度も起こり得る）という選択に直面することがある。このようなトレードオフに直面するほとんどの場合、正しいのは低遅延に偏ることだ。高価な演算を事前計算しようとしないことだ。短い起動時間と素早い応答を選ぶ方がよい。</p>
+<p>遅延を削減するための一般的な戦略：</p>
+<ul>
+<li>起動費用を共有できる交信の一括処理</li>
+<li>交信の重複を許容する</li>
+<li>キャッシュ</li>
+</ul>
+<h3 id="batching-operations">Batching Operations<a class="headerlink" href="#batching-operations" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>Graphics APIs are frequently written on the assumption that the fixed setup
+cost for a physical screen update is large.</p>
+</blockquote>
+<p>物理的な更新の適切な間隔をプログラマーが選ぶことで、クライアントの操作感は大きく変わる。X サーバーも、ローグライクプログラムで使用される curses(3) ライブラリーもこのように構成されている。</p>
+<p>永続サービスデーモンは一括処理の Unix 固有の例だ。これを書く理由は二つ：</p>
+<ul>
+<li>明白な方は共有資源の更新を管理するためだ。</li>
+<li>微妙な方は、更新を処理しないデーモンであっても同様であるが、デーモンのデータ
+  ベースを読み込む費用を複数の要求にまたがって徐々に清算するためだ。</li>
+</ul>
+<p>後者の完璧な例が DNS サービスデーモン named(8) だ。秒間何千もの要求を処理しなければならないことがある。</p>
+<blockquote>
+<p>One of the tactics that makes named(8) fast is that it replaces parses of
+expensive on-disk text files describing DNS zones with accesses to a cache
+held in memory.</p>
+</blockquote>
+<p>ディスクよりメモリー。</p>
+<h3 id="overlapping-operations">Overlapping Operations<a class="headerlink" href="#overlapping-operations" title="Permanent link">&para;</a></h3>
+<p>IMAP 要求は POP3 のそれとは異なり、クライアントが生成した要求識別子でタグ付けされる (<a href="textuality.html">Chapter 5</a>)。サーバーが応答するとき、その応答は関連する要求のタグを含む。</p>
+<p>POP3 は同期的であると言える：</p>
+<blockquote>
+<p>POP3 requests have to be processed in lockstep by both client and server; the
+client sends a request, waits for the response to that request, and only then
+can prepare and ship the next one</p>
+</blockquote>
+<p>一方、IMAP 要求はタグ付けされているので重ね合うことができる。IMAP クライアントが複数のメッセージを連れてきたいことを知っている場合、IMAP サーバーに複数の要求（それぞれ異なるタグ）をストリーミングすることが可能だ。それぞれのタグが付けられた応答は、サーバーの準備ができたときに返される。クライアントがまだ後の要求を送り出す途中に、初期の要求に対する応答が来ることもある。</p>
+<p>遅延を削減したいのであれば、ブロッキングや中間結果待ちは致命的だ。</p>
+<h3 id="caching-operation-results">Caching Operation Results<a class="headerlink" href="#caching-operation-results" title="Permanent link">&para;</a></h3>
+<!-- throughput: an amount of work, etc. done in a particular period of time -->
+
+<p>高価な結果を必要に応じて計算し、後で使用するためにキャッシュすることで、いいとこどり（低遅延と大容量処理能力）ができる。<code>named</code> は一括処理によってだけでなく、他のDNSサーバーとの以前のネットワーク交信の結果をキャッシュすることによっても待ち時間を削減する。</p>
+<p>バイナリーキャッシュを用いることで、テキストデータベースファイルに関連する解析処理の間接費を排除するという応用を考察することで、キャッシングにおける独自の問題とトレードオフを説明することが可能だ。</p>
+<p>これを機能させるためには、バイナリーキャッシュを見るコードすべてが、バイナリーキャッシュとデータベースファイル両方のタイムスタンプを検査し、マスターであるテキストの方が新しければキャッシュを再生成することを知らなければならない。あるいは、マスターへの変更はすべて、バイナリー形式を更新するようなラッパーを通して行われなければならない。</p>
+<p>この方法は機能させることはできるが、SPOT 規則 (<a href="modularity.html">Chapter 4</a>) から予想されるような欠点がある。データの重複はストレージの経済性をもたらさないことを意味する。本当の問題は、キャッシュとマスター間の整合を保証するコードに漏れが生じやすく、バグが発生しやすいことで有名だということだ。高頻度で更新されるキャッシュファイルは、タイムスタンプ分解能が一秒であるため、微妙な競合状態を引き起こす可能性がある。</p>
+<p>次のような単純な事例では整合性を保証することが可能だ（それぞれにおいて後者のファイルがキャッシュ）：</p>
+<ul>
+<li>Python における <code>.py</code> ファイルと <code>.pyc</code> ファイル</li>
+<li>Emacs における <code>.el</code> ファイルと <code>.elc</code> ファイル</li>
+</ul>
+<p>この技法はキャッシュへの読み取りと書き込みの両方のアクセスが単一のプログラムを経由するため機能する。</p>
+<p>マスターの更新パターンが複雑になると同期コードに漏れが生じやすくなる。</p>
+<p>一般的に、バイナリーキャッシュファイルは当てにならない技術であり、避けるのが最善だ。</p>
+<blockquote>
+<p>The work that went into implementing a special-purpose hack to reduce latency
+in this one case would have been better spent improving the application design
+so it doesn't have a bottleneck there — or even on tuning to improve the speed
+of the file system or the virtual-memory implementation.</p>
+</blockquote>
+<p>キャッシングが必要な状況にあると思ったら、なぜそう思うかを問うのが賢明だ。その問題を解決することは、キャッシングソフトウェアの極端な状況すべてで正しくすることほど難しくはないことがある。</p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>© 2025 プレハブ小屋 All rights reserved.</p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js"></script>
+        <script src="../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

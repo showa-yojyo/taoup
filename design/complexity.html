@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="ja" data-bs-theme="auto">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="プレハブ小屋">
+        <link rel="canonical" href="https://github.com/showa-yojyo/taoup/design/complexity.html">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Complexity - The Art of Unix Programming 読書ノート</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../css/brands.min.css" rel="stylesheet">
+        <link href="../css/solid.min.css" rel="stylesheet">
+        <link href="../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" disabled>
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <link href="../css/style.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../index.html">The Art of Unix Programming 読書ノート</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../index.html" class="nav-link">Home</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle active" aria-current="page" role="button" data-bs-toggle="dropdown"  aria-expanded="false">Notes</a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../preface.html" class="dropdown-item">Preface</a>
+</li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Context</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../context/philosophy.html" class="dropdown-item">Philosophy</a>
+</li>
+            
+<li>
+    <a href="../context/history.html" class="dropdown-item">History</a>
+</li>
+            
+<li>
+    <a href="../context/contrasts.html" class="dropdown-item">Contrasts</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Design</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="modularity.html" class="dropdown-item">Modularity</a>
+</li>
+            
+<li>
+    <a href="textuality.html" class="dropdown-item">Textuality</a>
+</li>
+            
+<li>
+    <a href="transparency.html" class="dropdown-item">Transparency</a>
+</li>
+            
+<li>
+    <a href="multiprogram.html" class="dropdown-item">Multiprogramming</a>
+</li>
+            
+<li>
+    <a href="minilanguages.html" class="dropdown-item">Minilanguages</a>
+</li>
+            
+<li>
+    <a href="generation.html" class="dropdown-item">Generation</a>
+</li>
+            
+<li>
+    <a href="configuration.html" class="dropdown-item">Configuration</a>
+</li>
+            
+<li>
+    <a href="interface.html" class="dropdown-item">Interfaces</a>
+</li>
+            
+<li>
+    <a href="optimization.html" class="dropdown-item">Optimization</a>
+</li>
+            
+<li>
+    <a href="complexity.html" class="dropdown-item active" aria-current="page">Complexity</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Implementation</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../implementation/languages.html" class="dropdown-item">Languages</a>
+</li>
+            
+<li>
+    <a href="../implementation/tools.html" class="dropdown-item">Tools</a>
+</li>
+            
+<li>
+    <a href="../implementation/reuse.html" class="dropdown-item">Reuse</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Community</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../community/portability.html" class="dropdown-item">Portability</a>
+</li>
+            
+<li>
+    <a href="../community/documentation.html" class="dropdown-item">Documentation</a>
+</li>
+            
+<li>
+    <a href="../community/opensource.html" class="dropdown-item">Open Source</a>
+</li>
+            
+<li>
+    <a href="../community/futures.html" class="dropdown-item">Futures</a>
+</li>
+    </ul>
+  </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/showa-yojyo/taoup/issues" class="nav-link">Issues</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="optimization.html" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../implementation/languages.html" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/showa-yojyo/taoup/edit/main/docs/design/complexity.md" class="nav-link"><i class="fa-brands fa-github"></i> Edit on GitHub</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                              <button id="theme-menu" aria-expanded="false" data-bs-toggle="dropdown" data-bs-display="static" aria-label="Toggle theme" class="nav-link dropdown-toggle">
+                                <i class="fa-solid fa-circle-half-stroke fa-fw"></i>
+                                <span class="d-lg-none ms-2">Toggle theme</span>
+                              </button>
+                              <ul class="dropdown-menu dropdown-menu-end">
+                                <li>
+                                  <button class="dropdown-item d-flex align-items-center" data-bs-theme-value="light" aria-pressed="false">
+                                    <i class="fa-solid fa-sun fa-fw"></i>
+                                    <span class="ms-2">Light</span>
+                                    <i class="fa-solid fa-check ms-auto d-none"></i>
+                                  </button>
+                                </li>
+                                <li>
+                                  <button class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark" aria-pressed="false">
+                                    <i class="fa-solid fa-moon fa-fw"></i>
+                                    <span class="ms-2">Dark</span>
+                                    <i class="fa-solid fa-check ms-auto d-none"></i>
+                                  </button>
+                                </li>
+                                <li>
+                                  <button class="dropdown-item d-flex align-items-center" data-bs-theme-value="auto" aria-pressed="true">
+                                    <i class="fa-solid fa-circle-half-stroke fa-fw"></i>
+                                    <span class="ms-2">Auto</span>
+                                    <i class="fa-solid fa-check ms-auto"></i>
+                                  </button>
+                                </li>
+                              </ul>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <script src="../js/darkmode.js"></script>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="2"><a href="#speaking-of-complexity" class="nav-link">Speaking of Complexity</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="3"><a href="#the-three-sources-of-complexity" class="nav-link">The Three Sources of Complexity</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#tradeoffs-between-interface-and-implementation-complexity" class="nav-link">Tradeoffs between Interface and Implementation Complexity</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#essential-optional-and-accidental-complexity" class="nav-link">Essential, Optional, and Accidental Complexity</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#mapping-complexity" class="nav-link">Mapping Complexity</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#when-simplicity-is-not-enough" class="nav-link">When Simplicity Is Not Enough</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="2"><a href="#a-tale-of-five-editors" class="nav-link">A Tale of Five Editors</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="3"><a href="#ed" class="nav-link">ed</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#vi" class="nav-link">vi</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#sam" class="nav-link">Sam</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#emacs" class="nav-link">Emacs</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#wily" class="nav-link">Wily</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="2"><a href="#the-right-size-for-an-editor" class="nav-link">The Right Size for an Editor</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="3"><a href="#identifying-the-complexity-problems" class="nav-link">Identifying the Complexity Problems</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#compromise-doesnt-work" class="nav-link">Compromise Doesn't Work</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#is-emacs-an-argument-against-the-unix-tradition" class="nav-link">Is Emacs an Argument against the Unix Tradition?</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="2"><a href="#the-right-size-of-software" class="nav-link">The Right Size of Software</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="chapter-13-complexity">Chapter 13. Complexity<a class="headerlink" href="#chapter-13-complexity" title="Permanent link">&para;</a></h1>
+<div class="toc"><span class="toctitle">見出し一覧</span><ul>
+<li><a href="#speaking-of-complexity">Speaking of Complexity</a><ul>
+<li><a href="#the-three-sources-of-complexity">The Three Sources of Complexity</a></li>
+<li><a href="#tradeoffs-between-interface-and-implementation-complexity">Tradeoffs between Interface and Implementation Complexity</a></li>
+<li><a href="#essential-optional-and-accidental-complexity">Essential, Optional, and Accidental Complexity</a></li>
+<li><a href="#mapping-complexity">Mapping Complexity</a></li>
+<li><a href="#when-simplicity-is-not-enough">When Simplicity Is Not Enough</a></li>
+</ul>
+</li>
+<li><a href="#a-tale-of-five-editors">A Tale of Five Editors</a><ul>
+<li><a href="#ed">ed</a></li>
+<li><a href="#vi">vi</a></li>
+<li><a href="#sam">Sam</a></li>
+<li><a href="#emacs">Emacs</a></li>
+<li><a href="#wily">Wily</a></li>
+</ul>
+</li>
+<li><a href="#the-right-size-for-an-editor">The Right Size for an Editor</a><ul>
+<li><a href="#identifying-the-complexity-problems">Identifying the Complexity Problems</a></li>
+<li><a href="#compromise-doesnt-work">Compromise Doesn't Work</a></li>
+<li><a href="#is-emacs-an-argument-against-the-unix-tradition">Is Emacs an Argument against the Unix Tradition?</a></li>
+</ul>
+</li>
+<li><a href="#the-right-size-of-software">The Right Size of Software</a></li>
+</ul>
+</div>
+<blockquote>
+<p>But what <em>is</em> “as simple as possible”? How do you tell?</p>
+</blockquote>
+<h2 id="speaking-of-complexity">Speaking of Complexity<a class="headerlink" href="#speaking-of-complexity" title="Permanent link">&para;</a></h2>
+<ol>
+<li>ソフトウェアの複雑度とは何かを定義する。</li>
+<li>複雑さの種類を水平的に区別する。それらは互いにトレードオフしなければならない
+   ことがある。</li>
+<li>垂直的な区別として、共存しなければならない複雑さと、排除するオプションがある
+   複雑さの区別をする。</li>
+</ol>
+<h3 id="the-three-sources-of-complexity">The Three Sources of Complexity<a class="headerlink" href="#the-three-sources-of-complexity" title="Permanent link">&para;</a></h3>
+<p>単純は美であり、風雅は善であり、複雑は醜悪であり、滑稽は邪悪だ。</p>
+<ul>
+<li>複雑さは高く付く。</li>
+<li>複雑なソフトウェアは考えるのも、試験するのも、デバッグするのも、保守するのも難
+  しい。</li>
+<li>複雑さの対価は運用環境配備後が最も痛手となる。</li>
+</ul>
+<p>すごいことを述べている：</p>
+<blockquote>
+<p>Traditionally, Unix programmers push back against these tendencies by
+proclaiming with religious fervor a rhetoric that condemns all complexity as
+bad.</p>
+</blockquote>
+<p>Unix プログラマーは（他のそれと同じように）実装の複雑さを注目する傾向がある。基本的にはプログラムを理解しようとするときに経験する困難さの度合いだ。</p>
+<p>顧客や使用者はプログラムのインターフェイスの複雑さによって複雑さを見る傾向がある。表現力が弱く、簡潔でないインターフェイスは、わずかな高水準の操作ではなく、エラーを起こしやすい、あるいは単に退屈な低水分の操作を数多く使用者に強いることになる。</p>
+<p>この二つの指標によって左右されるのが、もっと単純な第三の指標、つまりシステム内のコード総行数 (codebase size) だ。通常、これが最も重要な尺度だ。</p>
+<p>その理由は、コードの欠陥密度（特定行数あたりのバグ数）は実装言語に依存せず一定である傾向がある。行数が多いほどバグも多くなり、デバッグが開発で銭と時間の最もかかる部分となる。</p>
+<ul>
+<li>実装の複雑さ</li>
+<li>インターフェイスの複雑さ</li>
+<li>コード量</li>
+</ul>
+<p>これら三つの尺度の妥協点を探らねばならぬときが難しい。</p>
+<p>実装の単純さを維持するため、あるいはコードベースの規模を抑えるために主に設計された UI が、使用者に低水準の仕事を単に押し付けることがある。この種の設計上の失敗はあまりにもよくあることだ、伝統的な呼び名がない。そこでこれを手作業の罠と呼ぶことにする。</p>
+<p>極端に高密度で複雑な実装技術を使うことで、コードベースの規模を抑えようとする圧力がシステムに実装の複雑さを連鎖的に引き起こし、デバッグ不可能な混乱を招くことがある。これを馬糞罠と呼ぶ。</p>
+<p>プロジェクト設計者が実装の複雑さを警戒するあまり、複雑だが統一された方法で問題全体を解決する方法を拒否し、重複する即興的コードを大量に使って個々の問題を順番に解決していくことがある。その結果、コードベースは肥大化し、保守性の問題は統一された方法が受け入れられていた場合よりも深刻になる。この種の失敗はあまりにもよくある。これは即興的罠と呼ぶことにする。</p>
+<ul>
+<li>手作業の罠</li>
+<li>馬糞罠</li>
+<li>即興的罠</li>
+</ul>
+<p>これらは複雑性の三つの顔であり、設計者が回避しようとして陥る罠の一部だ。</p>
+<h3 id="tradeoffs-between-interface-and-implementation-complexity">Tradeoffs between Interface and Implementation Complexity<a class="headerlink" href="#tradeoffs-between-interface-and-implementation-complexity" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Richard Gabriel という Lisp 界の長年の指導者がいる。</li>
+<li>論文 <em>Lisp: Good News, Bad News, and How to Win Big</em><ul>
+<li>Lisp 設計の特定の流儀を主張するのが主な目的だった。</li>
+<li>しかし、その一節 <a href="https://www.dreamsongs.com/WorseIsBetter.html">The Rise of <em>Worse Is Better</em></a> が読者の記憶に残っ
+  たという。</li>
+</ul>
+</li>
+</ul>
+<p>Gabriel の中心的な議論は、実装とインターフェイスの複雑さの間の具体的な両立不能関係性についてであった。そこでは次の二つを対比している：</p>
+<ul>
+<li>インターフェイスの単純さを最重視する MIT 哲学</li>
+<li>実装の単純さを最重視する New Jersey 哲学</li>
+</ul>
+<p>を比較している。その提案は：</p>
+<ul>
+<li>MIT 哲学は抽象的にはより優れたソフトウェアをもたらすが、New Jersey モデルの方
+  がより優れた伝播特性を持つ。</li>
+</ul>
+<p>時間が経つにつれて、人々は New Jersey 式ソフトウェアにより多くの注意するようになり、その結果、より速く改善される。«Worse becomes better.»</p>
+<blockquote>
+<p>The tension between these approaches arises precisely because one can
+sometimes get a simpler interface if one is willing to pay implementation
+complexity for it, or vice versa.</p>
+</blockquote>
+<p>それが trade-off だと述べているのだった。</p>
+<p>長時間システムコールが割り込みをどう処理するかという例が最良のもの一つだ：</p>
+<ul>
+<li>MIT: システムコールからいったん退いて、割り込みが処理されたら自動的に再開する。</li>
+<li>New Jersey: システムコールは中断されたことを示すエラーを返し、使用者が再実行し
+  なければならない。</li>
+</ul>
+<p>前者は実装が難しいが、より単純なインターフェイスに至る。後者ははるかに単純に実装できるが、より使いにくいプログラミングインターフェイスになる。</p>
+<p>ソフトウェアシグナルの取り扱いは System-V 式と BSD 式があるが、前者は New Jersey
+哲学に、後者は MIT 哲学にそれぞれ従っている。</p>
+<p>両者の選択の根底にあるのはこうだ：目標が全体の複雑さを抑えることだとしたら、そのためにはどこに銭を払うのが最善なのか。</p>
+<p>例：HTTP 404 エラー応答は古典的な New Jersey 式解決法と言える。</p>
+<ul>
+<li>設計の一つ一つについて、この問題を注意深く考える習慣を身につけろ。</li>
+<li>複雑さは慎重に予算を組まなければならない費用だ。</li>
+</ul>
+<h3 id="essential-optional-and-accidental-complexity">Essential, Optional, and Accidental Complexity<a class="headerlink" href="#essential-optional-and-accidental-complexity" title="Permanent link">&para;</a></h3>
+<p>理想的な世界では、それぞれが最小限で上品で完全な、小さくて完璧な宝石のようなソフトウェアしか Unix プログラマーは作らない。しかし、現実では、複雑な解決策を必要とする複雑な問題をしばしば引き起こす。</p>
+<blockquote>
+<p>You can't control a jetliner with an elegant ten-line procedure.</p>
+</blockquote>
+<p>ジェット旅客機には必然的な (essential) 複雑さがある。飛行機は空中に留まらなければならないため、単純性と機能を取り替えることはできない。</p>
+<p>要求がより柔軟で、期待される機能と複雑さの両立不能性の妥協点を見出しやすいソフトウェアでは、設計上の問題を見極め、考えることは容易だ。</p>
+<blockquote>
+<p>(Here, and in the rest of this chapter, we will use ‘feature’ in a very
+general sense that includes things like performance gains or overall degree of
+interface polish.)</p>
+</blockquote>
+<ul>
+<li>偶発的な (accidental) 複雑さは、指定された一連の機能を実装する最も単純な方法を
+  誰かが見つけられなかったために起こる。優れた（再）設計によって取り除くことがで
+  きる。</li>
+<li>選択的な (optional) 複雑さは、何らかの望ましい機能と結びついている。プロジェク
+  トの目的を変更することによってのみ排除することができる。</li>
+</ul>
+<p>この二つの複雑性を区別しないと設計に関する議論が混乱する。プロジェクトの目的は何かという問いが、単純性の美学や、人々が十分に賢かったかどうかという問いと混同されてしまう。</p>
+<h3 id="mapping-complexity">Mapping Complexity<a class="headerlink" href="#mapping-complexity" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>So far, we've developed two different scales for thinking about complexity.
+These scales are actually orthogonal to each other.</p>
+</blockquote>
+<p><a href="http://www.catb.org/esr/writings/taoup/html/graphics/complexity.png">Figure 13.1</a> では下の尺度がグラフの横軸と縦軸になっている：</p>
+<ul>
+<li>(+) 実装の複雑さ/インターフェイスの複雑さ/コード量 (-)</li>
+<li>(+) 偶発的な複雑さ/選択的な複雑さ/必然的な複雑さ (-)</li>
+</ul>
+<!-- Figure 13.1. Sources and kinds of complexity. -->
+<blockquote>
+<p>In <a href="modularity.html">Chapter 4</a> we saw that accidental interface complexity often comes from
+non-orthogonality in the interface design — that is, failing to carefully
+factor the interface operations so that each does exactly one thing.</p>
+</blockquote>
+<pre><code class="language-raw">Non-orthogonality = (Interface complexity, Accidental complexity).
+</code></pre>
+<p>偶発的なコードの複雑さ（仕事を成し遂げるために必要以上にコードを複雑にすること）は、多くの場合、時期尚早の最適化から生じる。</p>
+<pre><code class="language-raw">Premature optimization = (Implementation complexity, Accidental complexity).
+</code></pre>
+<p>コードベースの肥大化は、SPOT 規則に違反してコードを重複させたり、コードの整理が不十分で再利用の機会が認識されなかったりすることが原因であることが多い。</p>
+<pre><code class="language-raw">Violating the SPOT rule = (Codebase size, Accidental complexity).
+</code></pre>
+<p>インターフェイスの必然的な複雑さは、ソフトウェアの基本的な機能要件を削ることなく削減することは通常、できない。</p>
+<pre><code class="language-raw">Functional requirements = (Interface complexity, Essential complexity).
+</code></pre>
+<p>コードベースの必然的規模は開発ツールの選択と関連する。機能一覧が一定であればコードベースの規模で最も重要な要因は、おそらく実装言語の選択 (<a href="minilanguages.html">Chapter 8</a>) だからだ。</p>
+<pre><code class="language-raw">Development tools = (Codebase size, Essential complexity).
+</code></pre>
+<blockquote>
+<p>Sources of optional complexity are the most difficult to make useful
+generalizations about, because they so often depend on delicate judgments
+about which features it is worth paying the complexity cost for.</p>
+</blockquote>
+<p>インターフェイスの選択的複雑さは、多くの場合、使用者の生活を楽にする便利な機能を追加することから生じるが、プログラムの機能には必須ではない。</p>
+<pre><code class="language-raw">Convenience features = (Interface complexity, Optional complexity).
+</code></pre>
+<p>使用者の目に見える機能と使用される算法が一定を保っているという仮定下で、コードベース規模の増大は、コメントの追加、長い変数名の使用など、保守性を高めることを意図したさまざまな慣行から生じることが多い。</p>
+<pre><code class="language-raw">Methodology overhead = (Codebase size, Optional complexity).
+</code></pre>
+<p>実装の選択的複雑さはプロジェクトに関わるすべてのものによって引き起こされる傾向がある。</p>
+<pre><code class="language-raw">EVERYTHING ELSE = (Implementation complexity, Optional complexity).
+</code></pre>
+<p>このプロットは複雑さの原因を対処する方法と、複雑さの種類を攻略する方法を教えるものだ。</p>
+<ul>
+<li>コードベースの規模はより良い道具で対処する。</li>
+<li>実装の複雑さは算法をより適切に選択することで対処する。</li>
+<li>インターフェイスの複雑さには、人間工学や使用者心理を考慮した、より優れた双方向
+  操作設計で対処しなければならない。コードを書くよりも難しい。</li>
+<li>偶発的な複雑さは、もっと単純な方法があることに気づくことで解消できる。</li>
+<li>どのような機能が価値あるものなのか、文脈に依存した判断を下すことで、選択的複雑
+  さを削減することが可能。</li>
+<li>必然的複雑さを減らすには、対処する問題を根本的に再定義し、ひらめきを得ることで
+  しか成し得ない。</li>
+</ul>
+<!-- epiphany: a moment of sudden and great revelation or realization -->
+
+<h3 id="when-simplicity-is-not-enough">When Simplicity Is Not Enough<a class="headerlink" href="#when-simplicity-is-not-enough" title="Permanent link">&para;</a></h3>
+<p>Unix プログラマーはしばしば、選択的複雑さがすべて偶然的であるかのように話す（振る舞う）。それ以上に、Unix の伝統には、選択的複雑さを受け入れるのではなく、機能を削除することに強い執着がある。</p>
+<blockquote>
+<p>But computing resources and human thinking time, like wealth, find their
+justification not in being hoarded but in being spent.</p>
+</blockquote>
+<p>これは名言。</p>
+<blockquote>
+<p>As with other forms of asceticism, one has to ask when design minimalism stops
+being a valuable form of self-discipline and starts being a mere hair shirt —
+a way to indulge those feelings of virtue at the expense of actually using
+that wealth to get work done.</p>
+</blockquote>
+<!-- asceticism: 苦行 -->
+<!-- to indulge: to give someone anything they want and not to mind if they behave badly -->
+
+<p>これは文章が難しい。この質問はたいへん危険であり、優れた設計規律を完全に放棄する議論になりやすい。しかし必要だ。</p>
+<!-- inexorably: in a way that continues without any possibility of being stopped -->
+<!-- damnation: the act of sending someone to hell or the state of being in hell -->
+
+<h2 id="a-tale-of-five-editors">A Tale of Five Editors<a class="headerlink" href="#a-tale-of-five-editors" title="Permanent link">&para;</a></h2>
+<p>事例研究に異なる Unix エディターを五つ使う。評価基準となる仕事は次だ：</p>
+<ul>
+<li>プレーンテキスト編集</li>
+<li>リッチテキスト編集：フォントの変更、色、テキスト区間の他の種類の性質（ハイパー
+  リンクであることなど）を含む。このような編集ができるエディターは UI での属性の
+  表示と、ディスク上のデータ表現 (HTML, XML, etc.) の間で変換可能。</li>
+<li>構文認識：プログラミング言語のブロックの開始や終了を認識すると、自動的に字下げ
+  階層を変更するようなことをする。構文を認識するエディターは、一般的に色やフォン
+  トを変えて強調する。</li>
+<li>一括コマンド出力の解析。エディター内部からコンパイルを実行し、エラーメッセージ
+  を捕まえて、エディターを離れることなくエラー箇所を調べられるようにする。</li>
+<li>エディターコマンド間の状態を持続的に維持する補助子プロセスとの相互作用。この機
+  能が存在する場合、強力な結果をもたらす：<ul>
+<li>エディターから VCS を動かすことができ、シェルウィンドウや別の道具に抜け出
+  さずに、バージョン管理コマンドを実行できる。</li>
+<li>エディターでデバッガーを前処理することが可能。例えばブレイクポイントで実行
+  が停止すると、該当するファイルの行へ自動的に飛ぶ。</li>
+<li>ファイル名が他のホストを参照していることを認識させることで、エディターで遠
+  隔ファイルを編集することが可能。 適切なアクセス権があれば、そのようなエ
+  ディターは scp(1) や ftp(1) を自動的に実行する。</li>
+</ul>
+</li>
+</ul>
+<p>どの事例のエディターにおいてもプレーンテキストを編集できる。より複雑な仕事をどのように処理するかについて、さまざまな度合いの選択的複雑さが見え始めている。</p>
+<h3 id="ed">ed<a class="headerlink" href="#ed" title="Permanent link">&para;</a></h3>
+<ul>
+<li>プレーンテキスト編集の真に Unix 最小主義的な方法</li>
+<li>単純かつ質素な CLI</li>
+<li>画面表示はない</li>
+</ul>
+<p>Unix オリジナルコードのほとんどはこのエディターで書かれた。DOS にあった Edlin は
+<code>ed</code> を露骨に手本にしたものだと言う。</p>
+<p>エディターの定義が、単にプレーンテキストファイルを作成し、修正できるようにするものだというならば、ed(1) はその仕事に完全に十分だ。</p>
+<blockquote>
+<p>Importantly to the Unix view of design correctness, it does nothing else.</p>
+</blockquote>
+<p>Ken Thompson が以前の <a href="https://en.wikipedia.org/wiki/QED_(text_editor)">QED</a> というエディターを意図的に簡略化したものが <code>ed</code> だという見方が適切だ：</p>
+<ul>
+<li>正規表現を用いる最初のエディターだった。これは <code>ed</code> に引き継がせた。</li>
+<li>マルチバッファー機能を有していた。これは捨てられた。</li>
+</ul>
+<p>ed(1) とその末裔すべての特筆すべき特徴は、コマンドのオブジェクト操作形式だ。</p>
+<pre><code class="language-raw">a
+.
+1s/f[a-z]x/dragon/
+1,$p
+w
+q
+</code></pre>
+<p>行の範囲を指定するための比較的強力な構文があり、数値で指定したり、正規表現のパターンマッチで指定したり、現在行と最終行の特別な短縮形で指定したりすることができる。エディター操作の大半はどの範囲にも適用可能だ。直交性の良い例だ。</p>
+<p>ex(1) と呼ばれる、コマンドプロンプトのようないくつかの便利な対話機能を追加したものがある。ある種の異常なクラッシュの回復状況において、時折役に立つ。</p>
+<p>すべての Unix に <code>ed</code> の実装が含まれており、ほとんどの Unix は <code>ex</code> も含む。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>私の環境では <code>ex</code> は <code>vim</code> だ。</p>
+</div>
+<p>sed(1) (<a href="generation.html">Chapter 9</a>) も <code>ed</code> と密接に関連している。基本的なコマンドの多くは同じだが、標準入力からではなく、コマンドラインスイッチを通して呼び出されるように設計されている。</p>
+<h3 id="vi">vi<a class="headerlink" href="#vi" title="Permanent link">&para;</a></h3>
+<p>オリジナルの vi(1) は ed(1) のコマンド集合に Rogue 風インターフェイスを取り付けた最初の試みだった。<code>ed</code> と同様、<code>vi</code> のコマンドは一般的に単一キーストロークであり、熟練タイピストによる使用に特に適している。</p>
+<p>オリジナルの <code>vi</code> には（これも <code>ed</code> 同様に？）使用者カスタマイズのいかなる形態もなかった。そのことを <code>vi</code> 使用者は美徳と考えた。</p>
+<blockquote>
+<p>On this view, one of vi's most important virtues is that you can start editing
+immediately on a new Unix system without having to carry along your
+customizations or worrying that the default command bindings will be
+dangerously different from what you're used to.</p>
+</blockquote>
+<p>これを読んで思ったが、Twitter のかつての某フォロワーサンがまさにノーカスタマイズ主義者だった。</p>
+<p>インターフェースは、コマンドモードかテキスト挿入モードのどちらかになっている。</p>
+<ul>
+<li>テキスト挿入モードでは、機能するコマンドはモード終了の <kbd>Esc</kbd> とキャ
+  レット移動キーしかない。</li>
+<li>コマンドモードでは、入力テキストはコマンドとして解釈され、バッファー内容に奇妙
+  な（破壊的な）ことを行う。</li>
+</ul>
+<p>オブジェクト操作形式は <code>ed</code> から受け継いだ。拡張コマンドのほとんどはどの行範囲でも自然な形で操作できる。</p>
+<p>Emacs とは対照的に、内蔵汎用スクリプトの使用は普及しなかった。 その代わりに、<code>vi</code>
+の実装はそれ自体に C のコードを追加することによって、C コードの構文認識やコンパイラーのエラーメッセージの出力解析のようなことを行う個々の機能を成長させてきた。</p>
+<p>子プロセスとの対話は支援されていない。</p>
+<h3 id="sam">Sam<a class="headerlink" href="#sam" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Sam_(text_editor)">Sam</a> は 1980 年代半ばに Bell 研究所の Rob Pike が書いた。</li>
+<li>Plan 9 OS 用に設計された。</li>
+<li><code>vi</code> よりも <code>ed</code> にずっと近い。</li>
+</ul>
+<p>Sam が新たに取り入れた概念：</p>
+<ul>
+<li>curses(3) スタイルのテキスト表示</li>
+<li>マウスによるテキスト選択</li>
+</ul>
+<blockquote>
+<p>Each Sam session has exactly one command window, and one or more text windows.
+Text windows edit text, and command windows accept ed-style editing commands.
+The mouse is used to move between windows, and to select text regions within
+text windows.</p>
+</blockquote>
+<p>著者はこれを、<code>vi</code> のインターフェイスの複雑さをほとんど捨てた、直交的でモードレスで清浄な設計だと評する。</p>
+<ul>
+<li>マウスを選択とバッファー間のフォーカスの迅速な変更に利用できることから、<code>vi</code>
+  におけるコマンドモードと同等のものを必要としない。</li>
+<li>何百もの拡張 <code>vi</code> コマンドは不要であり、したがって省略される。</li>
+</ul>
+<p>Sam の興味深い特徴は二つの部分に分かれているということだ：</p>
+<ul>
+<li>ファイルを操作したり検索を行ったりするバックエンド</li>
+<li>画面のインターフェイスを扱うフロントエンド</li>
+</ul>
+<p>これは Separated Engine and Interface パターンの実例になっている。プログラムが
+GUI を持っているにもかかわらず、遠隔サーバー上のファイルを編集するために低帯域幅接続で簡単に実行できるという実用的な利点がある。また、フロントエンドとバックエンドを比較的簡単に変えられる。</p>
+<p>設計上、リッチテキスト編集も、出力解析も、子プロセスとの対話も支援していない。</p>
+<h3 id="emacs">Emacs<a class="headerlink" href="#emacs" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>Emacs is undoubtedly the most powerful programmer's editor in existence. It's
+a big, feature-laden program with a great deal of flexibility and
+customizability.</p>
+</blockquote>
+<ol>
+<li>最初の Emacs は Richard M. Stallman が設計した。</li>
+<li>Lisp を内蔵した最初のバージョンは Bernie Greenberg のものだ。</li>
+<li>現在のバージョンは Greenberg のものから派生した Stallman のものだ。</li>
+</ol>
+<p>Emacs にはプログラミング言語全体 (<a href="../implementation/languages.html">Chapter 14</a>) が組み込まれており、それを使って強力なエディター関数を書くことが可能だ。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>この辺の Emacs の機能説明ノートは省略。よく知っている。</p>
+</div>
+<blockquote>
+<p>The designers of Emacs built a programmable editor that could have
+task-related intelligence customized into it for hundreds of different
+specialized editing jobs. They then gave it the ability to drive other tools.
+As a result, Emacs supports dealing with all things textual in one shared
+context — files, mail, news, debugger symbols. It can serve as a customizable
+front end to any command with an interactive textual interface.</p>
+</blockquote>
+<p>Emacs 最大のウリは個人的にはこのプログラム可能性だと思う。</p>
+<p>Emacs は非 Unix 系 OS の統合開発環境 (IDE) が占める役割を果たしている (<a href="../implementation/tools.html">Chapter
+15</a>)。</p>
+<p>この能力は複雑さという代償を伴う。</p>
+<blockquote>
+<p>To use a customized Emacs you have to carry around the Lisp files that define
+your personal Emacs preferences.</p>
+</blockquote>
+<p>現代ならこの点は解消された。</p>
+<blockquote>
+<p>Learning how to customize Emacs is an entire art in itself.</p>
+</blockquote>
+<h3 id="wily">Wily<a class="headerlink" href="#wily" title="Permanent link">&para;</a></h3>
+<p><a href="https://en.wikipedia.org/wiki/Wily_(text_editor)">Wily</a> は Plan 9 エディター <a href="https://en.wikipedia.org/wiki/Acme_(text_editor)">Acme</a> のクローンだ。<a href="https://en.wikipedia.org/wiki/Sam_(text_editor)">Sam</a> と機能をいくつか共有しているが、根本的に異なる使用者体験を与えることを意図していた。</p>
+<ul>
+<li>エディターの必須条件である大域的検索と置換でさえ外部プログラムによって実現して
+  いる。</li>
+<li>内蔵コマンドはほとんどウィンドウ操作にしか関係しない。</li>
+<li>可能な限りマウスを使うように設計されている。</li>
+</ul>
+<blockquote>
+<p>The left mouse button is used to select text, the middle button to execute
+text as a command (either built-in or external), and the right button to
+search either Wily's buffers or the file system for text.</p>
+</blockquote>
+<ul>
+<li>メインウィンドウ内のテキストはすべて、動作や検索式になり得る。</li>
+<li>メニューは必要ない。</li>
+<li>ショートカットは複数のマウスボタンを同時に押し続けることで実現する。これらの
+  ショートカットは常に、何らかの内蔵コマンドで中ボタンを使うのと同じだ。</li>
+<li>C, Python, Perl プログラムのフロントエンドとして利用可能。ウィンドウが変更され
+  たり、マウスで execute や search コマンドが実行されたりするたびに、それらに報
+  告する。これらのプラグインは Emacs モードと同様の機能だが、Wily と同じアドレス
+  空間では動作しない。</li>
+<li>Wily には <code>xterm</code> 類縁物と、それを編集フロントエンドとして使うメールツールが同
+  梱されている。</li>
+<li>マウスに大きく依存しているため、character-cell-only 画面でも遠隔リンクなしでも
+  使用不可能。</li>
+<li>プレーンテキストを編集する設計になっている。フォントは可変幅と固定幅の二つしか
+  なく、リッチテキスト編集や構文認識を支援する仕組みはない。</li>
+</ul>
+<h2 id="the-right-size-for-an-editor">The Right Size for an Editor<a class="headerlink" href="#the-right-size-for-an-editor" title="Permanent link">&para;</a></h2>
+<p>本章の冒頭で作成した複雑性区分によって事例研究を検証していく。</p>
+<h3 id="identifying-the-complexity-problems">Identifying the Complexity Problems<a class="headerlink" href="#identifying-the-complexity-problems" title="Permanent link">&para;</a></h3>
+<p>どのテキストエディターにも、ある程度の必然的複雑性がある。四事例の中では、選択的複雑性も偶発的複雑性も、これ以上に大きく異なることを示している。</p>
+<p>四事例の中では ed(1) は最も複雑さが少ない。UI はきわめてコンパクトだ。</p>
+<ul>
+<li>コマンドの多くが p や l という接尾辞を付ければ、結果を表示したり一覧したりする
+  という非直交的な特徴があるが、これがほとんど唯一。</li>
+<li>コマンド数が 30 未満であり、削除可能であるような選択的複雑性はあまりなく、偶発
+  的複雑性を特定するのが難しい。</li>
+</ul>
+<p>反面、<code>ed</code> のインターフェイスはテキストファイルを素早くめくるような基本的な編集作業にはあまり適していない。</p>
+<p>では「複数ファイルの視覚的な閲覧と編集を支援する」という目的を <code>ed</code> に追加したとする。そうすると、Sam はこれを実現できる最小限の拡張機能ということになる。Sam 設計者は次の点で素晴らしい判断をした：</p>
+<blockquote>
+<p>The fact that the designers did not change the semantics of the inherited ed
+commands is notable; they kept an existing, orthogonal set and added a
+relatively small set of capabilities that are themselves orthogonal.</p>
+</blockquote>
+<p>Sam を検討する。選択的複雑度を大きくしている機能は二つ：</p>
+<ul>
+<li>無限 undo 機能</li>
+<li>コマンド言語での正規表現に基づく反復機能</li>
+</ul>
+<p>設計水準では Sam の偶発的複雑度を特定するのは難しい。インターフェイスは少なくともセミコンパクトで、ほぼ間違いなく厳密にコンパクトだ。出自を考えれば驚くものではないことだが、Unix 設計の最高水準に達している。</p>
+<p>次に <code>vi</code> を検討する。</p>
+<ul>
+<li>何百ものコマンドがあり、重複が多くある。高々選択的複雑性であり、たぶん偶発的。</li>
+<li>製作当時、キャレット移動をキーで行う必要があったので、モーダルインターフェイス
+  は避けられなかった。</li>
+<li>コマンドの乱雑さの問題は比較的表面的だ。ほとんど無視することが可能。</li>
+</ul>
+<p>問題としては即興的罠がもっとも深い：</p>
+<blockquote>
+<p>Over the years, <code>vi</code> has had progressively more and more special-purpose C
+code bolted onto it to perform tasks that Sam refuses to do and that Emacs
+would attack with Lisp code modules and subprocess control.</p>
+</blockquote>
+<p>不要なときでも <code>vi</code> の全機能がメモリーに乗る。そこには選択的複雑性も偶発的複雑性も含まれる。</p>
+<p>Emacs と <code>vi</code> のコードベース規模の比率が <code>vi</code> にとって有利になる見込みはなさそうだ：</p>
+<blockquote>
+<p>While <code>vi</code> fans like to talk about filtering buffers with external programs
+and scripts to do what Emacs's embedded scripting does, the reality is that
+<code>vi</code>'s <code>!</code> command cannot filter regions of an edit buffer selected at finer
+granularity than a range of lines (Sam and Wily, though they have no more
+subprocess management than <code>vi</code> does, can at least filter arbitrary text
+ranges, not just line ranges). All knowledge of file formats and syntaxes that
+vary at a finer granularity (and most do) has to be built in to C code if <code>vi</code>
+is going to have it available at all.</p>
+</blockquote>
+<p>Emacs は十分に大きく、もつれた歴史があるので、選択的と偶発的複雑性を切り分けるのは難しい。設計に含まれる偶発的なものを必然的なものから切り分けることから始める。</p>
+<p>Emacs 設計の中で、もっともどうでもいい部分は Emacs Lisp だろう。</p>
+<ul>
+<li>現在では内蔵スクリプト言語が備わっていることは必須だが、それが Python, Java,
+  Perl であったとしてもエディター機能はほとんど変わらない。</li>
+<li>ただし、設計当時は Lisp が Emacs に適した性質をもつ唯一の言語だった。</li>
+<li>そういえば他の書籍でも Lisp は軽視されることがない。</li>
+</ul>
+<p>任意のイベントを任意の内蔵関数や使用者定義関数に束縛する機能は死活的だ。</p>
+<p>同梱されている膨大な拡張モードのライブラリーは偶然的だ（拡張を構築する能力は必然的だが）。</p>
+<p>子プロセスとの相互作用は死活的だ。これがなければ Emacs のモードは期待された IDE
+のような統合やさまざまなツールのフロントエンドたり得ない。</p>
+<blockquote>
+<p>Experience with small editors that clone the default keybindings and
+appearance of Emacs without emulating its extensibility is instructive.</p>
+</blockquote>
+<p>二つ挙げている：</p>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/MicroEMACS">MicroEMACS</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Pico_(text_editor)">Pico</a></li>
+</ul>
+<p>Wily は Emacs と比較するのが面白い。Sam と同様、選択的複雑度は低く、Wily の UI
+は一ページで簡潔でありながら効率的に説明可能だ。</p>
+<ul>
+<li>キーストロークや入力ジェスチャーに機能を束縛することが不可能（マウス限定）</li>
+<li>ごく基本的なテキスト挿入・削除を除く編集機能は、エディター外部にあるプログラム
+  など（次のいずれか）で実装しなければならない：<ul>
+<li>単品のスクリプト</li>
+<li>Wily の入力イベントを傍受する特別な共生プロセス</li>
+</ul>
+</li>
+</ul>
+<p>Emacs が Lisp 拡張で実装するような選択的複雑性は、特別な共生物で分配される。この仕組みには利点がある：</p>
+<ul>
+<li>使用者が選ぶ言語で共生物を書くことができる。</li>
+<li>エディタープロセス外で動作するため、Wily 本体に悪影響を与えることがない。</li>
+</ul>
+<p>二つ目の利点を裏返せば欠点となる。Wily 自身は Unix ツールによる子プロセスとの相互作用を直接行えない。</p>
+<p>構文を意識した編集やリッチテキストへの興味を放棄しており、Wily もその Plan 9 の祖先である Acme もこれらのことはできない。</p>
+<h3 id="compromise-doesnt-work">Compromise Doesn't Work<a class="headerlink" href="#compromise-doesnt-work" title="Permanent link">&para;</a></h3>
+<p>Sam と <code>vi</code> の比較は、少なくともエディターに関しては、<code>ed</code> の最小主義と Emacs の完全装備指向の間で妥協しようとする試みがあまり上手くいかないことを強く示唆している。</p>
+<ul>
+<li><code>vi</code> これを試みたが、結局どちらの徳も得るところか、即興的罠にはまった。</li>
+<li>Wily は即興的罠を回避したが、Emacs の能力には及ばないし、それに近づくために
+  はそれぞれの対話型共生体に自作プロセスインターフェイスを要求しなければならない。</li>
+</ul>
+<blockquote>
+<p>Evidently something about editors tends to push them in the direction of
+increasing complexity.</p>
+</blockquote>
+<p>すべてが Zawinski の法則とも呼ばれる「ソフトウェア拡張の法則」に従って進化する傾向がある：</p>
+<blockquote>
+<p>Every program attempts to expand until it can read mail. Those programs which
+cannot so expand are replaced by ones which can.</p>
+</blockquote>
+<p>Zawinski はより一般に、次を主張している：</p>
+<blockquote>
+<p>all really useful programs tend to turn into Swiss Army knives.</p>
+</blockquote>
+<p>Unix 界以外での、大規模で統合されたアプリケーションスイートの商業的成功はスイスアーミーナイフ説を裏付ける傾向があり、Unix の最小主義哲学に対して異議を直接的に唱えている。</p>
+<p>Zawinski の法則が正しい限りにおいて、あるものは小さくあることを望み、あるものは大きくあることを望むが、その中間は不安定であることを示唆している。</p>
+<p>Emacs と Wily の例から、モノが大きくなりたがる理由がさらにわかる。編集とバージョン管理（メール、デバッグなど、編集以外の何か）は、実装者の視点からは別々の仕事だ。しかし、使用者は、同じファイル名やバッファーの内容を渡さなければならないプログラムの間を往復することに時間と注意を費やすよりも、テキストの断片を指し示すことができる単一の大きな環境で仕事をしたいことがよくある。</p>
+<p>もっと一般的に、Unix 環境全体を共同体による設計の一つの作品と見なすとしよう。そうすると、「小さくて鋭い道具」という信仰、インターフェイスの複雑さとコードベース規模を抑えようという圧力は、まさに手作業の罠に導かれることがある。</p>
+<blockquote>
+<p>the user has to maintain all the shared context himself, because the tools
+won't do it for him.</p>
+</blockquote>
+<p>話をエディターに戻すと：</p>
+<ul>
+<li>Sam は <code>vi</code> が間違ったものであることを示している。</li>
+<li>Wily は Emacs の広大さを回避するために頑張ったが、構文を認識することができない
+  ために失敗に終わった。</li>
+<li>Wily は、つまり Emacs の設計思想を因習を捨て去って整理したものは、正しいものな
+  のかもしれない。</li>
+</ul>
+<p>選択的複雑性の価値は誰かが選択する目的によって異なり、ある仕事に関連するテキスト指向ツールすべての間で、その仕事の状況、場面、背景を共にする能力は価値がある。</p>
+<h3 id="is-emacs-an-argument-against-the-unix-tradition">Is Emacs an Argument against the Unix Tradition?<a class="headerlink" href="#is-emacs-an-argument-against-the-unix-tradition" title="Permanent link">&para;</a></h3>
+<p>昔気質の Unix プログラマーの間で <code>vi</code> や Emacs が受けなかった理由は、それらが醜いからだ。(Doug McIlroy)</p>
+<p>著者は <code>vi</code> 使用者による Emacs の攻撃と、まだ <code>ed</code> に執着している筋金入りの守旧派による <code>vi</code> への攻撃があると言っている。</p>
+<!-- exuberance:  the quality of feeling energetic, or the behaviour of someone who feels this way -->
+
+<p>Unix プログラマーは過剰よりも気品を賞揚する伝統を維持してきた。</p>
+<p>Emacs の広大さを発明したのは、Artificial Intelligence Lab の Richard M. Stallman
+だった。計算機科学の研究機関の中でも最も裕福な研究所だ。彼は Unix プログラマーのような最小主義にこだわらず、自分のコードに最大限の能力と余地を求めた。</p>
+<blockquote>
+<p>The central tension in the Unix tradition has always been between doing more
+with less and doing more with more.</p>
+</blockquote>
+<p>Emacs に対する賛否両論はこの緊張の例証だという。</p>
+<p>Unix プログラマーが最小主義の原則に固執するあまり、現実を無視する過ちに対処する方法は二つある：</p>
+<ul>
+<li>大きいものは実際に大きいということを否定する</li>
+<li>独断的でない複雑性についての考え方を発展する</li>
+</ul>
+<p>先ほどは Emacs が Lisp と拡張を置き換えたら、という思考実験をした。Emacs が肥大している原因は拡張ライブラリーが巨大だからだという非難からそういう仮説を立てたわけだが、これはシステムにあるシェルスクリプトの集合が巨大だから <code>/bin/sh</code> が肥大しているというようなものだ。</p>
+<blockquote>
+<p>Emacs could be considered a virtual machine or framework around a collection
+of small, sharp tools (the modes) that happen to be written in Lisp.</p>
+</blockquote>
+<p>Emacs の中に汎用言語があると肥大化したように感じるからという理由で Emacs に反対するのは、シェルに条件分岐や <code>for</code> ループがあるからという理由でシェルスクリプトを使うのを拒否するのと同じくらい愚かだ。シェルスクリプトを使うためにシェルを学ぶ必要がないように、Emacs を使うために Lisp を学ぶ必要もないのだ。</p>
+<p>拒絶に陥る可能性を回避し、Emacs が有用であると同時に巨大であること、つまり Unix
+最小主義に対する反論であることを認めよう。</p>
+<h2 id="the-right-size-of-software">The Right Size of Software<a class="headerlink" href="#the-right-size-of-software" title="Permanent link">&para;</a></h2>
+<p>Unix 式の小さくて尖った道具は、ツール間の通信を容易にする枠組の中に存在しない限り、データの共有に苦労する。Emacs は枠組であり、«unified management of shared
+context» は Emacs の選択的複雑性を買うものだ。</p>
+<p>Emacs はファイルシステムをテキストバッファーと補助プロセスの世界と統合し、シェルの枠組をほとんど置き去りにしている。 Wily もバッファーと補助が中心だが、シェル枠組を取り込んでいる。最近のデスクトップ環境は GUI のための通信枠組を備え、これもシェル枠組を置き去りにしている。</p>
+<p>枠組は道具の生態系の住処になる：</p>
+<ul>
+<li>シェルはシェルスクリプト</li>
+<li>Emacs は Lisp モード</li>
+<li>デスクトップ環境は GUI の群れ</li>
+</ul>
+<p>これは最小限の法則 (Rule of Minimality) を示唆している：</p>
+<blockquote>
+<p>Choose the shared context you want to manage, and build your programs as small
+as those boundaries will allow.</p>
+</blockquote>
+<ul>
+<li>これは本章冒頭の Einstein の名言に適う。</li>
+<li>The shared context の選択に注意を集中することになる。</li>
+<li>この法則は枠組だけでなく、アプリケーションやプログラムシステムにも適用される。</li>
+</ul>
+<p>The shared context の大きさについてずさんになりがちだ。Zawinski の法則の背後にある圧力は、便利であるからといって context を share したがるアプリケーションの風潮がある。あまりに重く、多くの仮定を持ち運ぶことになり、複雑、肥大、巨大なプログラムを書くことになりがちだ。</p>
+<blockquote>
+<p>The corrective to this tendency comes straight from the old-school Unix
+hymnbook. It is the Rule of Parsimony: *Write a big program only when it is
+clear by demonstration that nothing else will do.</p>
+</blockquote>
+<p>その時とは、問題を分割しようとして失敗した時だ。</p>
+<ol>
+<li>小規模プログラムの解決策を探す。</li>
+<li>単一の小プログラムでは解決できない場合、既存の枠組の中で小プログラムを連携さ
+   せ、それで攻める。</li>
+<li>両方の取り組みが失敗したら、その場合に限り、大規模プログラムなり新規枠組なり
+   を自由に作る。</li>
+</ol>
+<p>枠組を作るときは分離の法則 (the Rule of Separation) を適用する。</p>
+<ul>
+<li>枠組は仕組みであり、方策は持たない。</li>
+<li>枠組を使うモジュールには、多くの振る舞いを組み込む。</li>
+</ul>
+<blockquote>
+<p>Circumstances alter cases, and exercising good judgment and good taste is what
+software designers are for.</p>
+</blockquote></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>© 2025 プレハブ小屋 All rights reserved.</p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js"></script>
+        <script src="../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

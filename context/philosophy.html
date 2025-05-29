@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="ja" data-bs-theme="auto">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="プレハブ小屋">
+        <link rel="canonical" href="https://github.com/showa-yojyo/taoup/context/philosophy.html">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Philosophy - The Art of Unix Programming 読書ノート</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../css/brands.min.css" rel="stylesheet">
+        <link href="../css/solid.min.css" rel="stylesheet">
+        <link href="../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" disabled>
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <link href="../css/style.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../index.html">The Art of Unix Programming 読書ノート</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../index.html" class="nav-link">Home</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle active" aria-current="page" role="button" data-bs-toggle="dropdown"  aria-expanded="false">Notes</a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../preface.html" class="dropdown-item">Preface</a>
+</li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Context</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="philosophy.html" class="dropdown-item active" aria-current="page">Philosophy</a>
+</li>
+            
+<li>
+    <a href="history.html" class="dropdown-item">History</a>
+</li>
+            
+<li>
+    <a href="contrasts.html" class="dropdown-item">Contrasts</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Design</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../design/modularity.html" class="dropdown-item">Modularity</a>
+</li>
+            
+<li>
+    <a href="../design/textuality.html" class="dropdown-item">Textuality</a>
+</li>
+            
+<li>
+    <a href="../design/transparency.html" class="dropdown-item">Transparency</a>
+</li>
+            
+<li>
+    <a href="../design/multiprogram.html" class="dropdown-item">Multiprogramming</a>
+</li>
+            
+<li>
+    <a href="../design/minilanguages.html" class="dropdown-item">Minilanguages</a>
+</li>
+            
+<li>
+    <a href="../design/generation.html" class="dropdown-item">Generation</a>
+</li>
+            
+<li>
+    <a href="../design/configuration.html" class="dropdown-item">Configuration</a>
+</li>
+            
+<li>
+    <a href="../design/interface.html" class="dropdown-item">Interfaces</a>
+</li>
+            
+<li>
+    <a href="../design/optimization.html" class="dropdown-item">Optimization</a>
+</li>
+            
+<li>
+    <a href="../design/complexity.html" class="dropdown-item">Complexity</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Implementation</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../implementation/languages.html" class="dropdown-item">Languages</a>
+</li>
+            
+<li>
+    <a href="../implementation/tools.html" class="dropdown-item">Tools</a>
+</li>
+            
+<li>
+    <a href="../implementation/reuse.html" class="dropdown-item">Reuse</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Community</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../community/portability.html" class="dropdown-item">Portability</a>
+</li>
+            
+<li>
+    <a href="../community/documentation.html" class="dropdown-item">Documentation</a>
+</li>
+            
+<li>
+    <a href="../community/opensource.html" class="dropdown-item">Open Source</a>
+</li>
+            
+<li>
+    <a href="../community/futures.html" class="dropdown-item">Futures</a>
+</li>
+    </ul>
+  </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/showa-yojyo/taoup/issues" class="nav-link">Issues</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../preface.html" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="history.html" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/showa-yojyo/taoup/edit/main/docs/context/philosophy.md" class="nav-link"><i class="fa-brands fa-github"></i> Edit on GitHub</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                              <button id="theme-menu" aria-expanded="false" data-bs-toggle="dropdown" data-bs-display="static" aria-label="Toggle theme" class="nav-link dropdown-toggle">
+                                <i class="fa-solid fa-circle-half-stroke fa-fw"></i>
+                                <span class="d-lg-none ms-2">Toggle theme</span>
+                              </button>
+                              <ul class="dropdown-menu dropdown-menu-end">
+                                <li>
+                                  <button class="dropdown-item d-flex align-items-center" data-bs-theme-value="light" aria-pressed="false">
+                                    <i class="fa-solid fa-sun fa-fw"></i>
+                                    <span class="ms-2">Light</span>
+                                    <i class="fa-solid fa-check ms-auto d-none"></i>
+                                  </button>
+                                </li>
+                                <li>
+                                  <button class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark" aria-pressed="false">
+                                    <i class="fa-solid fa-moon fa-fw"></i>
+                                    <span class="ms-2">Dark</span>
+                                    <i class="fa-solid fa-check ms-auto d-none"></i>
+                                  </button>
+                                </li>
+                                <li>
+                                  <button class="dropdown-item d-flex align-items-center" data-bs-theme-value="auto" aria-pressed="true">
+                                    <i class="fa-solid fa-circle-half-stroke fa-fw"></i>
+                                    <span class="ms-2">Auto</span>
+                                    <i class="fa-solid fa-check ms-auto"></i>
+                                  </button>
+                                </li>
+                              </ul>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <script src="../js/darkmode.js"></script>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="2"><a href="#culture-what-culture" class="nav-link">Culture? What Culture?</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="2"><a href="#the-durability-of-unix" class="nav-link">The Durability of Unix</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="2"><a href="#the-case-against-learning-unix-culture" class="nav-link">The Case against Learning Unix Culture</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="2"><a href="#what-unix-gets-wrong" class="nav-link">What Unix Gets Wrong</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="2"><a href="#what-unix-gets-right" class="nav-link">What Unix Gets Right</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="3"><a href="#open-source-software" class="nav-link">Open-Source Software</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#cross-platform-portability-and-open-standards" class="nav-link">Cross-Platform Portability and Open Standards</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#the-internet-and-the-world-wide-web" class="nav-link">The Internet and the World Wide Web</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#the-open-source-community" class="nav-link">The Open-Source Community</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#flexibility-all-the-way-down" class="nav-link">Flexibility All the Way Down</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#unix-is-fun-to-hack" class="nav-link">Unix Is Fun to Hack</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#the-lessons-of-unix-can-be-applied-elsewhere" class="nav-link">The Lessons of Unix Can Be Applied Elsewhere</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="2"><a href="#basics-of-the-unix-philosophy" class="nav-link">Basics of the Unix Philosophy</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="3"><a href="#rule-of-modularity-write-simple-parts-connected-by-clean-interfaces" class="nav-link">Rule of Modularity: Write simple parts connected by clean interfaces.</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#rule-of-clarity-clarity-is-better-than-cleverness" class="nav-link">Rule of Clarity: Clarity is better than cleverness.</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#rule-of-composition-design-programs-to-be-connected-with-other-programs" class="nav-link">Rule of Composition: Design programs to be connected with other programs.</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#rule-of-separation-separate-policy-from-mechanism-separate-interfaces-from-engines" class="nav-link">Rule of Separation: Separate policy from mechanism; separate interfaces from engines.</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#rule-of-simplicity-design-for-simplicity-add-complexity-only-where-you-must" class="nav-link">Rule of Simplicity: Design for simplicity; add complexity only where you must.</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#rule-of-parsimony-write-a-big-program-only-when-it-is-clear-by-demonstration-that-nothing-else-will-do" class="nav-link">Rule of Parsimony: Write a big program only when it is clear by demonstration that nothing else will do.</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#rule-of-transparency-design-for-visibility-to-make-inspection-and-debugging-easier" class="nav-link">Rule of Transparency: Design for visibility to make inspection and debugging easier.</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#rule-of-robustness-robustness-is-the-child-of-transparency-and-simplicity" class="nav-link">Rule of Robustness: Robustness is the child of transparency and simplicity.</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#rule-of-representation-fold-knowledge-into-data-so-program-logic-can-be-stupid-and-robust" class="nav-link">Rule of Representation: Fold knowledge into data, so program logic can be stupid and robust.</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#rule-of-least-surprise-in-interface-design-always-do-the-least-surprising-thing" class="nav-link">Rule of Least Surprise: In interface design, always do the least surprising thing.</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#rule-of-silence-when-a-program-has-nothing-surprising-to-say-it-should-say-nothing" class="nav-link">Rule of Silence: When a program has nothing surprising to say, it should say nothing.</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#rule-of-repair-repair-what-you-can-but-when-you-must-fail-fail-noisily-and-as-soon-as-possible" class="nav-link">Rule of Repair: Repair what you can — but when you must fail, fail noisily and as soon as possible.</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#rule-of-economy-programmer-time-is-expensive-conserve-it-in-preference-to-machine-time" class="nav-link">Rule of Economy: Programmer time is expensive; conserve it in preference to machine time.</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#rule-of-generation-avoid-hand-hacking-write-programs-to-write-programs-when-you-can" class="nav-link">Rule of Generation: Avoid hand-hacking; write programs to write programs when you can.</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#rule-of-optimization-prototype-before-polishing-get-it-working-before-you-optimize-it" class="nav-link">Rule of Optimization: Prototype before polishing. Get it working before you optimize it.</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#rule-of-diversity-distrust-all-claims-for-one-true-way" class="nav-link">Rule of Diversity: Distrust all claims for one true way.</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#rule-of-extensibility-design-for-the-future-because-it-will-be-here-sooner-than-you-think" class="nav-link">Rule of Extensibility: Design for the future, because it will be here sooner than you think.</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="2"><a href="#the-unix-philosophy-in-one-lesson" class="nav-link">The Unix Philosophy in One Lesson</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="2"><a href="#applying-the-unix-philosophy" class="nav-link">Applying the Unix Philosophy</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="2"><a href="#attitude-matters-too" class="nav-link">Attitude Matters Too</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="chapter-1-philosophy">Chapter 1. Philosophy<a class="headerlink" href="#chapter-1-philosophy" title="Permanent link">&para;</a></h1>
+<div class="toc"><span class="toctitle">見出し一覧</span><ul>
+<li><a href="#culture-what-culture">Culture? What Culture?</a></li>
+<li><a href="#the-durability-of-unix">The Durability of Unix</a></li>
+<li><a href="#the-case-against-learning-unix-culture">The Case against Learning Unix Culture</a></li>
+<li><a href="#what-unix-gets-wrong">What Unix Gets Wrong</a></li>
+<li><a href="#what-unix-gets-right">What Unix Gets Right</a><ul>
+<li><a href="#open-source-software">Open-Source Software</a></li>
+<li><a href="#cross-platform-portability-and-open-standards">Cross-Platform Portability and Open Standards</a></li>
+<li><a href="#the-internet-and-the-world-wide-web">The Internet and the World Wide Web</a></li>
+<li><a href="#the-open-source-community">The Open-Source Community</a></li>
+<li><a href="#flexibility-all-the-way-down">Flexibility All the Way Down</a></li>
+<li><a href="#unix-is-fun-to-hack">Unix Is Fun to Hack</a></li>
+<li><a href="#the-lessons-of-unix-can-be-applied-elsewhere">The Lessons of Unix Can Be Applied Elsewhere</a></li>
+</ul>
+</li>
+<li><a href="#basics-of-the-unix-philosophy">Basics of the Unix Philosophy</a><ul>
+<li><a href="#rule-of-modularity-write-simple-parts-connected-by-clean-interfaces">Rule of Modularity: Write simple parts connected by clean interfaces.</a></li>
+<li><a href="#rule-of-clarity-clarity-is-better-than-cleverness">Rule of Clarity: Clarity is better than cleverness.</a></li>
+<li><a href="#rule-of-composition-design-programs-to-be-connected-with-other-programs">Rule of Composition: Design programs to be connected with other programs.</a></li>
+<li><a href="#rule-of-separation-separate-policy-from-mechanism-separate-interfaces-from-engines">Rule of Separation: Separate policy from mechanism; separate interfaces from engines.</a></li>
+<li><a href="#rule-of-simplicity-design-for-simplicity-add-complexity-only-where-you-must">Rule of Simplicity: Design for simplicity; add complexity only where you must.</a></li>
+<li><a href="#rule-of-parsimony-write-a-big-program-only-when-it-is-clear-by-demonstration-that-nothing-else-will-do">Rule of Parsimony: Write a big program only when it is clear by demonstration that nothing else will do.</a></li>
+<li><a href="#rule-of-transparency-design-for-visibility-to-make-inspection-and-debugging-easier">Rule of Transparency: Design for visibility to make inspection and debugging easier.</a></li>
+<li><a href="#rule-of-robustness-robustness-is-the-child-of-transparency-and-simplicity">Rule of Robustness: Robustness is the child of transparency and simplicity.</a></li>
+<li><a href="#rule-of-representation-fold-knowledge-into-data-so-program-logic-can-be-stupid-and-robust">Rule of Representation: Fold knowledge into data, so program logic can be stupid and robust.</a></li>
+<li><a href="#rule-of-least-surprise-in-interface-design-always-do-the-least-surprising-thing">Rule of Least Surprise: In interface design, always do the least surprising thing.</a></li>
+<li><a href="#rule-of-silence-when-a-program-has-nothing-surprising-to-say-it-should-say-nothing">Rule of Silence: When a program has nothing surprising to say, it should say nothing.</a></li>
+<li><a href="#rule-of-repair-repair-what-you-can-but-when-you-must-fail-fail-noisily-and-as-soon-as-possible">Rule of Repair: Repair what you can — but when you must fail, fail noisily and as soon as possible.</a></li>
+<li><a href="#rule-of-economy-programmer-time-is-expensive-conserve-it-in-preference-to-machine-time">Rule of Economy: Programmer time is expensive; conserve it in preference to machine time.</a></li>
+<li><a href="#rule-of-generation-avoid-hand-hacking-write-programs-to-write-programs-when-you-can">Rule of Generation: Avoid hand-hacking; write programs to write programs when you can.</a></li>
+<li><a href="#rule-of-optimization-prototype-before-polishing-get-it-working-before-you-optimize-it">Rule of Optimization: Prototype before polishing. Get it working before you optimize it.</a></li>
+<li><a href="#rule-of-diversity-distrust-all-claims-for-one-true-way">Rule of Diversity: Distrust all claims for one true way.</a></li>
+<li><a href="#rule-of-extensibility-design-for-the-future-because-it-will-be-here-sooner-than-you-think">Rule of Extensibility: Design for the future, because it will be here sooner than you think.</a></li>
+</ul>
+</li>
+<li><a href="#the-unix-philosophy-in-one-lesson">The Unix Philosophy in One Lesson</a></li>
+<li><a href="#applying-the-unix-philosophy">Applying the Unix Philosophy</a></li>
+<li><a href="#attitude-matters-too">Attitude Matters Too</a></li>
+</ul>
+</div>
+<h2 id="culture-what-culture">Culture? What Culture?<a class="headerlink" href="#culture-what-culture" title="Permanent link">&para;</a></h2>
+<p>技術書であるのに、本書のあちらこちらに「文化」「技術」「哲学」などの言葉が飛び交う理由は Unix が独自の文化を有するから仕方がない：</p>
+<blockquote>
+<p>But Unix has a culture; it has a distinctive art of programming; and it
+carries with it a powerful design philosophy. Understanding these traditions
+will help you build better software, even if you're developing for a non-Unix
+platform.</p>
+</blockquote>
+<p>禅というか、仏教で言う顕教と密教のような考え方があるようだ：</p>
+<blockquote>
+<p>Senior engineers develop huge bodies of implicit knowledge, which they pass to
+their juniors by (as Zen Buddhists put it) “a special transmission, outside
+the scriptures”.</p>
+</blockquote>
+<p>Unix は技術一辺倒ではないのだという強い主張を感じる：</p>
+<blockquote>
+<p>A very few software technologies have proved durable enough to evolve strong
+technical cultures, distinctive arts, and an associated design philosophy
+transmitted across generations of engineers.</p>
+<p>The Unix culture is one of these. The Internet culture is another — or, in the
+twenty-first century, arguably the same one.</p>
+</blockquote>
+<h2 id="the-durability-of-unix">The Durability of Unix<a class="headerlink" href="#the-durability-of-unix" title="Permanent link">&para;</a></h2>
+<p>前節の最後を受けてか、耐久度という観点で議論が展開される。</p>
+<blockquote>
+<p>Unix was born in 1969 and has been in continuous production use ever since.
+That's several geologic eras by computer-industry standards</p>
+</blockquote>
+<p>まるで化石を論じるかのような書き出しだ。</p>
+<blockquote>
+<p>Much of Unix's stability and success has to be attributed to its inherent
+strengths, to design decisions Ken Thompson, Dennis Ritchie, Brian Kernighan,
+Doug McIlroy, Rob Pike and other early Unix developers made back at the
+beginning; decisions that have been proven sound over and over. But just as
+much is due to the design philosophy, art of programming, and technical
+culture that grew up around Unix in the early days.</p>
+</blockquote>
+<p>初期 Unix を取り巻く設計哲学、プログラミング技術、技術文化とは何であるかをこのあと詳しく語ってくれるのだろう。</p>
+<h2 id="the-case-against-learning-unix-culture">The Case against Learning Unix Culture<a class="headerlink" href="#the-case-against-learning-unix-culture" title="Permanent link">&para;</a></h2>
+<p>このへんから、Unix 懐疑論者という新キャラが登場するという体で読み進めるとわかりやすい。</p>
+<blockquote>
+<p>What confounds the skeptics' case is, more than anything else, the rise of
+Linux and other open-source Unixes (such as the modern BSD variants). Unix's
+culture proved too vital to be smothered even by a decade of vendor
+mismanagement. Today the Unix community itself has taken control of the
+technology and marketing, and is rapidly and visibly solving Unix's problems</p>
+</blockquote>
+<h2 id="what-unix-gets-wrong">What Unix Gets Wrong<a class="headerlink" href="#what-unix-gets-wrong" title="Permanent link">&para;</a></h2>
+<p>ここはもう一回目を通す。</p>
+<blockquote>
+<p>For a design that dates from 1969, it is remarkably difficult to identify
+design choices in Unix that are unequivocally wrong.</p>
+</blockquote>
+<p>この牽制のやり方は習得しよう。</p>
+<blockquote>
+<p>But the cost of the mechanism-not-policy approach is that when the user <em>can</em>
+set policy, the user <em>must</em> set policy.</p>
+</blockquote>
+<p>本節の結論は次だが、理解が少し難しい：</p>
+<blockquote>
+<p>So the flip side of the flip side is that the “mechanism, not policy”
+philosophy may enable Unix to renew its relevance long after competitors more
+tied to one set of policy or interface choices have faded from view.</p>
+</blockquote>
+<h2 id="what-unix-gets-right">What Unix Gets Right<a class="headerlink" href="#what-unix-gets-right" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>Unix culture is worth learning because there are some things that Unix and its
+surrounding culture clearly do better than any competitors.</p>
+</blockquote>
+<p>Unix とその文化をまとめて考えるのがコツだ。その優った文化として次を挙げている：</p>
+<ul>
+<li>オープンソースソフトウェアであること</li>
+<li>移植性と標準が公開されていて誰でも使えること</li>
+<li>インターネット</li>
+<li>オープンソース共同体</li>
+<li>柔軟性があること</li>
+<li>工夫するのが楽しいこと</li>
+<li>Unix で得た教訓が他でも使えること</li>
+</ul>
+<h3 id="open-source-software">Open-Source Software<a class="headerlink" href="#open-source-software" title="Permanent link">&para;</a></h3>
+<p>このオープンソースという術語自体は 1998 年のものだが、それが指す概念はもっと以前から存在していたという。</p>
+<h3 id="cross-platform-portability-and-open-standards">Cross-Platform Portability and Open Standards<a class="headerlink" href="#cross-platform-portability-and-open-standards" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>The Unix API is the closest thing to a hardware-independent standard for
+writing truly portable software that exists.</p>
+</blockquote>
+<p>Unix API が文書化されているという記述も重要。</p>
+<blockquote>
+<p>Binary-only applications for other operating systems die with their birth
+environments, but Unix sources are forever.</p>
+</blockquote>
+<p>バイナリーとテキストの比較論は以降も現れる。</p>
+<h3 id="the-internet-and-the-world-wide-web">The Internet and the World Wide Web<a class="headerlink" href="#the-internet-and-the-world-wide-web" title="Permanent link">&para;</a></h3>
+<p>理論や仕様はどこにでもだれにでも使えるものであるかもしれないが、伝統となれば話は別だ：</p>
+<blockquote>
+<p>The theory and specifications are available to anyone, but the engineering
+tradition to make them into a solid and working reality exists only in the
+Unix world.</p>
+</blockquote>
+<p>インターネットにおける URL の概念は Unix ファイルシステムに由来する：</p>
+<blockquote>
+<p>In particular, the concept of the Uniform Resource Locator (URL) so central to
+the Web is a generalization of the Unix idea of one uniform file namespace
+everywhere. To function effectively as an Internet expert, an understanding of
+Unix and its culture are indispensable.</p>
+</blockquote>
+<p>さらに、脚注で «Other operating systems have generally copied or cloned Unix
+TCP/IP implementations» と述べている。</p>
+<h3 id="the-open-source-community">The Open-Source Community<a class="headerlink" href="#the-open-source-community" title="Permanent link">&para;</a></h3>
+<p>インターネットの隆盛と共同体の形成は分けて考えられない。</p>
+<blockquote>
+<p>Entire Unix operating systems, with complete toolkits and basic applications
+suites, are available for free over the Internet. Why code from scratch when
+you can adapt, reuse, recycle, and save yourself 90% of the work?</p>
+</blockquote>
+<p>前半を端折って引用したが、有料既製品に負けない品質のシステムであるのに、という文脈だ。</p>
+<h3 id="flexibility-all-the-way-down">Flexibility All the Way Down<a class="headerlink" href="#flexibility-all-the-way-down" title="Permanent link">&para;</a></h3>
+<p>柔軟性の意味するところはこれがすべて：</p>
+<blockquote>
+<p>The many ways Unix provides to glue together programs mean that components of
+its basic toolkit can be combined to produce useful effects that the designers
+of the individual toolkit parts never anticipated.</p>
+</blockquote>
+<p>Unix における部品・道具それぞれの特徴はこうだ：</p>
+<blockquote>
+<p>Unix tradition lays heavy emphasis on keeping programming interfaces
+relatively small, clean, and orthogonal — another trait that produces
+flexibility in depth.</p>
+</blockquote>
+<p>Unix プログラムインターフェイスの集合は計量空間らしい。</p>
+<h3 id="unix-is-fun-to-hack">Unix Is Fun to Hack<a class="headerlink" href="#unix-is-fun-to-hack" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>People who pontificate about Unix's technical superiority often don't mention
+what may ultimately be its most important strength, the one that underlies all
+its successes.</p>
+</blockquote>
+<p>この言い回しは何かに使いたい。動詞 pontifacate など知らなかった。</p>
+<blockquote>
+<p>‘Fun’ is therefore a sign of peak efficiency.</p>
+</blockquote>
+<p>楽しいかどうかで効率性を計ることにするというのは面白い。</p>
+<h3 id="the-lessons-of-unix-can-be-applied-elsewhere">The Lessons of Unix Can Be Applied Elsewhere<a class="headerlink" href="#the-lessons-of-unix-can-be-applied-elsewhere" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>Even non-Unix programmers can benefit from studying that Unix experience.
+Because Unix makes it relatively easy to apply good design principles and
+development methods, it is an excellent place to learn them.</p>
+</blockquote>
+<p>Unix は優れた設計原則や開発手法を比較的簡単に適用できる対象であり、それらを学ぶのに最適な場所でもある。</p>
+<p>Unix コードの大部分は ANSI C をサポートする OS ならば、それに直接移植することができるという意味でも can be applied elsewhere なのだ。</p>
+<h2 id="basics-of-the-unix-philosophy">Basics of the Unix Philosophy<a class="headerlink" href="#basics-of-the-unix-philosophy" title="Permanent link">&para;</a></h2>
+<p>この節は比較的長い。</p>
+<blockquote>
+<p>The ‘Unix philosophy’ originated with Ken Thompson's early meditations on how
+to design a small but capable operating system with a clean service interface.</p>
+</blockquote>
+<p>Google で Ken Thompson を検索すると、猿渡哲也先生作品に出てきそうなモノクロ近影写真が出てくる。</p>
+<blockquote>
+<p>The Unix philosophy (like successful folk traditions in other engineering
+disciplines) is bottom-up, not top-down.</p>
+</blockquote>
+<p>これはよく憶えておく。どちらかを選べたらボトムアップだ。</p>
+<p>Doug McIlroy, Rob Pike, Ken Thompson 各老師による Unix 評を、おそらく著者が独自に要約したのがここから詳述される規則集だ。これらの価値が貴いという観点は現代でも失われていないのでは：</p>
+<ul>
+<li>Modularity</li>
+<li>Clarity</li>
+<li>Composition</li>
+<li>Separation</li>
+<li>Simplicity</li>
+<li>Parsimony</li>
+<li>Transparency</li>
+<li>Robustness</li>
+<li>Representation</li>
+<li>Least Surprise</li>
+<li>Silence</li>
+<li>Repair</li>
+<li>Economy</li>
+<li>Generation</li>
+<li>Optimization</li>
+<li>Diversity</li>
+<li>Extensibility</li>
+</ul>
+<h3 id="rule-of-modularity-write-simple-parts-connected-by-clean-interfaces">Rule of Modularity: Write simple parts connected by clean interfaces.<a class="headerlink" href="#rule-of-modularity-write-simple-parts-connected-by-clean-interfaces" title="Permanent link">&para;</a></h3>
+<p>複雑さを抑制することがプログラミングの本質であるならば、どうすればよいか。複雑なものをほぐしてより小さい部分に分離する。それらの部分は後できれいにつながるようでなければならない。そのような性質は modularity と呼ばれている。</p>
+<blockquote>
+<p>The only way to write complex software that won't fall on its face is to hold
+its global complexity down — to build it out of simple parts connected by
+well-defined interfaces, so that most problems are local and you can have some
+hope of upgrading a part without breaking the whole.</p>
+</blockquote>
+<h3 id="rule-of-clarity-clarity-is-better-than-cleverness">Rule of Clarity: Clarity is better than cleverness.<a class="headerlink" href="#rule-of-clarity-clarity-is-better-than-cleverness" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>Code that is graceful and clear, on the other hand, is less likely to break —
+and more likely to be instantly comprehended by the next person to have to
+change it.</p>
+</blockquote>
+<p>きれいなコードは壊れにくい。</p>
+<h3 id="rule-of-composition-design-programs-to-be-connected-with-other-programs">Rule of Composition: Design programs to be connected with other programs.<a class="headerlink" href="#rule-of-composition-design-programs-to-be-connected-with-other-programs" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>Unix tradition strongly encourages writing programs that read and write
+simple, textual, stream-oriented, device-independent formats. Under classic
+Unix, as many programs as possible are written as simple <em>filters</em>, which take
+a simple text stream on input and process it into another simple text stream
+on output.</p>
+</blockquote>
+<p>よく使う CLI はこの原則によく従っている。テキストであることがまずは必要であって、さらに変な構造や書式がないこと。</p>
+<blockquote>
+<p>Text streams are to Unix tools as messages are to objects in an
+object-oriented setting. The simplicity of the text-stream interface enforces
+the encapsulation of the tools.</p>
+</blockquote>
+<p>後世になって PowerShell のようなメッセージがほんとうにオブジェクトである CLI が生まれる。</p>
+<h3 id="rule-of-separation-separate-policy-from-mechanism-separate-interfaces-from-engines">Rule of Separation: Separate policy from mechanism; separate interfaces from engines.<a class="headerlink" href="#rule-of-separation-separate-policy-from-mechanism-separate-interfaces-from-engines" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>Thus, hardwiring policy and mechanism together has two bad effects: It makes
+policy rigid and harder to change in response to user requirements, and it
+means that trying to change policy has a strong tendency to destabilize the
+mechanisms.</p>
+</blockquote>
+<p>分離の例を二つ挙げている：</p>
+<ul>
+<li>Emacs 方式。このエディターでは C 言語で書かれた編集要素を制御するのに、内蔵
+  Lisp インタプリターを使用する。</li>
+<li>ソケット通信方式。フロントエンドとバックエンドを専用プロトコルで通信、協調させ
+  る。</li>
+</ul>
+<h3 id="rule-of-simplicity-design-for-simplicity-add-complexity-only-where-you-must">Rule of Simplicity: Design for simplicity; add complexity only where you must.<a class="headerlink" href="#rule-of-simplicity-design-for-simplicity-add-complexity-only-where-you-must" title="Permanent link">&para;</a></h3>
+<p>技術マッチョはダメだ。</p>
+<h3 id="rule-of-parsimony-write-a-big-program-only-when-it-is-clear-by-demonstration-that-nothing-else-will-do">Rule of Parsimony: Write a big program only when it is clear by demonstration that nothing else will do.<a class="headerlink" href="#rule-of-parsimony-write-a-big-program-only-when-it-is-clear-by-demonstration-that-nothing-else-will-do" title="Permanent link">&para;</a></h3>
+<p>見出しにある parsimony という単語は知らなんだ。吝嗇くらいの意味か？</p>
+<blockquote>
+<p>‘Big’ here has the sense both of large in volume of code and of internal
+complexity.</p>
+</blockquote>
+<p>量としても質としてもデカいということ？</p>
+<h3 id="rule-of-transparency-design-for-visibility-to-make-inspection-and-debugging-easier">Rule of Transparency: Design for visibility to make inspection and debugging easier.<a class="headerlink" href="#rule-of-transparency-design-for-visibility-to-make-inspection-and-debugging-easier" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>A particularly effective way to ease debugging is to design for <em>transparency</em>
+and <em>discoverability</em>.</p>
+</blockquote>
+<p>透明である、発見可能である、を定義する：</p>
+<blockquote>
+<p>A software system is <em>transparent</em> when you can look at it and immediately
+understand what it is doing and how. It is <em>discoverable</em> when it has
+facilities for monitoring and display of internal state so that your program
+not only functions well but can be seen to function well.</p>
+</blockquote>
+<p>デバッグ機能は後付けであってはならない。</p>
+<h3 id="rule-of-robustness-robustness-is-the-child-of-transparency-and-simplicity">Rule of Robustness: Robustness is the child of transparency and simplicity.<a class="headerlink" href="#rule-of-robustness-robustness-is-the-child-of-transparency-and-simplicity" title="Permanent link">&para;</a></h3>
+<p>著者はソフトウェアが堅牢であるということを次のように定義している：</p>
+<blockquote>
+<p>Software is said to be <em>robust</em> when it performs well under unexpected
+conditions which stress the designer's assumptions, as well as under normal
+conditions.</p>
+</blockquote>
+<p>思っていたより厳しい意味だった。</p>
+<p>どうすれば堅牢に作れるのか。方法は二つあるという。それが見出しの後半だ。これらの概念も改めて定義される：</p>
+<blockquote>
+<p>We observed above that software is <em>transparent</em> when you can look at it and
+immediately see what is going on. It is <em>simple</em> when what is going on is
+uncomplicated enough for a human brain to reason about all the potential cases
+without strain. The more your programs have both of these qualities, the more
+robust they will be.</p>
+</blockquote>
+<h3 id="rule-of-representation-fold-knowledge-into-data-so-program-logic-can-be-stupid-and-robust">Rule of Representation: Fold knowledge into data, so program logic can be stupid and robust.<a class="headerlink" href="#rule-of-representation-fold-knowledge-into-data-so-program-logic-can-be-stupid-and-robust" title="Permanent link">&para;</a></h3>
+<p>知識をデータに折り重ねる！</p>
+<blockquote>
+<p>Even the simplest procedural logic is hard for humans to verify, but quite
+complex data structures are fairly easy to model and reason about.</p>
+</blockquote>
+<p>これはなぜだろうか。</p>
+<p>データ構造の複雑さとコードの複雑さのどちらを選ぶかといえば、前者を選ぶべきだということになる。</p>
+<p>この後に C 言語のポインターの話が続くのが不穏だ。</p>
+<h3 id="rule-of-least-surprise-in-interface-design-always-do-the-least-surprising-thing">Rule of Least Surprise: In interface design, always do the least surprising thing.<a class="headerlink" href="#rule-of-least-surprise-in-interface-design-always-do-the-least-surprising-thing" title="Permanent link">&para;</a></h3>
+<p>高名な「驚き最小の原則」だ。</p>
+<blockquote>
+<p>Therefore, avoid gratuitous novelty and excessive cleverness in interface
+design. If you're writing a calculator program, ‘+’ should always mean
+addition! When designing an interface, model it on the interfaces of
+functionally similar or analogous programs with which your users are likely to
+be familiar.</p>
+</blockquote>
+<p>何が意外である（ない）かは、使用者による。</p>
+<p>最後に引用されている Henry Spencer 氏の言葉には誰もが思い当たる状況があるだろう：</p>
+<blockquote>
+<p>The flip side of the Rule of Least Surprise is to avoid making things
+superficially similar but really a little bit different. This is extremely
+treacherous because the seeming familiarity raises false expectations. It's
+often better to make things distinctly different than to make them almost the
+same.</p>
+</blockquote>
+<!-- superficially: うわべでは -->
+<!-- treacherous: 裏切りの、油断ならぬ -->
+
+<h3 id="rule-of-silence-when-a-program-has-nothing-surprising-to-say-it-should-say-nothing">Rule of Silence: When a program has nothing surprising to say, it should say nothing.<a class="headerlink" href="#rule-of-silence-when-a-program-has-nothing-surprising-to-say-it-should-say-nothing" title="Permanent link">&para;</a></h3>
+<p>この規則の元々の理由は、単に出力そのものが高く付いた時代がかつてあったからだ：</p>
+<blockquote>
+<p>This “silence is golden” rule evolved originally because Unix predates video
+displays. On the slow printing terminals of 1969, each line of unnecessary
+output was a serious drain on the user's time.</p>
+</blockquote>
+<p>まずは：</p>
+<blockquote>
+<p>Well-behaved Unix programs do their jobs unobtrusively, with a minimum of fuss
+and bother. Silence is golden.</p>
+</blockquote>
+<p>もう一つ：</p>
+<blockquote>
+<p>Well-designed programs treat the user's attention and concentration as a
+precious and limited resource, only to be claimed when necessary.</p>
+</blockquote>
+<!-- predate: 前から存在する -->
+<!-- unobtrusively: 目立たずに -->
+
+<h3 id="rule-of-repair-repair-what-you-can-but-when-you-must-fail-fail-noisily-and-as-soon-as-possible">Rule of Repair: Repair what you can — but when you must fail, fail noisily and as soon as possible.<a class="headerlink" href="#rule-of-repair-repair-what-you-can-but-when-you-must-fail-fail-noisily-and-as-soon-as-possible" title="Permanent link">&para;</a></h3>
+<p>失敗するならやかましく、かつ早く失敗しろ。</p>
+<blockquote>
+<p>Well-designed programs cooperate with other programs by making as much sense
+as they can from ill-formed inputs; they either fail noisily or pass strictly
+clean and correct data to the next program in the chain.</p>
+</blockquote>
+<!-- cope: 対処する -->
+<!-- heed: 心に留める -->
+
+<blockquote>
+<p>McIlroy adjures us to <em>design</em> for generosity rather than compensating for
+inadequate standards with permissive implementations.</p>
+</blockquote>
+<!-- adjure: 命じる-->
+<!-- generosity: 寛大な -->
+
+<h3 id="rule-of-economy-programmer-time-is-expensive-conserve-it-in-preference-to-machine-time">Rule of Economy: Programmer time is expensive; conserve it in preference to machine time.<a class="headerlink" href="#rule-of-economy-programmer-time-is-expensive-conserve-it-in-preference-to-machine-time" title="Permanent link">&para;</a></h3>
+<p>本書執筆時点でさえマシン性能は十分なものだった。プログラマーの時間を節約することが重要なのは言うまでもないとある。</p>
+<blockquote>
+<p>In the early minicomputer days of Unix, this was still a fairly radical idea
+(machines were a great deal slower and more expensive then).</p>
+</blockquote>
+<p>ただし、著者はこの格言がどういうわけか現実にはまだ浸透していないと考えている。</p>
+<blockquote>
+<p>And indeed this is happening within the Unix world, though outside it most
+applications shops still seem stuck with the old-school Unix strategy of
+coding in C (or C++).</p>
+</blockquote>
+<h3 id="rule-of-generation-avoid-hand-hacking-write-programs-to-write-programs-when-you-can">Rule of Generation: Avoid hand-hacking; write programs to write programs when you can.<a class="headerlink" href="#rule-of-generation-avoid-hand-hacking-write-programs-to-write-programs-when-you-can" title="Permanent link">&para;</a></h3>
+<p>手作業を忌避しろというよりは、プログラムを書くプログラムを書けというのが主旨らしい。</p>
+<blockquote>
+<p>Human beings are notoriously bad at sweating the details. Accordingly, any
+kind of hand-hacking of programs is a rich source of delays and errors. The
+simpler and more abstracted your program specification can be, the more likely
+it is that the human designer will have gotten it right. Generated code (at
+every level) is almost always cheaper and more reliable than hand-hacked.</p>
+<p>We all know this is true (it's why we have compilers and interpreters, after
+all) but we often don't think about the implications.</p>
+</blockquote>
+<h3 id="rule-of-optimization-prototype-before-polishing-get-it-working-before-you-optimize-it">Rule of Optimization: Prototype before polishing. Get it working before you optimize it.<a class="headerlink" href="#rule-of-optimization-prototype-before-polishing-get-it-working-before-you-optimize-it" title="Permanent link">&para;</a></h3>
+<p>まず試作で、それから最適化だ。</p>
+<ul>
+<li>«90% of the functionality delivered now is better than 100% of it delivered
+  never» Kernighan and Plauger</li>
+<li>«Premature optimization is the root of all evil» Donald Knuth; 完全版は本書脚
+  注参照。</li>
+<li>«Make it run, then make it right, then make it fast» Kent Beck</li>
+</ul>
+<p>最適化には局所的なものと大域的なものがある。早過ぎる前者は後者を阻害すると言っている：</p>
+<blockquote>
+<p>A prematurely optimized portion of a design frequently interferes with changes
+that would have much higher payoffs across the whole design, so you end up
+with both inferior performance and excessively complex code.</p>
+</blockquote>
+<p>設計の観点からも試作することには意味がある：</p>
+<blockquote>
+<p>Using prototyping to learn which features you don't have to implement helps
+optimization for performance; you don't have to optimize what you don't write.</p>
+</blockquote>
+<h3 id="rule-of-diversity-distrust-all-claims-for-one-true-way">Rule of Diversity: Distrust all claims for one true way.<a class="headerlink" href="#rule-of-diversity-distrust-all-claims-for-one-true-way" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>Even the best software tools tend to be limited by the imaginations of their
+designers.</p>
+</blockquote>
+<p>設計者の想像には限界がある。</p>
+<p>Unix の伝統では、ただ一つの真の方法のような考えを疑念であると考える。そして、次のようなものを良しとする：</p>
+<blockquote>
+<p>It embraces multiple languages, open extensible systems, and customization
+hooks everywhere.</p>
+</blockquote>
+<!-- embrace: 抱擁する→受け入れる→採用する -->
+
+<h3 id="rule-of-extensibility-design-for-the-future-because-it-will-be-here-sooner-than-you-think">Rule of Extensibility: Design for the future, because it will be here sooner than you think.<a class="headerlink" href="#rule-of-extensibility-design-for-the-future-because-it-will-be-here-sooner-than-you-think" title="Permanent link">&para;</a></h3>
+<p>Unix 愛好家は技術者というより芸術家に近いようだ。</p>
+<blockquote>
+<p>Never assume you have the final answer. Therefore, leave room for your data
+formats and code to grow; otherwise, you will often find that you are locked
+into unwise early choices because you cannot change them while maintaining
+backward compatibility.</p>
+</blockquote>
+<p>データ形式とコードは拡張性を意識して設計しろということだ。さらに実践的なことを述べられる：</p>
+<blockquote>
+<p>When you design protocols or file formats, make them sufficiently
+self-describing to be extensible. Always, always either include a version
+number, or compose the format from self-contained, self-describing clauses in
+such a way that new clauses can be readily added and old ones dropped without
+confusing format-reading code.</p>
+</blockquote>
+<p>例えば自作アプリケーションデータを XML ファイルで入出力可能にする設計だとすると、ファイルの最初の方に <code>&lt;version&gt;</code> のような要素を格納してしかるべきだ。</p>
+<h2 id="the-unix-philosophy-in-one-lesson">The Unix Philosophy in One Lesson<a class="headerlink" href="#the-unix-philosophy-in-one-lesson" title="Permanent link">&para;</a></h2>
+<p>かの有名な KISS 原則を紹介する節。忘れたらこの巨大な画像を確認して欲しい。本書の残りの部分で読者がその方法を学ぶ助けとするつもりだと述べている。</p>
+<h2 id="applying-the-unix-philosophy">Applying the Unix Philosophy<a class="headerlink" href="#applying-the-unix-philosophy" title="Permanent link">&para;</a></h2>
+<p>Unix の教えを標語的にして一覧にしたもの（完全版ではないと断ってある）がある。</p>
+<p>自分の言葉で表現し直して以下に綴る：</p>
+<ul>
+<li>送信元と送信先に依存しないフィルターであり得るものはそうであって然るべきだ。</li>
+<li>データストリームはテキストであって然るべきだ。</li>
+<li>データベースレイアウトとアプリケーションプロトコルはテキストであって然るべきだ。</li>
+<li>複雑な UI は複雑なバックエンドから分離してあって然るべきだ。</li>
+<li>C 言語で書く前にインタプリター言語で試作する。</li>
+<li>一つの言語しか使わないとプログラムが複雑になり過ぎる可能性がある場合、かつその
+  場合に限り、一つの言語ですべてを書くより、複数の言語を混ぜるほうがいい。</li>
+<li>受け入れは寛大に、送り出しは厳格に。</li>
+<li>絞り込む際には不要な情報を捨ててはいけない。</li>
+<li>必要な仕事をするだけの小さなプログラムを書け。</li>
+</ul>
+<p>ここで言う C 言語は現代ならそれ以外の違う言語でもあり得る。コードが面倒な高級言語くらいの意味に解釈したい。</p>
+<blockquote>
+<p>We'll see the Unix design rules, and the prescriptions that derive from them,
+applied over and over again in the remainder of this book.</p>
+</blockquote>
+<p>Unix の設計規則とそこから派生した方策は、当然ではあるが、他の伝統的なソフトウェア工学のベストプラクティスに収束する傾向がある。</p>
+<h2 id="attitude-matters-too">Attitude Matters Too<a class="headerlink" href="#attitude-matters-too" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>If you don't know what the right thing is, do the minimum necessary to get the
+job done, at least until you figure out what the right thing is.</p>
+</blockquote>
+<p>言われなくてもそうすると言いたいところだが、実際は意外にそうではない。</p>
+<blockquote>
+<p>You have to believe that software design is a craft worth all the
+intelligence, creativity, and passion you can muster.</p>
+</blockquote>
+<!-- muster: 奮い起こす -->
+
+<p>Unix の哲学を正しく行うにはかなりの意思の強さが要ると言う。必要以上に頑張ることなく、賢く働き、余分な努力は後に取っておく。道具を活用し、自動化する。そんな態度であれと述べ、こう語りかけられる：</p>
+<blockquote>
+<p>If this attitude seems preposterous or vaguely embarrassing to you, stop and
+think; ask yourself what you've forgotten. Why do you design software instead
+of doing something else to make money or pass the time? You must have thought
+software was worthy of your passion once....</p>
+</blockquote>
+<p>馬鹿らしいとはさすがに思っていないが、熱が失せているのは確かだ。</p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>© 2025 プレハブ小屋 All rights reserved.</p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js"></script>
+        <script src="../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

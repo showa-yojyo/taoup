@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="ja" data-bs-theme="auto">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="プレハブ小屋">
+        <link rel="canonical" href="https://github.com/showa-yojyo/taoup/community/futures.html">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Futures - The Art of Unix Programming 読書ノート</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../css/brands.min.css" rel="stylesheet">
+        <link href="../css/solid.min.css" rel="stylesheet">
+        <link href="../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" disabled>
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <link href="../css/style.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../index.html">The Art of Unix Programming 読書ノート</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../index.html" class="nav-link">Home</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle active" aria-current="page" role="button" data-bs-toggle="dropdown"  aria-expanded="false">Notes</a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../preface.html" class="dropdown-item">Preface</a>
+</li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Context</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../context/philosophy.html" class="dropdown-item">Philosophy</a>
+</li>
+            
+<li>
+    <a href="../context/history.html" class="dropdown-item">History</a>
+</li>
+            
+<li>
+    <a href="../context/contrasts.html" class="dropdown-item">Contrasts</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Design</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../design/modularity.html" class="dropdown-item">Modularity</a>
+</li>
+            
+<li>
+    <a href="../design/textuality.html" class="dropdown-item">Textuality</a>
+</li>
+            
+<li>
+    <a href="../design/transparency.html" class="dropdown-item">Transparency</a>
+</li>
+            
+<li>
+    <a href="../design/multiprogram.html" class="dropdown-item">Multiprogramming</a>
+</li>
+            
+<li>
+    <a href="../design/minilanguages.html" class="dropdown-item">Minilanguages</a>
+</li>
+            
+<li>
+    <a href="../design/generation.html" class="dropdown-item">Generation</a>
+</li>
+            
+<li>
+    <a href="../design/configuration.html" class="dropdown-item">Configuration</a>
+</li>
+            
+<li>
+    <a href="../design/interface.html" class="dropdown-item">Interfaces</a>
+</li>
+            
+<li>
+    <a href="../design/optimization.html" class="dropdown-item">Optimization</a>
+</li>
+            
+<li>
+    <a href="../design/complexity.html" class="dropdown-item">Complexity</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Implementation</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../implementation/languages.html" class="dropdown-item">Languages</a>
+</li>
+            
+<li>
+    <a href="../implementation/tools.html" class="dropdown-item">Tools</a>
+</li>
+            
+<li>
+    <a href="../implementation/reuse.html" class="dropdown-item">Reuse</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Community</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="portability.html" class="dropdown-item">Portability</a>
+</li>
+            
+<li>
+    <a href="documentation.html" class="dropdown-item">Documentation</a>
+</li>
+            
+<li>
+    <a href="opensource.html" class="dropdown-item">Open Source</a>
+</li>
+            
+<li>
+    <a href="futures.html" class="dropdown-item active" aria-current="page">Futures</a>
+</li>
+    </ul>
+  </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/showa-yojyo/taoup/issues" class="nav-link">Issues</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="opensource.html" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" class="nav-link disabled">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/showa-yojyo/taoup/edit/main/docs/community/futures.md" class="nav-link"><i class="fa-brands fa-github"></i> Edit on GitHub</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                              <button id="theme-menu" aria-expanded="false" data-bs-toggle="dropdown" data-bs-display="static" aria-label="Toggle theme" class="nav-link dropdown-toggle">
+                                <i class="fa-solid fa-circle-half-stroke fa-fw"></i>
+                                <span class="d-lg-none ms-2">Toggle theme</span>
+                              </button>
+                              <ul class="dropdown-menu dropdown-menu-end">
+                                <li>
+                                  <button class="dropdown-item d-flex align-items-center" data-bs-theme-value="light" aria-pressed="false">
+                                    <i class="fa-solid fa-sun fa-fw"></i>
+                                    <span class="ms-2">Light</span>
+                                    <i class="fa-solid fa-check ms-auto d-none"></i>
+                                  </button>
+                                </li>
+                                <li>
+                                  <button class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark" aria-pressed="false">
+                                    <i class="fa-solid fa-moon fa-fw"></i>
+                                    <span class="ms-2">Dark</span>
+                                    <i class="fa-solid fa-check ms-auto d-none"></i>
+                                  </button>
+                                </li>
+                                <li>
+                                  <button class="dropdown-item d-flex align-items-center" data-bs-theme-value="auto" aria-pressed="true">
+                                    <i class="fa-solid fa-circle-half-stroke fa-fw"></i>
+                                    <span class="ms-2">Auto</span>
+                                    <i class="fa-solid fa-check ms-auto"></i>
+                                  </button>
+                                </li>
+                              </ul>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <script src="../js/darkmode.js"></script>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="2"><a href="#essence-and-accident-in-unix-tradition" class="nav-link">Essence and Accident in Unix Tradition</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="2"><a href="#plan-9-the-way-the-future-was" class="nav-link">Plan 9: The Way the Future Was</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="2"><a href="#problems-in-the-design-of-unix" class="nav-link">Problems in the Design of Unix</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="3"><a href="#a-unix-file-is-just-a-big-bag-of-bytes" class="nav-link">A Unix File Is Just a Big Bag of Bytes</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#unix-support-for-guis-is-weak" class="nav-link">Unix Support for GUIs Is Weak</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#file-deletion-is-forever" class="nav-link">File Deletion Is Forever</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#unix-assumes-a-static-file-system" class="nav-link">Unix Assumes a Static File System</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#the-design-of-job-control-was-badly-botched" class="nav-link">The Design of Job Control Was Badly Botched</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#the-unix-api-doesnt-use-exceptions" class="nav-link">The Unix API Doesn't Use Exceptions</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#ioctl2-and-fcntl2-are-an-embarrassment" class="nav-link">ioctl2 and fcntl2 Are an Embarrassment</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#the-unix-security-model-may-be-too-primitive" class="nav-link">The Unix Security Model May Be Too Primitive</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#unix-has-too-many-different-kinds-of-names" class="nav-link">Unix Has Too Many Different Kinds of Names</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#file-systems-might-be-considered-harmful" class="nav-link">File Systems Might Be Considered Harmful</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#towards-a-global-internet-address-space" class="nav-link">Towards a Global Internet Address Space</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="2"><a href="#problems-in-the-environment-of-unix" class="nav-link">Problems in the Environment of Unix</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="2"><a href="#problems-in-the-culture-of-unix" class="nav-link">Problems in the Culture of Unix</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="2"><a href="#reasons-to-believe" class="nav-link">Reasons to Believe</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="chapter-20-futures">Chapter 20. Futures<a class="headerlink" href="#chapter-20-futures" title="Permanent link">&para;</a></h1>
+<div class="toc"><span class="toctitle">見出し一覧</span><ul>
+<li><a href="#essence-and-accident-in-unix-tradition">Essence and Accident in Unix Tradition</a></li>
+<li><a href="#plan-9-the-way-the-future-was">Plan 9: The Way the Future Was</a></li>
+<li><a href="#problems-in-the-design-of-unix">Problems in the Design of Unix</a><ul>
+<li><a href="#a-unix-file-is-just-a-big-bag-of-bytes">A Unix File Is Just a Big Bag of Bytes</a></li>
+<li><a href="#unix-support-for-guis-is-weak">Unix Support for GUIs Is Weak</a></li>
+<li><a href="#file-deletion-is-forever">File Deletion Is Forever</a></li>
+<li><a href="#unix-assumes-a-static-file-system">Unix Assumes a Static File System</a></li>
+<li><a href="#the-design-of-job-control-was-badly-botched">The Design of Job Control Was Badly Botched</a></li>
+<li><a href="#the-unix-api-doesnt-use-exceptions">The Unix API Doesn't Use Exceptions</a></li>
+<li><a href="#ioctl2-and-fcntl2-are-an-embarrassment">ioctl2 and fcntl2 Are an Embarrassment</a></li>
+<li><a href="#the-unix-security-model-may-be-too-primitive">The Unix Security Model May Be Too Primitive</a></li>
+<li><a href="#unix-has-too-many-different-kinds-of-names">Unix Has Too Many Different Kinds of Names</a></li>
+<li><a href="#file-systems-might-be-considered-harmful">File Systems Might Be Considered Harmful</a></li>
+<li><a href="#towards-a-global-internet-address-space">Towards a Global Internet Address Space</a></li>
+</ul>
+</li>
+<li><a href="#problems-in-the-environment-of-unix">Problems in the Environment of Unix</a></li>
+<li><a href="#problems-in-the-culture-of-unix">Problems in the Culture of Unix</a></li>
+<li><a href="#reasons-to-believe">Reasons to Believe</a></li>
+</ul>
+</div>
+<p>未来を forcast するのは難しいが、二つの方法で anticipate することはできる：</p>
+<ul>
+<li>Unix が過去にどのように設計上の課題に対処してきたかを見る。</li>
+<li>解決策を探している問題や活用待ちの機運を特定する。</li>
+</ul>
+<h2 id="essence-and-accident-in-unix-tradition">Essence and Accident in Unix Tradition<a class="headerlink" href="#essence-and-accident-in-unix-tradition" title="Permanent link">&para;</a></h2>
+<p>目標は Unix の設計が将来どのように変化するかを理解することだ。そのために Unix のプログラミング流儀が過去にどのように変化してきたかを見ることから始める。</p>
+<ul>
+<li>目標：偶然と本質の区別する。言い換えると、一過性の技術的状況から生じる特徴と、
+  Unix の中心的な設計課題と深く結びついている特徴を認識する。</li>
+<li>Unix の中心的な設計課題：システムの透明性と単純性を維持しながら、モジュール化
+  と抽象化をいかに正しくやるか。</li>
+</ul>
+<p>偶発的に生まれた特質が本質的な有用性を持つことが後で判明することもあるから、この区別は難しい可能性がある。例：<a href="../design/interface.html">Chapter 11</a> で検討した「沈黙は金なり」法則。</p>
+<p>その一方で、かつて不可欠と思われた特性のいくつかは、特定の費用比率に結びついた事故であることが判明した。例えば、</p>
+<ul>
+<li>古の Unix は入力を一行ずつ、一レコードずつ処理する設計を好んだ。</li>
+<li>新派の Unix 設計は全入力をメモリーに読み込んで、その後はランダムアクセスできる
+  という前提で、一般的に満足している。</li>
+</ul>
+<p>この変更は、より単純で透明性の高いコードを得るために、ストレージの経済性を手放すということだ。プログラマーの時間に対するメモリーの費用が急落していることへの適応だ。</p>
+<p>Unix の設計様式を大きく変化させたな技術の変化を特定することができた：</p>
+<ul>
+<li>Internetworking</li>
+<li>Bitmapped graphics displays</li>
+<li>The personal computer</li>
+</ul>
+<p>いずれの場合も、Unix の伝統はもはや適応できない偶然の出来事を捨て去り、その本質的な思いつきの新しい適用を見つけることで難題に適応してきた。</p>
+<p>復習：</p>
+<ul>
+<li><a href="../context/history.html">Chapter 2</a>: TCP/IP が Unix と ARPANET の二つの文化を結合した。</li>
+<li><a href="../design/multiprogram.html">Chapter 7</a>: System V の STREAMS のような、時代遅れのプロセス間通信やネット
+  ワーキングの手法に関する資料が示唆するように、Unix の開発者たちが初手から誤
+  り、歩みを誤り、十年間行き詰まった。</li>
+</ul>
+<p>やがて TCP/IP が勝利し、BSD ソケットが「すべてがバイトストリーム」という主張を再び示すようになると混乱は解消した。1990-1991 年の WWW の発明はその帰結だ。</p>
+<p>TCP/IP の数年後、1984 年にビットマップグラフィックスと Macintosh の例が登場したとき、さらなる難題が突きつけられた。Unix プログラマーの対応はポリシーとメカニズムの分離を明確な原則とすることだった。X Window System は 1988 年までに確立された。</p>
+<p>X のウィンドウ部品集合を低水準のグラフィックスを扱うディスプレイマネジャーから切り離すことで、彼らは Unix 的にモジュール化されたきれいな建築方式を作り上げた。</p>
+<p>難しいのは、Unix が統一インターフェイスポリシーを持つべきかどうか、持つとしたらどうあるべきかを決めることだった。Motif のような市販ツールキットを通じて統一インターフェースを確立しようとした試みがいくつあり、それらは失敗した。2003 年の今日、GTK と Qt がその役割を争っている。</p>
+<p>新しい流派の Unix 設計は、コマンドラインを維持し、両方の方式で使用できる CLI エンジンと GUI のペアをたくさん書くことで、GUI と CLI の着手方法の間の緊張に対処してきた。</p>
+<p>PC はそれ自体の技術としては設計上の大きな課題はほとんどなかった。真の挑戦は、
+Unix の潜在的な市場の変化だった。ハードウェアの全体的な価格が大幅に下がったことで、PC は、技術的に洗練されていない、より幅広い使用者層にとって魅力的なものになった。</p>
+<p>末端使用者向けデスクトップへの最初の本格的な取り組みはオープンソース共同体から生まれた。2003 年半ば現在、市場調査によると Linux の市場占有率は約 4, 5% に達した。
+Apple 社の Macintosh とほぼ同等だ。</p>
+<p>テーマ化された GUI とインストールパッケージの下では、依然としてモジュール性ときれいなコード、つまり本格的で高信頼性の演算と通信の基盤を正しく構築することに重点が置かれている。</p>
+<p>Mozilla や OpenOffice.org のようなデスクトップに焦点を当てた大規模な開発の歴史はこの強調をよく物語っている。どちらの事例においても、共同体からのフィードバックで最も重要な主題は怪物的一枚岩に対する嫌悪感であり、これらの巨大なプログラムが厄介な存在になる前に、減量し、内部構造を整頓し、モジュールに切り分けなければならないという一般的な感覚であった。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>OpenOffice.org は解散済み。</p>
+</div>
+<p>この三技術は基本的な Unix の設計法則、つまりモジュール性、透明性、ポリシーとメカニズムの分離、そして本書の前半で特徴づけようとしたその他の品質に関しては保守的なものだった。</p>
+<p>三十年以上にわたって強化されてきた Unix プログラマーの学習された反応は、最初の原則に戻ることだった。つまり、新しいものを重ねることよりも、ストリーム、名前空間、プロセスといった Unix の基本的な抽象化からより多くの力を引き出そうとすることだった。</p>
+<h2 id="plan-9-the-way-the-future-was">Plan 9: The Way the Future Was<a class="headerlink" href="#plan-9-the-way-the-future-was" title="Permanent link">&para;</a></h2>
+<p>Unix を構築した Bell Labs の研究グループが設計した Plan 9 from Bell Labs はかつての Unix の未来とはどのようなものであるかを体現したものだった。Plan 9 は
+Unix をより良くやり直す試みだった。</p>
+<ul>
+<li>Plan 9 という名称は 1958 年の映画 <em>Plan 9 from Outer Space</em> へのオマージュだ。</li>
+</ul>
+<p>Plan 9 設計者が試みた中心的な設計課題は：</p>
+<blockquote>
+<p>integrating graphics and ubiquitous networking into a comfortable Unix-like
+framework</p>
+</blockquote>
+<p>だった。</p>
+<ul>
+<li>単一の大きなファイル階層名前空間を通じてシステムサービスへのアクセスを仲介する。</li>
+<li>装置ファイルに類似した特別ファイルに対する読み書きで多くの機能にアクセスする。</li>
+<li>装置ファイルのほとんどはテキストファイル。</li>
+<li>システムサービスのほとんどはファイルサーバー。</li>
+<li>資源はすべてファイルとして表現する。異なるサーバー上の資源へのアクセス問題
+  を異なるサーバー上のファイルへのアクセス問題に転換する。</li>
+</ul>
+<p>Plan 9 では Unix ファイルモデルを超えた Unix ファイルモデルと、私有名前空間という新しい概念を組み合わせた。</p>
+<p>使用者（実際にはプロセス）はすべて、ファイルサーバーのマウントの独自の木を作成することによって、システムのサービスの独自のビューを持つことができる。ファイルサーバーのマウントは使用者が手動で設定したものもあれば、ログイン時に自動的に設定されたものもある。そのため、</p>
+<blockquote>
+<p>Plan 9 from Bell Labs 調査資料：
+<code>/dev/cons</code> はあなたの端末装置を、<code>/bin/date</code> は実行する <code>date</code> コマンドの正し
+いバージョンを常に指すが、これらのファイル名がどのファイルを表すかは、<code>date</code>を
+実行する計算機の建築方式などの状況に依存する。</p>
+</blockquote>
+<p>Plan 9 の単一で最も重要な特徴は、マウントされたファイルサーバーはすべて、その背後にある実装に関係なく、同じファイルシステムのようなインターフェイスをエクスポートするということだ。</p>
+<ul>
+<li>あるものは局地ファイルシステムに対応し、</li>
+<li>あるものはネットワーク経由でアクセスされる遠隔ファイルシステムに対応し、</li>
+<li>あるものは使用者空間で実行されるシステムサーバーの実物に対応し、</li>
+<li>あるものはカーネルインターフェイスに対応する</li>
+</ul>
+<p>ことがある。使用者やクライアントプログラムにとってはすべて同じように見える。</p>
+<p>Plan 9 の調査報告書にある例の一つは遠隔サイトへの FTP アクセスの実装方法だ。
+Plan 9 では ftp(1) コマンドがない。その代わりに ftpfs ファイルサーバーがある。各
+FTP 接続はファイルシステムのマウントのように見える。</p>
+<p>Plan 9 には</p>
+<ul>
+<li>Unix のシステムコールインターフェイスの問題点の再発明</li>
+<li>スーパーユーザーの廃止</li>
+<li>その他多くの興味深い再考</li>
+</ul>
+<p>など、推薦できる点がたくさんある。設計は上品で、Unix の設計におけるいくつかの重大な誤りを露呈している。なぜ世界を征服しなかったのか。</p>
+<p>歴史の長い目で見れば話は違ってくるかもしれないが、2003 年の時点では、Plan 9 が失敗したのは、単に Unix の先祖を置き換えるほどの説得力のある改良には至らなかったからだと思われる。Unix はガタが来ているものの、その地位を維持するのに十分な仕事をこなしている。</p>
+<blockquote>
+<p>There is a lesson here for ambitious system architects: the most dangerous
+enemy of a better solution is an existing codebase that is just good enough.</p>
+</blockquote>
+<p>Plan 9 の作意のいくつかは現代の Unix, とりわけ革新的なオープンソースのバージョンに吸収されている：</p>
+<ul>
+<li>FreeBSD には、Plan 9 を正確にモデル化した <code>proc</code> ファイルシステムがあり、 実行
+  中のプロセスの問い合わせや制御に使うことができる。</li>
+<li>FreeBSD の rfork(2) と Linux の clone(2) システムコールは Plan 9 の rfork(2)
+  を手本にしている。</li>
+<li>Linux の <code>/proc</code> ファイルシステムはプロセス情報の提示に加えて、主にテキストイ
+  ンターフェイスを使用してカーネル内部を照会し制御するために使用される、さまざま
+  な人工 Plan 9 風装置ファイルを保持している。</li>
+<li>Linux の実験的な 2003 年版はプロセスごとのマウントポイントを実装している。
+  Plan 9 の私有名前空間への大きな一歩だ。</li>
+<li>オープンソースの Unix はすべて、Plan 9 のために実際に発明された UTF-8 をシステ
+  ム全体で支持する方向に進んでいる。</li>
+</ul>
+<p>Unix の建築術のさまざまな部分が老衰に向かうにつれて、Plan 9 の多くが Unix に導入されることになるかもしれない。</p>
+<h2 id="problems-in-the-design-of-unix">Problems in the Design of Unix<a class="headerlink" href="#problems-in-the-design-of-unix" title="Permanent link">&para;</a></h2>
+<p>Plan 9 は Unix をすっきりさせた。基本的な設計構想に新しい思想である私有名前空間を加えたことしかしなかった。</p>
+<h3 id="a-unix-file-is-just-a-big-bag-of-bytes">A Unix File Is Just a Big Bag of Bytes<a class="headerlink" href="#a-unix-file-is-just-a-big-bag-of-bytes" title="Permanent link">&para;</a></h3>
+<p>Unix のファイルは単なるバイトの大きな袋であって、他の属性はない。特に、</p>
+<ul>
+<li>ファイル型に関する情報</li>
+<li>関連するアプリケーションプログラムへの関連</li>
+</ul>
+<p>のようなものはない。</p>
+<p>より一般的には、すべてがバイトストリームであり、ハードウェア装置でさえそうだ。ここの比喩（そうではないなのか？）は初期の Unix で大成功を収めた。パイプとシェルプログラミングはこの比喩から生まれた。</p>
+<p>Unix のバイトストリーム比喩はあまりにも中心的なものであるため、バイトストリームやファイル操作にうまく当てはまらない操作を持つソフトウェアオブジェクトを統合するのに苦労している。これは GUI オブジェクトでは特に問題となる。</p>
+<p>Unix 支持者はファイルデータを自己記述させる取り組みを好み、実質的に同じ種類のメタデータがファイル内に格納されるようにする。この手法では、ファイルを書き込むプログラムすべてがそのファイルについて知っていなければならないことが問題だ。例えばファイルに型情報を持たせたい場合、ファイルに触れるすべての工具は、型欄を変更せずに保存するか、解釈してから書き換えるかのどちらかに注意しなければならない。</p>
+<p>一方、ファイル属性を指示すると、どのファイル操作で属性を保持するかという厄介な問題が生じる。名前付きファイルを別の名前にコピーする場合、データだけでなく元ファイルの属性もコピーすべきであることは明らかだ。しかし、そのファイルを cat(1) し、
+cat(1) の出力を新しい名前にリダイレクトする場合はどうなるか。</p>
+<p>質問はこうなる：どの操作がもちものを明らかにするのか。</p>
+<p>Xerox PARC ファイルシステム設計はの問題に取り組んでいた。属性と内容物の両方を含むバイトストリームを返す open serialized 呼び出しを持っていた。ディレクトリーに適用すると属性のシリアライズとその中のすべてのファイルのシリアライズが返された。</p>
+<p>Linux 2.5 では任意の名前と値のペアをファイル名のもちものとして取り付けることをすでに支援しているが、本稿執筆時点では、この機能はアプリケーションではまだあまり使われていない。最近のバージョンの Solaris にはほぼ同等の機能がある。</p>
+<h3 id="unix-support-for-guis-is-weak">Unix Support for GUIs Is Weak<a class="headerlink" href="#unix-support-for-guis-is-weak" title="Permanent link">&para;</a></h3>
+<p>Unix の経験は、フレームワークの基礎としてわずかな比喩を使うことが強力な戦略であることを証明 (<a href="../design/complexity.html">Chapter 13</a>) している。現代の GUI の中心にある視覚的比喩（アイコンで表現されたファイル、そしてクリックすることで開かれ、指定された処理プログラムを呼び出す）は、1970 年代に Xerox PARC が先駆者となって以来、使用者とインターフェイス設計者に強い影響を与え、成功と長寿の両方を証明してきた。</p>
+<p>2003 年現在、Unix はまだこの比喩を不十分かつ不本意な形でしか支援していない。
+Unix の古参者の典型的な反応は、これが GUI 比喩自体の深い問題を反映しているのではないかと疑うものだ。</p>
+<p>Steve Johnson: 例えば、Mac ではファイルをゴミ箱にドラッグして削除する。ディスクにドラッグするとコピーされる。印刷機アイコンにドラッグすると印刷はできない。他にもいろいろある。</p>
+<p>GUI には欠点もあるが、末端使用者からの需要は大きい。仮に、UI の設計段階で比喩を正しく理解できたとして、Unix はそれを丁重に支援できるだろうか。</p>
+<p>Macintosh 流のファイル属性は GUI をより豊富に支援する仕組みを備えるのに役立つかもしれないが、それが答えのすべてである可能性は相当低いと思われる。Unix のオブジェクトモデルには適切な基本構造が含まれていない。GUI のための本当に強力なフレームワークがどのようなものか、そして、それが Unix の既存のフレームワークとどのように統合できるかを考え抜く必要がある。</p>
+<h3 id="file-deletion-is-forever">File Deletion Is Forever<a class="headerlink" href="#file-deletion-is-forever" title="Permanent link">&para;</a></h3>
+<p>VMS や TOPS-20 というシステムにはファイルバージョン管理機能が備わっていたらしい。既存のファイルを書き込みのために開いたり、削除したりすると、実際にはバージョン番号を含む予測可能な方法でファイル名が変更された。実際にデータが消去されるのは、バージョンファイルに対する明示的な削除操作が必要だった。</p>
+<p>Unix ではこのようなことはなく、打ち間違いやシェルのワイルドカードの予期せぬ影響によって使用者の意図でないファイルが削除される。</p>
+<p>Unix の開発者は、たとえ使用者の指示が「自分の足を撃て」という命令に等しいものであったとしても、指示したことを実行する明確で単純な操作を好む。彼らの本能は、使用者を自分自身から守ることは OS ではなく、GUI やアプリケーション水準で行うべきだということだ。</p>
+<h3 id="unix-assumes-a-static-file-system">Unix Assumes a Static File System<a class="headerlink" href="#unix-assumes-a-static-file-system" title="Permanent link">&para;</a></h3>
+<ul>
+<li>プログラムは暗黙のうちに短時間しか実行されないと仮定すれば、ファイルやディレク
+  トリーの背景は、その実行中は静的であると仮定できる。</li>
+<li>指定されたファイルやディレクトリーが変更されたときに、アプリケーションに通知す
+  るようにシステムに要求する標準的方法が確立していない。</li>
+</ul>
+<p>背景の変更について知りたがっている長寿命の UI ソフトウェアを書くときに重要な問題となる。</p>
+<p>Linux にはファイルとディレクトリーの変更通知機能があり、BSD のいくつかのバージョンはそれをコピーしているが、これらはまだ他の Unix に移植可能ではない。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Linux 端末でコマンド <code>man 2 fctl</code> を実行して <code>F_NOTIFY</code> を検索すると通知機能の概要を得られる。</p>
+</div>
+<h3 id="the-design-of-job-control-was-badly-botched">The Design of Job Control Was Badly Botched<a class="headerlink" href="#the-design-of-job-control-was-badly-botched" title="Permanent link">&para;</a></h3>
+<p>プロセスを suspend する機能を除けば、ジョブ制御とは複数のプロセス間で端末を切り替えることだ。最も簡単な部分、つまりキーストリークの行き先を決めるだけで、画面の状態を保存したり復元したりといった難しい部分はすべてアプリケーションに押し付ける。</p>
+<p>このような機能の本当に優れた実装は、使用者プロセスからは完全に見えない。専用信号も、端末モードの保存と復元も、アプリケーションが不定期に画面を再描画する必要もない。</p>
+<p>仮想キーボードが実際のキーボードに接続されることがあり（接続されていないときに入力を要求するとブロックされる）、仮想画面が実画面に表示されることがあるというモデルであるべきで、システムはディスクや演算装置などへのアクセスのそれと同じ方法で多重化を行い、使用者プログラムにはまったく影響を与えない。</p>
+<p>以上を正しく行うには、Unixの <code>tty</code> ドライバーが、単に行バッファーを維持するだけでなく、現在の画面状態全体を追跡し、カーネルレベルで（おそらくデーモンプロセスの助けを借りて）端末の型を知る必要がある。これを誤ると、Unix カーネルは <code>xterm</code> や
+Emacs ジョブのようなセッションをある端末から切り離して、別の端末（別型の場合がある）に再接続することが不可能になる。</p>
+<p>Unix の利用が端末エミュレーターなどに移行するにつれ、ジョブ制御の重要性は相対的に低下し、この問題はかつてのような影響力を持たなくなった。</p>
+<p>プログラム screen(1) はこれらの問題のいくつかを解決している。しかし、使用者が明示的に呼び出す必要があるため、その機能がすべての端末セッションに存在することは保証されていない。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Windows Terminal で WSL を使う者は screen(1) を使わない。</p>
+</div>
+<h3 id="the-unix-api-doesnt-use-exceptions">The Unix API Doesn't Use Exceptions<a class="headerlink" href="#the-unix-api-doesnt-use-exceptions" title="Permanent link">&para;</a></h3>
+<p>Unix 実装言語である C には例外機能がない。そのため、Unix API の C 関数は識別値（通常は -1 または NULL ポインター）を返し、大域変数 <code>errno</code> を設定することでエラーを示す。</p>
+<p>これが多くの微妙な失敗の原因となっている。急いでいるプログラマーは戻り値の確認をしばしば怠る。例外が送出されないため、Rule of Repair に違反する。エラー状態が実行の後半で何らかの障害やデータ破損として現れるまで、プログラムの流れは続く。</p>
+<p>例外がないということは、複雑で、移植性に問題があり、バグが発生しやすいコードで実行されなければならないということでもある。</p>
+<p>この問題は例外を持つ Python や Java のような言語で Unix API をバインディングすることで隠せる。</p>
+<p>C 言語は型の枠組が弱いので、C 言語で実装された高水準言語間の通信に問題があるのだ。例えば、現代的な言語のほとんどはリストや辞書を主要なデータ型として持っている。しかし、これらは C の世界では正統的な表現を持っていないため、例えば Perl と Python
+の間でリストを渡そうとすると、多くの接着剤を必要とする不自然な行為になる。</p>
+<h3 id="ioctl2-and-fcntl2-are-an-embarrassment"><code>ioctl2</code> and <code>fcntl2</code> Are an Embarrassment<a class="headerlink" href="#ioctl2-and-fcntl2-are-an-embarrassment" title="Permanent link">&para;</a></h3>
+<p>これらは文書がしばしば不十分であり、移植性の問題の原因にもなっている。そのたびに操作型や特殊な引数値を記述したマクロ定義が山ほど出てくる。</p>
+<p>Unix のオブジェクトモデルは弱く、多くの補助操作を置く自然な場所がない。設計者は満足のいかない選択肢の中から整然としたものを選択しなければならない：</p>
+<ul>
+<li><code>/dev</code> にある装置を経由する <code>fcntl</code>/<code>ioctl</code></li>
+<li>新しい特別な目的のシステムコール</li>
+<li>カーネルにフックする特別な目的の仮想ファイルシステムを経由するフック (e.g.
+  <code>/proc</code>)</li>
+</ul>
+<p>Unix のオブジェクトモデルが将来的に強化されるかどうか、あるいはどのように強化されるかは定かではない。</p>
+<ul>
+<li>Mac OS のようなファイル属性が Unix の一般的な機能になれば、デバイスドライバー
+  で魔法名前付き属性を微調整することが、現在の <code>ioctl</code>/<code>fcntl</code> の役割を引き継ぐ
+  かもしれない。この場合、マクロ大量定義を必要としないという利点がある。</li>
+<li>Plan 9 が示したような、ファイル・バイトストリームではなく、名前付きファイル
+  サーバーやファイルシステムを基本オブジェクトとして使用する方向。</li>
+</ul>
+<h3 id="the-unix-security-model-may-be-too-primitive">The Unix Security Model May Be Too Primitive<a class="headerlink" href="#the-unix-security-model-may-be-too-primitive" title="Permanent link">&para;</a></h3>
+<p>おそらく root は強力であり過ぎる。何でもできる superuser を一人にするのではなく、システム管理機能のために、よりきめ細かい機能や ACL を持つべきだ。あまりにも多くのシステムプログラムが setuid メカニズムによって永久的な root 権限を持っている。一箇所でも侵害されれば、あらゆるところがそうされることになる。</p>
+<p>しかし、この議論は弱い。最近の Unix では任意のユーザーアカウントが複数のセキュリティーグループに属することができる。プログラム実行ファイルの実行権限ビットと
+setgid ビットを使うことで、各グループは事実上、ファイルやプログラムの ACL として機能することができる。</p>
+<p>しかし、この理論的な可能性はほとんど利用されておらず、ACL の需要が理論上よりも実際にははるかに少ないことを示唆している。</p>
+<h3 id="unix-has-too-many-different-kinds-of-names">Unix Has Too Many Different Kinds of Names<a class="headerlink" href="#unix-has-too-many-different-kinds-of-names" title="Permanent link">&para;</a></h3>
+<p>Unix で統一されたファイルや局地装置はすべて単なるバイトストリームだ。しかし、ソケットを通してアクセスされるネットワーク装置は異なる名前空間で異なる語義を持っている。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>わかりやすく書き換える。</p>
+</div>
+<p>Plan 9 はファイルを局地装置と遠隔（ネットワーク）装置の両方と滑らかに統合できること、そしてこれらすべてを、使用者ごと、さらにはプログラムごとに動的に調整可能な名前空間を通じて管理できることを示している。</p>
+<h3 id="file-systems-might-be-considered-harmful">File Systems Might Be Considered Harmful<a class="headerlink" href="#file-systems-might-be-considered-harmful" title="Permanent link">&para;</a></h3>
+<p>ファイルシステムを持つことが Unix の失敗であるとすれば、それはすべての競合 OS
+の失敗でもある。</p>
+<p>記憶ストレージを巨大なスワップ領域として扱い、仮想化されたオブジェクトポインターを通じてすべてを行う OS に関する興味深い研究の歴史があった。</p>
+<p>この分野での最新の取り組みは、このような設計が安全保障方策への証明可能な適合性と、より高い性能の両方を含む、大きな利点を与えられることを示唆している。</p>
+<h3 id="towards-a-global-internet-address-space">Towards a Global Internet Address Space<a class="headerlink" href="#towards-a-global-internet-address-space" title="Permanent link">&para;</a></h3>
+<p>URL では不十分なのかもしれない。</p>
+<p>Ken Thompson: 私の将来の理想は、Plan 9 のようなファイルシステムの遠隔インターフェイスを開発し、HTML ではなく標準としてインターネット上で実装することだ。</p>
+<h2 id="problems-in-the-environment-of-unix">Problems in the Environment of Unix<a class="headerlink" href="#problems-in-the-environment-of-unix" title="Permanent link">&para;</a></h2>
+<p>オープンソースの問題が Unix 文化人のものにもなった。</p>
+<p>その一つはオープンソース開発を経済的に持続可能なものにする方法だ。長い道のりを歩んできた。どのようなビジネスモデルが有効かは理論的には分かっているし、実際に機能することを示す成功を少しは挙げることもできる。今は、より長期にわたって確実に機能することを示さなければならない。</p>
+<p>オープンソースはソフトウェアをサービス産業に変える。サービス提供型企業（医療や法律事務所を思い浮かべろ）は、資本を注入することで規模を拡大することはできない。固定費だけを拡大しようとしても、収益基盤を行き過ぎて餓死するだけだ。選択肢は次に絞られる：</p>
+<ul>
+<li>祝儀や寄付で報酬を得る</li>
+<li>小規模で間接費の少ないサービス業を経営する</li>
+<li>裕福な金主（業務目的でオープンソースソフトウェアを使用し、修正する必要がある大
+  企業）を見つける</li>
+</ul>
+<p>自動車の価格が下がると整備工の時給が上がるのと同じ理由で、ソフトウェア開発者を雇うために使われる金額は、全体として上昇することが予想される。</p>
+<p>本当に大規模なソフトウェアビジネスを維持することが難しくなっていることに関連する重要な副次的問題の一つは、末端使用者試験をどのように組織化するかということだ。</p>
+<ul>
+<li>Unix 文化は基盤に集中してきた歴史があり、末端使用者に快適なインターフェイスを
+  与えることにその価値を依存するプログラムを構築する傾向がなかった。</li>
+<li>末端使用者インターフェイスを、実際の末端使用者を使って系統的に試験する必要があ
+  る。</li>
+</ul>
+<p>ワープロ、表計算、その他生産力のあるアプリケーションは末端使用者試験に必要な設備、人員を手配するのが困難だと長々と述べられている。</p>
+<p>Hollywood と Big Media はインターネットに深い脅威を感じており、無秩序なソフトウェア開発に対して多角的な攻撃を開始した。Digital Millennium Copyright Act のような既存の法律は、メディア大物が嫌うことを行っているソフトウェア開発者を起訴するためにすでに使われている。いわゆる Trusted Computing Platform Alliance や
+Palladium のような構想中の企画はオープンソースの開発を事実上違法にする恐れがある。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Trusted Computing Platform Alliance は現存しない。後継組織は
+Trusted Computing Group というもので、Intel, AMD, Microsoft, Cisco
+などが参加している。</p>
+</div>
+<p>政治の可能性は通信技術によっていよいよ形成されている。誰がそれを使い、誰がそれを検閲し、誰がそれを統率できるのか。政府や企業がネットの内容や、人々が自分の計算機でできること統率することは政治的自由に対する長期的な脅威だ。</p>
+<h2 id="problems-in-the-culture-of-unix">Problems in the Culture of Unix<a class="headerlink" href="#problems-in-the-culture-of-unix" title="Permanent link">&para;</a></h2>
+<p>Unix を取り巻く共同体の文化的な問題として、少なくとも深刻な問題が二つある。</p>
+<ul>
+<li>（あまり大きくない問題）内部的な移行</li>
+<li>（大きい問題）歴史的なエリート主義の克服</li>
+</ul>
+<p>それより小さい課題は、</p>
+<ul>
+<li>旧来の Unixの達人たちと新しいオープンソース勢との間の摩擦</li>
+</ul>
+<p>だ。特に Linux の成功は、多くの古参の Unix プログラマーにとって、世代的な問題もあり、まったく快適な現象ではない。年長者が失敗したところで子供たちが成功しているという事実によってさらに悪化している。</p>
+<blockquote>
+<p>The greater problem of psychology only became clear to me after spending three
+days at a Macintosh developer conference in 2000. It was a very enlightening
+experience to be immersed in a programming culture with assumptions
+diametrically opposed to those of the Unix world.</p>
+</blockquote>
+<p>それは良かった。</p>
+<p>Macintosh のプログラマーは使用者体験にこだわる。まず「どんな相互作用を支援したいのか」と問いかけ、UI 設計の要求を満たすために、その背後にあるアプリケーション論理を構築する。その結果、プログラムはべらぼうに美しく、基盤は脆弱でガタガタになる。</p>
+<p>それとは対照的に、Unix 人は基盤がすべてだ。私たちは、抽象的に定義された問題を解決するために、強大なエンジンを構築し、内側から外側へと設計する。そして、そのエンジンに、薄くて、しばしばべらぼうに醜いインターフェイスを巻きつける。コマンド
+date(1), find(1), ed(1) は悪くて有名な例だが、他にも何百とある。</p>
+<p>どちらの設計思想にもそれなりの正当性はあるが、この二つの陣営は互いの主張を理解するのがとても難しい。</p>
+<p>Unix 人はインターネットと WWW の番人なのだ。Unix 人のソフトウェアと伝統が 24 時間 365 日の信頼性と最小限の休止時間が必須のアプリケーションを支配している。この実績に近いソフトウェア技術文化は他にはない。</p>
+<blockquote>
+<p>And our implicit demand is that if you want to use our software, you must
+learn to think like us.</p>
+</blockquote>
+<p>Unix 人の姿勢には両義性がある。</p>
+<ul>
+<li>GNOME や KDE のような、Unix にきれいな顔を与えるように（独特の表現）設計された
+  プロジェクトに大きな労力を費やしている。</li>
+<li>Tillie （※典型的な非技術使用者。高齢で散漫な乙女）の要望に共感したり、耳を傾け
+  たりすることには消極的で、多くの場合、耳を傾けることができない。</li>
+</ul>
+<p>Unix 人の文化としての最大の挑戦は、これまで役に立ってきた思い込みを卒業できるかどうか、つまり、Macintosh の人々の言い分にも一理あることを、日々の実践の中で認めることができるかどうかということだ。</p>
+<p><em>The Inmates Are Running the Asylum</em> (1999) という論証的な本を読むことを推奨している。Unix プログラマーが知っておくべき厳しい真実が数多く含まれている。</p>
+<p><a href="../design/modularity.html">Chapter 4</a> では技術的な問題を解決する上で、限定的な思い込みを捨て、過去を捨てることの重要性について述べた。禅の「離俗」や「初心」の思想との類比を示唆している。謙虚さを学ばなければならない。過去に成功を収めた長年の偏見を捨てなければならない。</p>
+<p>Macintosh 文化が Unix 文化に収束し始めた。MacOS X の下には Unix があり、2003 年、
+Mac の開発者たちは Unix の基盤重視の良さを学ぶために精神的な調整を行なっている。
+Macintosh の使用者中心の美徳を受け入れることが Unix 人の挑戦となる。</p>
+<p>リファクタリング、単体試験、その他のアジャイルコンセプトは、これまで Unix の伝統の中で暗黙のうちに広まっていた実践を明確にし、研ぎ澄ますものだ。一方、Unix の伝統はアジャイルプログラミング派に、地に足のついた、長い経験からの教訓をもたらすことができる。昔のインターネット文化と初期の Unix 文化が融合したときのように、アジャイルと Unix の文化がそうなることも考えられる。</p>
+<h2 id="reasons-to-believe">Reasons to Believe<a class="headerlink" href="#reasons-to-believe" title="Permanent link">&para;</a></h2>
+<p>Unix の三十年以上の挑戦で収めてきた成功：</p>
+<ul>
+<li>ソフトウェア工学の最善実践の先駆者だ。</li>
+<li>今日のインターネットと Web を作り上げた。</li>
+<li>これまでに存在した中で最も大きく、複雑で、信頼できるソフトウェアシステムを構築
+  してきた。</li>
+<li>IBM の独占を凌駕し、Microsoft の独占を脅かすのに十分な実績を上げている。</li>
+</ul>
+<p>決してすべてが勝利したわけではない：</p>
+<ul>
+<li>1980 年代、Unix の独占的奪取に屈し、すんでのところで自滅するところだった。</li>
+<li>技術者でない末端使用者をあまりにも長い間軽視し、それによって Microsoft にソフ
+  トウェアの品質基準を著しく低下させる隙を与えてしまった。</li>
+</ul>
+<p>失敗から学ぶこともある。初期の学術機関ハッカー、ARPANET の実験者、マイコン愛好家、その他多くの文化から、優れたものを吸収してきたのだ。オープンソース運動は
+Unix 人の初期の活力と理想主義を復活させ、かつてないほど強くなり、人数もより多くなっている。</p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>© 2025 プレハブ小屋 All rights reserved.</p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js"></script>
+        <script src="../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

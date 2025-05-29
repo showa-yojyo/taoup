@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="ja" data-bs-theme="auto">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="プレハブ小屋">
+        <link rel="canonical" href="https://github.com/showa-yojyo/taoup/design/textuality.html">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Textuality - The Art of Unix Programming 読書ノート</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../css/brands.min.css" rel="stylesheet">
+        <link href="../css/solid.min.css" rel="stylesheet">
+        <link href="../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" disabled>
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <link href="../css/style.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../index.html">The Art of Unix Programming 読書ノート</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../index.html" class="nav-link">Home</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle active" aria-current="page" role="button" data-bs-toggle="dropdown"  aria-expanded="false">Notes</a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../preface.html" class="dropdown-item">Preface</a>
+</li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Context</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../context/philosophy.html" class="dropdown-item">Philosophy</a>
+</li>
+            
+<li>
+    <a href="../context/history.html" class="dropdown-item">History</a>
+</li>
+            
+<li>
+    <a href="../context/contrasts.html" class="dropdown-item">Contrasts</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Design</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="modularity.html" class="dropdown-item">Modularity</a>
+</li>
+            
+<li>
+    <a href="textuality.html" class="dropdown-item active" aria-current="page">Textuality</a>
+</li>
+            
+<li>
+    <a href="transparency.html" class="dropdown-item">Transparency</a>
+</li>
+            
+<li>
+    <a href="multiprogram.html" class="dropdown-item">Multiprogramming</a>
+</li>
+            
+<li>
+    <a href="minilanguages.html" class="dropdown-item">Minilanguages</a>
+</li>
+            
+<li>
+    <a href="generation.html" class="dropdown-item">Generation</a>
+</li>
+            
+<li>
+    <a href="configuration.html" class="dropdown-item">Configuration</a>
+</li>
+            
+<li>
+    <a href="interface.html" class="dropdown-item">Interfaces</a>
+</li>
+            
+<li>
+    <a href="optimization.html" class="dropdown-item">Optimization</a>
+</li>
+            
+<li>
+    <a href="complexity.html" class="dropdown-item">Complexity</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Implementation</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../implementation/languages.html" class="dropdown-item">Languages</a>
+</li>
+            
+<li>
+    <a href="../implementation/tools.html" class="dropdown-item">Tools</a>
+</li>
+            
+<li>
+    <a href="../implementation/reuse.html" class="dropdown-item">Reuse</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Community</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../community/portability.html" class="dropdown-item">Portability</a>
+</li>
+            
+<li>
+    <a href="../community/documentation.html" class="dropdown-item">Documentation</a>
+</li>
+            
+<li>
+    <a href="../community/opensource.html" class="dropdown-item">Open Source</a>
+</li>
+            
+<li>
+    <a href="../community/futures.html" class="dropdown-item">Futures</a>
+</li>
+    </ul>
+  </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/showa-yojyo/taoup/issues" class="nav-link">Issues</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="modularity.html" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="transparency.html" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/showa-yojyo/taoup/edit/main/docs/design/textuality.md" class="nav-link"><i class="fa-brands fa-github"></i> Edit on GitHub</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                              <button id="theme-menu" aria-expanded="false" data-bs-toggle="dropdown" data-bs-display="static" aria-label="Toggle theme" class="nav-link dropdown-toggle">
+                                <i class="fa-solid fa-circle-half-stroke fa-fw"></i>
+                                <span class="d-lg-none ms-2">Toggle theme</span>
+                              </button>
+                              <ul class="dropdown-menu dropdown-menu-end">
+                                <li>
+                                  <button class="dropdown-item d-flex align-items-center" data-bs-theme-value="light" aria-pressed="false">
+                                    <i class="fa-solid fa-sun fa-fw"></i>
+                                    <span class="ms-2">Light</span>
+                                    <i class="fa-solid fa-check ms-auto d-none"></i>
+                                  </button>
+                                </li>
+                                <li>
+                                  <button class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark" aria-pressed="false">
+                                    <i class="fa-solid fa-moon fa-fw"></i>
+                                    <span class="ms-2">Dark</span>
+                                    <i class="fa-solid fa-check ms-auto d-none"></i>
+                                  </button>
+                                </li>
+                                <li>
+                                  <button class="dropdown-item d-flex align-items-center" data-bs-theme-value="auto" aria-pressed="true">
+                                    <i class="fa-solid fa-circle-half-stroke fa-fw"></i>
+                                    <span class="ms-2">Auto</span>
+                                    <i class="fa-solid fa-check ms-auto"></i>
+                                  </button>
+                                </li>
+                              </ul>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <script src="../js/darkmode.js"></script>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="2"><a href="#the-importance-of-being-textual" class="nav-link">The Importance of Being Textual</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="3"><a href="#case-study-unix-password-file-format" class="nav-link">Case Study: Unix Password File Format</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#case-study-newsrc-format" class="nav-link">Case Study: .newsrc Format</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#case-study-the-png-graphics-file-format" class="nav-link">Case Study: The PNG Graphics File Format</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="2"><a href="#data-file-metaformats" class="nav-link">Data File Metaformats</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="3"><a href="#dsv-style" class="nav-link">DSV Style</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#rfc-822-format" class="nav-link">RFC 822 Format</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#cookie-jar-format" class="nav-link">Cookie-Jar Format</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#record-jar-format" class="nav-link">Record-Jar Format</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#xml" class="nav-link">XML</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#windows-ini-format" class="nav-link">Windows INI Format</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#unix-textual-file-format-conventions" class="nav-link">Unix Textual File Format Conventions</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#the-pros-and-cons-of-file-compression" class="nav-link">The Pros and Cons of File Compression</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="2"><a href="#application-protocol-design" class="nav-link">Application Protocol Design</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="3"><a href="#case-study-smtp-the-simple-mail-transfer-protocol" class="nav-link">Case Study: SMTP, the Simple Mail Transfer Protocol</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#case-study-pop3-the-post-office-protocol" class="nav-link">Case Study: POP3, the Post Office Protocol</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#case-study-imap-the-internet-message-access-protocol" class="nav-link">Case Study: IMAP, the Internet Message Access Protocol</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="2"><a href="#application-protocol-metaformats" class="nav-link">Application Protocol Metaformats</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="3"><a href="#the-classical-internet-application-metaprotocol" class="nav-link">The Classical Internet Application Metaprotocol</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#http-as-a-universal-application-protocol" class="nav-link">HTTP as a Universal Application Protocol</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#case-study-the-cddbfreedborg-database" class="nav-link">Case Study: The CDDB/freedb.org Database</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#case-study-internet-printing-protocol" class="nav-link">Case Study: Internet Printing Protocol</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#beep-blocks-extensible-exchange-protocol" class="nav-link">BEEP: Blocks Extensible Exchange Protocol</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="3"><a href="#xml-rpc-soap-and-jabber" class="nav-link">XML-RPC, SOAP, and Jabber</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="chapter-5-textuality">Chapter 5. Textuality<a class="headerlink" href="#chapter-5-textuality" title="Permanent link">&para;</a></h1>
+<div class="toc"><span class="toctitle">見出し一覧</span><ul>
+<li><a href="#the-importance-of-being-textual">The Importance of Being Textual</a><ul>
+<li><a href="#case-study-unix-password-file-format">Case Study: Unix Password File Format</a></li>
+<li><a href="#case-study-newsrc-format">Case Study: .newsrc Format</a></li>
+<li><a href="#case-study-the-png-graphics-file-format">Case Study: The PNG Graphics File Format</a></li>
+</ul>
+</li>
+<li><a href="#data-file-metaformats">Data File Metaformats</a><ul>
+<li><a href="#dsv-style">DSV Style</a></li>
+<li><a href="#rfc-822-format">RFC 822 Format</a></li>
+<li><a href="#cookie-jar-format">Cookie-Jar Format</a></li>
+<li><a href="#record-jar-format">Record-Jar Format</a></li>
+<li><a href="#xml">XML</a></li>
+<li><a href="#windows-ini-format">Windows INI Format</a></li>
+<li><a href="#unix-textual-file-format-conventions">Unix Textual File Format Conventions</a></li>
+<li><a href="#the-pros-and-cons-of-file-compression">The Pros and Cons of File Compression</a></li>
+</ul>
+</li>
+<li><a href="#application-protocol-design">Application Protocol Design</a><ul>
+<li><a href="#case-study-smtp-the-simple-mail-transfer-protocol">Case Study: SMTP, the Simple Mail Transfer Protocol</a></li>
+<li><a href="#case-study-pop3-the-post-office-protocol">Case Study: POP3, the Post Office Protocol</a></li>
+<li><a href="#case-study-imap-the-internet-message-access-protocol">Case Study: IMAP, the Internet Message Access Protocol</a></li>
+</ul>
+</li>
+<li><a href="#application-protocol-metaformats">Application Protocol Metaformats</a><ul>
+<li><a href="#the-classical-internet-application-metaprotocol">The Classical Internet Application Metaprotocol</a></li>
+<li><a href="#http-as-a-universal-application-protocol">HTTP as a Universal Application Protocol</a></li>
+<li><a href="#case-study-the-cddbfreedborg-database">Case Study: The CDDB/freedb.org Database</a></li>
+<li><a href="#case-study-internet-printing-protocol">Case Study: Internet Printing Protocol</a></li>
+<li><a href="#beep-blocks-extensible-exchange-protocol">BEEP: Blocks Extensible Exchange Protocol</a></li>
+<li><a href="#xml-rpc-soap-and-jabber">XML-RPC, SOAP, and Jabber</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<!-- ad-hoc: made or happening only for a particular purpose or need, not planned before it happens -->
+
+<blockquote>
+<p>Interoperability, transparency, extensibility, and storage or transaction
+economy: these are the important themes in designing file formats and
+application protocols. Interoperability and transparency demand that we focus
+such designs on clean data representations, rather than putting convenience of
+implementation or highest possible performance first. Extensibility also
+favors textual protocols, since binary ones are often harder to extend or
+subset cleanly.</p>
+</blockquote>
+<h2 id="the-importance-of-being-textual">The Importance of Being Textual<a class="headerlink" href="#the-importance-of-being-textual" title="Permanent link">&para;</a></h2>
+<p>テキストストリームは、特別なツールを使わなくても、人間が簡単に読み書きや編集ができる。これらのフォーマットは透過的である（ように設計できる）。</p>
+<blockquote>
+<p>When you feel the urge to design a complex binary file format, or a complex
+binary application protocol, it is generally wise to lie down until the
+feeling passes.</p>
+</blockquote>
+<p>バイナリー形式はダメだ。性能が心配なら、テキストストリームにアプリケーションプロトコルの下か上の階層で圧縮を施せばよいのだから。</p>
+<blockquote>
+<p>Binary formats usually specify the number of bits allocated to a given value,
+and extending them is difficult.</p>
+</blockquote>
+<p>これは業務で経験がある。整数型として 32 ビットを勝手に想定していた時代のファイルが 64 ビット時代になってダメになった。ファイルサイズをケチってかえって損をした。</p>
+<p>バイナリー形式が本当に向いている場合は限定的だ：</p>
+<blockquote>
+<p>Formats for large images and multimedia are sometimes an example of the
+former, and network protocols with hard latency requirements sometimes an
+example of the latter.</p>
+</blockquote>
+<p>バイナリー形式は拡張性に乏しいことにも注意。</p>
+<blockquote>
+<p>When you think you have an extreme case that justifies a binary file format or
+protocol, you need to think very carefully about extensibility and leaving
+room in the design for growth.</p>
+</blockquote>
+<h3 id="case-study-unix-password-file-format">Case Study: Unix Password File Format<a class="headerlink" href="#case-study-unix-password-file-format" title="Permanent link">&para;</a></h3>
+<p>ファイル <code>/etc/passwd</code> と等価な情報をバイナリー形式ファイルで置き換えるのは先述の観点からも無理がある。本文ではこのファイルの場合に絞ってここで説明している。</p>
+<p>テキスト形式であることの利点は例えば：</p>
+<ul>
+<li>汎用テキストエディターで読み書き可能</li>
+<li>汎用ツール (e.g. grep(1)) でテキスト内容を処理可能</li>
+</ul>
+<p>CSV 形式を編集するときには、各欄に区切り記号を含めぬように注意しろ。</p>
+<p>パスワードファイルはその用途上、バイナリー形式である利点が乏しい：</p>
+<blockquote>
+<p>Economy is not a major issue with password files to begin with, as they're
+normally read seldom and infrequently modified. Interoperability is not an
+issue, since various data in the file (notably user and group numbers) are not
+portable off the originating machine.</p>
+</blockquote>
+<h3 id="case-study-newsrc-format">Case Study: .newsrc Format<a class="headerlink" href="#case-study-newsrc-format" title="Permanent link">&para;</a></h3>
+<p>ファイル <code>.newsrc</code> についての考察。本書 Example 5.2 のコードを観察すると、これもやはり可変長レコードを含む CSV の亜種だ。したがってバイナリー形式はダメ。</p>
+<blockquote>
+<p>The designers of the original newsreader chose transparency and
+interoperability over economy. The case for going in the other direction was
+not completely ridiculous; <code>.newsrc</code> files can get very large, and one modern
+reader (GNOME's Pan) uses a speed-optimized private format to avoid startup
+lag.</p>
+</blockquote>
+<h3 id="case-study-the-png-graphics-file-format">Case Study: The PNG Graphics File Format<a class="headerlink" href="#case-study-the-png-graphics-file-format" title="Permanent link">&para;</a></h3>
+<p>ここでバイナリー形式の例を見る。画像データをバイナリー形式で表現する理由が少なくとも二つある：</p>
+<blockquote>
+<p>PNG is an excellent example of a thoughtfully designed binary format. A binary
+format is appropriate since graphics files may contain very large amounts of
+data, such that storage size and Internet download time would go up
+significantly if the pixel data were stored textually. Transaction economy was
+the prime consideration, with transparency sacrificed.</p>
+</blockquote>
+<p>ちなみにここで言う transparency とは本書の意味でいうそれであり、画素の透明性とは関係ない。PNG はアルファー値を扱う。</p>
+<p>PNG 形式はチャンクやヘッダーの造りが良好であると述べる。著者の総評は次のとおり：</p>
+<blockquote>
+<p>The PNG standard is precise, comprehensive, and well written. It could serve
+as a model for how to write file format standards.</p>
+</blockquote>
+<h2 id="data-file-metaformats">Data File Metaformats<a class="headerlink" href="#data-file-metaformats" title="Permanent link">&para;</a></h2>
+<p>見出しの意味は術語としては構文と字句の規約のことで、次のどちらかの性質はあるものを指す：</p>
+<ul>
+<li>規約が正式に標準化されている</li>
+<li>規約がシリアライズ処理のためのライブラリーが標準で存在する程度には十分に確立さ
+  れている</li>
+</ul>
+<blockquote>
+<p>It is good practice to use one of these (rather than an idiosyncratic custom
+format) wherever possible.</p>
+</blockquote>
+<p>CSV, XML, JSON, YAML, TOML は data file metaformats だと言い切れる。</p>
+<!-- idiosyncratic: 奇異な、風変わりな -->
+
+<blockquote>
+<p>In the following discussion, when we refer to “traditional Unix tools” we are
+intending the combination of grep(1), sed(1), awk(1), tr(1), and cut(1) for
+doing text searches and transformations.</p>
+</blockquote>
+<p>基本的には行単位でテキスト検索・変換をするような CLI という意味に解釈する。</p>
+<h3 id="dsv-style">DSV Style<a class="headerlink" href="#dsv-style" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>DSV stands for <em>Delimiter-Separated Values</em>.</p>
+</blockquote>
+<p>ファイル <code>/etc/passwd</code> は値の区切り記号にコロンを用いる DSV だ。Unix ではコロンが DSV の既定の区切り記号だ。</p>
+<ul>
+<li>DSV は表形式のデータに対してよく用いられる (e.g. <code>/etc/group</code>, <code>/etc/inittab</code>)</li>
+<li>DSV ファイルはバックスラッシュエスケープによってデータ欄に区切り記号を含めるこ
+  とを支援することが期待される。</li>
+</ul>
+<blockquote>
+<p>This format is most appropriate when the data is tabular, keyed by a name (in
+the first field), and records are typically short (less than 80 characters
+long). It works well with traditional Unix tools.&gt; </p>
+</blockquote>
+<ul>
+<li>区切り記号について、昔の慣習ではタブ文字が好まれており、cut(1) や paste(1) の
+  既定にその傾向が現れている。</li>
+<li>タブ文字は空白文字と見分けがつきにくいので、好まれなくなっていった。</li>
+</ul>
+<p>言われてみると <code>cut</code> を使うときはオプション <code>-d</code> を必ず指定する。</p>
+<p>カンマ区切りの CSV 形式は «rarely found under Unix» だ。</p>
+<p>MS Excel などの CSV の扱いがまずい理由を引用する。データ欄にカンマを含むものがある場合に、データ欄全体を二重引用符で括るという対処法に問題があると述べている：</p>
+<blockquote>
+<p>... encloses the entire field in double quotes if it contains the separator.
+If the field contains double quotes, it must also be enclosed in double
+quotes, and the individual double quotes in the field must themselves be
+repeated twice to indicate that they don't end the field.</p>
+</blockquote>
+<p>そして次の問題を引き起こす：</p>
+<ul>
+<li>解析の複雑さ（とバグに対する脆弱性）が増大する</li>
+<li>書式規則が複雑で十分に規定されていないため、極端な場合の扱いが実装次第になる</li>
+</ul>
+<h3 id="rfc-822-format">RFC 822 Format<a class="headerlink" href="#rfc-822-format" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>RFC 822 is the principal Internet RFC describing this format (since superseded
+by RFC 2822). MIME (Multipurpose Internet Media Extension) provides a way to
+embed typed binary data within RFC-822-format messages.</p>
+</blockquote>
+<p>後続のパラグラフで RFC 822 書式の仕様を簡潔に述べている。実例は後で述べるように容易に入手可能。</p>
+<p>この metaformat が適しているデータ構造：</p>
+<blockquote>
+<p>More generally, it's appropriate for records with a varying set of fields in
+which the hierarchy of data is flat (no recursion or tree structure).</p>
+</blockquote>
+<p>テキスト形式でありながらの弱点を抱える：</p>
+<blockquote>
+<p>Traditional Unix search tools are still good for attribute searches, though
+finding record boundaries will be a little more work than in a record-per-line
+format.</p>
+</blockquote>
+<p>もう一つ。この書式が単品で使われることがないことから来る弱点がある：</p>
+<blockquote>
+<p>One weakness of RFC 822 format is that when more than one RFC 822 message or
+record is put in a file, the record boundaries may not be obvious</p>
+</blockquote>
+<p>RFC 822 データがどのようなものであれか実例を見るにはこうする（メール本文は RFC
+822 データの一部ではないとみなす）：</p>
+<ol>
+<li>Thunderbird を開く</li>
+<li>受信箱から適当なメールを開く</li>
+<li><code>その他</code> ドロップダウンメニューから <code>ソースを表示</code> を選択する</li>
+<li>テキストウィンドウの先頭から最初の空行までのデータを見る</li>
+</ol>
+<h3 id="cookie-jar-format">Cookie-Jar Format<a class="headerlink" href="#cookie-jar-format" title="Permanent link">&para;</a></h3>
+<p>Cookie-Jar 書式はプログラム fortune(1) がランダムな引用文のデータベースに使用している書式だ。自然な順序付けや、単語レベル以上の区別可能な構造、テキストの文脈以外の検索キーを持たないテキスト片に適する。</p>
+<ul>
+<li>構造化されていないテキストからなるレコードの集まりに適している。</li>
+<li>レコードの区切り文字として、改行の後に <code>%%</code> or <code>%</code> を使用する。</li>
+</ul>
+<p>Example 5.3. A fortune file example. の第二の引用は刀狩令か。</p>
+<!--
+The people of the various provinces are strictly forbidden to have in their possession any swords, short swords, bows, spears, firearms, or other types of arms.
+The possession of unnecessary implements makes difficult the collection of taxes and dues and tends to foment uprisings.
+-->
+
+<blockquote>
+<p>It's even better practice to use %%, and ignore all text from %% to
+end-of-line.</p>
+</blockquote>
+<p>それは普通はコメントと呼ばれるものだ。</p>
+<h3 id="record-jar-format">Record-Jar Format<a class="headerlink" href="#record-jar-format" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>Cookie-jar record separators combine well with the RFC 822 metaformat for
+records, yielding a format we'll call ‘record-jar’.</p>
+</blockquote>
+<p>Cookie-Jar 書式における <code>%%</code> に関する考察はこの書式でも当てはまる。</p>
+<blockquote>
+<p>In a format like this it is good practice to simply ignore blank lines.</p>
+</blockquote>
+<h3 id="xml">XML<a class="headerlink" href="#xml" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>XML is well suited for complex data formats （中略） though overkill for
+simpler ones. It is especially appropriate for formats that have a complex
+nested or recursive structure of the sort that the RFC 822 metaformat does not
+handle well.</p>
+</blockquote>
+<p>XML の利点の一つは、構文を検査することで不正な形式、破損データ、不正に生成されたデータを検出できることが多いことだ（データの意味まで調べずに済むことが多いの意）。</p>
+<p>XML の最も深刻な問題は、従来の Unix ツールとは相性が悪いということだ。マークアップの中にあるデータを見るのが難しい。XML ファイルが比較的まばらに記述されていればいいのだが。</p>
+<h3 id="windows-ini-format">Windows INI Format<a class="headerlink" href="#windows-ini-format" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>The <code>DEFAULT</code> entry supplies values that will be used when a named entry fails
+to supply them.</p>
+</blockquote>
+<p>これは知らなんだ。</p>
+<ul>
+<li>読みやすい</li>
+<li>設計は悪くない</li>
+<li>従来の Unix スクリプトツール e.g. grep(1) とは相性が悪い</li>
+</ul>
+<blockquote>
+<p>It's not good for data with a fully recursive treelike structure (XML is more
+appropriate for that), and it would be overkill for a simple list of
+name-value associations (use DSV format for that).</p>
+</blockquote>
+<h3 id="unix-textual-file-format-conventions">Unix Textual File Format Conventions<a class="headerlink" href="#unix-textual-file-format-conventions" title="Permanent link">&para;</a></h3>
+<ul>
+<li>一行あたり一レコード</li>
+<li>一行 80 字以内</li>
+<li>コメントは <code>#</code> から始まる</li>
+<li>バックスラッシュエスケープ</li>
+<li>フィールドの区切り文字として <code>:</code> または空白を使用する</li>
+<li>タブと空白の区別を重要視しない</li>
+<li>バージョン番号を含めるか、互いに独立した自己記述の塊として書式を設計する</li>
+<li>浮動小数点丸め誤差の問題に注意する</li>
+<li>ファイルの一部だけを圧縮したり、バイナリー化したりする必要はない</li>
+</ul>
+<blockquote>
+<p>For complex records, use a ‘stanza’ format: multiple lines per record, with a
+record separator line of <code>%%\n</code> or <code>%\n</code>. The separators make useful visual
+boundaries for human beings eyeballing the file.</p>
+</blockquote>
+<ul>
+<li>一行あたり一フィールドを持つか、<code>:</code> で終端するフィールド名キーワードでフィール
+  ドを始める、RFC822 ヘッダーに似た書式を使う</li>
+<li>行をまたいでフィールドを継続する書式を用意する</li>
+</ul>
+<h3 id="the-pros-and-cons-of-file-compression">The Pros and Cons of File Compression<a class="headerlink" href="#the-pros-and-cons-of-file-compression" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>Many modern Unix projects, such as OpenOffice.org and AbiWord, now use XML
+compressed with zip(1) or gzip(1) as a data file format.</p>
+</blockquote>
+<p>LibreOffice もアプリケーションデータを圧縮 XML ファイルにシリアライズする方法を受け継いでいる。</p>
+<blockquote>
+<p>On the other hand, experiments have shown that documents in a compressed XML
+file are usually significantly smaller than the Microsoft Word's native file
+format, a binary format that one might imagine would take less space.</p>
+</blockquote>
+<p>これは「一つことを巧くやる」という Unix 哲学の基本に適っている。</p>
+<p>やや高度な分析：表現設計を圧縮方法から切り離すことで、実際のファイル解析に最小限の変更を加えるだけで、将来的に異なる圧縮方法を使用できる可能性を残すことができる。</p>
+<p>圧縮は透明性を阻害する：</p>
+<blockquote>
+<p>While a human being can estimate from context whether uncompressing the file
+is likely to show him anything useful, tools such as file(1) cannot as of
+mid-2003 see through the wrapping.</p>
+</blockquote>
+<p>いちおうオプション <code>--uncompress</code>, <code>--uncompress-noreport</code> はあるが、解凍して
+<code>file</code> を走らせるのと変わりない。</p>
+<p>テキスト、バイナリー、圧縮テキストのどれが最適かは、ストレージの経済性、発見しやすさ、閲覧ツールをできるだけ単純に書くことのどれを重視するかによって決まる。選択肢と設計のトレードオフを見極めろ。</p>
+<h2 id="application-protocol-design">Application Protocol Design<a class="headerlink" href="#application-protocol-design" title="Permanent link">&para;</a></h2>
+<p>データファイルの書式がテキスト形式であることの良い理由はすべて、アプリケーション固有のプロトコルにも当てはまる。</p>
+<blockquote>
+<p>A CLI server with a command set that is designed for simplicity has the
+valuable property that a human tester will be able to type commands direct to
+the server process to probe the software's behavior.</p>
+</blockquote>
+<p>読書案内：</p>
+<blockquote>
+<p>Every protocol designer should read the classic <em>End-to-End Arguments in
+System Design</em> <a href="https://web.mit.edu/Saltzer/www/publications/endtoend/endtoend.pdf">Saltzer</a>.</p>
+</blockquote>
+<p>インターネットアプリケーションプロトコル設計の伝統は 1980 年以前は Unix とは別に発展してきた。</p>
+<p>SMTP, POP3, IMAP はインターネットハッカーの間でアプリケーションプロトコル規範とみなされている。</p>
+<h3 id="case-study-smtp-the-simple-mail-transfer-protocol">Case Study: SMTP, the Simple Mail Transfer Protocol<a class="headerlink" href="#case-study-smtp-the-simple-mail-transfer-protocol" title="Permanent link">&para;</a></h3>
+<p>SMTP の交信例が示されている。参加者が二人しかいないチャット欄のようなものだ。</p>
+<ul>
+<li><code>C:</code> から始まる行はメール送信側による</li>
+<li><code>S:</code> から始まる行はメール受信側による</li>
+<li>送信側の文字列はコマンド名＋引数が基本形で、メッセージ本文送信方式だけ変わる</li>
+<li>受信側の文字列は戻り値＋情報</li>
+<li>コマンド <code>DATA</code> のペイロードは一つの点からなる行で終了する</li>
+</ul>
+<blockquote>
+<p>SMTP is one of the two or three oldest application protocols still in use on
+the Internet. It is simple, effective, and has withstood the test of time.</p>
+</blockquote>
+<p>時の試練とは格好いい。</p>
+<blockquote>
+<p>The traits we have called out here are tropes that recur frequently in other
+Internet protocols. If there is any single archetype of what a well-designed
+Internet application protocol looks like, SMTP is it.</p>
+</blockquote>
+<p>SMTP はインターネットアプリケーション通信規格の始祖のようなものだ。</p>
+<h3 id="case-study-pop3-the-post-office-protocol">Case Study: POP3, the Post Office Protocol<a class="headerlink" href="#case-study-pop3-the-post-office-protocol" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>It is also used for mail transport, but where SMTP is a ‘push’ protocol with
+transactions initiated by the mail sender, POP3 is a ‘pull’ protocol with
+transactions initiated by the mail receiver.</p>
+</blockquote>
+<p>メールクライアントの送信と受信コマンドがそれぞれ push, pull 通信規格だ。それも、定期的、周期的、連続的、継続的に起こるものではない。</p>
+<p>Example 5.8 は POP3 セッションの例だが、SMTP のそれと類似点が多い。</p>
+<ul>
+<li><code>C:</code> 行と <code>S:</code> 行の存在</li>
+<li>行指向</li>
+<li>サーバー側の文字列は戻り値＋情報</li>
+<li>ペイロードメッセージ区画の指示方式（ドット）</li>
+</ul>
+<p>ただし戻り値の細部は異なる。</p>
+<h3 id="case-study-imap-the-internet-message-access-protocol">Case Study: IMAP, the Internet Message Access Protocol<a class="headerlink" href="#case-study-imap-the-internet-message-access-protocol" title="Permanent link">&para;</a></h3>
+<p>ダメ押しに IMAP も考察する。</p>
+<p>IMAP ではペイロードの区切り方が少し異なる。ドットで終わらせる代わりに、その直前にペイロードの長さを送信する。受信側にしてみればバッファリングが可能になる。</p>
+<p>ここはわからない：</p>
+<blockquote>
+<p>Also, notice that each response is tagged with a sequence label supplied by
+the request; in this example they have the form A000n, but the client could
+have generated any token into that slot. This feature makes it possible for
+IMAP commands to be streamed to the server without waiting for the responses;
+a state machine in the client can then simply interpret the responses and
+payloads as they come back. This technique cuts down on latency.</p>
+</blockquote>
+<p>IMAP は POP3 を置き換えるために設計された。インターネットアプリケーション通信規格設計の優秀な例であり、研究、模倣の価値がある。</p>
+<h2 id="application-protocol-metaformats">Application Protocol Metaformats<a class="headerlink" href="#application-protocol-metaformats" title="Permanent link">&para;</a></h2>
+<p>データファイルでも通信規格でも、metaformats はシリアライズを簡素化する方向に進化する。</p>
+<h3 id="the-classical-internet-application-metaprotocol">The Classical Internet Application Metaprotocol<a class="headerlink" href="#the-classical-internet-application-metaprotocol" title="Permanent link">&para;</a></h3>
+<p>推薦図書：</p>
+<blockquote>
+<p><em>On the Design of Application Protocols</em>l</p>
+</blockquote>
+<p>古典的インターネット通信規格の性質：</p>
+<ul>
+<li>テキスト形式</li>
+<li>単一行の要求と応答を使用する</li>
+<li>ペイロードは複数行になることがある。ペイロードは、先行する長さをオクテットで指
+  定するか、<code>.\r\n</code> という行で終端する。</li>
+<li>ピリオドで始まる行はすべて、ピリオドがもう一つ付加される</li>
+<li>応答行はステータスコードの後に人間が読めるメッセージが続く</li>
+</ul>
+<blockquote>
+<p>One final advantage of this classical style is that it is readily extensible.
+（中略）
+SMTP, POP3, and IMAP have all been extended in minor ways fairly often during
+their lifetimes, with minimal interoperability problems.</p>
+</blockquote>
+<!-- readily: quickly, immediately, willingly, or without any problem -->
+
+<h3 id="http-as-a-universal-application-protocol">HTTP as a Universal Application Protocol<a class="headerlink" href="#http-as-a-universal-application-protocol" title="Permanent link">&para;</a></h3>
+<p>アプリケーション通信規格の設計者は、汎用サービスプラットフォームとして Web サーバーを使い、HTTP の上に専用目的通信規格を重ねる傾向が強まってきている。</p>
+<blockquote>
+<p>This is a viable option because, at the transaction layer, HTTP is very simple
+and general.</p>
+</blockquote>
+<p>HTTP を簡単に説明している文があり有益。</p>
+<ul>
+<li>要求は RFC-822/MIME 風書式のメッセージ</li>
+<li>ヘッダーは識別と認証情報を一般に含む</li>
+<li>最初の行は URI で指定された資料に対するメソッド (GET, PUT, POST, etc.) 呼び出し</li>
+<li>応答は RFC-822/MIME 書式のメッセージ</li>
+</ul>
+<blockquote>
+<p>Besides avoiding a lot of lower-level details, this method means the
+application protocol will tunnel through the standard HTTP service port and
+not need a TCP/IP service port of its own. This can be a distinct advantage;
+most firewalls leave port 80 open, but trying to punch another hole through
+can be fraught with both technical and political difficulties.</p>
+</blockquote>
+<p>MDN にあるこの資料は HTTP を大づかみに理解するのにいい：
+<a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Overview">An overview of HTTP - HTTP</a></p>
+<h3 id="case-study-the-cddbfreedborg-database">Case Study: The <code>CDDB/freedb.org</code> Database<a class="headerlink" href="#case-study-the-cddbfreedborg-database" title="Permanent link">&para;</a></h3>
+<p>唐突に始まる音楽 CD の話。PC などに再生装置が実装される昔からある規格であるため、アルバム名や曲名といった簡単な情報すらデータ規格に用意されていない。後付けで音楽情報をダウンロードする仕組みがインターネットに存在する：</p>
+<blockquote>
+<p>There are (at least two) repositories that provide a mapping between a hash
+code computed from the track-length table on a CD and
+artist/album-title/track-title records. The original was <code>cddb.org</code>, but
+another site called <code>freedb.org</code> which is probably now more complete and
+widely used.</p>
+</blockquote>
+<p>サービスは単純な CGI 問い合わせとして HTTP 上で実装されている。</p>
+<p>この実装方針のおかげで、HTTP やさまざまなプログラミング言語のウェブアクセスライブラリーといった既存の下部構造がすべて利用可能になり、このデータベースへの問い合わせや更新を行うプログラムを支援することができる。</p>
+<h3 id="case-study-internet-printing-protocol">Case Study: Internet Printing Protocol<a class="headerlink" href="#case-study-internet-printing-protocol" title="Permanent link">&para;</a></h3>
+<p>IPP はネットワークからアクセス可能な印刷機を制御するための標準だ。</p>
+<ul>
+<li>IPP はトランスポート層として HTTP 1.1 を使用する</li>
+<li>要求はすべて POST メソッド 呼出しによって渡される</li>
+<li>応答は通常の HTTP 応答</li>
+</ul>
+<blockquote>
+<p>Most network-aware printers already embed a web server, because that's the
+natural way to make the status of the printer remotely queryable by human
+beings.</p>
+</blockquote>
+<p>Printer Working Group の文書 <a href="https://www.pwg.org/ipp/ippguide.html">How to Use the Internet Printing Protocol
+</a> にある Overview にザッと目を通し、本書のこれまでの説明と組み合わせればこの通信規約の例がおぼろげにわかるか。</p>
+<h3 id="beep-blocks-extensible-exchange-protocol">BEEP: Blocks Extensible Exchange Protocol<a class="headerlink" href="#beep-blocks-extensible-exchange-protocol" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>BEEP (formerly BXXP) is a generic protocol machine that competes with HTTP for
+the role of universal underlayer for application protocols.</p>
+</blockquote>
+<p>聞いたことがない。リンク切れは <a href="https://beepcore.org/">https://beepcore.org/</a> に変えておけばいいか？</p>
+<blockquote>
+<p>BEEP also avoids the HTTP problem that all requests have to be
+client-initiated; it would be better in situations in which a server needs to
+send asynchronous status messages back to the client.</p>
+</blockquote>
+<p>今なら Python や JavaScript で非同期プログラミングを知っているから言わんとすることを理解するが、C/C++ しか知らないときに読んだら想像がつかなかっただろう。</p>
+<blockquote>
+<p>BEEP is still new technology in mid-2003, and has only a few demonstration
+projects.</p>
+</blockquote>
+<h3 id="xml-rpc-soap-and-jabber">XML-RPC, SOAP, and Jabber<a class="headerlink" href="#xml-rpc-soap-and-jabber" title="Permanent link">&para;</a></h3>
+<p>アプリケーション通信規格の設計では、要求とペイロードを構造化するために、MIME 内で XML を使用する傾向にある。見出しの三つはすべて XML 文書型だ。</p>
+<blockquote>
+<p>XML-RPC and SOAP, considered as remote procedure call methods, have some
+associated risks that we discuss at the end of <a href="multiprogram.html">Chapter 7</a>.</p>
+</blockquote>
+<p>これらは後回しでいいか。第七章でもわからなかったらここに戻る。</p>
+<blockquote>
+<p>Jabber is a peer-to-peer protocol designed to support instant messaging and
+presence.</p>
+</blockquote>
+<p>リンク先 (Jabber Software Foundation) は Chrome からの警告により閲覧不能。</p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>© 2025 プレハブ小屋 All rights reserved.</p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js"></script>
+        <script src="../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
