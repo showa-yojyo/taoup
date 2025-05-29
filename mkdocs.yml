@@ -1,12 +1,42 @@
+# mkdocs.yml
+# For the specification, see <https://www.mkdocs.org/user-guide/configuration/>.
+
 # Project information
+
+# Set the copyright information to be included in the documentation by the
+# theme.
 copyright: © 2025 プレハブ小屋 All rights reserved.
+
+# The path from the base repo_url to the docs directory when directly viewing a
+# page, accounting for specifics of the repository host (e.g. GitHub, Bitbucket,
+# etc), the branch, and the docs directory itself. MkDocs concatenates
+# `repo_url` and `edit_uri`, and appends the input path of the page.
 edit_uri: edit/main/docs/
+
+# Set the remote branch to commit to when using gh-deploy to deploy to GitHub
+# Pages.
+#
+# default: gh-pages
 #remote_branch: gh-pages
+
+# Set the remote name to push to when using gh-deploy to deploy to GitHub Pages.
+#
+# default: origin
 #remote_name: origin
+
+# link to your repository (GitHub, Bitbucket, GitLab, ...) on each page.
 repo_url: https://github.com/showa-yojyo/taoup/
+
+# This will add a meta tag to the generated HTML header.
 site_author: プレハブ小屋
+
+# This will add a meta tag to the generated HTML header.
 site_description: 読書ノートの一部
+
+# the main title for the project documentation
 site_name: The Art of Unix Programming 読書ノート
+
+# the canonical URL of the site
 site_url: https://github.com/showa-yojyo/taoup/
 
 # Documentation layout
