@@ -35,5 +35,5 @@ jobs:
 
     - name: Build and deploy HTML files
       run: |
-        mkdocs gh-deploy --strict
+        mkdocs gh-deploy --force --no-history
 
