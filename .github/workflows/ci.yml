@@ -10,6 +10,9 @@ on:
 
 jobs:
   deploy:
+    permissions:
+      contents: write
+
     runs-on: ${{ matrix.platform }}
     strategy:
       matrix:
@@ -33,3 +36,4 @@ jobs:
     - name: Build and deploy HTML files
       run: |
         mkdocs gh-deploy --strict
+
