@@ -46,7 +46,30 @@ Python 周りは次のとおりだが、詳しくは別ファイルで述べる�
 
 ## リポジトリー構造
 
-TBW
+<!-- tree -a -d -I .git --dirsfirst -->
+
+リポジトリーの `main` ブランチのディレクトリーのみの構造を次に示す：
+
+```raw
+.
+├── .github
+│   └── workflows
+└── docs
+    ├── community
+    ├── context
+    ├── css
+    ├── design
+    └── implementation
+```
+
+ルート直下には `mkdocs.yml` やプロジェクト管理に関係するファイル、その他を置く。
+
+サブディレクトリー `.github/workflows` には GitHub Actions ワークフロー定義ファイルを置く。
+
+サブディレクトリー `docs` 以下は [MkDocs] 既定の Markdown ファイル格納場所だ。本書の
+Part それぞれに対応するサブディレクトリーを設けてある。
+
+サブディレクトリー `docs/css` には MkDocs が生成するスタイルシートを調整するための CSS ファイルを置く。
 
 ## ビルド
 
